@@ -1,60 +1,44 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-content>
-      <HelloWorld/>
+    <v-content color="bgcolor">
+      <notification :message="err_msg" :stats="status" />
+      <router-view />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import bus from "@/config/bus";
 
 export default {
-  name: 'App',
+  name: "App",
 
-  components: {
-    HelloWorld,
+  components: {},
+  created() {
+    bus.$on("callNotif", (type, res) => {
+      switch (type) {
+        case "error":
+          this.err_msg = res.response.data.meta;
+          this.status.error = true;
+          break;
+        case "success":
+          this.err_msg = res;
+          this.status.success = true;
+          break;
+        case "info":
+          this.err_msg = res;
+          this.status.info = true;
+          break;
+        case "warning":
+          this.err_msg = res.response.data.meta;
+          this.status.warning = true;
+          break;
+      }
+    });
   },
 
   data: () => ({
     //
-  }),
+  })
 };
 </script>
