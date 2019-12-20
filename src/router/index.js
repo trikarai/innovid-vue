@@ -53,6 +53,10 @@ import CoordinatorDashboard from '../components/personnel/asCoordinator/dashboar
 import CoordinatorParticipant from '../components/personnel/asCoordinator/participant/Participant';
 import CoordinatorApplicant from '../components/personnel/asCoordinator/applicant/Applicant';
 
+import MentorDashboard from '../components/personnel/asMentor/dashboard';
+import MentorSchedule from '../components/personnel/asMentor/schedule/Schedule';
+import MentorScheduleNegotiate from '../components/personnel/asMentor/schedule/NegotiateSchedule';
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -298,6 +302,31 @@ const routes = [
       {
         path: "/personnel/coordinator/program/:programId/cohort/:cohortId/applicant",
         component: CoordinatorApplicant,
+        meta: {
+          level: 2,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      //Mentor
+      {
+        path: "/personnel/mentor/dashboard",
+        component: MentorDashboard,
+        meta: {
+          level: 1,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/mentor/:mentorshipId/schedule",
+        component: MentorSchedule,
+        meta: {
+          level: 2,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/mentor/:mentorshipId/negotiate-schedule",
+        component: MentorScheduleNegotiate,
         meta: {
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false

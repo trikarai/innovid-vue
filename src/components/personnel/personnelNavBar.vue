@@ -204,6 +204,12 @@ export default {
       ],
       mentors: [
         {
+          icon: "dashboard",
+          text: "Dashboard",
+          route: "/personnel/mentor/dashboard",
+          disabled: false
+        },
+        {
           icon: "schedule",
           text: "Schedules",
           route: "/personnel/mentor/schedules",
