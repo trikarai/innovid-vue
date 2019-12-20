@@ -49,6 +49,10 @@ import CohortMission from '../components/personnel/program/cohort/mission/Missio
 import CohortMentoring from '../components/personnel/program/cohort/mentoring/Mentoring';
 import PersonnelList from '../components/personnel/program/cohort/assign/PersonnelList';
 
+import CoordinatorDashboard from '../components/personnel/asCoordinator/dashboard';
+import CoordinatorParticipant from '../components/personnel/asCoordinator/participant/Participant';
+import CoordinatorApplicant from '../components/personnel/asCoordinator/applicant/Applicant';
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -271,6 +275,31 @@ const routes = [
         component: CohortMentoring,
         meta: {
           level: 3,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      //Coordinator
+      {
+        path: "/personnel/coordinator/dashboard",
+        component: CoordinatorDashboard,
+        meta: {
+          level: 1,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/coordinator/program/:programId/cohort/:cohortId/participant",
+        component: CoordinatorParticipant,
+        meta: {
+          level: 2,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/coordinator/program/:programId/cohort/:cohortId/applicant",
+        component: CoordinatorApplicant,
+        meta: {
+          level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
       },

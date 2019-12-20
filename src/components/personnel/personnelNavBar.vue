@@ -184,6 +184,12 @@ export default {
       ],
       coordinators: [
         {
+          icon: "dashboard",
+          text: "Dashboard",
+          route: "/personnel/coordinator/dashboard",
+          disabled: false
+        },
+        {
           icon: "group",
           text: "Participant",
           route: "/personnel/coordinator/participant",
