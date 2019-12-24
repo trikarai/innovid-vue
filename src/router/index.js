@@ -12,6 +12,7 @@ import IncubateeNav from "../views/main/Incubatee";
 import IncubateeAccount from "../components/Incubatee/account/IncubateeAccount";
 import IncubateeMembership from "../components/Incubatee/membership/Membership";
 import IncubateeCandidateships from "../components/Incubatee/candidate/Candidate";
+import IncubateeProfiles from "../components/Incubatee/profile/Profile";
 
 import TeamMember from "../components/Incubatee/asTeam/member/Member";
 import TeamMemberCandidate from "../components/Incubatee/asTeam/candidate/Candidate";
@@ -368,6 +369,14 @@ const routes = [
       {
         path: "/incubatee/candidateship",
         component: IncubateeCandidateships,
+        meta: {
+          level: 1,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/profile",
+        component: IncubateeProfiles,
         meta: {
           level: 1,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
