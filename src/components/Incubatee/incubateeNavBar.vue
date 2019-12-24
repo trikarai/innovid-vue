@@ -71,7 +71,7 @@
         </v-list-item>
       </v-list>
 
-      <v-list-group prepend-icon="account_circle" value="true" no-action>
+      <!-- <v-list-group prepend-icon="account_circle" value="true" no-action>
         <template v-slot:activator>
           <v-list-item-title>Team</v-list-item-title>
         </template>
@@ -82,7 +82,7 @@
             <v-icon v-text="team.icon"></v-icon>
           </v-list-item-icon>
         </v-list-item>
-      </v-list-group>
+      </v-list-group> -->
     </v-navigation-drawer>
     <v-navigation-drawer temporary right v-model="rightDrawer" fixed>
       <v-list>
