@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-xs>
     <v-row>
-      <v-col></v-col>
+      <v-col>Mentoring List</v-col>
     </v-row>
     <v-row>
       <v-col>
@@ -22,50 +22,23 @@
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>
-            {{item.cohort.name}}
+            {{item.name}}
           </template>
-          <template v-slot:item.sub="{item}">
-            <v-btn
-              small
-              color="accent"
-              class="mr-2"
-              router
-              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + item.id + '/schedule'"
-            >
-              <v-icon left>today</v-icon>Schedules
-            </v-btn>
-            <v-btn
-              small
-              color="accent"
-              class="mr-2"
-              router
-              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + item.id + '/journal'"
-            >
-              <v-icon left>book</v-icon>Journals
-            </v-btn>
-          </template>
+
           <template v-slot:item.action="{item}">
-            <v-btn small color="warning" class="mr-2" @click="leftAct(item, 'Cancel')">
-              <v-icon left>flag</v-icon>Quit
+            <v-btn
+              small
+              color="accent"
+              class="mr-2"
+              router
+              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mentoring/' + item.id + '/mentor' "
+            >
+              <v-icon left>emoji_people</v-icon>Select Mentor
             </v-btn>
           </template>
         </v-data-table>
       </v-col>
     </v-row>
-
-    <v-dialog v-model="dialogDelete" width="300" :persistent="true">
-      <v-card :loading="loader">
-        <v-card-title>
-          <p class="text-capitalize">{{leftAction}}</p>
-        </v-card-title>
-        <v-card-text>{{leftName}}</v-card-text>
-        <v-card-actions>
-          <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
 
     <v-dialog
       v-model="dialogDetail"
@@ -83,11 +56,11 @@
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.cohort.name">
-            <p>{{dataSingle.cohort.name}}</p>
-            <p>{{dataSingle.acceptedTime}}</p>
+          <v-card-text :key="dataSingle.name">
+            <p>{{dataSingle.name}}</p>
+            <!-- <p>{{dataSingle.acceptedTime}}</p>
             <p>{{dataSingle.active}}</p>
-            <p>{{dataSingle.note}}</p>
+            <p>{{dataSingle.note}}</p>-->
           </v-card-text>
         </transition>
         <v-card-actions>
@@ -101,7 +74,7 @@
   </v-container>
 </template>
 <script>
-import bus from "@/config/bus";
+// import bus from "@/config/bus";
 
 // import * as config from "@/config/config";
 import auth from "@/config/auth";
@@ -142,7 +115,9 @@ export default {
           "http://localhost:3004/api" +
             "/incubatee/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations",
+            "/cohort-participations/" +
+            this.$route.params.cohortId +
+            "/mentorings",
           {
             headers: auth.getAuthHeader()
           }
@@ -168,6 +143,8 @@ export default {
             "/incubatee/as-team-member/" +
             this.$route.params.teamId +
             "/cohort-participations/" +
+            this.$route.params.cohortId +
+            "/mentorings/" +
             id,
           {
             headers: auth.getAuthHeader()
@@ -184,37 +161,6 @@ export default {
     openDetail(id) {
       this.dialogDetail = true;
       this.getDataSingle(id);
-    },
-    leftAct(item, action) {
-      this.dialogDelete = true;
-      this.leftId = item.id;
-      this.leftName = item.cohort.name;
-      this.leftAction = action;
-    },
-    deleteAccount(id) {
-      this.tableLoad = true;
-      this.axios
-        .delete(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
-            this.$route.params.teamId +
-            "/cohort-participations/" +
-            id,
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
-        .then(() => {
-          bus.$emit("callNotif", "info", "Successfully Quit");
-          this.refresh();
-        })
-        .catch(res => {
-          bus.$emit("callNotif", "error", res);
-        })
-        .finally(() => {
-          this.tableLoad = false;
-        });
     }
   }
 };

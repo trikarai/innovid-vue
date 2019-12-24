@@ -18,6 +18,10 @@ import TeamMemberCandidate from "../components/Incubatee/asTeam/candidate/Candid
 import TeamMemberInvite from "../components/Incubatee/asTeam/member/searchMember";
 import TeamMemberApplication from "../components/Incubatee/asTeam/application/Application";
 import TeamMemberParticipation from "../components/Incubatee/asTeam/participation/Participation";
+//sub participation
+import TeamMemberSchedules from "../components/Incubatee/asTeam/participation/schedule/Schedule";
+import TeamMemberMentoring from "../components/Incubatee/asTeam/participation/schedule/MentoringList";
+import TeamMemberMentor from "../components/Incubatee/asTeam/participation/schedule/MentorList";
 
 import AccountMain from "../views/account/AccountMain"
 import ForgotPassword from "../views/account/ForgotPassword";
@@ -404,6 +408,30 @@ const routes = [
         component: TeamMemberParticipation,
         meta: {
           level: 2,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/team/:teamId/participation/:cohortId/schedule",
+        component: TeamMemberSchedules,
+        meta: {
+          level: 3,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/team/:teamId/participation/:cohortId/mentoring",
+        component: TeamMemberMentoring,
+        meta: {
+          level: 4,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/team/:teamId/participation/:cohortId/mentoring/:mentoringId/mentor",
+        component: TeamMemberMentor,
+        meta: {
+          level: 5,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
       },
