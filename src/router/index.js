@@ -18,7 +18,9 @@ import TeamMemberCandidate from "../components/Incubatee/asTeam/candidate/Candid
 import TeamMemberInvite from "../components/Incubatee/asTeam/member/searchMember";
 import TeamMemberApplication from "../components/Incubatee/asTeam/application/Application";
 import TeamMemberParticipation from "../components/Incubatee/asTeam/participation/Participation";
+
 //sub participation
+import TeamMemberJournal from "../components/Incubatee/asTeam/participation/journal/Journal";
 import TeamMemberSchedules from "../components/Incubatee/asTeam/participation/schedule/Schedule";
 import TeamMemberMentoring from "../components/Incubatee/asTeam/participation/schedule/MentoringList";
 import TeamMemberMentor from "../components/Incubatee/asTeam/participation/schedule/MentorList";
@@ -408,6 +410,14 @@ const routes = [
         component: TeamMemberParticipation,
         meta: {
           level: 2,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/team/:teamId/participation/:cohortId/journal",
+        component: TeamMemberJournal,
+        meta: {
+          level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
       },
