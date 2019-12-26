@@ -42,3 +42,8 @@ export default {
   })
 };
 </script>
+<style>
+.required::after {
+  content: "*";
+}
+</style>
