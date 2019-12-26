@@ -43,6 +43,40 @@ export const validationMixins = {
                 () =>
                     this.cpassword === this.password.newPassword || "Password does not match"
             ],
+            rules: {
+                max: value =>
+                    value.length <= this.field.maxValue ||
+                    "Max " + this.field.maxValue + " characters",
+                min: value =>
+                    value.length >= this.field.minValue ||
+                    "Min " + this.field.minValue + " characters",
+                maxValue: value =>
+                    value <= this.field.maxValue ||
+                    "Max value is" + this.field.maxValue,
+                minValue: value =>
+                    value >= this.field.minValue ||
+                    "Min Value is " + this.field.minValue,
+                maxSize: value =>
+                    value.size <= this.field.maxSize ||
+                    "Max size is " + this.field.maxSize + " Byte",
+                minSize: value =>
+                    value.size >= this.field.minSize ||
+                    "Min Size is " + this.field.minSize + " Byte"
+            }
         };
     },
+    watch: {
+        value: "checkRequired"
+    },
+    computed: {
+    },
+    methods: {
+        checkRequired(value) {
+            if (value.length === 0 && this.field.required) {
+                return "Field is Required?";
+            } else {
+                return true;
+            }
+        }
+    }
 };
