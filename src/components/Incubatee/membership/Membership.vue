@@ -187,9 +187,13 @@ export default {
     getDataList() {
       this.tableLoad = true;
       this.axios
-        .get(config.baseUri + "/incubatee/memberships", {
-          headers: auth.getAuthHeader()
-        })
+        .get(
+          //   config.baseUri +
+          "http://localhost:3004/api" + "/incubatee/memberships",
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
         .then(res => {
           if (res.data.data) {
             this.dataList = res.data.data;
@@ -206,9 +210,13 @@ export default {
       this.dataSingle = "";
       this.loader = true;
       this.axios
-        .get(config.baseUri + "/incubatee/memberships/" + id, {
-          headers: auth.getAuthHeader()
-        })
+        .get(
+          //   config.baseUri +
+          "http://localhost:3004/api" + "/incubatee/memberships/" + id,
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
         .then(res => {
           this.dataSingle = res.data.data;
         })
