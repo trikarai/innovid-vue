@@ -148,7 +148,7 @@ export default {
           icon: "folder_shared",
           text: "Profile",
           route: "/incubatee/profile",
-          disabled: true
+          disabled: false
         },
         {
           icon: "group_work",
