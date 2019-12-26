@@ -1,18 +1,28 @@
 <template>
-  <v-col>
+  <v-col md="6">
     <v-text-field
-      :label="field.name"
       :hint="field.description"
       :placeholder="field.placeholder"
-      :clearable="clearable"
       outlined
       type="number"
       :autocomplete="false"
-    ></v-text-field>
+      :min="field.minValue"
+      :max="field.maxValue"
+      :rules="[rules.minValue, checkRequired]"
+      v-model="value"
+    >
+      <template v-slot:label>
+        <div :class="{required : field.required}">{{field.name}}</div>
+      </template>
+    </v-text-field>
   </v-col>
 </template>
 <script>
+import { validationMixins } from "@/mixins/validationMixins";
+import { formDynamicMixins } from "@/mixins/formDynamicMixins";
+
 export default {
+  mixins: [validationMixins, formDynamicMixins],
   props: ["field", "index"],
   components: {},
   data: function() {
