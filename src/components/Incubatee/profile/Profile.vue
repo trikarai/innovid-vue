@@ -37,7 +37,9 @@
             {{item.name}}
           </template>
           <template v-slot:item.action="{item}">
-            <v-btn color="accent"><v-icon>visibility</v-icon></v-btn>
+            <v-btn small color="accent" router :to="'/incubatee/profile/' + item.id + '/add'">
+              <v-icon>visibility</v-icon>
+            </v-btn>
           </template>
         </v-data-table>
       </v-col>
