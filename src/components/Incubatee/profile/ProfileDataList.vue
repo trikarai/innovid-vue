@@ -1,7 +1,11 @@
 <template>
   <v-container grid-list-xs>
     <v-row>
-      <v-col md="8" xs="12"></v-col>
+      <v-col md="8" xs="12">
+        <v-btn color="accent" router to="/incubatee/profile-form">
+          <v-icon left>add</v-icon>Add Profiles
+        </v-btn>
+      </v-col>
     </v-row>
     <v-row v-show="false">
       <v-col md="4" xs="12">
@@ -34,13 +38,13 @@
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>
-            {{item.name}}
+            {{item.profileForm.name}}
           </template>
-          <template v-slot:item.action="{item}">
-            <v-btn small color="accent" router :to="'/incubatee/profile/' + item.id + '/add'">
+          <!-- <template v-slot:item.action="{item}">
+            <v-btn small color="accent" router :to="'/incubatee/profile/' + item.id">
               <v-icon>visibility</v-icon>
             </v-btn>
-          </template>
+          </template>-->
         </v-data-table>
       </v-col>
     </v-row>
@@ -109,7 +113,7 @@ export default {
     getDataList() {
       this.tableLoad = true;
       this.axios
-        .get(config.baseUri + "/incubatee/profile-forms", {
+        .get(config.baseUri + "/incubatee/profiles", {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -128,7 +132,7 @@ export default {
       this.dataSingle = "";
       this.loader = true;
       this.axios
-        .get(config.baseUri + "/incubatee/profile-forms/" + id, {
+        .get(config.baseUri + "/incubatee/profiles/" + id, {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -142,8 +146,9 @@ export default {
         });
     },
     openDetail(id) {
-      this.dialogDetail = true;
-      this.getDataSingle(id);
+      // this.dialogDetail = true;
+      // this.getDataSingle(id);
+      this.$router.push({ path: "/incubatee/profile/" + id });
     },
     refresh() {
       this.dialogForm = false;

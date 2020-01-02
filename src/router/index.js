@@ -12,7 +12,9 @@ import IncubateeNav from "../views/main/Incubatee";
 import IncubateeAccount from "../components/Incubatee/account/IncubateeAccount";
 import IncubateeMembership from "../components/Incubatee/membership/Membership";
 import IncubateeCandidateships from "../components/Incubatee/candidate/Candidate";
-import IncubateeProfiles from "../components/Incubatee/profile/Profile";
+import IncubateeProfiles from "../components/Incubatee/profile/ProfileDataList";
+import IncubateeProfilesData from "../components/Incubatee/profile/ProfileData";
+import IncubateeProfilesForm from "../components/Incubatee/profile/ProfileForm";
 import IncubateeProfilesAdd from "../components/Incubatee/profile/addProfile";
 
 import TeamMember from "../components/Incubatee/asTeam/member/Member";
@@ -384,10 +386,26 @@ const routes = [
         }
       },
       {
-        path: "/incubatee/profile/:formId/add",
-        component: IncubateeProfilesAdd,
+        path: "/incubatee/profile/:profileId",
+        component: IncubateeProfilesData,
         meta: {
           level: 2,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/profile-form",
+        component: IncubateeProfilesForm,
+        meta: {
+          level: 3,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/profile-form/:formId/add",
+        component: IncubateeProfilesAdd,
+        meta: {
+          level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
       },

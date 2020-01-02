@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md>
     <v-row></v-row>
-    <v-card :loading="loading">
+    <v-card :loading="loader">
       <v-card-title primary-title>{{formTemplate.name}}</v-card-title>
       <v-card-text class="subtitle">{{formTemplate.description}}</v-card-text>
       <v-card-text>
@@ -14,7 +14,7 @@
         </v-form>
       </v-card-text>
       <v-card-text>
-        <pre>{{params}}</pre>
+        <!-- <pre>{{params}}</pre> -->
       </v-card-text>
       <v-card-text>
         <pre>{{test}}</pre>
@@ -28,8 +28,8 @@
 </template>
 <script>
 import bus from "@/config/bus";
-import * as config from "@/config/config";
-import auth from "@/config/auth";
+// import * as config from "@/config/config";
+// import auth from "@/config/auth";
 import FieldModule from "@/components/fields/field";
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
@@ -42,7 +42,9 @@ export default {
       valid: false,
       params: [],
       fields: [],
-      test: {}
+      test: {
+        profileFormId: this.formTemplate.id
+      }
     };
   },
   components: {
@@ -56,23 +58,8 @@ export default {
   },
   methods: {
     sendtoParent() {
-      this.loader = true;
-      this.test = this.refactorParams(this.params);
-      this.axios
-        .post(
-          config.baseUri + "/incubatee/profiles",
-          this.test,
-          { headers: auth.getAuthHeader() }
-        )
-        .then(() => {
-          bus.$emit("callNotif", "success", "Form Data Uploaded");
-        })
-        .catch(res => {
-          bus.$emit("callNotif", "error", res);
-        })
-        .finally(() => {
-          this.loader = false;
-        });
+      this.test = this.refactorParams(this.params, this.formTemplate.id);
+      this.$emit("submit-form", this.test);
     }
   }
 };

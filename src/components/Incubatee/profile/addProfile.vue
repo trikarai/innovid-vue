@@ -6,7 +6,7 @@
       </v-col>
     </v-row>
 
-    <render-form v-if="!loader" :formTemplate="formTemplate" />
+    <render-form v-if="!loader" :formTemplate="formTemplate" @submit-form="submitForm" />
   </v-container>
 </template>
 <script>
@@ -49,6 +49,23 @@ export default {
         })
         .then(res => {
           this.formTemplate = res.data.data;
+        })
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
+        .finally(() => {
+          this.loader = false;
+        });
+    },
+    submitForm(params) {
+      this.loader = true;
+      this.axios
+        .post(config.baseUri + "/incubatee/profiles", params, {
+          headers: auth.getAuthHeader()
+        })
+        .then(() => {
+          bus.$emit("callNotif", "success", "Form Data Uploaded");
+          this.$router.go(-2);
         })
         .catch(res => {
           bus.$emit("callNotif", "error", res);
