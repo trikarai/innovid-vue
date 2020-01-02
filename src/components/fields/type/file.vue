@@ -1,6 +1,7 @@
 <template>
   <v-row>
     <v-col md="6">
+      <!-- {{fileInfo}} -->
       <v-file-input
         :hint="field.description"
         :clearable="clearable"
@@ -32,19 +33,19 @@
     </v-col>
     <v-col md="4">
       <v-expand-transition>
-        <template>
-          <v-img :src="imageUrl" contain max-height="150" v-if="imageUrl" />
-        </template>
+          <v-img class="ml-5" :src="imageUrl" contain max-width="250" v-if="imageUrl" />
       </v-expand-transition>
     </v-col>
     <v-col md="3">
-      <v-btn v-if="imageUrl" small fab color="warning" @click="uploadFile">
-        <v-icon>cloud_upload</v-icon>
-      </v-btn>
-      <v-btn depressed fab small color="green">
+      <template v-if="!uploaded">
+        <v-btn v-if="imageUrl" small fab color="warning" @click="uploadFile">
+          <v-icon>cloud_upload</v-icon>
+        </v-btn>
+      </template>
+      <v-btn depressed fab small color="green" v-if="uploaded">
         <v-icon>check</v-icon>
       </v-btn>
-      <v-btn icon small color="red" @click="removeFile">
+      <v-btn icon small color="red" @click="removeFile" v-if="removeFileBtn">
         <v-icon>close</v-icon>
       </v-btn>
     </v-col>
@@ -54,6 +55,7 @@
 import bus from "@/config/bus";
 import auth from "@/config/auth";
 import { validationMixins } from "@/mixins/validationMixins";
+import { uuid } from "vue-uuid";
 import * as config from "@/config/config";
 
 export default {
@@ -69,28 +71,52 @@ export default {
       imageUrl: null,
       file: null,
       headers: {},
-      progressShow: true,
+      progressShow: false,
       uploaded: false,
-      fileInfo: { id: "", filePath: "" },
+      removeFileBtn: false,
+      fileInfo: { id: "", path: "", size: "" },
       ext: ""
     };
   },
-  watch: {},
+  watch: {
+    fileInfo: function() {
+      var params = {
+        fieldId: this.field.id,
+        fileInfoIdList: this.value,
+        type: this.field.type
+      };
+      bus.$emit("getValue", params, this.index);
+    }
+  },
   methods: {
     onFilePicked() {
+      this.uploaded = false;
+      this.progressShow = false;
       const files = this.file;
       const fr = new FileReader();
+
+      var name = uuid.v4() + "_" + files.name;
+      var str = name.replace(/(?:\.(?![^.]+$)|[^\w\d\n.])+/g, "");
+      this.fileInfo.path = str;
+      this.headers["fileName"] = str;
+
       fr.readAsDataURL(files);
-      fr.addEventListener("load", () => {
-        this.imageUrl = fr.result;
-        // this.file = files; // this is an image file that can be sent to server...
-      });
+      fr.addEventListener(
+        "load",
+        () => {
+          this.imageUrl = fr.result;
+        },
+        false
+      );
       this.ext = files.name.split(".").pop();
+      this.removeFileBtn = true;
     },
     removeFile() {
       this.file = null;
       this.imageUrl = null;
       this.ext = "";
+      this.removeFileBtn = false;
+      this.uploaded = false;
     },
     uploadFile() {
       this.headers["Content-Type"] = "image/*";
@@ -107,8 +133,10 @@ export default {
             }
           }
         })
-        .then(() => {
+        .then(res => {
           this.uploaded = true;
+          this.value[0] = res.data.data.id;
+          this.fileInfo = res.data.data;
         })
         .catch(res => {
           this.uploaded = false;
