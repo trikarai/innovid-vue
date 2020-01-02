@@ -38,20 +38,54 @@ export const formDynamicMixins = {
                 this.fields.push(element);
             });
         },
-        refactorParams(data) {
+        refactorRecordJSON(data) {
+            data.stringFieldRecords.forEach(element => {
+                element.type = "string";
+                this.fields.push(element);
+            });
+            data.integerFieldRecords.forEach(element => {
+                element.type = "integer";
+                this.fields.push(element);
+            });
+            data.textAreaFieldRecords.forEach(element => {
+                element.type = "textarea";
+                this.fields.push(element);
+            });
+            data.singleSelectFieldRecords.forEach(element => {
+                element.type = "radio";
+                this.fields.push(element);
+            });
+            data.multiSelectFieldRecords.forEach(element => {
+                element.type = "select";
+                this.fields.push(element);
+            });
+            data.attachmentFieldRecords.forEach(element => {
+                element.type = "attachment";
+                this.fields.push(element);
+            });
+        },
+        refactorParams(data, formId) {
             var params = new Object();
+            params.profileFormId = formId;
             var stringFieldRecords = new Array();
             var integerFieldRecords = new Array();
             var textAreaFieldRecords = new Array();
             var singleSelectFieldRecords = new Array();
             var multiSelectFieldRecords = new Array();
             var attachmentFieldRecords = new Array();
-
             data.forEach(element => {
                 if (element.type == 'string') {
                     stringFieldRecords.push(element)
-                } else {
+                } else if (element.type == 'integer') {
                     integerFieldRecords.push(element)
+                } else if (element.type == 'textarea') {
+                    textAreaFieldRecords.push(element)
+                } else if (element.type == 'radio') {
+                    singleSelectFieldRecords.push(element);
+                } else if (element.type == 'select') {
+                    multiSelectFieldRecords.push(element)
+                } else if (element.type == 'attachment') {
+                    attachmentFieldRecords.push(element)
                 }
             });
             params.stringFieldRecords = stringFieldRecords;
