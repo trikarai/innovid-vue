@@ -1,7 +1,7 @@
 <template>
   <v-col md="6">
     <v-select
-      v-model="value"
+      v-model="optionList"
       :items="field.options"
       item-text="name"
       item-value="id"
@@ -14,9 +14,11 @@
         <div :class="{required : field.required}">{{field.name}}</div>
       </template>
     </v-select>
+    <!-- {{optionList}} -->
   </v-col>
 </template>
 <script>
+import bus from "@/config/bus";
 import { validationMixins } from "@/mixins/validationMixins";
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
@@ -27,10 +29,19 @@ export default {
   data: function() {
     return {
       clearable: true,
-      value: ""
+      optionList: []
     };
   },
-  watch: {}
+  watch: {
+    optionList: function() {
+      var params = {
+        fieldId: this.field.id,
+        selectedOptionIdList: this.optionList,
+        type: this.field.type
+      };
+      bus.$emit("getValue", params, this.index);
+    }
+  }
 };
 </script>
 
