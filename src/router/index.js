@@ -24,6 +24,7 @@ import TeamMemberApplication from "../components/Incubatee/asTeam/application/Ap
 import TeamMemberParticipation from "../components/Incubatee/asTeam/participation/Participation";
 
 //sub participation
+import TeamMemberMission from "../components/Incubatee/asTeam/participation/mission/Mission";
 import TeamMemberJournal from "../components/Incubatee/asTeam/participation/journal/Journal";
 import TeamMemberSchedules from "../components/Incubatee/asTeam/participation/schedule/Schedule";
 import TeamMemberMentoring from "../components/Incubatee/asTeam/participation/schedule/MentoringList";
@@ -446,6 +447,14 @@ const routes = [
         component: TeamMemberParticipation,
         meta: {
           level: 2,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/team/:teamId/participation/:cohortId/mission",
+        component: TeamMemberMission,
+        meta: {
+          level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
       },

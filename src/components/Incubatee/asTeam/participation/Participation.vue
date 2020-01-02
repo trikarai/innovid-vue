@@ -43,6 +43,15 @@
             >
               <v-icon left>book</v-icon>Journals
             </v-btn>
+            <v-btn
+              small
+              color="accent"
+              class="mr-2"
+              router
+              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + item.id + '/mission'"
+            >
+              <v-icon left>emoji_objects</v-icon>Missions
+            </v-btn>
           </template>
           <template v-slot:item.action="{item}">
             <v-btn small color="warning" class="mr-2" @click="leftAct(item, 'Cancel')">
