@@ -25,6 +25,7 @@ import TeamMemberParticipation from "../components/Incubatee/asTeam/participatio
 
 //sub participation
 import TeamMemberMission from "../components/Incubatee/asTeam/participation/mission/Mission";
+import TeamMemberMissionDetail from "../components/Incubatee/asTeam/participation/mission/MissionDetail";
 import TeamMemberJournal from "../components/Incubatee/asTeam/participation/journal/Journal";
 import TeamMemberSchedules from "../components/Incubatee/asTeam/participation/schedule/Schedule";
 import TeamMemberMentoring from "../components/Incubatee/asTeam/participation/schedule/MentoringList";
@@ -455,6 +456,22 @@ const routes = [
         component: TeamMemberMission,
         meta: {
           level: 3,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/team/:teamId/participation/:cohortId/mission/:missionId",
+        component: TeamMemberMissionDetail,
+        meta: {
+          level: 4,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/team/:teamId/participation/:cohortId/mission/:rootId/next/:missionId",
+        component: TeamMemberMissionDetail,
+        meta: {
+          level: 5,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
       },

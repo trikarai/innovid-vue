@@ -10,24 +10,19 @@
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-btn
-              color="success"
-              fab
-              x-small
-              router
-              :to="'/incubatee/team/' + this.$route.params.teamId + '/participation/' + this.$route.params.cohortId + '/mission/' + dataList.id "
-            >
-              <v-icon small>zoom_in</v-icon>
-            </v-btn>
+            <v-btn text color="accent" disabled>Prev Mission</v-btn>
             <v-spacer></v-spacer>
-            <v-btn
-              text
-              color="accent"
-              router
-              :to="'/incubatee/team/' + this.$route.params.teamId + '/participation/' + this.$route.params.cohortId + '/mission/' + dataList.id + '/next/' + dataList.nextMission.id "
-            >Next Mission</v-btn>
+            <v-btn text color="accent" disabled>Next Mission</v-btn>
           </v-card-actions>
         </v-card>
+      </v-col>
+      <v-col md="12">
+        <!-- <pre> {{dataList.worksheetForm}} </pre> -->
+        <render-form
+          v-if="!tableLoad"
+          :formTemplate="dataList.worksheetForm"
+          @submit-form="submitForm"
+        />
       </v-col>
     </v-row>
 
@@ -50,6 +45,8 @@
 import bus from "@/config/bus";
 import auth from "@/config/auth";
 import * as config from "@/config/config";
+
+import RenderForm from "@/components/buildform/incubatee/renderForm";
 
 export default {
   data() {
@@ -75,6 +72,9 @@ export default {
       leftAction: ""
     };
   },
+  components: {
+    RenderForm
+  },
   mounted() {
     this.getDataList();
   },
@@ -89,7 +89,8 @@ export default {
             this.$route.params.teamId +
             "/cohort-participations/" +
             this.$route.params.cohortId +
-            "/missions",
+            "/missions/" +
+            this.$route.params.missionId,
           {
             headers: auth.getAuthHeader()
           }
@@ -100,6 +101,30 @@ export default {
         .catch(() => {})
         .finally(() => {
           this.tableLoad = false;
+        });
+    },
+    submitForm(params) {
+      this.loader = true;
+      this.axios
+        .post(
+          config.baseUri +
+            "/incubatee/as-team-member/" +
+            this.$route.params.teamId +
+            "/worksheets",
+          params,
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(() => {
+          bus.$emit("callNotif", "success", "Worksheet Data Uploaded");
+          this.$router.go(-2);
+        })
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
+        .finally(() => {
+          this.loader = false;
         });
     },
     leftAct(item, action) {
