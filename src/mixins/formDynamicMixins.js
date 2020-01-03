@@ -67,6 +67,7 @@ export const formDynamicMixins = {
         refactorParams(data, formId) {
             var params = new Object();
             params.profileFormId = formId;
+            params.Form_id = formId;
             var stringFieldRecords = new Array();
             var integerFieldRecords = new Array();
             var textAreaFieldRecords = new Array();

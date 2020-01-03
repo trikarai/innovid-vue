@@ -43,7 +43,8 @@ export default {
       params: [],
       fields: [],
       test: {
-        profileFormId: this.formTemplate.id
+        profileFormId: this.formTemplate.id,
+        Form_id: this.formTemplate.id
       }
     };
   },
