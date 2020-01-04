@@ -13,12 +13,12 @@
           </template>
         </v-form>
       </v-card-text>
-      <v-card-text>
-        <!-- <pre>{{params}}</pre> -->
-      </v-card-text>
-      <v-card-text>
+      <!-- <v-card-text>
+        <pre>{{params}}</pre>
+      </v-card-text> -->
+      <!-- <v-card-text>
         <pre>{{test}}</pre>
-      </v-card-text>
+      </v-card-text> -->
 
       <v-card-actions>
         <v-btn color="primary" :disabled="!valid" @click="sendtoParent">Submit</v-btn>
