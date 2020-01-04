@@ -22,12 +22,15 @@ import TeamMemberCandidate from "../components/Incubatee/asTeam/candidate/Candid
 import TeamMemberInvite from "../components/Incubatee/asTeam/member/searchMember";
 import TeamMemberApplication from "../components/Incubatee/asTeam/application/Application";
 import TeamMemberParticipation from "../components/Incubatee/asTeam/participation/Participation";
+import TeamMemberWorksheet from "../components/Incubatee/asTeam/worksheet/Worksheet";
 
 //sub participation
 import TeamMemberMission from "../components/Incubatee/asTeam/participation/mission/Mission";
 import TeamMemberMissionDetail from "../components/Incubatee/asTeam/participation/mission/MissionDetail";
 import TeamMemberJournal from "../components/Incubatee/asTeam/participation/journal/Journal";
 import TeamMemberSchedules from "../components/Incubatee/asTeam/participation/schedule/Schedule";
+import TeamMemberSchedulesDetail from "../components/Incubatee/asTeam/participation/schedule/ScheduleDetail";
+import TeamMemberSchedulesReport from "../components/Incubatee/asTeam/participation/schedule/Report";
 import TeamMemberMentoring from "../components/Incubatee/asTeam/participation/schedule/MentoringList";
 import TeamMemberMentor from "../components/Incubatee/asTeam/participation/schedule/MentorList";
 
@@ -67,6 +70,8 @@ import CoordinatorApplicant from '../components/personnel/asCoordinator/applican
 
 import MentorDashboard from '../components/personnel/asMentor/dashboard';
 import MentorSchedule from '../components/personnel/asMentor/schedule/Schedule';
+import MentorScheduleDetail from '../components/personnel/asMentor/schedule/ScheduleDetail';
+import MentorScheduleReport from '../components/personnel/asMentor/schedule/Report';
 import MentorScheduleNegotiate from '../components/personnel/asMentor/schedule/NegotiateSchedule';
 
 Vue.use(VueRouter)
@@ -337,6 +342,22 @@ const routes = [
         }
       },
       {
+        path: "/personnel/mentor/:mentorshipId/schedule/:scheduleId",
+        component: MentorScheduleDetail,
+        meta: {
+          level: 3,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/mentor/:mentorshipId/schedule/:scheduleId/report",
+        component: MentorScheduleReport,
+        meta: {
+          level: 3,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
         path: "/personnel/mentor/:mentorshipId/negotiate-schedule",
         component: MentorScheduleNegotiate,
         meta: {
@@ -444,6 +465,14 @@ const routes = [
         }
       },
       {
+        path: "/incubatee/team/:teamId/worksheet",
+        component: TeamMemberWorksheet,
+        meta: {
+          level: 2,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
         path: "/incubatee/team/:teamId/participation",
         component: TeamMemberParticipation,
         meta: {
@@ -488,6 +517,22 @@ const routes = [
         component: TeamMemberSchedules,
         meta: {
           level: 3,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/team/:teamId/participation/:cohortId/schedule/:scheduleId",
+        component: TeamMemberSchedulesDetail,
+        meta: {
+          level: 4,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/team/:teamId/participation/:cohortId/schedule/:scheduleId/report",
+        component: TeamMemberSchedulesReport,
+        meta: {
+          level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
       },
