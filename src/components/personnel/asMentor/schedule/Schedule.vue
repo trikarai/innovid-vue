@@ -22,7 +22,7 @@
             {{item.mentoring.name}}
           </template>
           <template v-slot:item.action="{item}">
-            <v-btn class="ml-2" small color="accent" disabled>
+            <v-btn class="ml-2" small color="accent" @click="openReport(item.id)">
               <v-icon small left>assignment</v-icon>Report
             </v-btn>
           </template>
@@ -115,8 +115,25 @@ export default {
         });
     },
     openDetail(id) {
-      this.dialogDetail = true;
-      this.getDataSingle(id);
+      // this.dialogDetail = true;
+      // this.getDataSingle(id);
+      this.$router.push({
+        path:
+          "/personnel/mentor/" +
+          this.$route.params.mentorshipId +
+          "/schedule/" +
+          id
+      });
+    },
+    openReport(id) {
+      this.$router.push({
+        path:
+          "/personnel/mentor/" +
+          this.$route.params.mentorshipId +
+          "/schedule/" +
+          id +
+          "/report"
+      });
     },
     getDataSingle(id) {
       this.loader = true;
