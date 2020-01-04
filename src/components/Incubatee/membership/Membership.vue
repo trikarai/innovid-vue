@@ -55,6 +55,13 @@
               small
               color="accent"
               router
+              :to="'/incubatee/team/' + item.team.id + '/worksheet' "
+            >Worksheet</v-btn>
+            <v-btn
+              class="mr-2"
+              small
+              color="accent"
+              router
               :to="'/incubatee/team/' + item.team.id + '/application' "
             >
               <v-icon left small>how_to_vote</v-icon>Application
