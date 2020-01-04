@@ -34,7 +34,13 @@
             {{item.mentoring.name}}
           </template>
           <template v-slot:item.action="{item}">
-            <v-btn class="ml-2" small color="accent" disabled>
+            <v-btn
+              class="ml-2"
+              small
+              color="accent"
+              router
+              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/schedule/' + item.id + '/report'"
+            >
               <v-icon small left>assignment</v-icon>Report
             </v-btn>
           </template>
@@ -298,8 +304,17 @@ export default {
         });
     },
     openDetail(id) {
-      this.dialogDetail = true;
-      this.getDataSingle(id);
+      // this.dialogDetail = true;
+      // this.getDataSingle(id);
+      this.$router.push({
+        path:
+          "/incubatee/team/" +
+          this.$route.params.teamId +
+          "/participation/" +
+          this.$route.params.cohortId +
+          "/schedule/" +
+          id
+      });
     },
     getDataSingle(id) {
       this.loader = true;
