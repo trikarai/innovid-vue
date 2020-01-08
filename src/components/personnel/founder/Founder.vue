@@ -1,14 +1,6 @@
 <template>
   <v-container grid-list-xs>
     <v-row>
-      <!-- {{authData.data.id}} -->
-      <v-col md="8" xs="12">
-        <v-btn color="primary" @click="openAdd">
-          <v-icon left>add</v-icon>Add Program
-        </v-btn>
-      </v-col>
-    </v-row>
-    <v-row>
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -41,21 +33,14 @@
             </v-btn>
             {{item.name}}
           </template>
-          <template v-slot:item.action="{item}">
-            <v-btn small color="warning" @click="leftAct(item, 'Delete')">
-              <v-icon small>delete</v-icon>
-            </v-btn>
+          <template v-slot:item.activated="{item}">
+            <v-icon v-if="item.activated" large color="green darken-1">check</v-icon>
+            <v-icon v-else large color="red darken-1">remove</v-icon>
           </template>
-          <template v-slot:item.sub="{item}">
-            <v-btn small color="accent" @click="gotoCohort(item.id)">
-              <v-icon left small>check</v-icon>Cohort
-            </v-btn>
-          </template>
+          <template v-slot:item.action="{item}"></template>
         </v-data-table>
       </v-col>
     </v-row>
-
-    <add-form v-if="dialogForm" :edit="edit" @close="dialogForm = false" @refresh="refresh" />
 
     <v-dialog v-model="dialogDelete" width="300" :persistent="true">
       <v-card :loading="tableLoad">
@@ -90,7 +75,13 @@
           <v-card-text :key="dataSingle.name">{{dataSingle.name}}</v-card-text>
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.description">{{dataSingle.description}}</v-card-text>
+          <v-card-text :key="dataSingle.email">{{dataSingle.email}}</v-card-text>
+        </transition>
+        <transition name="slide-fade" mode="out-in">
+          <v-card-text :key="dataSingle.phone">{{dataSingle.phone}}</v-card-text>
+        </transition>
+        <transition name="slide-fade" mode="out-in">
+          <v-card-text :key="dataSingle.joinTime">{{dataSingle.joinTime}}</v-card-text>
         </transition>
         <v-card-actions>
           <div class="flex-grow-1"></div>
@@ -107,8 +98,6 @@
 import * as config from "@/config/config";
 import auth from "@/config/auth";
 
-import AddForm from "./addform";
-
 export default {
   data() {
     return {
@@ -120,7 +109,9 @@ export default {
       loader: false,
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
-        { text: "", value: "sub", sortable: false, align: "right" },
+        { text: "Email", value: "email", sortable: false },
+        { text: "Signup Time", value: "signupTime", sortable: false },
+        { text: "activated", value: "activated", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       dialogForm: false,
@@ -132,11 +123,9 @@ export default {
       leftAction: ""
     };
   },
-  components: {
-    AddForm
-  },
+  components: {},
   created: function() {
-    this.authData = JSON.parse(auth.getAuthData());
+    // this.authData = JSON.parse(auth.getAuthData());
   },
   mounted: function() {
     this.getDataList();
@@ -145,7 +134,7 @@ export default {
     getDataList() {
       this.tableLoad = true;
       this.axios
-        .get(config.baseUri + "/personnel/as-admin/programmes", {
+        .get(config.baseUri + "/personnel/as-admin/founders", {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -161,10 +150,14 @@ export default {
         });
     },
     getDataSingle(id) {
-      this.dataSingle = "";
+      this.dataSingle.name = "";
+      this.dataSingle.email = "";
+      this.dataSingle.phone = "";
+      this.dataSingle.joinTime = "";
+
       this.loader = true;
       this.axios
-        .get(config.baseUri + "/personnel/as-admin/programmes/" + id, {
+        .get(config.baseUri + "/personnel/as-admin/founders/" + id, {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -192,7 +185,7 @@ export default {
     deleteAccount(id) {
       this.tableLoad = true;
       this.axios
-        .delete(config.baseUri + "/personnel/as-admin/programmes/" + id, {
+        .delete(config.baseUri + "/sys-admin/sys-admins/" + id, {
           headers: auth.getAuthHeader()
         })
         .then(() => {
@@ -207,9 +200,6 @@ export default {
       this.dialogForm = false;
       this.dialogDelete = false;
       this.getDataList();
-    },
-    gotoCohort(id) {
-      this.$router.push({ path: "/personnel/program/" + id + "/cohort" });
     }
   }
 };

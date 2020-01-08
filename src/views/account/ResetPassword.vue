@@ -112,7 +112,7 @@ export default {
       this.loader = true;
       this.axios
         .patch(
-          config.baseUri + "/incubatee-account/reset-password",
+          config.baseUri + "/founder-account/reset-password",
           this.signup
         )
         .then(() => {

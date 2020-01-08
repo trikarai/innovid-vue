@@ -10,6 +10,7 @@
           <v-card-text>
             <template v-for="data in fields">
               <v-row :key="data.id">
+                <!-- {{data}} -->
                 <v-col md="2" class="sub-title">{{data.field.name}}</v-col>
                 <v-col md="6" class="display-1">{{data.value}}</v-col>
               </v-row>
@@ -63,7 +64,7 @@ export default {
       this.axios
         .get(
           config.baseUri +
-            "/incubatee/profiles/" +
+            "/founder/profiles/" +
             this.$route.params.profileId,
           {
             headers: auth.getAuthHeader()

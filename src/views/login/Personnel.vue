@@ -98,9 +98,9 @@ export default {
       alert: false,
       e1: true,
       params: {
-        incubatorIdentifier: "",
-        email: "",
-        password: ""
+        incubatorIdentifier: "incubator-identifier",
+        email: "personnel@email.org",
+        password: "pwd123personnel"
       },
       activate: false
     };

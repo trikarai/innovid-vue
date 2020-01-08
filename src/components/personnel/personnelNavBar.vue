@@ -44,6 +44,7 @@
         </v-list-item>
       </v-list>
       <v-list v-if="user.data.hasAdminRole">
+        <!-- <v-list> -->
         <!--admin menu-->
         <v-list-item
           v-for="link in admins"
@@ -180,47 +181,53 @@ export default {
           text: "Mentoring Form",
           route: "/personnel/mentoring-feedback-forms",
           disabled: false
+        },
+        {
+          icon: "how_to_reg",
+          text: "Founder",
+          route: "/personnel/founder",
+          disabled: false
         }
       ],
       coordinators: [
         {
           icon: "dashboard",
-          text: "Dashboard",
+          text: "Coordinator",
           route: "/personnel/coordinator/dashboard",
           disabled: false
         },
-        {
-          icon: "group",
-          text: "Participant",
-          route: "/personnel/coordinator/participant",
-          disabled: true
-        },
-        {
-          icon: "how_to_reg",
-          text: "Applicant",
-          route: "/personnel/coordinator/applicant",
-          disabled: true
-        }
+        // {
+        //   icon: "group",
+        //   text: "Participant",
+        //   route: "/personnel/coordinator/participant",
+        //   disabled: true
+        // },
+        // {
+        //   icon: "how_to_reg",
+        //   text: "Applicant",
+        //   route: "/personnel/coordinator/applicant",
+        //   disabled: true
+        // }
       ],
       mentors: [
         {
           icon: "dashboard",
-          text: "Dashboard",
+          text: "Mentor",
           route: "/personnel/mentor/dashboard",
           disabled: false
         },
-        {
-          icon: "schedule",
-          text: "Schedules",
-          route: "/personnel/mentor/schedules",
-          disabled: true
-        },
-        {
-          icon: "event_available",
-          text: " Negotiate Schedules ",
-          route: "/personnel/mentor/negotiate-schedules",
-          disabled: true
-        }
+        // {
+        //   icon: "schedule",
+        //   text: "Schedules",
+        //   route: "/personnel/mentor/schedules",
+        //   disabled: true
+        // },
+        // {
+        //   icon: "event_available",
+        //   text: " Negotiate Schedules ",
+        //   route: "/personnel/mentor/negotiate-schedules",
+        //   disabled: true
+        // }
       ]
     };
   },

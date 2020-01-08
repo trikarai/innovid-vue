@@ -77,7 +77,7 @@ export default {
       this.loader = false;
       this.axios
         .patch(
-          config.baseUri + "/incubatee-account/generate-activation-code",
+          config.baseUri + "/founder-account/generate-activation-code",
           this.params
         )
         .then(() => {

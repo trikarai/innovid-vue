@@ -125,10 +125,8 @@ export default {
       this.axios
         .post(
           config.baseUri +
-            "/personnel/as-admin/programmes/" +
+            "/personnel/as-admin/programs/" +
             this.$route.params.programId +
-            "/cohorts/" +
-            this.$route.params.cohortId +
             "/missions",
           this.params,
           {
@@ -150,10 +148,8 @@ export default {
       this.axios
         .post(
           config.baseUri +
-            "/personnel/as-admin/programmes/" +
+            "/personnel/as-admin/programs/" +
             this.$route.params.programId +
-            "/cohorts/" +
-            this.$route.params.cohortId +
             "/missions/" +
             this.rootid,
           this.params,

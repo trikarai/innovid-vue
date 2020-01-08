@@ -77,7 +77,7 @@ export default {
       this.loader = false;
       this.axios
         .patch(
-          config.baseUri + "/incubatee-account/generate-reset-password-code",
+          config.baseUri + "/founder-account/generate-reset-password-code",
           this.params
         )
         .then(() => {

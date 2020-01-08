@@ -109,7 +109,7 @@ export default {
     getDataList() {
       this.tableLoad = true;
       this.axios
-        .get(config.baseUri + "/incubatee/profile-forms", {
+        .get(config.baseUri + "/founder/profile-forms", {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -128,7 +128,7 @@ export default {
       this.dataSingle = "";
       this.loader = true;
       this.axios
-        .get(config.baseUri + "/incubatee/profile-forms/" + id, {
+        .get(config.baseUri + "/founder/profile-forms/" + id, {
           headers: auth.getAuthHeader()
         })
         .then(res => {

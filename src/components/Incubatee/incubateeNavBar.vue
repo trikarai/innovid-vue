@@ -46,7 +46,13 @@
 
       <v-list>
         <v-list-item>
-          <v-select label="Team" solo></v-select>
+          <v-select
+            label="Team"
+            solo
+            :items="user.data.teamMemberships"
+            item-text="team.name"
+            item-value="team.id"
+          ></v-select>
         </v-list-item>
         <v-list-item>
           <v-select label="Program" solo></v-select>
@@ -82,7 +88,7 @@
             <v-icon v-text="team.icon"></v-icon>
           </v-list-item-icon>
         </v-list-item>
-      </v-list-group> -->
+      </v-list-group>-->
     </v-navigation-drawer>
     <v-navigation-drawer temporary right v-model="rightDrawer" fixed>
       <v-list>
@@ -200,7 +206,7 @@ export default {
           route: "/incubatee/profile",
           disabled: true
         }
-      ]
+      ],
     };
   },
   created() {

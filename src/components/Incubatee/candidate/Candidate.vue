@@ -41,13 +41,19 @@
             </v-btn>
             {{item.team.name}}
           </template>
+          <template v-slot:item.concluded="{item}">
+            <v-icon v-if="item.concluded" color="green darken-1">check</v-icon>
+            <v-icon v-else color="red darken-1">removed</v-icon>
+          </template>
           <template v-slot:item.action="{item}">
-            <v-btn small color="primary" class="mr-2" @click="leftAct(item, 'accept')">
-              <v-icon left small>check</v-icon>Accept
-            </v-btn>
-            <v-btn small color="warning" @click="leftAct(item, 'reject')">
-              <v-icon left small>block</v-icon>Reject
-            </v-btn>
+            <template v-if="item.note == 'invited'">
+              <v-btn small color="primary" class="mr-2" @click="leftAct(item, 'accept')">
+                <v-icon left small>check</v-icon>Accept
+              </v-btn>
+              <v-btn small color="warning" @click="leftAct(item, 'reject')">
+                <v-icon left small>block</v-icon>Reject
+              </v-btn>
+            </template>
           </template>
         </v-data-table>
       </v-col>
@@ -139,7 +145,7 @@ export default {
     getDataList() {
       this.tableLoad = true;
       this.axios
-        .get(config.baseUri + "/incubatee/member-candidateships", {
+        .get(config.baseUri + "/founder/team-member-candidateships", {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -158,7 +164,7 @@ export default {
       this.dataSingle = "";
       this.loader = true;
       this.axios
-        .get(config.baseUri + "/incubatee/member-candidateships/" + id, {
+        .get(config.baseUri + "/founder/team-member-candidateships/" + id, {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -190,11 +196,11 @@ export default {
       this.axios
         .patch(
           config.baseUri +
-            // "http://localhost:3004/api" +
-            "/incubatee/member-candidateships/" +
+            "/founder/team-member-candidateships/" +
             id +
             "/" +
             this.leftAction,
+          {},
           {
             headers: auth.getAuthHeader()
           }

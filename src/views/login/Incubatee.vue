@@ -128,7 +128,7 @@ export default {
       this.loader = true;
       var authUser = {};
       this.axios
-        .post(config.baseUri + "/incubatee-login", this.params)
+        .post(config.baseUri + "/founder-login", this.params)
         .then(res => {
           this.$store.state.isLoggedIn = true;
           this.response = res.data.data;

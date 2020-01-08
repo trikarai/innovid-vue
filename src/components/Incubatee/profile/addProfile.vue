@@ -44,7 +44,7 @@ export default {
     getFormById() {
       this.loader = true;
       this.axios
-        .get(config.baseUri + "/incubatee/profile-forms/" + this.formId, {
+        .get(config.baseUri + "/founder/profile-forms/" + this.formId, {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -60,7 +60,7 @@ export default {
     submitForm(params) {
       this.loader = true;
       this.axios
-        .post(config.baseUri + "/incubatee/profiles", params, {
+        .post(config.baseUri + "/founder/profiles", params, {
           headers: auth.getAuthHeader()
         })
         .then(() => {

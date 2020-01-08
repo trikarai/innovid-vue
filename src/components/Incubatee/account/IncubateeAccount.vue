@@ -150,7 +150,7 @@ export default {
     updatePassword() {
       this.loaderPass = true;
       this.axios
-        .patch(config.baseUri + "/incubatee/change-password", this.password, {
+        .patch(config.baseUri + "/founder/change-password", this.password, {
           headers: auth.getAuthHeader()
         })
         .then(() => {
@@ -172,7 +172,7 @@ export default {
     updateProfile() {
       this.loaderProfile = true;
       this.axios
-        .patch(config.baseUri + "/incubatee/update-account", this.profiles, {
+        .patch(config.baseUri + "/founder/update-account", this.profiles, {
           headers: auth.getAuthHeader()
         })
         .then(res => {

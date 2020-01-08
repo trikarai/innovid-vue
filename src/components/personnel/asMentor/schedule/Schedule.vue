@@ -58,7 +58,7 @@
 </template>
 <script>
 import bus from "@/config/bus";
-// import * as config from "@/config/config";
+import * as config from "@/config/config";
 import auth from "@/config/auth";
 export default {
   data() {
@@ -93,8 +93,7 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          // config.baseUri
-          "http://localhost:3005/api" +
+          config.baseUri +
             "/personnel/mentorships/" +
             this.$route.params.mentorshipId +
             "/schedules",
@@ -139,8 +138,7 @@ export default {
       this.loader = true;
       this.axios
         .get(
-          // config.baseUri
-          "http://localhost:3005/api" +
+          config.baseUri +
             "/personnel/mentorships/" +
             this.$route.params.mentorshipId +
             "/schedules/" +

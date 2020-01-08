@@ -115,12 +115,15 @@ export default {
     getTalent() {
       this.async = true;
       this.axios
-        .get(config.baseUri + +"/incubatee/incubatees/" + this.search, {
-          headers: auth.getAuthHeader()
-        })
+        .get(
+          config.baseUri + "/founder/founders?email=" + encodeURI(this.search),
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
         .then(res => {
           if (res.data) {
-            this.incubatee = res.data;
+            this.incubatee = res.data.data;
           } else {
             this.incubatee = null;
           }
@@ -137,10 +140,10 @@ export default {
       this.axios
         .post(
           config.baseUri +
-            "/incubatee/as-team-member/" +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/member-candidates",
-          { incubateeId: this.incubatee.id, position: this.position },
+          { founderId: this.incubatee.id, position: this.position },
           { headers: auth.getAuthHeader() }
         )
         .then(() => {

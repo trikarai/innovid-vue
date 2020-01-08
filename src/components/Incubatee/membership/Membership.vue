@@ -194,13 +194,9 @@ export default {
     getDataList() {
       this.tableLoad = true;
       this.axios
-        .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" + "/incubatee/memberships",
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
+        .get(config.baseUri + "/founder/team-memberships", {
+          headers: auth.getAuthHeader()
+        })
         .then(res => {
           if (res.data.data) {
             this.dataList = res.data.data;
@@ -217,13 +213,9 @@ export default {
       this.dataSingle = "";
       this.loader = true;
       this.axios
-        .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" + "/incubatee/memberships/" + id,
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
+        .get(config.baseUri + "/founder/team-memberships/" + id, {
+          headers: auth.getAuthHeader()
+        })
         .then(res => {
           this.dataSingle = res.data.data;
         })
@@ -249,7 +241,7 @@ export default {
     deleteAccount(id) {
       this.tableLoad = true;
       this.axios
-        .delete(config.baseUri + "/incubatee/memberships/" + id, {
+        .delete(config.baseUri + "/founder/team-memberships/" + id, {
           headers: auth.getAuthHeader()
         })
         .then(() => {
@@ -273,7 +265,7 @@ export default {
       this.tableLoad = true;
       this.axios
         .patch(
-          config.baseUri + "/incubatee/as-team-member/" + this.leftId,
+          config.baseUri + "/founder/as-team-member/" + this.leftId,
           { name: this.leftName },
           {
             headers: auth.getAuthHeader()

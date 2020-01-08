@@ -134,16 +134,9 @@ export default {
     addData: function() {
       this.loader = true;
       this.axios
-        .post(
-          config.baseUri +
-            "/personnel/as-admin/programmes/" +
-            this.$route.params.programId +
-            "/cohorts",
-          this.params,
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
+        .post(config.baseUri + "/personnel/as-admin/programs", this.params, {
+          headers: auth.getAuthHeader()
+        })
         .then(() => {
           this.$emit("refresh");
         })

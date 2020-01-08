@@ -169,15 +169,9 @@ export default {
     getDataList() {
       this.tableLoad = true;
       this.axios
-        .get(
-          config.baseUri +
-            "/personnel/as-admin/programmes/" +
-            this.$route.params.programId +
-            "/cohorts",
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
+        .get(config.baseUri + "/personnel/as-admin/programs", {
+          headers: auth.getAuthHeader()
+        })
         .then(res => {
           if (res.data.data) {
             this.dataList = res.data.data;
@@ -194,16 +188,9 @@ export default {
       this.dataSingle = "";
       this.loader = true;
       this.axios
-        .get(
-          config.baseUri +
-            "/personnel/as-admin/programmes/" +
-            this.$route.params.programId +
-            "/cohorts/" +
-            id,
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
+        .get(config.baseUri + "/personnel/as-admin/programs/" + id, {
+          headers: auth.getAuthHeader()
+        })
         .then(res => {
           this.dataSingle = res.data.data;
         })
@@ -229,16 +216,9 @@ export default {
     deleteAccount(id) {
       this.tableLoad = true;
       this.axios
-        .delete(
-          config.baseUri +
-            "/personnel/as-admin/programmes/" +
-            this.$route.params.programId +
-            "/cohorts/" +
-            id,
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
+        .delete(config.baseUri + "/personnel/as-admin/programs/" + id, {
+          headers: auth.getAuthHeader()
+        })
         .then(() => {
           this.refresh();
         })
@@ -253,12 +233,7 @@ export default {
       this.tableLoad = true;
       this.axios
         .patch(
-          config.baseUri +
-            "/personnel/as-admin/programmes/" +
-            this.$route.params.programId +
-            "/cohorts/" +
-            id +
-            "/publish",
+          config.baseUri + "/personnel/as-admin/programs/" + id + "/publish",
           {},
           {
             headers: auth.getAuthHeader()
@@ -281,42 +256,22 @@ export default {
     },
     gotoCoordinator(id) {
       this.$router.push({
-        path:
-          "/personnel/program/" +
-          this.$route.params.programId +
-          "/cohort/" +
-          id +
-          "/coordinator"
+        path: "/personnel/program/" + id + "/coordinator"
       });
     },
     gotoMentor(id) {
       this.$router.push({
-        path:
-          "/personnel/program/" +
-          this.$route.params.programId +
-          "/cohort/" +
-          id +
-          "/mentor"
+        path: "/personnel/program/" + id + "/mentor"
       });
     },
     gotoMission(id) {
       this.$router.push({
-        path:
-          "/personnel/program/" +
-          this.$route.params.programId +
-          "/cohort/" +
-          id +
-          "/mission"
+        path: "/personnel/program/" + id + "/mission"
       });
     },
     gotoMentoring(id) {
       this.$router.push({
-        path:
-          "/personnel/program/" +
-          this.$route.params.programId +
-          "/cohort/" +
-          id +
-          "/mentoring"
+        path: "/personnel/program/" + id + "/mentoring"
       });
     }
   }

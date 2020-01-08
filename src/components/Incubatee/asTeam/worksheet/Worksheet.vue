@@ -51,7 +51,7 @@
 <script>
 import bus from "@/config/bus";
 import auth from "@/config/auth";
-// import * as config from "@/config/config";
+import * as config from "@/config/config";
 
 export default {
   data() {
@@ -85,9 +85,8 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/worksheets",
           {
@@ -116,9 +115,8 @@ export default {
       this.tableLoad = true;
       this.axios
         .delete(
-          // config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/worksheets/" +
             id,

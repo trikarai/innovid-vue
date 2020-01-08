@@ -27,7 +27,7 @@
       </v-col>
     </v-row>
 
-    <v-dialog v-model="dialogDelete" width="300" :persistent="true">
+    <!-- <v-dialog v-model="dialogDelete" width="300" :persistent="true">
       <v-card :loading="tableLoad">
         <v-card-title>
           <p class="text-capitalize">{{leftAction}}</p>
@@ -39,7 +39,7 @@
           <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
   </v-container>
 </template>
 <script>
@@ -99,8 +99,7 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3005/api" +
+          config.baseUri +
             "/personnel/mentorships/" +
             this.$route.params.mentorshipId +
             "/schedules/" +
@@ -139,42 +138,6 @@ export default {
         })
         .finally(() => {
           this.loader = false;
-        });
-    },
-    leftAct(item, action) {
-      this.dialogDelete = true;
-      this.leftId = item.id;
-      //   this.leftName = item.mentoring.name;
-      this.leftAction = action;
-    },
-    deleteAccount(id) {
-      this.tableLoad = true;
-      this.axios
-        .delete(
-          config.baseUri +
-            "/incubatee/as-team-member/" +
-            this.$route.params.teamId +
-            "/cohort-participations/" +
-            this.$route.params.cohortId +
-            "/journals/" +
-            id,
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
-        .then(() => {
-          bus.$emit(
-            "callNotif",
-            "info",
-            "Successfully " + this.leftAction + " Mentoring Schedule"
-          );
-          this.refresh();
-        })
-        .catch(res => {
-          bus.$emit("callNotif", "error", res);
-        })
-        .finally(() => {
-          this.tableLoad = false;
         });
     }
   }

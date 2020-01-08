@@ -191,7 +191,7 @@ export default {
     signupAct: function() {
       this.signupLoader = true;
       this.axios
-        .post(config.baseUri + "/incubatee-signup", this.signup)
+        .post(config.baseUri + "/founder-signup", this.signup)
         .then(() => {
           // this.$router.push({ path: "/login", query: { activate: true } });
           this.issuccess = true;

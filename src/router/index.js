@@ -47,7 +47,7 @@ import SysAdminIncubator from '../components/sysadmin/incubator/Incubator';
 import PersonnelLogin from '../views/login/Personnel';
 import PersonnelNav from '../views/main/Personnel';
 import PersonnelPersonnels from '../components/personnel/personnel/Personnel';
-import PersonnelProgram from '../components/personnel/program/Program';
+import PersonnelFounders from '../components/personnel/founder/Founder';
 import PersonnelWorksheet from '../components/personnel/worksheet/Worksheet';
 import PersonnelWorksheetBuild from '../components/personnel/worksheet/buildWorksheet';
 import PersonnelProfileForm from '../components/personnel/profileform/ProfileForm';
@@ -65,6 +65,7 @@ import CohortMentoring from '../components/personnel/program/cohort/mentoring/Me
 import PersonnelList from '../components/personnel/program/cohort/assign/PersonnelList';
 
 import CoordinatorDashboard from '../components/personnel/asCoordinator/dashboard';
+import CoordinatorPhase from '../components/personnel/asCoordinator/phase/Phase';
 import CoordinatorParticipant from '../components/personnel/asCoordinator/participant/Participant';
 import CoordinatorApplicant from '../components/personnel/asCoordinator/applicant/Applicant';
 
@@ -88,12 +89,12 @@ const routes = [
     component: IncubateeSignup
   },
   {
-    path: '/incubator-identifier/:incubatorIdentifier/activate-incubatee-account/:email/:token',
+    path: '/incubator-identifier/:incubatorIdentifier/activate-founder-account/:email/:token',
     name: 'activateaccount',
     component: ActivateAccount
   },
   {
-    path: '/incubator-identifier/:incubatorIdentifier/reset-incubatee-password/:email/:token',
+    path: '/incubator-identifier/:incubatorIdentifier/reset-founder-password/:email/:token',
     name: 'resetpassword',
     component: ResetPassword
   },
@@ -188,8 +189,16 @@ const routes = [
         }
       },
       {
+        path: "/personnel/founder",
+        component: PersonnelFounders,
+        meta: {
+          level: 0,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
         path: "/personnel/program",
-        component: PersonnelProgram,
+        component: PersonnelProgramCohort,
         meta: {
           level: 0,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
@@ -252,15 +261,7 @@ const routes = [
         }
       },
       {
-        path: "/personnel/program/:programId/cohort",
-        component: PersonnelProgramCohort,
-        meta: {
-          level: 1,
-          requiredAuth: true, personnelAuth: true, sysadminAuth: false
-        }
-      },
-      {
-        path: "/personnel/program/:programId/cohort/:cohortId/coordinator",
+        path: "/personnel/program/:programId/coordinator",
         component: CohortCoordinator,
         meta: {
           level: 2,
@@ -268,7 +269,7 @@ const routes = [
         }
       },
       {
-        path: "/personnel/program/:programId/cohort/:cohortId/mentor",
+        path: "/personnel/program/:programId/mentor",
         component: CohortMentor,
         meta: {
           level: 2,
@@ -276,26 +277,26 @@ const routes = [
         }
       },
       {
-        path: "/personnel/program/:programId/cohort/:cohortId/assign",
+        path: "/personnel/program/:programId/assign",
         component: PersonnelList,
         meta: {
-          level: 3,
+          level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
       },
       {
-        path: "/personnel/program/:programId/cohort/:cohortId/mission",
+        path: "/personnel/program/:programId/mission",
         component: CohortMission,
         meta: {
-          level: 3,
+          level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
       },
       {
-        path: "/personnel/program/:programId/cohort/:cohortId/mentoring",
+        path: "/personnel/program/:programId/mentoring",
         component: CohortMentoring,
         meta: {
-          level: 3,
+          level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
       },
@@ -309,7 +310,7 @@ const routes = [
         }
       },
       {
-        path: "/personnel/coordinator/program/:programId/cohort/:cohortId/participant",
+        path: "/personnel/coordinator/program/:programId/participant",
         component: CoordinatorParticipant,
         meta: {
           level: 2,
@@ -317,7 +318,15 @@ const routes = [
         }
       },
       {
-        path: "/personnel/coordinator/program/:programId/cohort/:cohortId/applicant",
+        path: "/personnel/coordinator/program/:programId/phase",
+        component: CoordinatorPhase,
+        meta: {
+          level: 2,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/coordinator/program/:programId/applicant",
         component: CoordinatorApplicant,
         meta: {
           level: 2,

@@ -54,6 +54,7 @@
           </template>
         </v-data-table>
       </v-col>
+      <v-col md="12">{{dataList}}</v-col>
     </v-row>
 
     <add-form
@@ -162,10 +163,8 @@ export default {
       this.axios
         .get(
           config.baseUri +
-            "/personnel/as-admin/programmes/" +
+            "/personnel/as-admin/programs/" +
             this.$route.params.programId +
-            "/cohorts/" +
-            this.$route.params.cohortId +
             "/missions",
           {
             headers: auth.getAuthHeader()
@@ -189,10 +188,8 @@ export default {
       this.axios
         .get(
           config.baseUri +
-            "/personnel/as-admin/programmes/" +
+            "/personnel/as-admin/programs/" +
             this.$route.params.programId +
-            "/cohorts/" +
-            this.$route.params.cohortId +
             "/missions/" +
             id,
           {
@@ -234,10 +231,8 @@ export default {
       this.axios
         .delete(
           config.baseUri +
-            "/personnel/as-admin/programmes/" +
+            "/personnel/as-admin/programs/" +
             this.$route.params.programId +
-            "/cohorts/" +
-            this.$route.params.cohortId +
             "/missions/" +
             id,
           {

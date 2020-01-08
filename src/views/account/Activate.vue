@@ -78,7 +78,7 @@ export default {
     activateAccount() {
       this.loader = true;
       this.axios
-        .patch(config.baseUri + "/incubatee-account/activate", this.params)
+        .patch(config.baseUri + "/founder-account/activate", this.params)
         .then(() => {
           this.issuccess = true;
           this.iserror = false;

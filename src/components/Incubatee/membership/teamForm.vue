@@ -86,7 +86,7 @@ export default {
     addData: function() {
       this.loader = true;
       this.axios
-        .post(config.baseUri + "/incubatee/teams", this.params, {
+        .post(config.baseUri + "/founder/teams", this.params, {
           headers: auth.getAuthHeader()
         })
         .then(() => {

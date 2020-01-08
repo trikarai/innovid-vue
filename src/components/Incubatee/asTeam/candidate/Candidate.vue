@@ -38,10 +38,10 @@
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>
-            {{item.incubatee.name}}
+            {{item.founder.name}}
           </template>
           <template v-slot:item.action="{item}">
-            <template v-if="authData.data.id !== item.incubatee.id">
+            <template v-if="authData.data.id !== item.founder.id">
               <v-btn small color="warning" @click="leftAct(item, 'Remove')">
                 <v-icon left small>block</v-icon>Cancel Invitation
               </v-btn>
@@ -81,7 +81,7 @@
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.incubatee.name">{{dataSingle.incubatee.name}}</v-card-text>
+          <v-card-text :key="dataSingle.founder.name">{{dataSingle.founder.name}}</v-card-text>
         </transition>
         <v-card-actions>
           <div class="flex-grow-1"></div>
@@ -96,7 +96,7 @@
 <script>
 import bus from "@/config/bus";
 
-// import * as config from "@/config/config";
+import * as config from "@/config/config";
 import auth from "@/config/auth";
 
 export default {
@@ -105,7 +105,7 @@ export default {
       authData: "",
       search: "",
       dataList: { total: 0, list: [] },
-      dataSingle: { incubatee: { name: "" }, position: "" },
+      dataSingle: { founder: { name: "" }, position: "" },
       tableLoad: false,
       loader: false,
       tableHeaders: [
@@ -133,9 +133,8 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/member-candidates",
           {
@@ -158,9 +157,8 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/member-candidates/" +
             id,
@@ -185,15 +183,14 @@ export default {
     leftAct(item, action) {
       this.dialogDelete = true;
       this.leftId = item.id;
-      this.leftName = item.incubatee.name;
+      this.leftName = item.founder.name;
       this.leftAction = action;
     },
     deleteAccount(id) {
       this.tableLoad = true;
       this.axios
         .delete(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
+          config.baseUri +
             "/incubatee/as-team-member/" +
             this.$route.params.teamId +
             "/member-candidates/" +

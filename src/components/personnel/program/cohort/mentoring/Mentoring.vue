@@ -159,10 +159,8 @@ export default {
       this.axios
         .get(
           config.baseUri +
-            "/personnel/as-admin/programmes/" +
+            "/personnel/as-admin/programs/" +
             this.$route.params.programId +
-            "/cohorts/" +
-            this.$route.params.cohortId +
             "/mentorings",
           {
             headers: auth.getAuthHeader()
@@ -186,10 +184,8 @@ export default {
       this.axios
         .get(
           config.baseUri +
-            "/personnel/as-admin/programmes/" +
+            "/personnel/as-admin/programs/" +
             this.$route.params.programId +
-            "/cohorts/" +
-            this.$route.params.cohortId +
             "/mentorings/" +
             id,
           {
@@ -231,10 +227,8 @@ export default {
       this.axios
         .delete(
           config.baseUri +
-            "/personnel/as-admin/programmes/" +
+            "/personnel/as-admin/programs/" +
             this.$route.params.programId +
-            "/cohorts/" +
-            this.$route.params.cohortId +
             "/mentorings/" +
             id,
           {
