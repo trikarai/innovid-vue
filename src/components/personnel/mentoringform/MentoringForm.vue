@@ -42,6 +42,9 @@
             {{item.name}}
           </template>
           <template v-slot:item.action="{item}">
+            <v-btn small color="accent" class="mr-2" @click="openEdit(item.id)">
+              <v-icon small>edit</v-icon>
+            </v-btn>
             <v-btn small color="warning" @click="leftAct(item, 'Delete')">
               <v-icon small>delete</v-icon>
             </v-btn>
@@ -172,6 +175,12 @@ export default {
     openAdd() {
       this.edit = false;
       this.dialogForm = true;
+    },
+    openEdit(id) {
+      var formType = "mentoring-feedback-forms";
+      this.$router.push({
+        path: "/personnel/" + formType + "/" + id + "/edit"
+      });
     },
     openDetail(id) {
       // this.dialogDetail = true;

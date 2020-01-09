@@ -229,6 +229,14 @@ const routes = [
         }
       },
       {
+        path: "/personnel/:formType/:formId/edit",
+        component: PersonnelWorksheetBuild,
+        meta: {
+          level: 1,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
         path: "/personnel/profile-forms",
         component: PersonnelProfileForm,
         meta: {
