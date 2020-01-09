@@ -1,8 +1,5 @@
 <template>
   <v-container grid-list-xs>
-    <!-- {{dataSingle}}
-    <v-divider></v-divider>
-    {{fields}}-->
     <v-card>
       <v-card-title v-if="!loader">
         <span class="headline">{{dataSingle.name}} Form Preview</span>
@@ -34,8 +31,10 @@ import * as config from "@/config/config";
 import auth from "@/config/auth";
 
 import FieldModule from "@/components/fields/field";
+import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 export default {
+  mixins: [formDynamicMixins],
   data() {
     return {
       dataSingle: {
@@ -81,32 +80,6 @@ export default {
         .finally(() => {
           this.loader = false;
         });
-    },
-    refactorJSON(data) {
-      data.stringFields.forEach(element => {
-        element.type = "string";
-        this.fields.push(element);
-      });
-      data.integerFields.forEach(element => {
-        element.type = "integer";
-        this.fields.push(element);
-      });
-      data.textAreaFields.forEach(element => {
-        element.type = "textarea";
-        this.fields.push(element);
-      });
-      data.singleSelectFields.forEach(element => {
-        element.type = "radio";
-        this.fields.push(element);
-      });
-      data.multiSelectFields.forEach(element => {
-        element.type = "select";
-        this.fields.push(element);
-      });
-      data.attachmentFields.forEach(element => {
-        element.type = "attachment";
-        this.fields.push(element);
-      });
     }
   }
 };
