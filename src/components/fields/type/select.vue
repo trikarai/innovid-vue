@@ -1,18 +1,39 @@
 <template>
   <v-col md="6">
+    <!-- build mode : {{build}} -->
     <v-select
-      v-model="optionList"
+      v-if="build"
+      :label="field.name"
       :items="field.options"
       item-text="name"
-      item-value="id"
       :hint="field.description"
       :clearable="clearable"
-      outlined
       multiple
+      persistent-hint
+      outlined
     >
       <template v-slot:label>
         <div :class="{required : field.required}">{{field.name}}</div>
       </template>
+    </v-select>
+
+    <v-select
+      v-else
+      :label="field.name"
+      :items="field.options"
+      item-value="id"
+      item-text="name"
+      v-model="optionList"
+      :hint="field.description"
+      :clearable="clearable"
+      multiple
+      persistent-hint
+      outlined
+    >
+      <template v-slot:label>
+        <div :class="{required : field.required}">{{field.name}}</div>
+      </template>
+
     </v-select>
     <!-- {{optionList}} -->
   </v-col>
@@ -24,7 +45,7 @@ import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 export default {
   mixins: [validationMixins, formDynamicMixins],
-  props: ["field", "index"],
+  props: ["field", "index", "build"],
   components: {},
   data: function() {
     return {

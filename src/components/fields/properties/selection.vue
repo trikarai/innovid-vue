@@ -49,7 +49,7 @@
 
       <v-list>
         <transition-group name="slide-fade">
-          <v-list-item v-for="(opt, index) in field.options" :key="opt.id">
+          <v-list-item v-for="(opt, index) in field.options" :key="index">
             <v-list-item-avatar></v-list-item-avatar>
             <v-list-item-content>{{opt.name}}</v-list-item-content>
             <v-list-item-action>
@@ -79,6 +79,7 @@ export default {
     addOption() {
       if (this.$refs.formoption.validate()) {
         var opt = new Object({
+          id: "",
           name: this.optionAdd,
           description: "",
           position: this.field.options.length + 1

@@ -88,19 +88,20 @@
               <v-icon>zoom_in</v-icon>Form Preview
             </v-btn>
           </v-card-title>
-          <v-card-text v-show="true">
+          <v-card-text>
             <v-row>
               <v-col md="12">
                 <v-text-field label="name" v-model="params.name" outlined></v-text-field>
               </v-col>
               <v-col md="12">
-                <v-textarea rows="3" label="Descrption" v-model="params.description" outlined></v-textarea>
+                <v-textarea rows="3" label="Description" v-model="params.description" outlined></v-textarea>
               </v-col>
             </v-row>
           </v-card-text>
           <v-divider></v-divider>
           <v-card-text>
             <template v-if="fields.length == 0">No Fields Added</template>
+            <v-progress-circular indeterminate color="primary" v-if="loader"></v-progress-circular>
             <transition-group name="slide-fade">
               <template v-for="(field, index) in fields">
                 <v-row :key="index">
@@ -112,7 +113,7 @@
                         </v-btn>
                       </v-col>
                       <v-col md="10">
-                        <field-module :field="field" :index="index" />
+                        <field-module :field="field" :index="index" :build="buildmode"/>
                       </v-col>
                     </v-row>
                   </v-col>
@@ -151,7 +152,7 @@
               <v-icon left>save</v-icon>Save
             </v-btn>
           </v-card-actions>
-          <v-card-text v-show="false">
+          <v-card-text v-show="devmode">
             <v-row>
               <v-col md="6">
                 <pre>{{params}}</pre>
@@ -175,7 +176,7 @@
           <v-card-text>
             <template v-for="(field, index) in fields">
               <v-row :key="index">
-                <field-module :field="field" :index="index" />
+                <field-module :field="field" :index="index" :build="buildmode"/>
               </v-row>
             </template>
           </v-card-text>
@@ -216,14 +217,20 @@
 </template>
 <script>
 import bus from "@/config/bus";
-// import auth from "@/config/auth";
-// import * as config from "@/config/config";
+import auth from "@/config/auth";
+import * as config from "@/config/config";
 import FieldModule from "@/components/fields/field";
 import PropsModule from "@/components/fields/props";
 
+import { formDynamicMixins } from "@/mixins/formDynamicMixins";
+
 export default {
+  props: ["edit"],
+  mixins: [formDynamicMixins],
   data() {
     return {
+      buildmode: true,
+      devmode: false,
       snackbar: false,
       timeout: 700,
       text: "",
@@ -244,7 +251,8 @@ export default {
       field: {},
       items: ["Foo", "Bar", "Fizz", "Buzz"],
       loader: false,
-      loadBuild: false
+      loadBuild: false,
+      dataSingle: ""
     };
   },
   components: {
@@ -255,6 +263,10 @@ export default {
     bus.$on("resetField", () => {
       this.resetField();
     });
+
+    if (this.edit) {
+      this.getDataSingle();
+    }
   },
   methods: {
     postformtoParent() {
@@ -356,12 +368,6 @@ export default {
             name: "selection 1",
             description: "",
             position: 1
-          },
-          {
-            id: "",
-            name: "selection 2",
-            description: "",
-            position: 2
           }
         ],
         type: "select"
@@ -450,6 +456,31 @@ export default {
       }
       this.loadBuild = false;
       this.postformtoParent();
+    },
+    getDataSingle() {
+      this.dataSingle = "";
+      this.loader = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/personnel/as-admin/" +
+            this.$route.params.formType +
+            "/" +
+            this.$route.params.formId,
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          this.dataSingle = res.data.data;
+          this.params.name = this.dataSingle.name;
+          this.params.description = this.dataSingle.description;
+          this.refactorJSON(res.data.data);
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.loader = false;
+        });
     }
   }
 };
