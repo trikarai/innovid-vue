@@ -64,14 +64,14 @@
               <v-btn
                 class="mr-2"
                 color="primary"
-                :to="'/personnel/mentor/' + item.program.id +'/negotiate-schedule'"
+                :to="'/personnel/mentor/' + item.id +'/negotiate-schedule'"
               >
                 <v-icon left>group</v-icon>Negotiate Schedule
               </v-btn>
               <v-btn
                 class="mr-2"
                 color="primary"
-                :to="'/personnel/mentor/' + item.program.id +'/schedule'"
+                :to="'/personnel/mentor/' + item.id +'/schedule'"
               >
                 <v-icon left>how_to_vote</v-icon>Schedule
               </v-btn>
