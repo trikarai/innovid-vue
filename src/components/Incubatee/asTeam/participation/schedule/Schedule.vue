@@ -68,7 +68,7 @@
               fab
               x-small
               color="primary"
-              @click="openDetail(item.id)"
+              @click="openNegoDetail(item.id)"
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>
@@ -314,6 +314,10 @@ export default {
           id
       });
     },
+    openNegoDetail(id) {
+      this.dialogDetail = true;
+      this.getDataSingle(id);
+    },
     getDataSingle(id) {
       this.loader = true;
       this.axios
@@ -323,7 +327,7 @@ export default {
             this.$route.params.teamId +
             "/program-participations/" +
             this.$route.params.cohortId +
-            "/mentoring-schedules/" +
+            "/negotiate-mentoring-schedules/" +
             id,
           {
             headers: auth.getAuthHeader()
