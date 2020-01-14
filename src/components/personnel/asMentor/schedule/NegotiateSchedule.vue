@@ -270,6 +270,7 @@ export default {
             id +
             "/" +
             this.leftAction,
+          {},
           {
             headers: auth.getAuthHeader()
           }
