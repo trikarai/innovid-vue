@@ -2,7 +2,7 @@
   <v-app>
     <v-container fluid id="loginpage">
       <v-row align="center" justify="center">
-        <v-col xs="12" sm="8" md="6" lg="4" class="text-xs-center mt-7">
+        <v-col xs="12" sm="8" md="6" lg="4" class="text-xs-center mt-3">
           <v-toolbar class="pt-0" color="primary">
             <v-toolbar-title class="white--text ml-2">
               <h4>
@@ -29,7 +29,7 @@
                         required
                       ></v-text-field>
                   </v-row>
-                  <v-row class="mt-3">
+                  <v-row>
                       <v-text-field
                         outlined
                         label="Email"
@@ -39,7 +39,7 @@
                         required
                       ></v-text-field>
                   </v-row>
-                  <v-row class="mt-3">
+                  <v-row>
                       <v-text-field
                         autocomplete="current-password"
                         label="Password"
