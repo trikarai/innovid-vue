@@ -3,11 +3,11 @@
     <v-container fluid fill-height id="loginpage">
       <v-row align="center" justify="center">
         <v-col xs="12" sm="8" md="4" class="text-xs-center">
-          <v-toolbar class="pt-2" color="primary">
+          <v-toolbar class="" color="primary">
             <v-toolbar-title class="white--text ml-2">
               <h4>
-                Inov
-                <v-chip color="accent">ide</v-chip>
+                Login
+                <v-chip color="#fafafa">personnel</v-chip>
               </h4>
             </v-toolbar-title>
             <v-toolbar-title class="ml-auto">
@@ -64,6 +64,7 @@
                   <v-row justify-end class="mt-2">
                     <v-col class="mt-2"></v-col>
                     <v-btn
+                      block
                       @click="submit"
                       :loading="loader"
                       :class=" { 'primary white--text' : valid}"
@@ -98,9 +99,9 @@ export default {
       alert: false,
       e1: true,
       params: {
-        incubatorIdentifier: "incubator-identifier",
-        email: "personnel@email.org",
-        password: "pwd123personnel"
+        incubatorIdentifier: "",
+        email: "",
+        password: ""
       },
       activate: false
     };
@@ -145,7 +146,8 @@ export default {
 </script>
 <style scoped>
 #loginpage {
-  background-image: url("https://picsum.photos/1080/720?grayscale");
+  /* background-image: url("https://picsum.photos/1080/720?grayscale"); */
+  background-color: #fff;
   background-size: cover;
   background-position: center center;
   overflow: hidden;
