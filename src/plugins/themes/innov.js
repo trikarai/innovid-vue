@@ -13,6 +13,6 @@ export default {
         sidebar: '#e4e4e4',
     },
     dark: {
-        primary: '#8bc751'
+        primary: '#249c90'
     }
 }

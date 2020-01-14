@@ -1,13 +1,13 @@
 <template>
   <v-app>
-    <v-container fluid fill-height id="loginpage">
+    <v-container fluid id="loginpage">
       <v-row align="center" justify="center">
-        <v-col xs="12" sm="8" md="4" class="text-xs-center">
-          <v-toolbar class="pt-2" color="primary">
+        <v-col xs="12" sm="8" md="6" lg="4" class="text-xs-center mt-7">
+          <v-toolbar class="pt-0" color="primary">
             <v-toolbar-title class="white--text ml-2">
               <h4>
-                Inov
-                <v-chip color="accent">ide</v-chip>
+                login
+                <!-- <v-chip style="width:45px;" color="#e4e4e4"><span style="color:#777777;">id</span></v-chip> -->
               </h4>
             </v-toolbar-title>
             <v-toolbar-title class="ml-auto">
@@ -16,39 +16,34 @@
               </router-link>
             </v-toolbar-title>
           </v-toolbar>
-          <v-card style="padding:20px 30px 30px 30px;" class="text-center elevation-12">
-            <v-card-text style="pa-4">
+          <v-card id="accentlg" style="padding:20px 30px 0px 30px;" class="text-center elevation-0">
+            <v-card-text class="pa-8">
               <div>
                 <v-form v-model="valid" ref="form">
-                  <v-row>
-                    <v-col>
+                  <v-row>                  
                       <v-text-field
+                        outlined
                         label="Incubator Identifier"
-                        prepend-icon="vpn_key"
                         v-model="params.incubatorIdentifier"
                         :rules="rulesName"
                         required
                       ></v-text-field>
-                    </v-col>
                   </v-row>
-                  <v-row>
-                    <v-col>
+                  <v-row class="mt-3">
                       <v-text-field
+                        outlined
                         label="Email"
-                        prepend-icon="email"
                         v-model="params.email"
                         autocomplete="email"
                         :rules="rulesEmail"
                         required
                       ></v-text-field>
-                    </v-col>
                   </v-row>
-                  <v-row>
-                    <v-col>
+                  <v-row class="mt-3">
                       <v-text-field
                         autocomplete="current-password"
                         label="Password"
-                        prepend-icon="lock"
+                        outlined
                         v-model="params.password"
                         min="8"
                         :append-icon="e1 ? 'visibility' : 'visibility_off'"
@@ -59,22 +54,24 @@
                         @click:append="e1 = !e1"
                         v-on:keyup.enter="submit"
                       ></v-text-field>
-                    </v-col>
                   </v-row>
                   <v-row justify-end class="mt-2">
                     <v-col class="mt-2"></v-col>
                     <v-btn
+                      block
                       @click="submit"
                       :loading="loader"
                       :class=" { 'primary white--text' : valid}"
                       :disabled="!valid"
                       color="#e4e4e4"
                       style="color:#fff"
+                      large
                     >Login</v-btn>
                   </v-row>
-                  <v-row>
+                  <v-row class="mt-3">
                     <v-col>
                       <v-btn
+                        class="grey--text"
                         text
                         x-small
                         router
@@ -155,10 +152,30 @@ export default {
 </script>
 <style scoped>
 #loginpage {
-  background-image: url("https://picsum.photos/1080/720?grayscale");
+  /* background-image: url("https://picsum.photos/1080/720?grayscale"); */
+  background-color: #e8e8e8;
   background-size: cover;
   background-position: center center;
   overflow: hidden;
   height: 100%;
+}
+#accentlg {
+  position: relative;
+}
+
+#accentlg:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top: 20px solid #249c90 ;
+  border-left: 20px solid #fff;
+  width: 50%;
+}
+</style>
+
+<style>
+span.v-chip__content {
+    margin: 0 auto;
 }
 </style>
