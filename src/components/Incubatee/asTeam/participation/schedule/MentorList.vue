@@ -281,7 +281,7 @@ export default {
             this.$route.params.teamId +
             "/program-participations/" +
             this.$route.params.cohortId +
-            "/negotiate-schedules",
+            "/negotiate-mentoring-schedules",
           this.params,
 
           {
@@ -291,7 +291,7 @@ export default {
         .then(() => {
           this.$router.replace({
             path:
-              "/incubatee/" +
+              "/incubatee/team/" + 
               this.$route.params.teamId +
               "/participation/" +
               this.$route.params.cohortId +
