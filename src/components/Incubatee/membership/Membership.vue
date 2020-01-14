@@ -64,7 +64,7 @@
               router
               :to="'/incubatee/team/' + item.team.id + '/application' "
             >
-              <v-icon left small>how_to_vote</v-icon>Application
+              <v-icon left small>how_to_vote</v-icon>Programs
             </v-btn>
             <v-btn
               class="mr-2"

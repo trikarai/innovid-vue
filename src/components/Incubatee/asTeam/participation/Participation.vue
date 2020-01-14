@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-xs>
     <v-row>
-      <v-col></v-col>
+      <v-col>Participation</v-col>
     </v-row>
     <v-row>
       <v-col>
@@ -13,7 +13,7 @@
           class="elevation-1"
         >
           <template v-slot:item.name="{item}">
-            <v-btn
+            <!-- <v-btn
               class="elevation-0 mr-2"
               fab
               x-small
@@ -21,8 +21,8 @@
               @click="openDetail(item.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn>
-            {{item.cohort.name}}
+            </v-btn> -->
+            {{item.program.name}}
           </template>
           <template v-slot:item.sub="{item}">
             <v-btn
@@ -54,8 +54,41 @@
             </v-btn>
           </template>
           <template v-slot:item.action="{item}">
-            <v-btn small color="warning" class="mr-2" @click="leftAct(item, 'Cancel')">
+            <v-btn small color="warning" class="mr-2" @click="leftAct(item, 'Quit')">
               <v-icon left>flag</v-icon>Quit
+            </v-btn>
+          </template>
+        </v-data-table>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>Registration</v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-data-table
+          :search="search"
+          :loading="tableLoad2"
+          :headers="tableHeaders2"
+          :items="dataList2.list"
+          class="elevation-1"
+        >
+          <template v-slot:item.name="{item}">
+            <v-btn
+              class="elevation-0 mr-2"
+              fab
+              x-small
+              color="primary"
+              @click="openDetail(item.id)"
+            >
+              <v-icon>zoom_in</v-icon>
+            </v-btn>
+            {{item.program.name}}
+          </template>
+
+          <template v-slot:item.action="{item}">
+            <v-btn small color="warning" class="mr-2" @click="leftCancel(item, 'Cancel')">
+              <v-icon left>cancel</v-icon>Cancel
             </v-btn>
           </template>
         </v-data-table>
@@ -70,7 +103,12 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn v-if="leftAction == 'Quit'" color="green" @click="quitProgram(leftId)">Yes (quit)</v-btn>
+          <v-btn
+            v-if="leftAction == 'Cancel'"
+            color="green"
+            @click="cancelProgram(leftId)"
+          >Yes (cancel)</v-btn>
           <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
@@ -92,11 +130,11 @@
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.cohort.name">
-            <p>{{dataSingle.cohort.name}}</p>
-            <p>{{dataSingle.acceptedTime}}</p>
+          <v-card-text :key="dataSingle.name">
+            <p>{{dataSingle}}</p>
+            <!-- <p>{{dataSingle.acceptedTime}}</p>
             <p>{{dataSingle.active}}</p>
-            <p>{{dataSingle.note}}</p>
+            <p>{{dataSingle.note}}</p>-->
           </v-card-text>
         </transition>
         <v-card-actions>
@@ -119,10 +157,17 @@ export default {
     return {
       search: "",
       dataList: { total: 0, list: [] },
-      dataSingle: { cohort: { name: "" } },
+      dataList2: { total: 0, list: [] },
+      dataSingle: { name: "" },
       tableLoad: false,
+      tableLoad2: false,
       loader: false,
       tableHeaders: [
+        { text: "Name", value: "name", sortable: false },
+        { text: "", value: "sub", sortable: false, align: "left" },
+        { text: "", value: "action", sortable: false, align: "right" }
+      ],
+      tableHeaders2: [
         { text: "Name", value: "name", sortable: false },
         { text: "", value: "sub", sortable: false, align: "left" },
         { text: "", value: "action", sortable: false, align: "right" }
@@ -140,6 +185,7 @@ export default {
   },
   mounted() {
     this.getDataList();
+    this.getDataList2();
   },
   methods: {
     getDataList() {
@@ -166,6 +212,30 @@ export default {
           this.tableLoad = false;
         });
     },
+    getDataList2() {
+      this.tableLoad2 = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-registrations",
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          if (res.data.data) {
+            this.dataList2 = res.data.data;
+          } else {
+            this.dataList2 = { total: 0, list: [] };
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.tableLoad2 = false;
+        });
+    },
     getDataSingle(id) {
       this.loader = true;
       this.axios
@@ -173,7 +243,7 @@ export default {
           config.baseUri +
             "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/program-participations/" +
+            "/program-registrations/" +
             id,
           {
             headers: auth.getAuthHeader()
@@ -194,10 +264,16 @@ export default {
     leftAct(item, action) {
       this.dialogDelete = true;
       this.leftId = item.id;
-      this.leftName = item.cohort.name;
+      this.leftName = item.program.name;
       this.leftAction = action;
     },
-    deleteAccount(id) {
+    leftCancel(item, action) {
+      this.dialogDelete = true;
+      this.leftId = item.id;
+      this.leftName = item.program.name;
+      this.leftAction = action;
+    },
+    quitProgram(id) {
       this.tableLoad = true;
       this.axios
         .delete(
@@ -212,6 +288,30 @@ export default {
         )
         .then(() => {
           bus.$emit("callNotif", "info", "Successfully Quit");
+          this.refresh();
+        })
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
+        .finally(() => {
+          this.tableLoad = false;
+        });
+    },
+    cancelProgram(id) {
+      this.tableLoad = true;
+      this.axios
+        .delete(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-registrations/" +
+            id,
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(() => {
+          bus.$emit("callNotif", "info", "Successfully Cancel Registration");
           this.refresh();
         })
         .catch(res => {

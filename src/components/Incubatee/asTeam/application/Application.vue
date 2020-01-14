@@ -22,15 +22,15 @@
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>
-            {{item.cohort.name}}
+            {{item.name}}
           </template>
           <template v-slot:item.action="{item}">
             <v-btn small color="accent" class="mr-2" @click="leftApply(item)">
               <v-icon left>check</v-icon>Apply
             </v-btn>
-            <v-btn small color="warning" class="mr-2" @click="leftAct(item, 'Cancel')">
+            <!-- <v-btn small color="warning" class="mr-2" @click="leftAct(item, 'Cancel')">
               <v-icon left>cancel</v-icon>Cancel
-            </v-btn>
+            </v-btn>-->
           </template>
         </v-data-table>
       </v-col>
@@ -39,7 +39,7 @@
     <v-dialog v-model="dialogApply" width="300" :persistent="true">
       <v-card :loading="loader">
         <v-card-title>
-          <p class="text-capitalize">Apply Cohort</p>
+          <p class="text-capitalize">Apply Program</p>
         </v-card-title>
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
@@ -80,11 +80,8 @@
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.cohort.name">
-            <p>{{dataSingle.cohort.name}}</p>
-            <p>{{dataSingle.appliedTime}}</p>
-            <p>{{dataSingle.concluded}}</p>
-            <p>{{dataSingle.note}}</p>
+          <v-card-text :key="dataSingle.name">
+            <p>{{dataSingle.name}}</p>
           </v-card-text>
         </transition>
         <v-card-actions>
@@ -107,7 +104,7 @@ export default {
     return {
       search: "",
       dataList: { total: 0, list: [] },
-      dataSingle: { cohort: { name: "" } },
+      dataSingle: { name: "" },
       tableLoad: false,
       loader: false,
       tableHeaders: [
@@ -124,8 +121,7 @@ export default {
       leftName: "",
       leftAction: "",
       params: {
-        programmeId: "",
-        cohortId: ""
+        programId: ""
       }
     };
   },
@@ -140,7 +136,7 @@ export default {
           config.baseUri +
             "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/program-applications",
+            "/programs",
           {
             headers: auth.getAuthHeader()
           }
@@ -164,7 +160,7 @@ export default {
           config.baseUri +
             "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/program-applications/" +
+            "/programs/" +
             id,
           {
             headers: auth.getAuthHeader()
@@ -185,24 +181,22 @@ export default {
     leftAct(item, action) {
       this.dialogDelete = true;
       this.leftId = item.id;
-      this.leftName = item.cohort.name;
+      this.leftName = item.name;
       this.leftAction = action;
     },
     leftApply(item) {
       this.dialogApply = true;
-      this.params.programmeId = item.id;
-      this.params.cohortId = item.cohort.id;
-      this.leftName = item.cohort.name;
+      this.params.programId = item.id;
+      this.leftName = item.name;
     },
     applyCohort() {
       this.loader = true;
       this.axios
         .post(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-applications/",
+            "/program-registrations/",
           this.params,
           {
             headers: auth.getAuthHeader()
@@ -223,11 +217,10 @@ export default {
       this.tableLoad = true;
       this.axios
         .delete(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-applications/" +
+            "/programs/" +
             id,
           {
             headers: auth.getAuthHeader()
@@ -243,6 +236,10 @@ export default {
         .finally(() => {
           this.tableLoad = false;
         });
+    },
+    refresh() {
+      this.dialogApply = false;
+      this.getDataList();
     }
   }
 };
