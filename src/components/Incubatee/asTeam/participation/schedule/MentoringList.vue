@@ -75,8 +75,7 @@
 </template>
 <script>
 // import bus from "@/config/bus";
-
-// import * as config from "@/config/config";
+import * as config from "@/config/config";
 import auth from "@/config/auth";
 
 export default {
@@ -111,11 +110,10 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
             "/mentorings",
           {
@@ -138,12 +136,11 @@ export default {
       this.loader = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
-            this.$route.params.cohortId +
+            "/program-participations/" +
+            this.$route.params.programId +
             "/mentorings/" +
             id,
           {

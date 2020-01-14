@@ -198,7 +198,7 @@
 </template>
 <script>
 import bus from "@/config/bus";
-// import * as config from "@/config/config";
+import * as config from "@/config/config";
 import auth from "@/config/auth";
 import { validationMixins } from "@/mixins/validationMixins";
 
@@ -253,13 +253,12 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
-            this.$route.params.cohortId +
-            "/schedules",
+            "/program-participations/" +
+            this.$route.params.programId +
+            "/mentoring-schedules",
           {
             headers: auth.getAuthHeader()
           }
@@ -280,13 +279,12 @@ export default {
       this.tableLoad2 = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
-            this.$route.params.cohortId +
-            "/negotiate-schedules",
+            "/program-participations/" +
+            this.$route.params.programId +
+            "/negotiate-mentoring-schedules",
           {
             headers: auth.getAuthHeader()
           }
@@ -311,7 +309,7 @@ export default {
           "/incubatee/team/" +
           this.$route.params.teamId +
           "/participation/" +
-          this.$route.params.cohortId +
+          this.$route.params.programId +
           "/schedule/" +
           id
       });
@@ -320,13 +318,12 @@ export default {
       this.loader = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
-            this.$route.params.cohortId +
-            "/schedules/" +
+            "/program-participations/" +
+            this.$route.params.programId +
+            "/mentoring-schedules/" +
             id,
           {
             headers: auth.getAuthHeader()
@@ -352,13 +349,12 @@ export default {
       this.tableLoad = true;
       this.axios
         .patch(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
-            "/negotiate-schedules/" +
+            "/negotiate-mentoring-schedules/" +
             id +
             "/" +
             this.leftAction,
@@ -389,13 +385,12 @@ export default {
       this.tableLoad = true;
       this.axios
         .patch(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
-            "/negotiate-schedules/" +
+            "/mentoring-negotiate-schedules/" +
             this.dataSingle.id +
             "/re-propose",
           this.params,

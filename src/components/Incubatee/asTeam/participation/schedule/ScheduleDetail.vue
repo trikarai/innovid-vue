@@ -99,13 +99,12 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
-            this.$route.params.cohortId +
-            "/schedules/" +
+            "/program-participations/" +
+            this.$route.params.programId +
+            "/mentorning-schedules/" +
             this.$route.params.scheduleId,
           {
             headers: auth.getAuthHeader()
@@ -124,7 +123,7 @@ export default {
       this.axios
         .post(
           config.baseUri +
-            "/incubatee/as-team-member/" +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/worksheets",
           params,
@@ -154,10 +153,10 @@ export default {
       this.axios
         .delete(
           config.baseUri +
-            "/incubatee/as-team-member/" +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
-            this.$route.params.cohortId +
+            "/program-participations/" +
+            this.$route.params.programId +
             "/journals/" +
             id,
           {
