@@ -103,8 +103,8 @@ export default {
             "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/program-participations/" +
-            this.$route.params.programId +
-            "/mentorning-schedules/" +
+            this.$route.params.cohortId +
+            "/negotiate-mentorning-schedules/" +
             this.$route.params.scheduleId,
           {
             headers: auth.getAuthHeader()
@@ -156,7 +156,7 @@ export default {
             "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/program-participations/" +
-            this.$route.params.programId +
+            this.$route.params.cohortId +
             "/journals/" +
             id,
           {

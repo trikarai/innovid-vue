@@ -257,7 +257,7 @@ export default {
             "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/program-participations/" +
-            this.$route.params.programId +
+            this.$route.params.cohortId +
             "/mentoring-schedules",
           {
             headers: auth.getAuthHeader()
@@ -283,7 +283,7 @@ export default {
             "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/program-participations/" +
-            this.$route.params.programId +
+            this.$route.params.cohortId +
             "/negotiate-mentoring-schedules",
           {
             headers: auth.getAuthHeader()
@@ -309,7 +309,7 @@ export default {
           "/incubatee/team/" +
           this.$route.params.teamId +
           "/participation/" +
-          this.$route.params.programId +
+          this.$route.params.cohortId +
           "/schedule/" +
           id
       });
@@ -322,7 +322,7 @@ export default {
             "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/program-participations/" +
-            this.$route.params.programId +
+            this.$route.params.cohortId +
             "/mentoring-schedules/" +
             id,
           {
