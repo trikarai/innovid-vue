@@ -9,7 +9,7 @@
 
       <v-toolbar-items class="d-none d-md-flex d-lg-flex">
         <v-btn dark text>Home</v-btn>
-        <v-btn dark text>Registration</v-btn>
+        <v-btn dark to="/signup" text>Registration</v-btn>
         <v-btn dark to="/login" text>Login</v-btn>
       </v-toolbar-items>
 
@@ -30,7 +30,7 @@
             <v-btn text>Home</v-btn>
           </v-list-item>
           <v-list-item>
-            <v-btn text>Registration</v-btn>
+            <v-btn to="/signup" text>Registration</v-btn>
           </v-list-item>
           <v-list-item>
             <v-btn to="/login" text>Login</v-btn>
@@ -53,7 +53,7 @@ organization (enterprise, incubators, accelerators, etc) can easily track
 progress and issues of each innovation innitiatives being concurrently 
 conducted by different innovator teams, and finally decide the right support for each of them. 
                 </p>
-                <v-btn large>
+                <v-btn to="/signup" large>
                   Registration
                 </v-btn>
                 
@@ -289,25 +289,4 @@ export default {
   border-left: 40px solid #fff;
   width: 50%;
 }
-</style>
-
-<style>
-.imgkastem .v-image__image {
-  background-attachment: fixed !important;
-}
-.backcu {
-  background-image: url(/img/slider-bg.png);
-  background-size: cover;
-}
-.garis {
-  background: #249c90;
-  width: 75px;
-  height: 9px;
-  border-radius: 100px;
-  margin-top: 9px;
-}
-.v-input__slot {
-    background: #fff !important;
-}
-
 </style>
