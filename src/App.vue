@@ -46,4 +46,22 @@ export default {
 .required::after {
   content: "*";
 }
+
+.imgkastem .v-image__image {
+  background-attachment: fixed !important;
+}
+.backcu {
+  background-image: url(/img/slider-bg.png);
+  background-size: cover;
+}
+.garis {
+  background: #249c90;
+  width: 75px;
+  height: 9px;
+  border-radius: 100px;
+  margin-top: 9px;
+}
+.v-input__slot {
+    background: #fff !important;
+}
 </style>
