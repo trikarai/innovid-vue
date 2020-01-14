@@ -9,13 +9,15 @@
               style="pa-4"
             >{{params.incubatorIdentifier}} - {{params.email}} - {{params.resetPasswordCode}}</v-card-text> -->
             <v-card-text v-if="!issuccess">
-              <v-form v-model="valid" ref="form">
+              <div style="text-align: left;" class="title">Reset Password</div>
+              <div class="garis"></div>
+              <v-form class="mt-3" v-model="valid" ref="form">
                 <v-row>
                   <v-col>
                     <v-text-field
+                      outlined
                       autocomplete="new-password"
                       label="Password"
-                      prepend-icon="lock"
                       v-model="signup.password"
                       :rules="rulesPassword"
                       min="8"
@@ -30,9 +32,9 @@
                 <v-row>
                   <v-col>
                     <v-text-field
+                      outlined
                       autocomplete="confirm-password"
                       label="Confirm Password"
-                      prepend-icon="lock"
                       v-model="cpassword"
                       :rules="rulesPasswordConfirmation"
                       min="8"
@@ -44,8 +46,8 @@
                     ></v-text-field>
                   </v-col>
                 </v-row>
-                <v-row justify-end class="mt-2">
-                  <v-col class="mt-2"></v-col>
+                <v-row justify-end class="">
+                  <v-col class=""></v-col>
                   <v-btn
                     @click="submit"
                     block
@@ -54,7 +56,7 @@
                     :disabled="!valid"
                     color="primary"
                     style="color:#fff"
-                  >Sign Up</v-btn>
+                  >Reset password</v-btn>
                 </v-row>
               </v-form>
             </v-card-text>
@@ -63,7 +65,7 @@
                 <v-col md="12">
                   <v-icon color="primary" size="150">check</v-icon>
                 </v-col>
-                <v-col md="12">Your password has been change successfully. You can now login.</v-col>
+                <v-col md="12">Your password has been change successfully. <br>You can now <b>login</b></v-col>
                 <v-col>
                   <v-btn
                     block
@@ -134,7 +136,8 @@ export default {
 </script>
 <style scoped>
 #loginpage {
-  background-image: url("https://picsum.photos/1080/720?grayscale");
+  /* background-image: url("https://picsum.photos/1080/720?grayscale"); */
+  background-color: rgb(238, 238, 238) ;
   background-size: cover;
   background-position: center center;
   overflow: hidden;
