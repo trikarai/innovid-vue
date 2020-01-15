@@ -113,8 +113,8 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn small color="warning" flat @click.native="dialog = false">Cancel</v-btn>
-            <v-btn small color="primary" flat @click="updateTeamName()">Update</v-btn>
+            <v-btn small color="warning"  @click.native="dialog = false">Cancel</v-btn>
+            <v-btn small color="primary"  @click="updateTeamName()">Update</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

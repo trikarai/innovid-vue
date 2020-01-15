@@ -175,15 +175,15 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="red" flat @click.native="dialogForm = false">Close</v-btn>
+            <v-btn color="red"  @click.native="dialogForm = false">Close</v-btn>
             <v-btn
               v-if="!edit"
               :disabled="!valid"
               color="primary"
-              flat
+              
               @click.native="createPhase"
             >Save</v-btn>
-            <v-btn v-else :disabled="!valid" color="primary" flat @click.native="editPhase">edit</v-btn>
+            <v-btn v-else :disabled="!valid" color="primary" @click.native="editPhase">edit</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
