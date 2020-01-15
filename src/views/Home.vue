@@ -10,7 +10,7 @@
       <v-toolbar-items class="d-none d-md-flex d-lg-flex">
         <v-btn dark text>Home</v-btn>
         <v-btn dark to="/signup" text>Registration</v-btn>
-        <v-btn dark to="/login" text>Login</v-btn>
+        <v-btn style=" border-radius: 28px !important;height: 34px !important;position: relative;top: 16px;" dark color="primary" to="/login">Login</v-btn>
       </v-toolbar-items>
 
       <v-menu left bottom>
@@ -289,4 +289,5 @@ export default {
   border-left: 40px solid #fff;
   width: 50%;
 }
+
 </style>
