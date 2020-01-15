@@ -236,10 +236,11 @@ export default {
   mixins: [validationMixins],
   data() {
     return {
+      menu: false,
+      menu2: false,
       authData: "",
       search: "",
       valid: false,
-      menu: false,
       dataList: { total: 0, list: [] },
       dataList2: { total: 0, list: [] },
       dataSingle: {
@@ -271,7 +272,9 @@ export default {
       leftAction: "",
       params: {
         startTime: ""
-      }
+      },
+      date: "",
+      time: ""
     };
   },
   watch: {
