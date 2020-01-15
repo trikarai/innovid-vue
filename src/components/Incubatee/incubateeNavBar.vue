@@ -1,9 +1,9 @@
 <template>
   <nav>
-    <v-app-bar text app color="primary">
+    <v-app-bar dense text app color="primary" class="elevation-0" dark>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="text-uppercase black--text">
-        <span class="font-weight-light">Inovide</span>
+        <!-- <span class="font-weight-light">Inovide</span> -->
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn text @click="rightDrawer =! rightDrawer">
@@ -31,7 +31,7 @@
         <v-list-item>
           <v-list-item-avatar>
             <!-- <img src="https://randomuser.me/api/portraits/men/85.jpg" /> -->
-            <img src="https://picsum.photos/id/768/85/85" />
+            <img src="/img/profile2.png" />
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>{{user.data.name}}</v-list-item-title>
@@ -48,14 +48,13 @@
         <v-list-item>
           <v-select
             label="Team"
-            solo
             :items="user.data.teamMemberships"
             item-text="team.name"
             item-value="team.id"
           ></v-select>
         </v-list-item>
         <v-list-item>
-          <v-select label="Program" solo></v-select>
+          <v-select label="Program"></v-select>
         </v-list-item>
       </v-list>
 
@@ -94,22 +93,13 @@
       <v-list>
         <v-list-item>
           <v-list-item-avatar>
-            <v-icon>exit_to_app</v-icon>
+            <!-- <v-icon>exit_to_app</v-icon> -->
           </v-list-item-avatar>
           <v-list-item-content></v-list-item-content>
           <v-list-item-action>
-            <v-btn small color="red" @click="logout">
+            <v-btn dark small color="red" @click="logout">
               <span>Sign Out</span>
             </v-btn>
-          </v-list-item-action>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-avatar>
-            <v-icon>language</v-icon>
-          </v-list-item-avatar>
-          <v-list-item-content></v-list-item-content>
-          <v-list-item-action>
-            <!-- <LocaleSwitcher /> -->
           </v-list-item-action>
         </v-list-item>
         <v-list-item>
@@ -119,6 +109,15 @@
           <v-list-item-content>Dark Theme</v-list-item-content>
           <v-list-item-action>
             <v-switch color="black" @change="switchTheme"></v-switch>
+          </v-list-item-action>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-avatar>
+            <!-- <v-icon>language</v-icon> -->
+          </v-list-item-avatar>
+          <v-list-item-content></v-list-item-content>
+          <v-list-item-action>
+            <!-- <LocaleSwitcher /> -->
           </v-list-item-action>
         </v-list-item>
       </v-list>
