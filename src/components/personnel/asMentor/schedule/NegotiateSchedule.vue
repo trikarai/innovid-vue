@@ -22,15 +22,17 @@
             {{item.mentoring.name}}
           </template>
           <template v-slot:item.action="{item}">
-            <v-btn class="ml-2" small color="primary" @click="leftAct(item, 'accept')">
-              <v-icon small left>check</v-icon>Accept
-            </v-btn>
-            <v-btn class="ml-2" small color="accent" @click="offerAct(item)">
-              <v-icon small left>update</v-icon>Offer
-            </v-btn>
-            <v-btn class="ml-2" small color="warning" @click="leftAct(item, 'reject')">
-              <v-icon small left>block</v-icon>Reject
-            </v-btn>
+            <template v-if="!item.concluded">
+              <v-btn class="ml-2" small color="primary" @click="leftAct(item, 'accept')">
+                <v-icon small left>check</v-icon>Accept
+              </v-btn>
+              <v-btn class="ml-2" small color="accent" @click="offerAct(item)">
+                <v-icon small left>update</v-icon>Offer
+              </v-btn>
+              <v-btn class="ml-2" small color="warning" @click="leftAct(item, 'reject')">
+                <v-icon small left>block</v-icon>Reject
+              </v-btn>
+            </template>
           </template>
         </v-data-table>
       </v-col>
