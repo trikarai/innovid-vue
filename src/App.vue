@@ -62,6 +62,6 @@ export default {
   margin-top: 9px;
 }
 .v-input__slot {
-    background: #fff !important;
+    /* background: #fff !important; */
 }
 </style>
