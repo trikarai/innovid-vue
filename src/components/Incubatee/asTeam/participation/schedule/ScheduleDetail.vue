@@ -104,7 +104,7 @@ export default {
             this.$route.params.teamId +
             "/program-participations/" +
             this.$route.params.cohortId +
-            "/negotiate-mentorning-schedules/" +
+            "/mentoring-schedules/" +
             this.$route.params.scheduleId,
           {
             headers: auth.getAuthHeader()
@@ -121,19 +121,23 @@ export default {
     submitForm(params) {
       this.loader = true;
       this.axios
-        .post(
+        .put(
           config.baseUri +
             "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/worksheets",
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/mentoring-schedules/" +
+            this.$route.params.scheduleId +
+            "/participant-mentoring-report",
           params,
           {
             headers: auth.getAuthHeader()
           }
         )
         .then(() => {
-          bus.$emit("callNotif", "success", "Worksheet Data Uploaded");
-          this.$router.go(-2);
+          bus.$emit("callNotif", "success", "Form Report Uploaded");
+          this.$router.go(-1);
         })
         .catch(res => {
           bus.$emit("callNotif", "error", res);

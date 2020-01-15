@@ -39,7 +39,7 @@
           <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog> -->
+    </v-dialog>-->
   </v-container>
 </template>
 <script>
@@ -119,18 +119,20 @@ export default {
     submitForm(params) {
       this.loader = true;
       this.axios
-        .post(
+        .put(
           config.baseUri +
-            "/incubatee/as-team-member/" +
-            this.$route.params.teamId +
-            "/worksheets",
+            "/personnel/mentorships/" +
+            this.$route.params.mentorshipId +
+            "/schedules/" +
+            this.$route.params.scheduleId +
+            "/mentor-mentoring-report",
           params,
           {
             headers: auth.getAuthHeader()
           }
         )
         .then(() => {
-          bus.$emit("callNotif", "success", "Worksheet Data Uploaded");
+          bus.$emit("callNotif", "success", "Report Data Uploaded");
           this.$router.go(-2);
         })
         .catch(res => {

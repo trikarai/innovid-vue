@@ -3,7 +3,7 @@
     <v-container fluid fill-height id="loginpage">
       <v-row align="center" justify="center">
         <v-col xs="12" sm="8" md="4" class="text-xs-center">
-          <v-toolbar class="" color="primary">
+          <v-toolbar class color="primary">
             <v-toolbar-title class="white--text ml-2">
               <h4>
                 Login
@@ -128,7 +128,7 @@ export default {
           authUser.token = res.data.credentials.token;
           authUser.valid_until = res.data.credentials.valid_until;
           window.localStorage.setItem("lbUser", JSON.stringify(authUser));
-
+          window.sessionStorage.setItem("uploadMode", "personnel");
           this.$router.replace("/personnel/main");
         })
         .catch(res => {

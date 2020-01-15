@@ -6,7 +6,8 @@
     <v-row>
       <v-col>
         <v-card>
-          <v-card-title primary-title>Mentoring Report</v-card-title>
+          <v-card-title primary-title>{{dataSingle.mentoring.name}}</v-card-title>
+          <v-card-title subheader>{{dataSingle.participant.team.name}}</v-card-title>
           <v-card-text>
             <template v-for="data in fields">
               <v-row :key="data.id">
@@ -66,15 +67,14 @@ export default {
             "/personnel/mentorships/" +
             this.$route.params.mentorshipId +
             "/schedules/" +
-            this.$route.params.scheduleId +
-            "/mentor-mentoring-report",
+            this.$route.params.scheduleId,
           {
             headers: auth.getAuthHeader()
           }
         )
         .then(res => {
           this.dataSingle = res.data.data;
-          this.refactorRecordJSON(res.data.data);
+          this.refactorRecordJSON(res.data.data.mentorMentoringReport);
         })
         .catch(res => {
           bus.$emit("callNotif", "error", res);

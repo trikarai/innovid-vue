@@ -40,14 +40,28 @@
             </v-btn>
             {{item.profileForm.name}}
           </template>
-          <!-- <template v-slot:item.action="{item}">
-            <v-btn small color="accent" router :to="'/incubatee/profile/' + item.id">
-              <v-icon>visibility</v-icon>
+          <template v-slot:item.action="{item}">
+            <v-btn small color="warning" @click="leftAct(item, 'Remove')">
+              <v-icon small>delete</v-icon>
             </v-btn>
-          </template>-->
+          </template>
         </v-data-table>
       </v-col>
     </v-row>
+
+    <v-dialog v-model="dialogDelete" width="300" :persistent="true">
+      <v-card :loading="tableLoad">
+        <v-card-title>
+          <p class="text-capitalize">{{leftAction}}</p>
+        </v-card-title>
+        <v-card-text>{{leftName}}</v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <v-dialog
       v-model="dialogDetail"
@@ -149,6 +163,29 @@ export default {
       // this.dialogDetail = true;
       // this.getDataSingle(id);
       this.$router.push({ path: "/incubatee/profile/" + id });
+    },
+    leftAct(item, action) {
+      this.dialogDelete = true;
+      this.leftId = item.id;
+      this.leftName = item.profileForm.name;
+      this.leftAction = action;
+    },
+    deleteAccount(id) {
+      this.tableLoad = true;
+      this.axios
+        .delete(config.baseUri + "/founder/profiles/" + id, {
+          headers: auth.getAuthHeader()
+        })
+        .then(() => {
+          bus.$emit("callNotif", "info", "Successfully Remove Profiles Data");
+          this.refresh();
+        })
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
+        .finally(() => {
+          this.tableLoad = false;
+        });
     },
     refresh() {
       this.dialogForm = false;
