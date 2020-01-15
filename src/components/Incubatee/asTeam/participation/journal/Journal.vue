@@ -18,7 +18,7 @@
               @click="openDetail(item.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn> -->
+            </v-btn>-->
             {{item.mission.name}}
           </template>
 
@@ -84,11 +84,10 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
             "/journals",
           {
@@ -110,7 +109,7 @@ export default {
     leftAct(item, action) {
       this.dialogDelete = true;
       this.leftId = item.id;
-    //   this.leftName = item.mentoring.name;
+      //   this.leftName = item.mentoring.name;
       this.leftAction = action;
     },
     deleteAccount(id) {
@@ -118,9 +117,9 @@ export default {
       this.axios
         .delete(
           config.baseUri +
-            "/incubatee/as-team-member/" +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
             "/journals/" +
             id,
@@ -132,7 +131,7 @@ export default {
           bus.$emit(
             "callNotif",
             "info",
-            "Successfully " + this.leftAction + " Mentoring Schedule"
+            "Successfully " + this.leftAction + " Journal"
           );
           this.refresh();
         })
