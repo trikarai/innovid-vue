@@ -186,7 +186,9 @@ export default {
   components: {
     TeamForm
   },
-  created: function() {},
+   created() {
+    window.sessionStorage.setItem("uploadMode", "team");
+  },
   mounted: function() {
     this.getDataList();
   },

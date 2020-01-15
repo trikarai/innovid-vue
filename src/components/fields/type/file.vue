@@ -33,7 +33,7 @@
     </v-col>
     <v-col md="4">
       <v-expand-transition>
-          <v-img class="ml-5" :src="imageUrl" contain max-width="250" v-if="imageUrl" />
+        <v-img class="ml-5" :src="imageUrl" contain max-width="250" v-if="imageUrl" />
       </v-expand-transition>
     </v-col>
     <v-col md="3">
@@ -75,7 +75,8 @@ export default {
       uploaded: false,
       removeFileBtn: false,
       fileInfo: { id: "", path: "", size: "" },
-      ext: ""
+      ext: "",
+      uploadUri: ""
     };
   },
   watch: {
@@ -86,6 +87,17 @@ export default {
         type: this.field.type
       };
       bus.$emit("getValue", params, this.index);
+    }
+  },
+  created() {
+    var mode = sessionStorage.getItem("uploadMode");
+    if (mode == "founder") {
+      this.uploadUri = "/founder/file-upload";
+    } else if (mode == "team") {
+      this.uploadUri =
+        "/founder/as-team-member/" + this.$route.params.teamId + "/file-upload";
+    } else if (mode == "personnel") {
+      this.uploadUri = "/personnel/file-upload";
     }
   },
   methods: {
@@ -124,7 +136,7 @@ export default {
       var app = this;
       this.progressShow = true;
       this.axios
-        .post(config.baseUri + "/incubatee/file-upload", this.file, {
+        .post(config.baseUri + this.uploadUri, this.file, {
           headers: this.headers,
           onUploadProgress(e) {
             if (e.lengthComputable) {

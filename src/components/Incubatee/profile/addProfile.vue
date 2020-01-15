@@ -34,6 +34,9 @@ export default {
       }
     };
   },
+  created() {
+    window.sessionStorage.setItem("uploadMode", "founder");
+  },
   components: {
     RenderForm
   },
