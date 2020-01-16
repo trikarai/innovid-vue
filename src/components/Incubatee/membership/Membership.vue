@@ -8,6 +8,9 @@
       </v-col>
     </v-row>
     <v-row>
+      <v-col>Membership</v-col>
+    </v-row>
+    <!-- <v-row>
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -18,7 +21,8 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row>
+    </v-row> -->
+
     <v-row>
       <v-col>
         <v-data-table
@@ -85,6 +89,46 @@
         </v-data-table>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col>Candidateship Invitation</v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-data-table
+          :loading="tableLoad"
+          :headers="tableHeaders2"
+          :items="dataList2.list"
+          class="elevation-1"
+        >
+          <template v-slot:item.name="{item}">
+            <!-- <v-btn
+              class="elevation-0 mr-2"
+              fab
+              x-small
+              color="primary"
+              @click="openDetail(item.id)"
+            >
+              <v-icon>zoom_in</v-icon>
+            </v-btn>-->
+            {{item.team.name}}
+          </template>
+          <template v-slot:item.concluded="{item}">
+            <v-icon v-if="item.concluded" color="green darken-1">check</v-icon>
+            <v-icon v-else color="red darken-1">removed</v-icon>
+          </template>
+          <template v-slot:item.action="{item}">
+            <template v-if="item.note == 'invited'">
+              <v-btn small color="primary" class="mr-2" @click="leftAct2(item, 'accept')">
+                <v-icon left small>check</v-icon>Accept
+              </v-btn>
+              <v-btn small color="warning" @click="leftAct2(item, 'reject')">
+                <v-icon left small>block</v-icon>Reject
+              </v-btn>
+            </template>
+          </template>
+        </v-data-table>
+      </v-col>
+    </v-row>
 
     <team-form v-if="dialogForm" :edit="edit" @close="dialogForm = false" @refresh="refresh" />
 
@@ -102,6 +146,20 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog v-model="dialogDelete2" width="300" :persistent="true">
+      <v-card :loading="tableLoad2">
+        <v-card-title>
+          <p class="text-capitalize">{{leftAction2}}</p>
+        </v-card-title>
+        <v-card-text>{{leftName2}}</v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn color="green" @click="deleteAccount2(leftId2)">Yes</v-btn>
+          <v-btn color="red" @click="dialogDelete2 = false">Cancel</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-layout row justify-center>
       <v-dialog v-model="dialog" persistent max-width="290">
         <v-card :loading="tableLoad">
@@ -113,8 +171,8 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn small color="warning"  @click.native="dialog = false">Cancel</v-btn>
-            <v-btn small color="primary"  @click="updateTeamName()">Update</v-btn>
+            <v-btn small color="warning" @click.native="dialog = false">Cancel</v-btn>
+            <v-btn small color="primary" @click="updateTeamName()">Update</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -165,22 +223,35 @@ export default {
       authData: "",
       search: "",
       dataList: { total: 0, list: [] },
+      dataList2: { total: 0, list: [] },
       dataSingle: { team: { name: "" }, position: "" },
       tableLoad: false,
+      tableLoad2: false,
       loader: false,
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
         { text: "Position", value: "position", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
+      tableHeaders2: [
+        { text: "Name", value: "name", sortable: false },
+        { text: "Position", value: "position", sortable: false },
+        { text: "Concluded", value: "concluded", sortable: false },
+        { text: "Note", value: "note", sortable: false },
+        { text: "", value: "action", sortable: false, align: "right" }
+      ],
       dialog: false,
       dialogForm: false,
       dialogDelete: false,
+      dialogDelete2: false,
       dialogDetail: false,
       edit: false,
       leftId: "",
       leftName: "",
-      leftAction: ""
+      leftAction: "",
+      leftId2: "",
+      leftName2: "",
+      leftAction2: ""
     };
   },
   components: {
@@ -209,6 +280,24 @@ export default {
         .catch(() => {})
         .finally(() => {
           this.tableLoad = false;
+        });
+    },
+    getDataList2() {
+      this.tableLoad2 = true;
+      this.axios
+        .get(config.baseUri + "/founder/team-member-candidateships", {
+          headers: auth.getAuthHeader()
+        })
+        .then(res => {
+          if (res.data.data) {
+            this.dataList2 = res.data.data;
+          } else {
+            this.dataList2 = { total: 0, list: [] };
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.tableLoad2 = false;
         });
     },
     getDataSingle(id) {
@@ -240,6 +329,12 @@ export default {
       this.leftName = item.team.name;
       this.leftAction = action;
     },
+    leftAct2(item, action) {
+      this.dialogDelete2 = true;
+      this.leftId2 = item.id;
+      this.leftName2 = item.team.name;
+      this.leftAction2 = action;
+    },
     deleteAccount(id) {
       this.tableLoad = true;
       this.axios
@@ -248,6 +343,35 @@ export default {
         })
         .then(() => {
           bus.$emit("callNotif", "info", "Successfully Quit from team");
+          this.refresh();
+        })
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
+        .finally(() => {
+          this.tableLoad = false;
+        });
+    },
+    deleteAccount2(id) {
+      this.tableLoad2 = true;
+      this.axios
+        .patch(
+          config.baseUri +
+            "/founder/team-member-candidateships/" +
+            id +
+            "/" +
+            this.leftAction2,
+          {},
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(() => {
+          bus.$emit(
+            "callNotif",
+            "info",
+            "Successfully " + this.leftAction2 + " candidateships"
+          );
           this.refresh();
         })
         .catch(res => {
@@ -288,7 +412,9 @@ export default {
       this.dialog = false;
       this.dialogForm = false;
       this.dialogDelete = false;
+      this.dialogDelete2 = false;
       this.getDataList();
+      this.getDataList2();
     }
   }
 };
