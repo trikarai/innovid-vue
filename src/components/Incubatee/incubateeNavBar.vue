@@ -44,17 +44,28 @@
         </v-list-item>
       </v-list>
 
-      <v-list>
+      <v-list v-if="user.data.teamMemberships.length != 0">
         <v-list-item>
           <v-select
+            :loading="tableLoad"
             label="Team"
             :items="user.data.teamMemberships"
             item-text="team.name"
             item-value="team.id"
+            v-model="teamId"
+            @change="getParticipations()"
           ></v-select>
+          <!-- {{teamId}} -->
         </v-list-item>
         <v-list-item>
-          <v-select label="Program"></v-select>
+          <v-select
+            label="Program"
+            :items="participationList.list"
+            item-text="program.name"
+            item-value="id"
+            v-model="participationId"
+          ></v-select>
+          <!-- {{participationId}} -->
         </v-list-item>
       </v-list>
 
@@ -76,18 +87,62 @@
         </v-list-item>
       </v-list>
 
-      <!-- <v-list-group prepend-icon="account_circle" value="true" no-action>
+      <v-list-group  value="true" no-action v-if="teamId != ''">
         <template v-slot:activator>
           <v-list-item-title>Team</v-list-item-title>
         </template>
 
-        <v-list-item v-for="(team, i) in teams" :key="i" link>
-          <v-list-item-title v-text="team.text"></v-list-item-title>
+        <v-list-item router :to="'/incubatee/team/' + teamId +'/member' ">
+          <v-list-item-title>Members</v-list-item-title>
           <v-list-item-icon>
-            <v-icon v-text="team.icon"></v-icon>
+            <v-icon>group</v-icon>
           </v-list-item-icon>
         </v-list-item>
-      </v-list-group>-->
+
+        <v-list-item router :to="'/incubatee/team/' + teamId +'/application' ">
+          <v-list-item-title>Program</v-list-item-title>
+          <v-list-item-icon>
+            <v-icon>how_to_vote</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
+
+        <v-list-item router :to="'/incubatee/team/' + teamId +'/worksheet' ">
+          <v-list-item-title>Worksheet</v-list-item-title>
+          <v-list-item-icon>
+            <v-icon>assignments</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
+      </v-list-group>
+
+      <v-list-group
+        value="true"
+        no-action
+        v-if="participationId != ''"
+      >
+        <template v-slot:activator>
+          <v-list-item-title>Participation</v-list-item-title>
+        </template>
+
+        <v-list-item
+          router
+          :to="'/incubatee/team/' + teamId +'/participation/' + participationId + '/schedule' "
+        >
+          <v-list-item-title>Mentoring</v-list-item-title>
+          <v-list-item-icon>
+            <v-icon>today</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
+
+        <v-list-item
+          router
+          :to="'/incubatee/team/' + teamId +'/participation/' + participationId + '/mission' "
+        >
+          <v-list-item-title>Mission</v-list-item-title>
+          <v-list-item-icon>
+            <v-icon>emoji_objects</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
+      </v-list-group>
     </v-navigation-drawer>
     <v-navigation-drawer temporary right v-model="rightDrawer" fixed>
       <v-list>
@@ -125,17 +180,22 @@
   </nav>
 </template>
 <script>
+import * as config from "@/config/config";
 import auth from "@/config/auth";
 
 export default {
   data() {
     return {
       drawer: true,
+      tableLoad: true,
       rightDrawer: false,
       miniVariant: false,
       clipped: false,
       fixed: false,
       user: "",
+      teamId: "",
+      participationList: { total: 0, list: [] },
+      participationId: "",
       links: [
         {
           icon: "dashboard",
@@ -160,21 +220,15 @@ export default {
           text: "Membership",
           route: "/incubatee/membership",
           disabled: false
-        },
-        {
-          icon: "inbox",
-          text: "Candidateship",
-          route: "/incubatee/candidateship",
-          disabled: false
         }
+        // {
+        //   icon: "inbox",
+        //   text: "Candidateship",
+        //   route: "/incubatee/candidateship",
+        //   disabled: false
+        // }
       ],
       teams: [
-        {
-          icon: "folder_shared",
-          text: "Candidate",
-          route: "/incubatee/profile",
-          disabled: true
-        },
         {
           icon: "folder_shared",
           text: "Team Profile",
@@ -205,11 +259,17 @@ export default {
           route: "/incubatee/profile",
           disabled: true
         }
-      ],
+      ]
     };
   },
   created() {
     this.user = JSON.parse(auth.getAuthData());
+    this.teamId = this.user.data.teamMemberships[0].team.id;
+  },
+  mounted() {
+    if (this.teamId != "") {
+      this.getParticipations();
+    }
   },
   methods: {
     goback: function() {
@@ -221,6 +281,32 @@ export default {
     logout: function() {
       localStorage.removeItem("lbUser");
       this.$router.replace({ path: "/" });
+    },
+    getParticipations() {
+      this.tableLoad = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.teamId +
+            "/program-participations",
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          if (res.data.data.total != 0) {
+            this.participationList = res.data.data;
+            this.participationId = this.participationList.list[0].id;
+          } else {
+            this.participationList = { total: 0, list: [] };
+            this.participationId = "";
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.tableLoad = false;
+        });
     }
   }
 };
