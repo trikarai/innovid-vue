@@ -12,10 +12,16 @@ import IncubateeNav from "../views/main/Incubatee";
 import IncubateeAccount from "../components/Incubatee/account/IncubateeAccount";
 import IncubateeMembership from "../components/Incubatee/membership/Membership";
 import IncubateeCandidateships from "../components/Incubatee/candidate/Candidate";
+//Founder Profile
 import IncubateeProfiles from "../components/Incubatee/profile/ProfileDataList";
 import IncubateeProfilesData from "../components/Incubatee/profile/ProfileData";
 import IncubateeProfilesForm from "../components/Incubatee/profile/ProfileForm";
 import IncubateeProfilesAdd from "../components/Incubatee/profile/addProfile";
+//Team Profile
+import IncubateeTeamProfiles from "../components/Incubatee/asTeam/teamprofile/ProfileDataList";
+import IncubateeTeamProfilesData from "../components/Incubatee/asTeam/teamprofile/ProfileData";
+import IncubateeTeamProfilesForm from "../components/Incubatee/asTeam/teamprofile/ProfileForm";
+import IncubateeTeamProfilesAdd from "../components/Incubatee/asTeam/teamprofile/addProfile";
 
 import TeamMember from "../components/Incubatee/asTeam/member/Member";
 import TeamMemberCandidate from "../components/Incubatee/asTeam/candidate/Candidate";
@@ -51,7 +57,9 @@ import PersonnelFounders from '../components/personnel/founder/Founder';
 import PersonnelWorksheet from '../components/personnel/worksheet/Worksheet';
 import PersonnelWorksheetBuild from '../components/personnel/worksheet/buildWorksheet';
 import PersonnelProfileForm from '../components/personnel/profileform/ProfileForm';
+import PersonnelTeamProfileForm from '../components/personnel/teamprofileform/TeamProfileForm';
 import PersonnelProfileFormBuild from '../components/personnel/profileform/buildProfileform';
+import PersonnelTeamProfileFormBuild from '../components/personnel/teamprofileform/buildProfileform';
 import PersonnelMentoringForm from '../components/personnel/mentoringform/MentoringForm';
 import PersonnelMentoringFormBuild from '../components/personnel/mentoringform/buildMentoringform';
 
@@ -253,6 +261,22 @@ const routes = [
         }
       },
       {
+        path: "/personnel/team-profile-forms",
+        component: PersonnelTeamProfileForm,
+        meta: {
+          level: 0,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/team-profile-forms/build",
+        component: PersonnelTeamProfileFormBuild,
+        meta: {
+          level: 1,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
         path: "/personnel/mentoring-feedback-forms",
         component: PersonnelMentoringForm,
         meta: {
@@ -426,10 +450,26 @@ const routes = [
         }
       },
       {
+        path: "/incubatee/team/:teamId/profile",
+        component: IncubateeTeamProfiles,
+        meta: {
+          level: 2,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
         path: "/incubatee/profile/:profileId",
         component: IncubateeProfilesData,
         meta: {
           level: 2,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/team/:teamId/profile/:profileId",
+        component: IncubateeTeamProfilesData,
+        meta: {
+          level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
       },
@@ -442,8 +482,24 @@ const routes = [
         }
       },
       {
+        path: "/incubatee/team/:teamId/team-profile-form",
+        component: IncubateeTeamProfilesForm,
+        meta: {
+          level: 4,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
         path: "/incubatee/profile-form/:formId/add",
         component: IncubateeProfilesAdd,
+        meta: {
+          level: 4,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/team/:teamId/team-profile-form/:formId/add",
+        component: IncubateeTeamProfilesAdd,
         meta: {
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
