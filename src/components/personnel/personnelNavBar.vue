@@ -171,6 +171,12 @@ export default {
           disabled: false
         },
         {
+          icon: "group_work",
+          text: "Team Profile Form",
+          route: "/personnel/team-profile-forms",
+          disabled: false
+        },
+        {
           icon: "assignment",
           text: "Worksheet",
           route: "/personnel/worksheet-forms",
