@@ -99,6 +99,13 @@
           </v-list-item-icon>
         </v-list-item>
 
+        <v-list-item router :to="'/incubatee/team/' + teamId +'/profile' ">
+          <v-list-item-title>Team Profile</v-list-item-title>
+          <v-list-item-icon>
+            <v-icon>group_work</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
+
         <v-list-item router :to="'/incubatee/team/' + teamId +'/application' ">
           <v-list-item-title>Program</v-list-item-title>
           <v-list-item-icon>

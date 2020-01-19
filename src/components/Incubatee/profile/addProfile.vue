@@ -63,7 +63,7 @@ export default {
     submitForm(params) {
       this.loader = true;
       this.axios
-        .post(config.baseUri + "/founder/profiles", params, {
+        .put(config.baseUri + "/founder/profiles/" + this.formId, params, {
           headers: auth.getAuthHeader()
         })
         .then(() => {

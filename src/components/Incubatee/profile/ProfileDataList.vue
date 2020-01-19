@@ -34,7 +34,7 @@
               fab
               x-small
               color="primary"
-              @click="openDetail(item.id)"
+              @click="openDetail(item.profileForm.id)"
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>
@@ -166,7 +166,7 @@ export default {
     },
     leftAct(item, action) {
       this.dialogDelete = true;
-      this.leftId = item.id;
+      this.leftId = item.profileForm.id;
       this.leftName = item.profileForm.name;
       this.leftAction = action;
     },
