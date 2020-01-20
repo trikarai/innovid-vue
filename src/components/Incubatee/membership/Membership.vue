@@ -262,6 +262,7 @@ export default {
   },
   mounted: function() {
     this.getDataList();
+    this.getDataList2();
   },
   methods: {
     getDataList() {
