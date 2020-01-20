@@ -16,6 +16,13 @@
                     maxlength="25"
                     required
                   ></v-text-field>
+                  <v-text-field
+                    :disabled="view"
+                    label="Position"
+                    v-model="params.position"
+                    :counter="25"
+                    maxlength="25"
+                  ></v-text-field>
                   <v-textarea
                     :disabled="view"
                     label="Description"
@@ -75,7 +82,8 @@ export default {
       params: {
         name: "",
         description: "",
-        worksheetFormId: ""
+        worksheetFormId: "",
+        position: ""
       }
     };
   },
