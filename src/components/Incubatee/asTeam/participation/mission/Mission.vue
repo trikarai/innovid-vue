@@ -1,33 +1,24 @@
 <template>
   <v-container grid-list-xs>
+    <!-- <v-row>
+      <v-col md="6">{{dataList}}</v-col>
+    </v-row>-->
     <v-row>
-      <v-col md="6">
-        <v-card :loading="tableLoad">
-          <v-card-title primary-title>
-            <div>
-              <h3 class="headline mb-0">{{dataList.name}}</h3>
-              <div>{{dataList.description}}</div>
-            </div>
-          </v-card-title>
-          <v-card-actions>
-            <v-btn
-              color="success"
-              fab
-              x-small
-              router
-              :to="'/incubatee/team/' + this.$route.params.teamId + '/participation/' + this.$route.params.cohortId + '/mission/' + dataList.id "
-            >
-              <v-icon small>zoom_in</v-icon>
-            </v-btn>
-            <v-spacer></v-spacer>
-            <v-btn
-              text
-              color="accent"
-              router
-              :to="'/incubatee/team/' + this.$route.params.teamId + '/participation/' + this.$route.params.cohortId + '/mission/' + dataList.id + '/next/' + dataList.nextMission.id "
-            >Next Mission</v-btn>
-          </v-card-actions>
-        </v-card>
+      <v-col md="12">
+        <v-timeline :reverse="true">
+          <v-timeline-item v-for="data in dataList.list" :key="data.id">
+            <v-card class="elevation-5">
+              <v-card-title class="headline">{{data.position}} : {{data.name}}</v-card-title>
+              <v-card-text>{{data}}</v-card-text>
+              <v-card-text>
+                <v-select append-icon="arrow_drop_down"></v-select>
+              </v-card-text>
+              <v-card-actions>
+                <v-btn color="success">Add Journal</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-timeline-item>
+        </v-timeline>
       </v-col>
     </v-row>
 
@@ -83,11 +74,10 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
             "/missions",
           {
@@ -113,9 +103,9 @@ export default {
       this.axios
         .delete(
           config.baseUri +
-            "/incubatee/as-team-member/" +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
             "/journals/" +
             id,
