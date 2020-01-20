@@ -64,7 +64,7 @@ export default {
       params: {
         incubatorIdentifier: this.$route.params.incubatorIdentifier,
         email: this.$route.params.email,
-        token: this.$route.params.token
+        activationCode: this.$route.params.token
       },
       err_msg: "error",
       loader: false,
