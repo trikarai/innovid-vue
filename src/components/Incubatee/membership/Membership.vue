@@ -117,7 +117,7 @@
             <v-icon v-else color="red darken-1">removed</v-icon>
           </template>
           <template v-slot:item.action="{item}">
-            <template v-if="item.note == 'invited'">
+            <template v-if="!item.concluded">
               <v-btn small color="primary" class="mr-2" @click="leftAct2(item, 'accept')">
                 <v-icon left small>check</v-icon>Accept
               </v-btn>
