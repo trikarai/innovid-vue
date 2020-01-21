@@ -61,6 +61,7 @@ export default {
         });
     },
     submitForm(params) {
+      params["profileFormId"] = this.formTemplate.id;
       this.loader = true;
       this.axios
         .put(config.baseUri + "/founder/profiles/" + this.formId, params, {
