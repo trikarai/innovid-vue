@@ -14,6 +14,7 @@
                 <v-select append-icon="arrow_drop_down"></v-select>
               </v-card-text>
               <v-card-actions>
+                <v-btn class="mr-2" color="success">View Journal</v-btn>
                 <v-btn color="success">Add Journal</v-btn>
               </v-card-actions>
             </v-card>
