@@ -15,10 +15,10 @@
       </v-card-text>
       <!-- <v-card-text>
         <pre>{{params}}</pre>
-      </v-card-text> -->
+      </v-card-text>-->
       <!-- <v-card-text>
         <pre>{{test}}</pre>
-      </v-card-text> -->
+      </v-card-text>-->
 
       <v-card-actions>
         <v-btn color="primary" :disabled="!valid" @click="sendtoParent">Submit</v-btn>
@@ -43,8 +43,8 @@ export default {
       params: [],
       fields: [],
       test: {
-        profileFormId: this.formTemplate.id,
-        Form_id: this.formTemplate.id
+        // profileFormId: this.formTemplate.id,
+        // Form_id: this.formTemplate.id
       }
     };
   },
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     sendtoParent() {
-      this.test = this.refactorParams(this.params, this.formTemplate.id);
+      this.test = this.refactorParams(this.params);
       this.$emit("submit-form", this.test);
     }
   }
