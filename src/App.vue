@@ -64,4 +64,14 @@ export default {
 .v-input__slot {
     /* background: #fff !important; */
 }
+.topaccent {
+  background: #249c90;
+  color: #fff;
+  margin-bottom: 18px;
+  width: 93%;
+  margin: 0 auto;
+  border-radius: 5px;
+  position: relative;
+  bottom: 28px;
+}
 </style>
