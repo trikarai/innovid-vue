@@ -39,6 +39,9 @@ import TeamMemberSchedulesDetail from "../components/Incubatee/asTeam/participat
 import TeamMemberSchedulesReport from "../components/Incubatee/asTeam/participation/schedule/Report";
 import TeamMemberMentoring from "../components/Incubatee/asTeam/participation/schedule/MentoringList";
 import TeamMemberMentor from "../components/Incubatee/asTeam/participation/schedule/MentorList";
+//Atomic Journal Worksheet
+import AddAtomicJournal from "../components/Incubatee/asTeam/participation/atomic/AddAtomicJournal";
+
 
 import AccountMain from "../views/account/AccountMain"
 import ForgotPassword from "../views/account/ForgotPassword";
@@ -572,6 +575,14 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/mission/:rootId/next/:missionId",
         component: TeamMemberMissionDetail,
+        meta: {
+          level: 5,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/team/:teamId/participation/:cohortId/mission/:missionId/atom",
+        component: AddAtomicJournal,
         meta: {
           level: 5,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
