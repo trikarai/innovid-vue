@@ -10,6 +10,7 @@
             </div>
           </v-card-title>
           <v-card-actions>
+            
             <v-btn text color="accent" disabled>Prev Mission</v-btn>
             <v-spacer></v-spacer>
             <v-btn text color="accent" disabled>Next Mission</v-btn>
@@ -83,11 +84,10 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
             "/missions/" +
             this.$route.params.missionId,
