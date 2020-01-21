@@ -423,6 +423,7 @@ const routes = [
       {
         path: "/incubatee/account",
         component: IncubateeAccount,
+        name: "My Account",
         meta: {
           level: 1,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -431,6 +432,7 @@ const routes = [
       {
         path: "/incubatee/membership",
         component: IncubateeMembership,
+        name: "Membership",
         meta: {
           level: 1,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -439,6 +441,7 @@ const routes = [
       {
         path: "/incubatee/candidateship",
         component: IncubateeCandidateships,
+        name: "Candidateship",
         meta: {
           level: 1,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -447,6 +450,7 @@ const routes = [
       {
         path: "/incubatee/profile",
         component: IncubateeProfiles,
+        name: "Profiles",
         meta: {
           level: 1,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -455,6 +459,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/profile",
         component: IncubateeTeamProfiles,
+        name: "Team Profiles",
         meta: {
           level: 2,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
