@@ -8,7 +8,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>Membership</v-col>
+      <v-col>Membership list</v-col>
     </v-row>
     <!-- <v-row>
       <v-col md="4" xs="12">
@@ -26,6 +26,7 @@
     <v-row>
       <v-col>
         <v-data-table
+          disable-sort
           :search="search"
           :loading="tableLoad"
           :headers="tableHeaders"
@@ -48,39 +49,43 @@
             <v-btn
               class="mr-2"
               small
-              color="accent"
+              color="primary"
               router
               :to="'/incubatee/team/' + item.team.id + '/member' "
             >
-              <v-icon left small>group</v-icon>Members
+              <!-- <v-icon left small>group</v-icon> -->
+              Members
             </v-btn>
             <v-btn
               class="mr-2"
               small
-              color="accent"
+              color="primary"
               router
               :to="'/incubatee/team/' + item.team.id + '/worksheet' "
             >Worksheet</v-btn>
             <v-btn
               class="mr-2"
               small
-              color="accent"
+              color="primary"
               router
               :to="'/incubatee/team/' + item.team.id + '/application' "
             >
-              <v-icon left small>how_to_vote</v-icon>Programs
+              <!-- <v-icon left small>how_to_vote</v-icon> -->
+              Programs
             </v-btn>
             <v-btn
               class="mr-2"
               small
-              color="accent"
+              color="primary"
               router
               :to="'/incubatee/team/' + item.team.id + '/participation' "
             >
-              <v-icon left small>how_to_reg</v-icon>Participation
+              <!-- <v-icon left small>how_to_reg</v-icon> -->
+              Participation
             </v-btn>
-            <v-btn class="mr-2" small color="accent" @click="updateAct(item, 'Update')">
-              <v-icon left small>edit</v-icon>Update Name
+            <v-btn class="mr-2" small color="primary" @click="updateAct(item, 'Update')">
+              <!-- <v-icon left small>edit</v-icon> -->
+              Update Name
             </v-btn>
             <v-btn small color="warning" @click="leftAct(item, 'Quit')">
               <v-icon left small>flag</v-icon>Quit
@@ -95,6 +100,7 @@
     <v-row>
       <v-col>
         <v-data-table
+          disable-sort
           :loading="tableLoad"
           :headers="tableHeaders2"
           :items="dataList2.list"
@@ -140,8 +146,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text class="grey--text" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -154,16 +160,20 @@
         <v-card-text>{{leftName2}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount2(leftId2)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete2 = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount2(leftId2)">Yes</v-btn>
+          <v-btn ctext class="grey--text" @click="dialogDelete2 = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
     <v-layout row justify-center>
-      <v-dialog v-model="dialog" persistent max-width="290">
+      <v-dialog v-model="dialog" persistent max-width="400">
         <v-card :loading="tableLoad">
-          <v-card-title class="headline">Update Name</v-card-title>
+          <v-card-title class="topaccent" primary-title>
+              <div>
+                <h3 class="headline mb-0">Update Name</h3>
+              </div>
+        </v-card-title>
           <v-card-text>
             <v-form>
               <v-text-field label="Team Name" v-model="leftName"></v-text-field>
@@ -171,8 +181,8 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn small color="warning" @click.native="dialog = false">Cancel</v-btn>
             <v-btn small color="primary" @click="updateTeamName()">Update</v-btn>
+            <v-btn small text color="grey" @click.native="dialog = false">Cancel</v-btn>          
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -180,31 +190,31 @@
 
     <v-dialog
       v-model="dialogDetail"
-      scrollable
-      persistent
       :overlay="false"
-      max-width="300px"
+      max-width="400px"
       transition="dialog-transition"
     >
       <v-card>
-        <v-card-title>
-          <p class="text-capitalize"></p>
+        <v-card-title class="topaccent" primary-title>
+              <div>
+                <h3 class="headline mb-0">Team Detail</h3>
+              </div>
         </v-card-title>
         <v-card-text v-if="loader">
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.team.name">{{dataSingle.team.name}}</v-card-text>
+          <v-card-text :key="dataSingle.team.name"><b>Team Name</b><br>{{dataSingle.team.name}}</v-card-text>
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.position">{{dataSingle.position}}</v-card-text>
+          <v-card-text :key="dataSingle.position"><b>Position</b><br>{{dataSingle.position}}</v-card-text>
         </transition>
-        <v-card-actions>
+        <!-- <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
             <v-icon>close</v-icon>
           </v-btn>
-        </v-card-actions>
+        </v-card-actions> -->
       </v-card>
     </v-dialog>
   </v-container>
@@ -229,8 +239,8 @@ export default {
       tableLoad2: false,
       loader: false,
       tableHeaders: [
-        { text: "Name", value: "name", sortable: false },
-        { text: "Position", value: "position", sortable: false },
+        { text: "Team Name", value: "name", sortable: false },
+        { text: "Your Position", value: "position", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       tableHeaders2: [
