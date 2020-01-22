@@ -48,13 +48,14 @@
       </v-col>
     </v-row>
 
-    <v-divider></v-divider>
+    <!-- <v-divider></v-divider> -->
 
     <v-row>
       <v-col>Negotiate Schedule</v-col>
     </v-row>
     <v-row>
       <v-col>
+        {{dataList2}}
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -75,14 +76,24 @@
             {{item.mentoring.name}}
           </template>
           <template v-slot:item.action="{item}">
-            <v-btn class="ml-2" small color="primary" @click="leftAct(item, 'accept')">
-              <v-icon small left>check</v-icon>Accept
-            </v-btn>
-            <v-btn class="ml-2" small color="accent" @click="reproposeAct(item)">
-              <v-icon small left>update</v-icon>Re-schedule
-            </v-btn>
-            <v-btn class="ml-2" small color="warning" @click="leftAct(item, 'cancel')">
-              <v-icon small left>block</v-icon>Reject
+            <template v-if="item.status !== 'proposed'">
+              <template v-if="item.status !== 'cancelled'">
+                <v-btn class="ml-2" small color="primary" @click="leftAct(item, 'accept')">
+                  <v-icon small left>check</v-icon>Accept
+                </v-btn>
+              </template>
+              <v-btn class="ml-2" small color="primary" @click="reproposeAct(item)">
+                <v-icon small left>update</v-icon>Re-schedule
+              </v-btn>
+            </template>
+            <v-btn
+              v-if="item.status !== 'cancelled'"
+              class="ml-2"
+              small
+              color="warning"
+              @click="leftAct(item, 'cancel')"
+            >
+              <v-icon small left>block</v-icon>Cancel
             </v-btn>
           </template>
         </v-data-table>
@@ -122,8 +133,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -261,6 +272,7 @@ export default {
         { text: "Mentor", value: "mentor.personnel.name", sortable: false },
         { text: "startTime", value: "startTime", sortable: false },
         { text: "endTime", value: "endTime", sortable: false },
+        { text: "status", value: "status", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       dialogForm: false,
@@ -392,16 +404,14 @@ export default {
     deleteAccount(id) {
       this.tableLoad = true;
       this.axios
-        .patch(
+        .delete(
           config.baseUri +
             "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/program-participations/" +
             this.$route.params.cohortId +
             "/negotiate-mentoring-schedules/" +
-            id +
-            "/" +
-            this.leftAction,
+            id,
           {
             headers: auth.getAuthHeader()
           }
