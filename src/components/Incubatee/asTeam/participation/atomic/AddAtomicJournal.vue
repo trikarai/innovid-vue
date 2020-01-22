@@ -58,16 +58,25 @@
       </v-col>
     </v-row>
     <v-row v-if="!is_newWorksheet">
-      <v-col md="12">{{worksheetData}}</v-col>
-      <v-col md="12">
-        <pre> {{dataList}} </pre>
+      <v-col md="12" v-if="is_reloadWorksheet">
+        <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
+        <render-form
+          :modeReload="reloadTrue"
+          v-if="!tableLoad"
+          :formTemplate="dataList.worksheetForm"
+          @submit-form="submitForm"
+        />
       </v-col>
+      <!-- <v-col><pre>{{worksheetData}}</pre></v-col> -->
+      <!-- <v-col>
+        <pre>{{dataList.worksheetForm}}</pre>
+      </v-col>-->
     </v-row>
     <v-row v-if="is_newWorksheet">
       <v-col md="12">
         <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
-        <!-- <pre> {{dataList.worksheetForm}} </pre> -->
         <render-form
+          :modeReload="reloadFalse"
           v-if="!tableLoad"
           :formTemplate="dataList.worksheetForm"
           @submit-form="submitForm"
@@ -91,6 +100,8 @@ export default {
   data() {
     return {
       mode: false,
+      reloadFalse: false,
+      reloadTrue: true,
       search: "",
       dataList: { id: "", name: "", description: "", nextMission: { id: "" } },
       dataListTemp: {
@@ -101,6 +112,7 @@ export default {
       },
       worksheetList: { total: 0, list: [] },
       worksheetData: {},
+      worksheetDataOK: false,
       tableLoad: false,
       loader: false,
       tableHeaders: [
@@ -151,7 +163,7 @@ export default {
         )
         .then(res => {
           this.dataList = res.data.data;
-          this.dataListTemp = res.data.data;
+          Object.assign(this.dataListTemp, this.dataList);
         })
         .catch(() => {})
         .finally(() => {
@@ -163,7 +175,7 @@ export default {
       params["worksheetFormId"] = this.dataList.worksheetForm.id;
       params["name"] = this.worksheetName;
 
-      //   this.params = params;
+      // this.params = params;
       this.loader = true;
       this.axios
         .post(
@@ -198,6 +210,7 @@ export default {
     },
     createReloadWorksheet() {
       this.mode = true;
+      this.exworksheetId = "";
       this.is_newWorksheet = false;
       this.is_reloadWorksheet = false;
       this.selectWorksheet = true;
@@ -228,7 +241,9 @@ export default {
         });
     },
     getWorksheetData() {
+      this.dataList = JSON.parse(JSON.stringify(this.dataListTemp));
       this.worksheetData = {};
+      this.worksheetOK = false;
       this.is_reloadWorksheet = false;
       this.tableLoad = true;
       this.axios
@@ -249,19 +264,35 @@ export default {
         .catch(() => {})
         .finally(() => {
           this.tableLoad = false;
-          this.is_reloadWorksheet = false;
+          this.is_reloadWorksheet = true;
         });
     },
     pairFieldValue(data) {
       //https://stackoverflow.com/questions/56444006/how-to-merge-the-property-with-same-key-in-two-object-array?noredirect=1&lq=1
+      //String
       var map = new Map(
         data.stringFieldRecords.map(o => [o.stringField.id, o])
       );
       var result = this.dataList.worksheetForm.stringFields.map(o =>
         Object.assign({}, o, map.get(o.id))
       );
-      //   this.testMap = result;
       this.dataList.worksheetForm.stringFields = result;
+      //String
+      var mapt = new Map(
+        data.textAreaFieldRecords.map(o => [o.textAreaField.id, o])
+      );
+      var resultt = this.dataList.worksheetForm.textAreaFields.map(o =>
+        Object.assign({}, o, mapt.get(o.id))
+      );
+      this.dataList.worksheetForm.textAreaFields = resultt;
+      //integer
+      var mapi = new Map(
+        data.integerFieldRecords.map(o => [o.integerField.id, o])
+      );
+      var resulti = this.dataList.worksheetForm.integerFields.map(o =>
+        Object.assign({}, o, mapi.get(o.id))
+      );
+      this.dataList.worksheetForm.integerFields = resulti;
     }
   }
 };

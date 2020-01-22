@@ -1,6 +1,6 @@
 <template>
   <v-container grid-list-md>
-    <v-row></v-row>
+    <!-- <v-row>Reload : {{modeReload}}</v-row> -->
     <v-card :loading="loader">
       <v-card-title primary-title>{{formTemplate.name}}</v-card-title>
       <v-card-text class="subtitle">{{formTemplate.description}}</v-card-text>
@@ -8,7 +8,7 @@
         <v-form ref="form" v-model="valid">
           <template v-for="(field, index) in fields">
             <v-row :key="index">
-              <field-module :field="field" :index="index" />
+              <field-module :field="field" :index="index" :modeReload="modeReload"/>
             </v-row>
           </template>
         </v-form>
@@ -18,7 +18,7 @@
       </v-card-text>-->
       <!-- <v-card-text>
         <pre>{{test}}</pre>
-      </v-card-text>-->
+      </v-card-text> -->
 
       <v-card-actions>
         <v-btn color="primary" :disabled="!valid" @click="sendtoParent">Submit</v-btn>
@@ -35,7 +35,7 @@ import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 export default {
   mixins: [formDynamicMixins],
-  props: ["formTemplate"],
+  props: ["formTemplate", "modeReload"],
   data() {
     return {
       loader: false,
