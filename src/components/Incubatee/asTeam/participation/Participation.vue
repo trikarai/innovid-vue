@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-xs>
     <v-row>
-      <v-col>Participation</v-col>
+      <v-col>Participation List</v-col>
     </v-row>
     <v-row>
       <v-col>
@@ -27,16 +27,16 @@
           <template v-slot:item.sub="{item}">
             <v-btn
               small
-              color="accent"
+              color="primary"
               class="mr-2"
               router
               :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + item.id + '/schedule'"
             >
-              <v-icon left>today</v-icon>Schedules
+              <v-icon left>today</v-icon>Mentoring Schedules
             </v-btn>
             <v-btn
               small
-              color="accent"
+              color="primary"
               class="mr-2"
               router
               :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + item.id + '/journal'"
@@ -45,7 +45,7 @@
             </v-btn>
             <v-btn
               small
-              color="accent"
+              color="primary"
               class="mr-2"
               router
               :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + item.id + '/mission'"
@@ -62,7 +62,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>Registration</v-col>
+      <v-col>Program Registration</v-col>
     </v-row>
     <v-row>
       <v-col>
