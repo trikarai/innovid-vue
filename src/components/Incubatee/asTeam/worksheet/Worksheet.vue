@@ -138,6 +138,10 @@ export default {
         .finally(() => {
           this.tableLoad = false;
         });
+    },
+    refresh() {
+      this.dialogDelete = false;
+      this.getDataList();
     }
   }
 };

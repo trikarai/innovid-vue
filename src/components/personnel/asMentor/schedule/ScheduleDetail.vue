@@ -56,7 +56,8 @@ export default {
       dataList: {
         id: "",
         mentoring: { id: "", name: "" },
-        participantMentoringFeedbackForm: {
+        mentorMentoringFeedbackForm: {
+          id: "",
           name: "",
           description: "",
           stringFields: [],
@@ -118,6 +119,8 @@ export default {
     },
     submitForm(params) {
       this.loader = true;
+      params["Form_id"] = this.mentorMentoringFeedbackForm.id;
+
       this.axios
         .put(
           config.baseUri +

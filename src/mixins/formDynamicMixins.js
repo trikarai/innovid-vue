@@ -7,7 +7,12 @@ export const formDynamicMixins = {
     },
     watch: {
         value: function () {
-            var params = { fieldId: this.field.id, value: this.value, type: this.field.type };
+            var params;
+            if (this.modeReload) {
+                params = { fieldId: this.field.stringField.id, value: this.value, type: this.field.type };
+            } else {
+                params = { fieldId: this.field.id, value: this.value, type: this.field.type };
+            }
             bus.$emit("getValue", params, this.index);
         }
     },
@@ -76,10 +81,8 @@ export const formDynamicMixins = {
                 this.fields.push(element);
             });
         },
-        refactorParams(data, formId) {
+        refactorParams(data) {
             var params = new Object();
-            params.profileFormId = formId;
-            params.Form_id = formId;
             var stringFieldRecords = new Array();
             var integerFieldRecords = new Array();
             var textAreaFieldRecords = new Array();

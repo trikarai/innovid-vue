@@ -22,18 +22,22 @@ import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 export default {
   mixins: [validationMixins, formDynamicMixins],
-  props: ["field", "index"],
+  props: ["field", "index", "modeReload"],
   components: {},
   data: function() {
     return {
       clearable: true,
       value: ""
     };
+  },
+  created() {
+    if (this.modeReload) {
+      this.value = this.field.value;
+    }
   }
 };
 </script>
 
 <style scoped>
-
 </style>
 

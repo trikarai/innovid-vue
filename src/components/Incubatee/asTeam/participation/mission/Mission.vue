@@ -14,8 +14,24 @@
                 <v-select append-icon="arrow_drop_down"></v-select>
               </v-card-text>
               <v-card-actions>
-                <v-btn class="mr-2" color="success">View Journal</v-btn>
-                <v-btn color="success">Add Journal</v-btn>
+                <!-- <v-btn
+                  color="success"
+                  fab
+                  x-small
+                  router
+                  :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id "
+                >
+                  <v-icon small>zoom_in</v-icon>
+                </v-btn>-->
+                <v-btn class="mr-2" small color="primary">View Journal</v-btn>
+                <v-btn
+                  color="primary"
+                  small
+                  router
+                  :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom' "
+                >
+                  <v-icon left>add</v-icon>Add Journal
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-timeline-item>

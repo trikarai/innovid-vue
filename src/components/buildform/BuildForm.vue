@@ -275,12 +275,12 @@ export default {
     addString() {
       var field = new Object({
         name: "String",
-        description: "description",
+        description: "",
         position: "",
         required: true,
         defaultValue: null,
-        minValue: 0,
-        maxValue: 0,
+        minValue: 10,
+        maxValue: 150,
         placeholder: "",
         type: "string"
       });
@@ -292,12 +292,12 @@ export default {
     addTextarea() {
       var field = new Object({
         name: "Text Area",
-        description: "description",
+        description: "",
         position: "",
         required: true,
         defaultValue: null,
-        minValue: 0,
-        maxValue: 0,
+        minValue: 10,
+        maxValue: 350,
         placeholder: "",
         type: "textarea"
       });
@@ -309,12 +309,12 @@ export default {
     addInteger() {
       var field = new Object({
         name: "Integer",
-        description: "description",
+        description: "",
         position: "",
         required: true,
         defaultValue: 0,
         minValue: 0,
-        maxValue: 0,
+        maxValue: 20,
         placeholder: "",
         type: "integer"
       });
