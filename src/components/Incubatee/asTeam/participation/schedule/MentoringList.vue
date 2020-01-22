@@ -45,7 +45,7 @@
       scrollable
       persistent
       :overlay="false"
-      max-width="300px"
+      max-width="400px"
       transition="dialog-transition"
     >
       <v-card>
@@ -57,7 +57,7 @@
         </v-card-text>
         <transition name="slide-fade" mode="out-in">
           <v-card-text :key="dataSingle.name">
-            <p>{{dataSingle.name}}</p>
+            <p>{{dataSingle}}</p>
             <!-- <p>{{dataSingle.acceptedTime}}</p>
             <p>{{dataSingle.active}}</p>
             <p>{{dataSingle.note}}</p>-->
@@ -140,7 +140,7 @@ export default {
             "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/program-participations/" +
-            this.$route.params.programId +
+            this.$route.params.cohortId +
             "/mentorings/" +
             id,
           {
