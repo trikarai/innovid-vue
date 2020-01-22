@@ -1,8 +1,8 @@
 <template>
-  <v-container class="mt-10" grid-list-xs>
+  <v-container>
     <v-row>
       <v-col xs="12" md="5">
-        <v-form ref="form1" v-model="valid1">
+        <v-form class="mt-10" ref="form1" v-model="valid1">
           <v-card>
             <v-card-title class="topaccent" primary-title>
               <div>
@@ -56,7 +56,7 @@
         </v-form>
       </v-col>
       <v-col xs="12" md="5">
-        <v-form v-model="valid2" ref="form2">
+        <v-form class="mt-10" v-model="valid2" ref="form2">
           <v-card :loading="loaderPass">
             <v-card-title class="topaccent" primary-title>
               <div>
