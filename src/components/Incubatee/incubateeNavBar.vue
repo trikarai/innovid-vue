@@ -19,9 +19,12 @@
     <v-btn class="ml-3 mt-5" icon v-if="$route.meta.level !== 0" @click="$router.go(-1) ">
       <v-icon>arrow_back</v-icon>
     </v-btn>
-  <div class="ml-8 mt-2">
-    <h2 class="ml-5 mb-2">{{$route.name}}</h2>
-    <div class="ml-5 garis"></div>
+    <v-btn class="ml-3 mt-5" icon v-if="$route.meta.level == 0" @click="$router.go(-1) ">
+      <v-icon></v-icon>
+    </v-btn>
+  <div class="container mt-2">
+    <h2 class="mb-2">{{$route.name}}</h2>
+    <div class="garis"></div>
   </div>
 
     <v-navigation-drawer app v-model="drawer" :mini-variant="miniVariant" color="sidebar">
