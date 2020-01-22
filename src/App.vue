@@ -74,4 +74,7 @@ export default {
   position: relative;
   bottom: 28px;
 }
+.v-dialog {
+  overflow-y: inherit !important;
+}
 </style>
