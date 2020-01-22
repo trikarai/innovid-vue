@@ -603,6 +603,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/journal",
         component: TeamMemberJournal,
+        name: "Journal",
         meta: {
           level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
