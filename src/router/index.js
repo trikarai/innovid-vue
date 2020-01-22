@@ -215,6 +215,7 @@ const routes = [
       {
         path: "/personnel/worksheet-forms",
         component: PersonnelWorksheet,
+        name: "Worksheet",
         meta: {
           level: 0,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
@@ -513,6 +514,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/member",
         component: TeamMember,
+        name: "Members",
         meta: {
           level: 1,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -521,6 +523,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/candidate",
         component: TeamMemberCandidate,
+        name: "Candidate",
         meta: {
           level: 2,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -529,6 +532,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/invite",
         component: TeamMemberInvite,
+        name: "Invite new member",
         meta: {
           level: 2,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -537,6 +541,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/application",
         component: TeamMemberApplication,
+        name: "Program",
         meta: {
           level: 2,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -545,6 +550,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/worksheet",
         component: TeamMemberWorksheet,
+        name: "Worksheet",
         meta: {
           level: 2,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -553,6 +559,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation",
         component: TeamMemberParticipation,
+        name: "Participation",
         meta: {
           level: 2,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -593,6 +600,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/schedule",
         component: TeamMemberSchedules,
+        name: "Mentoring Schedule",
         meta: {
           level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -617,6 +625,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/mentoring",
         component: TeamMemberMentoring,
+        name: "Mentoring",
         meta: {
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
