@@ -75,6 +75,7 @@
     </v-dialog>
 
     <v-dialog
+      content-class="vmember"
       v-model="dialogDetail"
       :overlay="false"
       max-width="300px"
