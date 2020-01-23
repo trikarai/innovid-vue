@@ -1,5 +1,5 @@
 <template>
-  <v-col md="6">
+  <v-col>
     <!-- build mode : {{build}} -->
     <v-select
       v-if="build"

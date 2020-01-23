@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col md="6">
+    <v-col>
       <!-- {{fileInfo}} -->
       <v-file-input
         :hint="field.description"

@@ -1,5 +1,5 @@
 <template>
-  <v-col md="6">
+  <v-col>
     <v-text-field
       :placeholder="field.placeholder"
       :hint="field.description"
