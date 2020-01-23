@@ -113,7 +113,7 @@
                         </v-btn>
                       </v-col>
                       <v-col md="10">
-                        <field-module :field="field" :index="index" :build="buildmode"/>
+                        <field-module :field="field" :index="index" :build="buildmode" />
                       </v-col>
                     </v-row>
                   </v-col>
@@ -176,7 +176,7 @@
           <v-card-text>
             <template v-for="(field, index) in fields">
               <v-row :key="index">
-                <field-module :field="field" :index="index" :build="buildmode"/>
+                <field-module :field="field" :index="index" :build="buildmode" />
               </v-row>
             </template>
           </v-card-text>
@@ -225,7 +225,7 @@ import PropsModule from "@/components/fields/props";
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 export default {
-  props: ["edit"],
+  props: ["edit", "formtype"],
   mixins: [formDynamicMixins],
   data() {
     return {
@@ -464,7 +464,8 @@ export default {
         .get(
           config.baseUri +
             "/personnel/as-admin/" +
-            this.$route.params.formType +
+            // this.$route.params.formType +
+            this.formtype +
             "/" +
             this.$route.params.formId,
           {

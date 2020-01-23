@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-xs>
     <!-- build form module-->
-    <buildform-module @postform="postform" />
+    <buildform-module @postform="postform" :edit="edit" :formtype="formtype" />
     <!-- -->
     <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
@@ -22,7 +22,8 @@ export default {
       key: "",
       loader: false,
       overlay: false,
-      edit: false
+      edit: false,
+      formtype: "team-profile-forms"
     };
   },
   components: {
@@ -55,7 +56,7 @@ export default {
           )
           .then(() => {
             bus.$emit("resetField");
-            bus.$emit("callNotif", "success", "Form Created");
+            bus.$emit("callNotif", "success", "Form Updated");
           })
           .catch(res => {
             bus.$emit("callNotif", "error", res);
@@ -65,13 +66,16 @@ export default {
           });
       } else {
         this.axios
-          .post(config.baseUri + "/personnel/as-admin/team-profile-forms", params, {
-            headers: auth.getAuthHeader()
-          })
+          .post(
+            config.baseUri + "/personnel/as-admin/team-profile-forms",
+            params,
+            {
+              headers: auth.getAuthHeader()
+            }
+          )
           .then(() => {
             bus.$emit("resetField");
             bus.$emit("callNotif", "success", "Form Created");
-            // this.resetField();
           })
           .catch(res => {
             bus.$emit("callNotif", "error", res);

@@ -241,7 +241,7 @@ const routes = [
         }
       },
       {
-        path: "/personnel/:formType/:formId/edit",
+        path: "/personnel/worksheet-forms/:formId/edit",
         component: PersonnelWorksheetBuild,
         meta: {
           level: 1,
@@ -265,6 +265,14 @@ const routes = [
         }
       },
       {
+        path: "/personnel/profile-forms/:formId/edit",
+        component: PersonnelProfileFormBuild,
+        meta: {
+          level: 2,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
         path: "/personnel/team-profile-forms",
         component: PersonnelTeamProfileForm,
         meta: {
@@ -277,6 +285,14 @@ const routes = [
         component: PersonnelTeamProfileFormBuild,
         meta: {
           level: 1,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/team-profile-forms/:formId/edit",
+        component: PersonnelTeamProfileFormBuild,
+        meta: {
+          level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
       },
