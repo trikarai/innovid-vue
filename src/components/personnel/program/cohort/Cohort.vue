@@ -41,6 +41,10 @@
             </v-btn>
             {{item.name}}
           </template>
+          <template v-slot:item.published="{item}">
+            <v-icon large v-if="item.published" color="green darken-1">check</v-icon>
+            <v-icon large v-else color="red darken-1">remove</v-icon>
+          </template>
           <template v-slot:item.action="{item}">
             <v-btn
               small
@@ -151,6 +155,12 @@ export default {
         { text: "Name", value: "name", sortable: false },
         { text: "", value: "personnel", sortable: false, align: "right" },
         { text: "", value: "sub", sortable: false, align: "right" },
+        {
+          text: "Published",
+          value: "published",
+          sortable: false,
+          align: "right"
+        },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       dialogForm: false,
