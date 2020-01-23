@@ -1,10 +1,7 @@
 <template>
   <v-container grid-list-xs>
     <v-row>
-      <v-col></v-col>
-    </v-row>
-    <v-row>
-      <v-col>
+      <v-col cols="12" md="6" lg="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -12,6 +9,7 @@
           :items="dataList.list"
           class="elevation-1"
         >
+        <template v-slot:no-data>No Program Available / Already Participate one of the program</template>
           <template v-slot:item.name="{item}">
             <v-btn
               class="elevation-0 mr-2"
