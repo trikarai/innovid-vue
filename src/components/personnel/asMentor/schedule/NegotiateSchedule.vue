@@ -75,35 +75,65 @@
         </v-card-text>
         <v-card-text>
           <v-form ref="form" v-model="valid">
-            <v-menu
-              ref="menu"
-              v-model="menu"
-              :close-on-content-click="false"
-              :nudge-right="40"
-              transition="scale-transition"
-              offset-y
-              full-width
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="params.startTime"
-                  label="Date Offer"
-                  prepend-icon="today"
-                  readonly
-                  :rules="rulesRequired"
-                  v-on="on"
-                  clearable
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                ref="picker"
-                :locale="$vuetify.lang.current"
-                v-model="params.startTime"
-                min="1950-01-01"
-                @input="menu = false"
-              ></v-date-picker>
-            </v-menu>
+            <v-row>
+              <v-col>
+                <v-menu
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="date"
+                      label="Date Offer"
+                      prepend-icon="today"
+                      readonly
+                      :rules="rulesRequired"
+                      v-on="on"
+                      clearable
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    ref="picker"
+                    :locale="$vuetify.lang.current"
+                    v-model="date"
+                    min="1950-01-01"
+                    @input="menu = false"
+                  ></v-date-picker>
+                </v-menu>
+              </v-col>
+              <v-col>
+                <v-menu
+                  v-model="menu2"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="time"
+                      label="Time"
+                      prepend-icon="schedule"
+                      readonly
+                      :rules="rulesRequired"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    format="24hr"
+                    color="blue"
+                    :locale="$vuetify.lang.current"
+                    v-model="time"
+                  ></v-time-picker>
+                </v-menu>
+              </v-col>
+            </v-row>
           </v-form>
           <!-- {{startTime}} -->
         </v-card-text>
@@ -159,6 +189,7 @@ export default {
       search: "",
       valid: false,
       menu: false,
+      menu2: false,
       dataList: { total: 0, list: [] },
       dataSingle: {
         id: "",
@@ -196,13 +227,22 @@ export default {
       leftAction: "",
       params: {
         startTime: ""
-      }
+      },
+      date: "",
+      time: ""
     };
+  },
+  watch: {
+    date: "setDateTime",
+    time: "setDateTime"
   },
   mounted: function() {
     this.getDataList();
   },
   methods: {
+    setDateTime: function() {
+      this.params.startTime = this.date + " " + this.time;
+    },
     getDataList() {
       this.tableLoad = true;
       this.axios
