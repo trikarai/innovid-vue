@@ -133,7 +133,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn v-if="leftAction = 'cancel'" text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn v-if="leftAction = 'accept'" text color="red" @click="acceptAccount(leftId)">Yes</v-btn>
           <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
@@ -412,6 +413,38 @@ export default {
             this.$route.params.cohortId +
             "/negotiate-mentoring-schedules/" +
             id,
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(() => {
+          bus.$emit(
+            "callNotif",
+            "info",
+            "Successfully " + this.leftAction + " Mentoring Schedule"
+          );
+          this.refresh();
+        })
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
+        .finally(() => {
+          this.tableLoad = false;
+        });
+    },
+    acceptAccount(id) {
+      this.tableLoad = true;
+      this.axios
+        .patch(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/negotiate-mentoring-schedules/" +
+            id +
+            "/" +
+            this.leftAction,
           {
             headers: auth.getAuthHeader()
           }
