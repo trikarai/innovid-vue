@@ -74,7 +74,10 @@ export default {
   position: relative;
   bottom: 28px;
 }
-.v-dialog {
+.v-dialog.vmember.v-dialog--active.v-dialog--persistent{
   overflow-y: inherit !important;
+}
+.v-dialog.vmember.v-dialog--active {
+    overflow-y: inherit;
 }
 </style>
