@@ -169,6 +169,16 @@
             <!-- <v-icon>emoji_objects</v-icon> -->
           </v-list-item-icon>
         </v-list-item>
+        <v-list-item
+          class="ml-5"
+          router
+          :to="'/incubatee/team/' + teamId +'/participation/' + participationId + '/journal' "
+        >
+          <v-list-item-title class="grey--text">Journal</v-list-item-title>
+          <v-list-item-icon>
+            <!-- <v-icon>emoji_objects</v-icon> -->
+          </v-list-item-icon>
+        </v-list-item>
       </v-list-group>
     </v-navigation-drawer>
     <v-navigation-drawer temporary right v-model="rightDrawer" fixed>
