@@ -252,6 +252,7 @@ const routes = [
       {
         path: "/personnel/profile-forms",
         component: PersonnelProfileForm,
+        name: "Profile Form",
         meta: {
           level: 0,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
@@ -486,6 +487,7 @@ const routes = [
       {
         path: "/incubatee/profile/:profileId",
         component: IncubateeProfilesData,
+        name: "Profile Detail",
         meta: {
           level: 2,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -493,7 +495,7 @@ const routes = [
       },
       {
         path: "/incubatee/team/:teamId/profile/:profileId",
-        component: IncubateeTeamProfilesData,
+        component: IncubateeTeamProfilesData,      
         meta: {
           level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -502,6 +504,7 @@ const routes = [
       {
         path: "/incubatee/profile-form",
         component: IncubateeProfilesForm,
+        name: "Profile Form",
         meta: {
           level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -518,6 +521,7 @@ const routes = [
       {
         path: "/incubatee/profile-form/:formId/add",
         component: IncubateeProfilesAdd,
+        name: "Add Profile Form",
         meta: {
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
