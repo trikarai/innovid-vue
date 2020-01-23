@@ -4,7 +4,7 @@
       <!-- {{authData.data.id}} -->
       <v-col md="8" xs="12">
         <v-btn color="primary" @click="openAdd">
-          <v-icon left>add</v-icon>Add Cohort
+          <v-icon left>add</v-icon>Create New Program
         </v-btn>
       </v-col>
     </v-row>
@@ -42,10 +42,16 @@
             {{item.name}}
           </template>
           <template v-slot:item.action="{item}">
-            <v-btn small color="green" class="mr-2" @click="publishCohort(item.id)">
+            <v-btn
+              small
+              color="green"
+              class="mr-2"
+              @click="publishCohort(item.id)"
+              v-if="!item.published"
+            >
               <v-icon left small>check</v-icon>Publish
             </v-btn>
-            <v-btn small color="warning" @click="leftAct(item, 'Delete')">
+            <v-btn v-if="!item.published" small color="warning" @click="leftAct(item, 'Delete')">
               <v-icon small>delete</v-icon>
             </v-btn>
           </template>
