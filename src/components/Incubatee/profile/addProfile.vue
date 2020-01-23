@@ -1,12 +1,13 @@
 <template>
   <v-container grid-list-xs>
-    <v-row>
+    <v-row v-if="loader">
       <v-col md="12">
-        <v-progress-circular v-if="loader" indeterminate color="primary"></v-progress-circular>
+        <v-progress-circular indeterminate color="primary"></v-progress-circular>
       </v-col>
     </v-row>
 
     <render-form v-if="!loader" :formTemplate="formTemplate" @submit-form="submitForm" />
+    
   </v-container>
 </template>
 <script>

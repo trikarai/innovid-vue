@@ -2,12 +2,12 @@
   <v-container grid-list-xs>
     <v-row>
       <v-col md="8" xs="12">
-        <v-btn color="accent" router to="/incubatee/profile-form">
+        <v-btn color="primary" router to="/incubatee/profile-form">
           <v-icon left>add</v-icon>Add Profiles
         </v-btn>
       </v-col>
     </v-row>
-    <v-row v-show="false">
+    <!-- <v-row v-show="false">
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -18,9 +18,9 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
-      <v-col>
+      <v-col cols="12" lg="6" md="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -42,7 +42,7 @@
           </template>
           <template v-slot:item.action="{item}">
             <v-btn small color="warning" @click="leftAct(item, 'Remove')">
-              <v-icon small>delete</v-icon>
+              <v-icon left small>delete</v-icon> Remove
             </v-btn>
           </template>
         </v-data-table>
@@ -57,8 +57,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
