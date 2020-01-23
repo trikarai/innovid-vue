@@ -161,13 +161,12 @@
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn text color="red" @click="deleteAccount2(leftId2)">Yes</v-btn>
-          <v-btn ctext class="grey--text" @click="dialogDelete2 = false">Cancel</v-btn>
+          <v-btn text class="grey--text" @click="dialogDelete2 = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-
-    <v-layout row justify-center>
-      <v-dialog v-model="dialog" persistent max-width="400">
+ 
+      <v-dialog content-class="vmember" v-model="dialog" persistent max-width="400">
         <v-card :loading="tableLoad">
           <v-card-title class="topaccent" primary-title>
               <div>
@@ -186,9 +185,9 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-    </v-layout>
 
     <v-dialog
+      content-class="vmember"
       v-model="dialogDetail"
       :overlay="false"
       max-width="400px"
