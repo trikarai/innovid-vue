@@ -9,17 +9,17 @@
           :items="dataList.list"
           class="elevation-1"
         >
-          <template v-slot:item.name="{item}">
-            <!-- <v-btn
+          <template v-slot:item.worksheet="{item}">
+            <v-btn
               class="elevation-0 mr-2"
               fab
               x-small
               color="primary"
-              @click="openDetail(item.id)"
+              @click="openDetail(item.worksheet.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn>-->
-            {{item.mission.name}}
+            </v-btn>
+            {{item.worksheet.name}}
           </template>
 
           <template v-slot:item.action="{item}">
@@ -60,8 +60,8 @@ export default {
       tableLoad: false,
       loader: false,
       tableHeaders: [
-        { text: "Mission", value: "name", sortable: false },
-        { text: "Worksheet", value: "worksheet.name", sortable: false },
+        { text: "Mission", value: "mission.name", sortable: false },
+        { text: "Worksheet", value: "worksheet", sortable: false },
         { text: "", value: "sub", sortable: false, align: "left" },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
@@ -141,6 +141,12 @@ export default {
         .finally(() => {
           this.tableLoad = false;
         });
+    },
+    openDetail(id) {
+      this.$router.push({
+        path:
+          "/incubatee/team/" + this.$route.params.teamId + "/worksheet/" + id
+      });
     }
   }
 };
