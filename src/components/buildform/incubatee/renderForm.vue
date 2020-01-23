@@ -1,9 +1,17 @@
 <template>
-  <v-container grid-list-md>
+  <!-- <v-container> -->
     <!-- <v-row>Reload : {{modeReload}}</v-row> -->
-    <v-card :loading="loader">
-      <v-card-title primary-title>{{formTemplate.name}}</v-card-title>
-      <v-card-text class="subtitle">{{formTemplate.description}}</v-card-text>
+    
+  <v-row>
+    <v-col cols="12" md="6" lg="6" xs="12">
+    <v-card class="pa-5 mt-6" :loading="loader">
+      <v-card-title class="topaccentform" primary-title>
+        <div>
+          <h3 class="headline mb-0">{{formTemplate.name}}</h3>
+        </div>
+      </v-card-title>
+      <v-card-text class="subtitle pb-0" v-if="formTemplate.descriptio !==''"><b>Description</b></v-card-text>
+      <v-card-text class="subtitle grey--text">{{formTemplate.description}}</v-card-text>
       <v-card-text>
         <v-form ref="form" v-model="valid">
           <template v-for="(field, index) in fields">
@@ -21,10 +29,12 @@
       </v-card-text> -->
 
       <v-card-actions>
-        <v-btn color="primary" :disabled="!valid" @click="sendtoParent">Submit</v-btn>
+        <v-btn block color="primary" :disabled="!valid" @click="sendtoParent">Submit</v-btn>
       </v-card-actions>
     </v-card>
-  </v-container>
+    </v-col>
+  </v-row>
+  <!-- </v-container> -->
 </template>
 <script>
 import bus from "@/config/bus";
@@ -65,3 +75,16 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.topaccentform {
+  background: #249c90;
+  color: #fff;
+  margin-bottom: 18px;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 5px;
+  position: relative;
+  bottom: 49px;
+}
+</style>
