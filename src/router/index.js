@@ -29,6 +29,7 @@ import TeamMemberInvite from "../components/Incubatee/asTeam/member/searchMember
 import TeamMemberApplication from "../components/Incubatee/asTeam/application/Application";
 import TeamMemberParticipation from "../components/Incubatee/asTeam/participation/Participation";
 import TeamMemberWorksheet from "../components/Incubatee/asTeam/worksheet/Worksheet";
+import TeamMemberWorksheetDetail from "../components/Incubatee/asTeam/worksheet/WorksheetDetail";
 
 //sub participation
 import TeamMemberMission from "../components/Incubatee/asTeam/participation/mission/Mission";
@@ -572,6 +573,15 @@ const routes = [
         name: "Worksheet",
         meta: {
           level: 2,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/team/:teamId/worksheet/:worksheetId",
+        component: TeamMemberWorksheetDetail,
+        name: "Worksheet Detail",
+        meta: {
+          level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
       },
