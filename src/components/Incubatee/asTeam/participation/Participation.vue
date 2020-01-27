@@ -103,13 +103,13 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn v-if="leftAction == 'Quit'" color="green" @click="quitProgram(leftId)">Yes (quit)</v-btn>
+          <v-btn v-if="leftAction == 'Quit'" text color="red" @click="quitProgram(leftId)">Yes</v-btn>
           <v-btn
             v-if="leftAction == 'Cancel'"
-            color="green"
+            text color="red"
             @click="cancelProgram(leftId)"
-          >Yes (cancel)</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          >Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
