@@ -513,6 +513,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/team-profile-form",
         component: IncubateeTeamProfilesForm,
+        name: "Team Profile Form",
         meta: {
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -530,6 +531,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/team-profile-form/:formId/add",
         component: IncubateeTeamProfilesAdd,
+        name: "Add Team Profile Form",
         meta: {
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -676,6 +678,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/mentoring/:mentoringId/mentor",
         component: TeamMemberMentor,
+        name: "Mentor",
         meta: {
           level: 5,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false

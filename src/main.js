@@ -11,6 +11,8 @@ import VueAxios from 'vue-axios';
 import Notification from "@/components/Notification";
 Vue.component('notification', Notification);
 
+Vue.use(require('vue-moment'));
+
 Vue.use(VueAxios, axios);
 Vue.config.productionTip = false
 
