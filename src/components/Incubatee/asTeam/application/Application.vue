@@ -1,7 +1,10 @@
 <template>
   <v-container grid-list-xs>
     <v-row>
-      <v-col cols="12" md="6" lg="6" xs="12">
+      <v-col>Available Program</v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" md="8" lg="8" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -10,7 +13,7 @@
           class="elevation-1"
         >
         <template v-slot:no-data>No Program Available / Already Participate one of the program</template>
-          <template v-slot:item.name="{item}">
+          <!-- <template v-slot:item.name="{item}">
             <v-btn
               class="elevation-0 mr-2"
               fab
@@ -21,14 +24,48 @@
               <v-icon>zoom_in</v-icon>
             </v-btn>
             {{item.name}}
-          </template>
+          </template> -->
           <template v-slot:item.action="{item}">
-            <v-btn small color="accent" class="mr-2" @click="leftApply(item)">
-              <v-icon left>check</v-icon>Apply
+            <v-btn small color="primary" class="mr-2" @click="leftApply(item)">
+              <v-icon left>check</v-icon>Register
             </v-btn>
             <!-- <v-btn small color="warning" class="mr-2" @click="leftAct(item, 'Cancel')">
               <v-icon left>cancel</v-icon>Cancel
             </v-btn>-->
+          </template>
+        </v-data-table>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>Registered Program</v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" md="8" lg="8" xs="12">
+        <v-data-table
+          :search="search"
+          :loading="tableLoad2"
+          :headers="tableHeaders2"
+          :items="dataList2.list"
+          class="elevation-1"
+        >
+          <template v-slot:item.name="{item}">
+            <v-btn
+              class="elevation-0 mr-2"
+              fab
+              x-small
+              color="primary"
+              @click="openDetail(item.id)"
+            >
+              <v-icon>zoom_in</v-icon>
+            </v-btn>
+            {{item.program.name}}
+          </template>
+
+          <template v-slot:item.action="{item}">
+            <v-btn small color="warning" class="mr-2" @click="leftCancel(item, 'Cancel')">
+              <v-icon left>cancel</v-icon>Cancel
+            </v-btn>
           </template>
         </v-data-table>
       </v-col>
@@ -42,8 +79,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="applyCohort()">Yes</v-btn>
-          <v-btn color="red" @click="dialogApply = false">Cancel</v-btn>
+          <v-btn text color="red" @click="applyCohort()">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogApply = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -56,8 +93,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -102,11 +139,19 @@ export default {
     return {
       search: "",
       dataList: { total: 0, list: [] },
+      dataList2: { total: 0, list: [] },
       dataSingle: { name: "" },
       tableLoad: false,
+      tableLoad2: false,
       loader: false,
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
+        { text: "Description", value: "description", sortable: false },
+        { text: "", value: "action", sortable: false, align: "right" }
+      ],
+      tableHeaders2: [
+        { text: "Name", value: "name", sortable: false },
+        { text: "", value: "sub", sortable: false, align: "left" },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       dialog: false,
@@ -125,6 +170,10 @@ export default {
   },
   mounted() {
     this.getDataList();
+    this.getDataList2();
+  },
+  watch: {
+    '$route': "getDataList"
   },
   methods: {
     getDataList() {
@@ -151,6 +200,30 @@ export default {
           this.tableLoad = false;
         });
     },
+    getDataList2() {
+      this.tableLoad2 = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-registrations",
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          if (res.data.data) {
+            this.dataList2 = res.data.data;
+          } else {
+            this.dataList2 = { total: 0, list: [] };
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.tableLoad2 = false;
+        });
+    },
     getDataSingle(id) {
       this.loader = true;
       this.axios
@@ -167,7 +240,9 @@ export default {
         .then(res => {
           this.dataSingle = res.data.data;
         })
-        .catch(() => {})
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
         .finally(() => {
           this.loader = false;
         });
