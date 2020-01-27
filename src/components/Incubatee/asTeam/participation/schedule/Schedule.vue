@@ -6,7 +6,7 @@
           color="primary"
           router
           :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mentoring' "
-        >Propose New Mentoring</v-btn>
+        ><v-icon left>add</v-icon>Propose New Mentoring</v-btn>
       </v-col>
     </v-row>
     <v-row>
