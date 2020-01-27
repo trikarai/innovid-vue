@@ -30,10 +30,10 @@
     </v-row>
     <v-row v-if="incubatee !== null">
       <v-col md="4" v-if="!async">
-        <v-card>
+        <v-card class="pa-5">
           <v-card-text>
-            <p>{{incubatee.name}}</p>
-            <p>{{incubatee.email}}</p>
+            <p><b>Name</b><br>{{incubatee.name}}</p>
+            <p><b>Email</b><br>{{incubatee.email}}</p>
           </v-card-text>
           <v-card-text>
             <v-form v-model="valid" ref="form">
@@ -48,6 +48,7 @@
           </v-card-text>
           <v-card-actions>
             <v-btn
+              block
               @click="validate"
               :class=" { 'primary white--text' : valid}"
               :disabled="!valid"
