@@ -61,7 +61,7 @@
         </v-data-table>
       </v-col>
     </v-row>
-    <v-row>
+    <!-- <v-row>
       <v-col>Program Registration</v-col>
     </v-row>
     <v-row>
@@ -93,7 +93,7 @@
           </template>
         </v-data-table>
       </v-col>
-    </v-row>
+    </v-row> -->
 
     <v-dialog v-model="dialogDelete" width="300" :persistent="true">
       <v-card :loading="loader">
