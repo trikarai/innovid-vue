@@ -237,8 +237,8 @@ export default {
         {
           icon: "dashboard",
           text: "Dashboard",
-          route: "/incubatee/profile",
-          disabled: true
+          route: "/incubatee/dashboard",
+          disabled: false
         },
         {
           icon: "account_circle",

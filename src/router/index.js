@@ -10,6 +10,7 @@ import ResetPassword from "../views/account/ResetPassword";
 
 import IncubateeNav from "../views/main/Incubatee";
 import IncubateeAccount from "../components/Incubatee/account/IncubateeAccount";
+import IncubateeDashboard from "../components/Incubatee/dashboard/Dashboard";
 import IncubateeMembership from "../components/Incubatee/membership/Membership";
 import IncubateeCandidateships from "../components/Incubatee/candidate/Candidate";
 //Founder Profile
@@ -440,6 +441,15 @@ const routes = [
     },
     children: [
       {
+        path: "/incubatee/dashboard",
+        component: IncubateeDashboard,
+        name: "Dashboard",
+        meta: {
+          level: 1,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
         path: "/incubatee/account",
         component: IncubateeAccount,
         name: "My Account",
@@ -495,7 +505,7 @@ const routes = [
       },
       {
         path: "/incubatee/team/:teamId/profile/:profileId",
-        component: IncubateeTeamProfilesData,      
+        component: IncubateeTeamProfilesData,
         meta: {
           level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
