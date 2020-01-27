@@ -4,7 +4,7 @@
       <v-col>Mentoring List</v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="12" md="6" lg="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -28,7 +28,7 @@
           <template v-slot:item.action="{item}">
             <v-btn
               small
-              color="accent"
+              color="primary"
               class="mr-2"
               router
               :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mentoring/' + item.id + '/mentor' "
