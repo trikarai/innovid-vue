@@ -4,7 +4,7 @@
       <v-col>Mentor List</v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="12" md="6" lg="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -26,7 +26,7 @@
           </template>
 
           <template v-slot:item.action="{item}">
-            <v-btn color="accent" @click="proposeAct(item)">
+            <v-btn small color="primary" @click="proposeAct(item)">
               <v-icon left>insert_invitation</v-icon>Propose
             </v-btn>
           </template>
