@@ -80,4 +80,15 @@ export default {
 .v-dialog.vmember.v-dialog--active {
     overflow-y: inherit;
 }
+
+@media (min-width: 1264px) {
+  .container {
+      max-width: 1029px !important;
+  }
+}
+@media (min-width: 1500px) {
+  .container {
+      max-width: 1185px !important;
+  }
+}
 </style>
