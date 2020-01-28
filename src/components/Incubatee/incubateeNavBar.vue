@@ -22,7 +22,7 @@
     <v-btn class="ml-3 mt-5" icon v-if="$route.meta.level == 0" @click="$router.go(-1) ">
       <v-icon></v-icon>
     </v-btn>
-  <div class="container mt-2">
+  <div class="container extend mt-2">
     <h2 class="mb-2">{{$route.name}}</h2>
     <div class="garis"></div>
   </div>
