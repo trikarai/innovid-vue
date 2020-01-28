@@ -21,7 +21,7 @@
               @click="openDetail(item.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn> -->
+            </v-btn>-->
             {{item.program.name}}
           </template>
           <template v-slot:item.sub="{item}">
@@ -93,7 +93,7 @@
           </template>
         </v-data-table>
       </v-col>
-    </v-row> -->
+    </v-row>-->
 
     <v-dialog v-model="dialogDelete" width="300" :persistent="true">
       <v-card :loading="loader">
@@ -104,11 +104,7 @@
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn v-if="leftAction == 'Quit'" text color="red" @click="quitProgram(leftId)">Yes</v-btn>
-          <v-btn
-            v-if="leftAction == 'Cancel'"
-            text color="red"
-            @click="cancelProgram(leftId)"
-          >Yes</v-btn>
+          <v-btn v-if="leftAction == 'Cancel'" text color="red" @click="cancelProgram(leftId)">Yes</v-btn>
           <v-btn text color="grey" @click="dialogDelete = false">Close</v-btn>
         </v-card-actions>
       </v-card>
@@ -151,8 +147,10 @@
 import bus from "@/config/bus";
 import * as config from "@/config/config";
 import auth from "@/config/auth";
+import { programMixins } from "@/mixins/programMixins";
 
 export default {
+  mixins: [programMixins],
   data() {
     return {
       search: "",
@@ -264,7 +262,7 @@ export default {
     leftAct(item, action) {
       this.dialogDelete = true;
       this.leftId = item.id;
-      this.leftName = item.program.name;
+      // this.leftName = item.program.name;
       this.leftAction = action;
     },
     leftCancel(item, action) {
@@ -288,30 +286,6 @@ export default {
         )
         .then(() => {
           bus.$emit("callNotif", "info", "Successfully Quit");
-          this.refresh();
-        })
-        .catch(res => {
-          bus.$emit("callNotif", "error", res);
-        })
-        .finally(() => {
-          this.tableLoad = false;
-        });
-    },
-    cancelProgram(id) {
-      this.tableLoad = true;
-      this.axios
-        .delete(
-          config.baseUri +
-            "/founder/as-team-member/" +
-            this.$route.params.teamId +
-            "/program-registrations/" +
-            id,
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
-        .then(() => {
-          bus.$emit("callNotif", "info", "Successfully Cancel Registration");
           this.refresh();
         })
         .catch(res => {

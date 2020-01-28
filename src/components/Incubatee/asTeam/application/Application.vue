@@ -12,7 +12,7 @@
           :items="dataList.list"
           class="elevation-1"
         >
-        <template v-slot:no-data>No Program Available / Already Participate one of the program</template>
+          <template v-slot:no-data>No Program Available / Already Participate one of the program</template>
           <!-- <template v-slot:item.name="{item}">
             <v-btn
               class="elevation-0 mr-2"
@@ -24,7 +24,7 @@
               <v-icon>zoom_in</v-icon>
             </v-btn>
             {{item.name}}
-          </template> -->
+          </template>-->
           <template v-slot:item.action="{item}">
             <v-btn small color="primary" class="mr-2" @click="leftApply(item)">
               <v-icon left>check</v-icon>Register
@@ -50,20 +50,20 @@
           class="elevation-1"
         >
           <template v-slot:item.name="{item}">
-            <v-btn
+            <!-- <v-btn
               class="elevation-0 mr-2"
               fab
               x-small
               color="primary"
-              @click="openDetail(item.id)"
+              @click="openDetail(item.program.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn>
+            </v-btn> -->
             {{item.program.name}}
           </template>
 
           <template v-slot:item.action="{item}">
-            <v-btn small color="warning" class="mr-2" @click="leftCancel(item, 'Cancel')">
+            <v-btn small color="warning" class="mr-2" @click="leftAct(item, 'Cancel')">
               <v-icon left>cancel</v-icon>Cancel
             </v-btn>
           </template>
@@ -93,7 +93,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <!-- <v-btn v-if="leftAction == 'Cancel'" text color="red" @click="deleteAccount(leftId)">Yes</v-btn> -->
+          <v-btn v-if="leftAction == 'Cancel'" text color="red" @click="cancelProgram(leftId)">Yes</v-btn>
           <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
@@ -134,7 +135,10 @@ import bus from "@/config/bus";
 import * as config from "@/config/config";
 import auth from "@/config/auth";
 
+import { programMixins } from "@/mixins/programMixins";
+
 export default {
+  mixins: [programMixins],
   data() {
     return {
       search: "",
@@ -173,7 +177,7 @@ export default {
     this.getDataList2();
   },
   watch: {
-    '$route': "getDataList"
+    $route: "getDataList"
   },
   methods: {
     getDataList() {
@@ -254,7 +258,7 @@ export default {
     leftAct(item, action) {
       this.dialogDelete = true;
       this.leftId = item.id;
-      this.leftName = item.name;
+      this.leftName = item.program.name;
       this.leftAction = action;
     },
     leftApply(item) {
