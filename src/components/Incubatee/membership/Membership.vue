@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col md="8" xs="12">
         <v-btn color="primary" @click="openAdd">
@@ -46,25 +46,33 @@
             {{item.team.name}}
           </template>
           <template v-slot:item.action="{item}">
+          <v-row>
+            <v-col>
+              <v-btn
+                class="ma-1"
+                small
+                color="primary"
+                router
+                :to="'/incubatee/team/' + item.team.id + '/member' "
+              >
+                <!-- <v-icon left small>group</v-icon> -->
+                Members
+              </v-btn>
+              <v-btn
+                class="ma-1"
+                small
+                color="primary"
+                router
+                :to="'/incubatee/team/' + item.team.id + '/worksheet' "
+              >Worksheet
+              </v-btn>
+            </v-col>
+          </v-row>
+          </template>
+          <template v-slot:item.action2="{item}">
+          <v-col>
             <v-btn
-              class="mr-2"
-              small
-              color="primary"
-              router
-              :to="'/incubatee/team/' + item.team.id + '/member' "
-            >
-              <!-- <v-icon left small>group</v-icon> -->
-              Members
-            </v-btn>
-            <v-btn
-              class="mr-2"
-              small
-              color="primary"
-              router
-              :to="'/incubatee/team/' + item.team.id + '/worksheet' "
-            >Worksheet</v-btn>
-            <v-btn
-              class="mr-2"
+              class="ma-1"
               small
               color="primary"
               router
@@ -74,7 +82,7 @@
               Programs
             </v-btn>
             <v-btn
-              class="mr-2"
+              class="ma-1"
               small
               color="primary"
               router
@@ -83,13 +91,22 @@
               <!-- <v-icon left small>how_to_reg</v-icon> -->
               Participation
             </v-btn>
+          </v-col>
+          </template>
+          <template v-slot:item.action3="{item}">
+          <v-col>
             <v-btn class="mr-2" small color="primary" @click="updateAct(item, 'Update')">
-              <!-- <v-icon left small>edit</v-icon> -->
-              Update Name
+              <v-icon small>edit</v-icon>
+              <!-- Update Name -->
             </v-btn>
+          </v-col>
+          </template>
+          <template v-slot:item.action4="{item}">
+          <v-col>
             <v-btn small color="warning" @click="leftAct(item, 'Quit')">
               <v-icon left small>flag</v-icon>Quit
             </v-btn>
+          </v-col>
           </template>
         </v-data-table>
       </v-col>
@@ -238,9 +255,12 @@ export default {
       tableLoad2: false,
       loader: false,
       tableHeaders: [
-        { text: "Team Name", value: "name", sortable: false },
+        { text: "Team Name", value: "name", width: "25%",sortable: false },
         { text: "Your Position", value: "position", sortable: false },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", width: "15%", sortable: false, align: "right" },
+        { text: "", value: "action2", width: "15%", sortable: false, align: "right" },
+        { text: "", value: "action3", width: "10%", sortable: false, align: "center" },
+        { text: "", value: "action4", width: "10%", sortable: false, align: "center" }
       ],
       tableHeaders2: [
         { text: "Name", value: "name", sortable: false },

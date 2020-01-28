@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col md="8" xs="12"></v-col>
     </v-row>
@@ -16,7 +16,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="12" md="6" lg="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -39,11 +39,12 @@
           <template v-slot:item.action="{item}">
             <v-btn
               small
-              color="accent"
+              color="primary"
               router
               :to="'/incubatee/team/'+ teamId +'/team-profile-form/' + item.id + '/add'"
             >
-              <v-icon>add</v-icon>
+              <v-icon left small>add</v-icon>
+              add
             </v-btn>
           </template>
         </v-data-table>

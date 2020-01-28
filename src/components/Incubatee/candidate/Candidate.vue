@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <!-- {{authData.data.id}} -->
       <v-col md="8" xs="12">

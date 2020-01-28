@@ -1,9 +1,9 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col md="8" xs="12">
-        <v-btn color="accent" router :to="'/incubatee/team/'+teamId+'/team-profile-form'">
-          <v-icon left>add</v-icon>Add Profiles
+        <v-btn color="primary" router :to="'/incubatee/team/'+teamId+'/team-profile-form'">
+          <v-icon left>add</v-icon>Add Team Profiles
         </v-btn>
       </v-col>
     </v-row>
@@ -20,7 +20,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="12" md="6" lg="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -42,7 +42,8 @@
           </template>
           <template v-slot:item.action="{item}">
             <v-btn small color="warning" @click="leftAct(item, 'Remove')">
-              <v-icon small>delete</v-icon>
+              <v-icon left small>delete</v-icon>
+              remove
             </v-btn>
           </template>
         </v-data-table>

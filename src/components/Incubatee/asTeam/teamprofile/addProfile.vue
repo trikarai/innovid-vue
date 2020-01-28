@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col md="12">
         <v-progress-circular v-if="loader" indeterminate color="primary"></v-progress-circular>

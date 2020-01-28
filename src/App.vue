@@ -82,12 +82,12 @@ export default {
 }
 
 @media (min-width: 1264px) {
-  .container .extend{
+  .container.extend{
       max-width: 1029px !important;
   }
 }
 @media (min-width: 1500px) {
-  .container .extend {
+  .container.extend {
       max-width: 1185px !important;
   }
 }

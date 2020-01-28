@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col md="8" xs="12">
         <v-btn color="primary" router :to="'/incubatee/team/' + $route.params.teamId + '/invite'">

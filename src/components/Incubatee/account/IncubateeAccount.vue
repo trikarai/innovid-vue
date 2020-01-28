@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container extend>
     <v-row>
       <v-col xs="12" md="5">
         <v-form class="mt-10" ref="form1" v-model="valid1">
