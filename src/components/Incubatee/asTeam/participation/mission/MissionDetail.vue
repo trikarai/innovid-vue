@@ -10,20 +10,44 @@
             </div>
           </v-card-title>
           <v-card-actions>
-            
-            <v-btn text color="accent" disabled>Prev Mission</v-btn>
+            <v-btn
+              v-if="dataList.previousMission !== null"
+              text
+              color="accent"
+              :disabled="dataList.previousMission == null"
+              router
+              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + dataList.previousMission.id "
+            >Prev Mission</v-btn>
+            <v-btn
+              v-else
+              text
+              color="accent"
+              :disabled="dataList.previousMission == null"
+              router
+            >Prev Mission</v-btn>
             <v-spacer></v-spacer>
             <v-btn text color="accent" disabled>Next Mission</v-btn>
+          </v-card-actions>
+          <v-card-actions>
+            <v-btn class="mr-2" small color="primary" disabled>View Journal</v-btn>
+            <v-btn
+              color="primary"
+              small
+              router
+              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + dataList.id + '/atom' "
+            >
+              <v-icon left>add</v-icon>Add Journal
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
       <v-col md="12">
         <!-- <pre> {{dataList.worksheetForm}} </pre> -->
-        <render-form
+        <!-- <render-form
           v-if="!tableLoad"
           :formTemplate="dataList.worksheetForm"
           @submit-form="submitForm"
-        />
+        />-->
       </v-col>
     </v-row>
 
@@ -47,7 +71,7 @@ import bus from "@/config/bus";
 import auth from "@/config/auth";
 import * as config from "@/config/config";
 
-import RenderForm from "@/components/buildform/incubatee/renderForm";
+// import RenderForm from "@/components/buildform/incubatee/renderForm";
 
 export default {
   data() {
@@ -74,10 +98,13 @@ export default {
     };
   },
   components: {
-    RenderForm
+    // RenderForm
   },
   mounted() {
     this.getDataList();
+  },
+  watch: {
+    $route: "getDataList"
   },
   methods: {
     getDataList() {

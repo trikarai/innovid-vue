@@ -14,7 +14,7 @@
                 <v-select append-icon="arrow_drop_down"></v-select>
               </v-card-text>
               <v-card-actions>
-                <!-- <v-btn
+                <v-btn
                   color="success"
                   fab
                   x-small
@@ -22,8 +22,8 @@
                   :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id "
                 >
                   <v-icon small>zoom_in</v-icon>
-                </v-btn>-->
-                <v-btn class="mr-2" small color="primary">View Journal</v-btn>
+                </v-btn>
+                <v-btn class="mr-2" small color="primary" disabled>View Journal</v-btn>
                 <v-btn
                   color="primary"
                   small
