@@ -15,17 +15,16 @@
       <v-icon left>keyboard_backspace</v-icon>Back
     </v-btn>-->
 
-  
     <v-btn class="ml-3 mt-5" icon v-if="$route.meta.level !== 0" @click="$router.go(-1) ">
       <v-icon>arrow_back</v-icon>
     </v-btn>
     <v-btn class="ml-3 mt-5" icon v-if="$route.meta.level == 0" @click="$router.go(-1) ">
       <v-icon></v-icon>
     </v-btn>
-  <div class="container mt-2">
-    <h2 class="mb-2">{{$route.name}}</h2>
-    <div class="garis"></div>
-  </div>
+    <div class="container mt-2">
+      <h2 class="mb-2">{{$route.name}}</h2>
+      <div class="garis"></div>
+    </div>
 
     <v-navigation-drawer app v-model="drawer" :mini-variant="miniVariant" color="sidebar">
       <!-- list head-->
@@ -94,13 +93,13 @@
         </v-list-item>
       </v-list>
 
-      <v-list-group  value="true" no-action v-if="teamId != ''">
+      <v-list-group value="true" no-action v-if="teamId != ''">
         <template v-slot:activator>
-           <v-list-item-action>
+          <v-list-item-action>
             <v-icon color="#676767">group</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-          <v-list-item-title class="grey--text">Team</v-list-item-title>
+            <v-list-item-title class="grey--text">Team</v-list-item-title>
           </v-list-item-content>
         </template>
 
@@ -131,20 +130,15 @@
             <!-- <v-icon>assignments</v-icon> -->
           </v-list-item-icon>
         </v-list-item>
- 
       </v-list-group>
 
-      <v-list-group
-        value="true"
-        no-action
-        v-if="participationId != ''"
-      >
+      <v-list-group value="true" no-action v-if="participationId != ''">
         <template v-slot:activator>
           <v-list-item-action>
             <v-icon color="#676767">how_to_reg</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-          <v-list-item-title class="grey--text">Participation</v-list-item-title>
+            <v-list-item-title class="grey--text">Participation</v-list-item-title>
           </v-list-item-content>
         </template>
 
@@ -219,6 +213,7 @@
 <script>
 import * as config from "@/config/config";
 import auth from "@/config/auth";
+import bus from "@/config/bus";
 
 export default {
   data() {
@@ -302,6 +297,7 @@ export default {
   created() {
     this.user = JSON.parse(auth.getAuthData());
     this.teamId = this.user.data.teamMemberships[0].team.id;
+    localStorage.setItem("DashboardTeamId", this.teamId);
   },
   mounted() {
     if (this.teamId != "") {
@@ -320,6 +316,8 @@ export default {
       this.$router.replace({ path: "/" });
     },
     getParticipations() {
+      localStorage.setItem("DashboardTeamId", this.teamId);
+      bus.$emit("changeDashboardTeam", this.teamId);
       this.tableLoad = true;
       this.axios
         .get(
