@@ -135,7 +135,7 @@ export default {
           authUser.valid_until = res.data.credentials.valid_until;
           window.localStorage.setItem("lbUser", JSON.stringify(authUser));
 
-          this.$router.replace("/incubatee/main");
+          this.$router.replace("/incubatee/dashboard");
         })
         .catch(res => {
           bus.$emit("callNotif", "error", res);
