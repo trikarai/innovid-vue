@@ -220,7 +220,7 @@ const routes = [
       {
         path: "/personnel/worksheet-forms",
         component: PersonnelWorksheet,
-        name: "Worksheet",
+        name: "Worksheet Form",
         meta: {
           level: 0,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
@@ -253,7 +253,7 @@ const routes = [
       {
         path: "/personnel/profile-forms",
         component: PersonnelProfileForm,
-        name: "Profile Form",
+        name: "Profile Forms",
         meta: {
           level: 0,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
