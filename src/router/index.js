@@ -506,6 +506,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/profile/:profileId",
         component: IncubateeTeamProfilesData,
+        name: "Team Profile",
         meta: {
           level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
