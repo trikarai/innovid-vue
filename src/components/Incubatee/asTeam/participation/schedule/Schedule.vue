@@ -55,10 +55,10 @@
     </v-row>
     <v-row>
       <v-col>
-        {{dataList2}}
+        <!-- {{dataList2}} -->
         <v-data-table
           :search="search"
-          :loading="tableLoad"
+          :loading="tableLoad2"
           :headers="tableHeaders"
           :items="dataList2.list"
           class="elevation-1"
@@ -133,8 +133,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn v-if="leftAction = 'cancel'" text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn v-if="leftAction = 'accept'" text color="red" @click="acceptAccount(leftId)">Yes</v-btn>
+          <v-btn v-if="leftAction == 'cancel'" text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn v-if="leftAction == 'accept'" text color="red" @click="acceptAccount(leftId)">Yes</v-btn>
           <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
