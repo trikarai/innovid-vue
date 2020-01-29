@@ -20,7 +20,7 @@
       </v-col>
     </v-row> -->
     <v-row>
-      <v-col cols="12" lg="7" md="7" xs="12">
+      <v-col cols="12" lg="6" md="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
