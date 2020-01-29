@@ -9,10 +9,16 @@
           <v-timeline-item v-for="data in dataList.list" :key="data.id">
             <v-card class="elevation-5">
               <v-card-title class="headline">{{data.position}} : {{data.name}}</v-card-title>
-              <v-card-text>{{data}}</v-card-text>
-              <v-card-text>
-                <v-select append-icon="arrow_drop_down"></v-select>
+              <v-card-text v-if="data.previousMission != null">
+                <v-icon color="indigo accent-1" left>account_tree</v-icon>
+                {{data.previousMission.name}}
               </v-card-text>
+              <v-card-text v-else>
+                <v-icon color="indigo accent-1" left>trip_origin</v-icon>Root
+              </v-card-text>
+              <!-- <v-card-text>
+                <v-select append-icon="arrow_drop_down"></v-select>
+              </v-card-text> -->
               <v-card-actions>
                 <v-btn
                   color="success"
