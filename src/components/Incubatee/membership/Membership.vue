@@ -46,7 +46,6 @@
             {{item.team.name}}
           </template>
           <template v-slot:item.action="{item}">
-          <v-row>
             <v-col>
               <v-btn
                 class="ma-1"
@@ -67,7 +66,6 @@
               >Worksheet
               </v-btn>
             </v-col>
-          </v-row>
           </template>
           <template v-slot:item.action2="{item}">
           <v-col>
@@ -95,7 +93,7 @@
           </template>
           <template v-slot:item.action3="{item}">
           <v-col>
-            <v-btn class="mr-2" small color="primary" @click="updateAct(item, 'Update')">
+            <v-btn small color="primary" @click="updateAct(item, 'Update')">
               <v-icon small>edit</v-icon>
               <!-- Update Name -->
             </v-btn>
@@ -223,7 +221,7 @@
           <v-card-text :key="dataSingle.team.name"><b>Team Name</b><br>{{dataSingle.team.name}}</v-card-text>
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.position"><b>Position</b><br>{{dataSingle.position}}</v-card-text>
+          <v-card-text :key="dataSingle.position"><b>Your Position</b><br>{{dataSingle.position}}</v-card-text>
         </transition>
         <!-- <v-card-actions>
           <div class="flex-grow-1"></div>
