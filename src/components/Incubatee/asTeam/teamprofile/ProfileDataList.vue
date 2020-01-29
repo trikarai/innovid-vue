@@ -58,8 +58,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
