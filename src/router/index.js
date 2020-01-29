@@ -636,7 +636,7 @@ const routes = [
         }
       },
       {
-        path: "/incubatee/team/:teamId/participation/:cohortId/mission/:missionId/atom",
+        path: "/incubatee/team/:teamId/participation/:cohortId/mission/:missionId/atom/:journalId?",
         component: AddAtomicJournal,
         meta: {
           level: 5,

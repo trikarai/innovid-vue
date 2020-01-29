@@ -317,6 +317,7 @@ export default {
     refresh() {
       this.dialogApply = false;
       this.getDataList();
+      this.getDataList2();
     }
   }
 };
