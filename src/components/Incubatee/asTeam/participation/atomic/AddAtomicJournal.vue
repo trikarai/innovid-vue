@@ -42,8 +42,6 @@
               :disabled="dataList.previousMission == null"
               router
             >Prev Mission</v-btn>
-            <v-spacer></v-spacer>
-            <v-btn text color="accent" disabled>Next Mission</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
