@@ -1,19 +1,20 @@
 <template>
   <v-container extend grid-list-xs>
     <v-row>
-      <v-col md="8" xs="12"></v-col>
-    </v-row>
-    <v-row>
-      <v-col>
+      <v-col cols="12" md="6" lg="6" xs="12">
         <v-card>
           <v-card-title primary-title>{{dataSingle.teamProfileForm.name}}</v-card-title>
-          <v-card-text>
+          <v-card-text class="pt-0 mt-2 ml-3">
             <template v-for="data in fields">
-              <v-row :key="data.id">
+
                 <!-- {{data}} -->
-                <v-col md="2" class="sub-title">{{data.field.name}}</v-col>
-                <v-col md="6" class="display-1">{{data.value}}</v-col>
-              </v-row>
+                <v-row :key="data.id">
+                  <b>{{data.field.name}}</b>
+                </v-row>
+                <v-row class="mb-4 grey--text" :key="data.id">
+                  {{data.value}}
+                </v-row>
+
             </template>
           </v-card-text>
         </v-card>
