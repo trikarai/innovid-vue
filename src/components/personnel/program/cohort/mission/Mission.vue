@@ -41,16 +41,24 @@
             </v-btn>
             {{item.name}}
           </template>
+          <template v-slot:item.published="{item}">
+            <v-icon large v-if="item.published" color="green darken-1">check</v-icon>
+            <v-icon large v-else color="red darken-1">remove</v-icon>
+          </template>
           <template v-slot:item.sub="{item}">
             <v-icon v-if="item.previousMission === null">stars</v-icon>
           </template>
           <template v-slot:item.action="{item}">
-            <v-btn small color="warning" @click="openAddBranch(item.id)">
+            <v-btn
+              v-if="!item.published"
+              class="mr-2"
+              small
+              color="warning"
+              @click="leftAct(item, 'publish')"
+            >Publish</v-btn>
+            <v-btn small color="primary" @click="openAddBranch(item.id)">
               <v-icon small left>account_tree</v-icon>Add Branch
             </v-btn>
-            <!-- <v-btn small color="warning" @click="leftAct(item, 'Delete')">
-              <v-icon small>delete</v-icon>
-            </v-btn>-->
           </template>
         </v-data-table>
       </v-col>
@@ -133,7 +141,13 @@ export default {
       loader: false,
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
-        { text: "", value: "personnel", sortable: false, align: "right" },
+        {
+          text: "Postition",
+          value: "position",
+          sortable: true,
+          align: "right"
+        },
+        { text: "Published", value: "published", sortable: false, align: "right" },
         { text: "", value: "sub", sortable: false, align: "right" },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
@@ -229,12 +243,13 @@ export default {
     deleteAccount(id) {
       this.tableLoad = true;
       this.axios
-        .delete(
+        .patch(
           config.baseUri +
             "/personnel/as-admin/programs/" +
             this.$route.params.programId +
             "/missions/" +
-            id,
+            id +
+            "/publish",
           {
             headers: auth.getAuthHeader()
           }
