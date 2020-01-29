@@ -62,7 +62,7 @@
           </template>
         </v-data-table>
       </v-col>
-      <v-col md="12">{{dataList}}</v-col>
+      <!-- <v-col md="12">{{dataList}}</v-col> -->
     </v-row>
 
     <add-form
@@ -147,7 +147,12 @@ export default {
           sortable: true,
           align: "right"
         },
-        { text: "Published", value: "published", sortable: false, align: "right" },
+        {
+          text: "Published",
+          value: "published",
+          sortable: false,
+          align: "right"
+        },
         { text: "", value: "sub", sortable: false, align: "right" },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
@@ -250,6 +255,7 @@ export default {
             "/missions/" +
             id +
             "/publish",
+          {},
           {
             headers: auth.getAuthHeader()
           }
