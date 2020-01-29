@@ -2,6 +2,7 @@
   <v-container grid-list-xs>
     <v-row>
       <v-col md="12">
+        <!-- {{root}} -->
         <v-expansion-panels>
           <v-expansion-panel>
             <v-expansion-panel-header>Learning Material</v-expansion-panel-header>
@@ -14,13 +15,33 @@
       <v-col md="6">
         <v-card :loading="tableLoad">
           <v-card-title primary-title>
-            <div>
-              <h3 class="headline mb-0">{{dataList.name}}</h3>
-              <div>{{dataList.description}}</div>
-            </div>
+            <h3 class="headline mb-0">{{dataList.name}}</h3>
           </v-card-title>
+          <v-card-text>
+            <div class="subtitle">{{dataList.description}}</div>
+          </v-card-text>
+          <v-card-text v-if="dataList.previousMission != null">
+            <v-icon color="indigo accent-1" left>account_tree</v-icon>
+          </v-card-text>
+          <v-card-text v-else>
+            <v-icon color="indigo accent-1" left>trip_origin</v-icon>Root
+          </v-card-text>
           <v-card-actions>
-            <v-btn text color="accent" disabled>Prev Mission</v-btn>
+            <v-btn
+              v-if="dataList.previousMission !== null"
+              text
+              color="accent"
+              :disabled="dataList.previousMission == null"
+              router
+              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + dataList.previousMission.id "
+            >Prev Mission</v-btn>
+            <v-btn
+              v-else
+              text
+              color="accent"
+              :disabled="dataList.previousMission == null"
+              router
+            >Prev Mission</v-btn>
             <v-spacer></v-spacer>
             <v-btn text color="accent" disabled>Next Mission</v-btn>
           </v-card-actions>
@@ -136,8 +157,18 @@ export default {
       exworksheetId: "",
       worksheetName: "",
       params: "",
-      testMap: ""
+      testMap: "",
+      root: true
     };
+  },
+  created() {
+    if (this.$route.params.journalId) {
+      this.root = false;
+      this.branchUri = "/" + this.$route.params.journalId;
+    } else {
+      this.root = true;
+      this.branchUri = "";
+    }
   },
   components: {
     RenderForm
@@ -184,7 +215,8 @@ export default {
             this.$route.params.teamId +
             "/program-participations/" +
             this.$route.params.cohortId +
-            "/journals_atomic-worksheet",
+            "/journals_atomic-worksheet" +
+            this.branchUri,
           params,
           {
             headers: auth.getAuthHeader()
