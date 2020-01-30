@@ -1,8 +1,15 @@
 <template>
   <v-container extend grid-list-xs>
-    <!-- <v-row>
-      <v-col md="6">{{dataList}}</v-col>
-    </v-row>-->
+    <v-row style="display:none">
+      <v-col md="6" >
+        <pre>{{dataList}} </pre>
+      </v-col>
+      <v-col md="6">
+        <pre>{{journalList}}</pre>
+        <pre>{{journalList2}}</pre>
+      </v-col>
+    </v-row>
+
     <v-row>
       <v-col md="12">
         <v-timeline :reverse="true">
@@ -16,9 +23,15 @@
               <v-card-text v-else>
                 <v-icon color="indigo accent-1" left>trip_origin</v-icon>Root
               </v-card-text>
-              <!-- <v-card-text>
-                <v-select append-icon="arrow_drop_down"></v-select>
-              </v-card-text> -->
+              <v-card-text v-if="data.journal.length != 0">
+                <v-select
+                  :items="data.journal"
+                  item-text="worksheet.name"
+                  item-value="id"
+                  outlined
+                  @change="getBranchJournal($event, data.id)"
+                ></v-select>
+              </v-card-text>
               <v-card-actions>
                 <v-btn
                   color="success"
@@ -69,7 +82,10 @@ export default {
   data() {
     return {
       search: "",
-      dataList: { id: "", name: "", description: "", nextMission: { id: "" } },
+      journalIdRoot: "",
+      dataList: { total: 0, list: [] },
+      journalList: { total: 0, list: [] },
+      journalList2: [],
       tableLoad: false,
       loader: false,
       tableHeaders: [
@@ -91,6 +107,7 @@ export default {
   },
   mounted() {
     this.getDataList();
+    this.getRootMissionJurnal();
   },
   methods: {
     getDataList() {
@@ -109,6 +126,10 @@ export default {
         )
         .then(res => {
           this.dataList = res.data.data;
+
+          this.dataList.list.forEach(element => {
+            element["journal"] = new Array();
+          });
         })
         .catch(() => {})
         .finally(() => {
@@ -150,6 +171,84 @@ export default {
         .finally(() => {
           this.tableLoad = false;
         });
+    },
+    getRootMissionJurnal() {
+      // this.tableLoad = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/journals?parentJournalId=" +
+            encodeURI(null),
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          this.journalList = res.data.data;
+          // this.dataList.list[0]["journal"] = res.data.data;
+          this.journalList.list.forEach(journalElement => {
+            this.dataList.list.forEach(missionElement => {
+              if (missionElement.id == journalElement.mission.id) {
+                missionElement["journal"].push(journalElement);
+              }
+            });
+          });
+        })
+        .catch(() => {})
+        .finally(() => {
+          // this.tableLoad = false;
+        });
+    },
+    getBranchJournal(event, missionId) {
+      // this.tableLoad = true;
+
+      this.resetElement(missionId);
+
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/journals?parentJournalId=" +
+            event,
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          // this.journalList = res.data.data;
+          // this.dataList.list[index + 1]["journal"] = res.data.data;
+          this.journalList2 = res.data.data;
+
+          this.journalList2.list.forEach(journalElement => {
+            this.dataList.list.forEach(missionElement => {
+              if (missionElement.id == journalElement.mission.id) {
+                missionElement["journal"].push(journalElement);
+              }
+            });
+          });
+        })
+        .catch(() => {})
+        .finally(() => {
+          // this.tableLoad = false;
+        });
+    },
+    resetElement(parentMissionId) {
+      this.dataList.list.forEach(element => {
+        if (
+          element.previousMission != null &&
+          element.previousMission.id == parentMissionId
+        ) {
+          this.resetElement(element.id);
+          element.journal = new Array();
+        }
+      });
     }
   }
 };
