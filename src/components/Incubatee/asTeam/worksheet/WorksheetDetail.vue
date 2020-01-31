@@ -8,7 +8,7 @@
             <template v-for="data in fields">
 
                 <!-- {{data}} -->
-                <v-row :key="data.id">
+                <v-row :key="data.field.id">
                   <b>{{data.field.name}}</b>
                 </v-row>
                 <v-row class="mb-4 grey--text" :key="data.id">
