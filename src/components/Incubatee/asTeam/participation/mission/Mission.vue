@@ -1,15 +1,13 @@
 <template>
   <v-container extend grid-list-xs>
+    <!-- jangan dihapus start-->
     <v-row style="display:none">
-      <v-col md="6" >
-        <pre>{{dataList}} </pre>
-      </v-col>
       <v-col md="6">
         <pre>{{journalList}}</pre>
         <pre>{{journalList2}}</pre>
       </v-col>
     </v-row>
-
+    <!-- jangan dihapus end-->
     <v-row>
       <v-col md="12">
         <v-timeline :reverse="true">
@@ -23,6 +21,7 @@
               <v-card-text v-else>
                 <v-icon color="indigo accent-1" left>trip_origin</v-icon>Root
               </v-card-text>
+
               <v-card-text v-if="data.journal.length != 0">
                 <v-select
                   :items="data.journal"
@@ -44,6 +43,7 @@
                 </v-btn>
                 <v-btn class="mr-2" small color="primary" disabled>View Journal</v-btn>
                 <v-btn
+                  v-if="data.previousMission == null"
                   color="primary"
                   small
                   router
@@ -51,6 +51,17 @@
                 >
                   <v-icon left>add</v-icon>Add Journal
                 </v-btn>
+                <template v-else>
+                  <v-btn
+                    v-if="data.selectedParentJournal"
+                    color="primary"
+                    small
+                    router
+                    :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom/'+ data.selectedParentJournal "
+                  >
+                    <v-icon left>add</v-icon>Add Journal
+                  </v-btn>
+                </template>
               </v-card-actions>
             </v-card>
           </v-timeline-item>
@@ -58,7 +69,7 @@
       </v-col>
     </v-row>
 
-    <v-dialog v-model="dialogDelete" width="300" :persistent="true">
+    <v-dialog v-model="dialogDelete" width="300" :persisteFnt="true">
       <v-card :loading="tableLoad">
         <v-card-title>
           <p class="text-capitalize">{{leftAction}}</p>
@@ -207,6 +218,15 @@ export default {
       // this.tableLoad = true;
 
       this.resetElement(missionId);
+
+      this.dataList.list.forEach(element => {
+        if (
+          element.previousMission != null &&
+          element.previousMission.id == missionId
+        ) {
+          element["selectedParentJournal"] = event;
+        }
+      });
 
       this.axios
         .get(
