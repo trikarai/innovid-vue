@@ -672,6 +672,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/schedule/:scheduleId",
         component: TeamMemberSchedulesDetail,
+        name: "Mentoring Report",
         meta: {
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
