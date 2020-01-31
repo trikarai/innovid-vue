@@ -533,7 +533,7 @@ const routes = [
       {
         path: "/incubatee/profile-form/:formId/add",
         component: IncubateeProfilesAdd,
-        name: "Add Profile Form",
+        name: "Add/Edit Profile Form",
         meta: {
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
