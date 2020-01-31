@@ -6,7 +6,9 @@
           color="primary"
           router
           :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mentoring' "
-        ><v-icon left>add</v-icon>Propose New Mentoring</v-btn>
+        >
+          <v-icon left>add</v-icon>Propose New Mentoring
+        </v-btn>
       </v-col>
     </v-row>
     <v-row>
@@ -22,7 +24,7 @@
           class="elevation-1"
         >
           <template v-slot:item.name="{item}">
-            <!-- <v-btn
+            <v-btn
               class="elevation-0 mr-2"
               fab
               x-small
@@ -30,27 +32,32 @@
               @click="openDetail(item.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn> -->
+            </v-btn>
             {{item.mentoring.name}}
           </template>
           <template v-slot:item.startTime="{item}">
             <v-row class="my-3">
-              <v-icon left color="primary">calendar_today</v-icon>{{ item.startTime | moment("MMMM Do YYYY") }}
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ item.startTime | moment("MMMM Do YYYY") }}
             </v-row>
             <v-row class="my-3">
-              <v-icon left color="primary">access_time</v-icon>{{ item.startTime | moment("h:mm a") }}
+              <v-icon left color="primary">access_time</v-icon>
+              {{ item.startTime | moment("h:mm a") }}
             </v-row>
           </template>
           <template v-slot:item.endTime="{item}">
             <v-row class="my-3">
-              <v-icon left color="primary">calendar_today</v-icon>{{ item.endTime | moment("MMMM Do YYYY") }}
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ item.endTime | moment("MMMM Do YYYY") }}
             </v-row>
             <v-row class="my-3">
-              <v-icon left color="primary">access_time</v-icon>{{ item.endTime | moment("h:mm a") }}
+              <v-icon left color="primary">access_time</v-icon>
+              {{ item.endTime | moment("h:mm a") }}
             </v-row>
           </template>
           <template v-slot:item.action="{item}">
             <v-btn
+              v-if="item.participantMentoringReport != null"
               class="ml-2"
               small
               color="primary"
@@ -88,23 +95,27 @@
               @click="openNegoDetail(item.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn> -->
+            </v-btn>-->
             {{item.mentoring.name}}
           </template>
           <template v-slot:item.startTime="{item}">
             <v-row class="my-3">
-              <v-icon left color="primary">calendar_today</v-icon>{{ item.startTime | moment("MMMM Do YYYY") }}
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ item.startTime | moment("MMMM Do YYYY") }}
             </v-row>
             <v-row class="my-3">
-              <v-icon left color="primary">access_time</v-icon>{{ item.startTime | moment("h:mm a") }}
+              <v-icon left color="primary">access_time</v-icon>
+              {{ item.startTime | moment("h:mm a") }}
             </v-row>
           </template>
           <template v-slot:item.endTime="{item}">
             <v-row class="my-3">
-              <v-icon left color="primary">calendar_today</v-icon>{{ item.endTime | moment("MMMM Do YYYY") }}
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ item.endTime | moment("MMMM Do YYYY") }}
             </v-row>
             <v-row class="my-3">
-              <v-icon left color="primary">access_time</v-icon>{{ item.endTime | moment("h:mm a") }}
+              <v-icon left color="primary">access_time</v-icon>
+              {{ item.endTime | moment("h:mm a") }}
             </v-row>
           </template>
           <template v-slot:item.status="{item}">
@@ -187,7 +198,7 @@
         <v-card-title>
           <p class="text-capitalize">Reschedule Mentoring</p>
           <v-spacer></v-spacer>
-           <v-btn icon color="primary" @click="dialogForm = false">
+          <v-btn icon color="primary" @click="dialogForm = false">
             <v-icon>close</v-icon>
           </v-btn>
         </v-card-title>
@@ -195,20 +206,36 @@
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
         <v-card-text>
-          <p><b>Mentoring Name</b><br>{{dataSingle.mentoring.name}}</p>
-          <p><b>Mentor Name</b><br>{{dataSingle.mentor.personnel.name}}</p>
+          <p>
+            <b>Mentoring Name</b>
+            <br />
+            {{dataSingle.mentoring.name}}
+          </p>
+          <p>
+            <b>Mentor Name</b>
+            <br />
+            {{dataSingle.mentor.personnel.name}}
+          </p>
           <b>Offered Schedule</b>
-          
+
           <v-row>
-             <v-col>
-               <b>Start time</b><br>
-              <v-icon left color="primary">calendar_today</v-icon>{{ dataSingle.startTime | moment("MMMM Do YYYY") }}  <br>        
-              <v-icon left color="primary">access_time</v-icon>{{ dataSingle.startTime | moment("h:mm a") }}
+            <v-col>
+              <b>Start time</b>
+              <br />
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ dataSingle.startTime | moment("MMMM Do YYYY") }}
+              <br />
+              <v-icon left color="primary">access_time</v-icon>
+              {{ dataSingle.startTime | moment("h:mm a") }}
             </v-col>
             <v-col>
-              <b>End time</b><br>
-               <v-icon left color="primary">calendar_today</v-icon>{{ dataSingle.endTime | moment("MMMM Do YYYY") }} <br>       
-              <v-icon left color="primary">access_time</v-icon>{{ dataSingle.endTime | moment("h:mm a") }}
+              <b>End time</b>
+              <br />
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ dataSingle.endTime | moment("MMMM Do YYYY") }}
+              <br />
+              <v-icon left color="primary">access_time</v-icon>
+              {{ dataSingle.endTime | moment("h:mm a") }}
             </v-col>
           </v-row>
         </v-card-text>
@@ -279,7 +306,7 @@
         <v-card-actions class="pa-5">
           <v-btn block color="primary" :disabled="!valid" @click="proposeAction()">
             <v-icon left>update</v-icon>RePropose
-          </v-btn>   
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
