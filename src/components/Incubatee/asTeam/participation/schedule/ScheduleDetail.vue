@@ -10,23 +10,40 @@
           </v-card-title>
           <v-card-text>
             <v-row>
-              <v-col md="12">{{dataList.mentor.personnel.name}}</v-col>
-              <v-col md="12">{{dataList.startTime}}</v-col>
-              <v-col md="12">{{dataList.endTime}}</v-col>
+              <v-col md="12"><b>Mentor Name</b><br>{{dataList.mentor.personnel.name}}</v-col>
+              <v-col>
+              <b>Start time</b>
+              <br />
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ dataList.startTime | moment("MMMM Do YYYY") }}
+              <br />
+              <v-icon left color="primary">access_time</v-icon>
+              {{ dataList.startTime | moment("h:mm a") }}
+            </v-col>
+            <v-col>
+              <b>End time</b>
+              <br />
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ dataList.endTime | moment("MMMM Do YYYY") }}
+              <br />
+              <v-icon left color="primary">access_time</v-icon>
+              {{ dataList.endTime | moment("h:mm a") }}
+            </v-col>
             </v-row>
           </v-card-text>
           <template v-if="!edit">
             <v-card-title primary-title>
-              <div>
                 <h3 class="headline mb-0">Report</h3>
-                <v-btn color="primary" small @click="edit = !edit"><v-icon small>edit</v-icon></v-btn>
-              </div>
+                <v-spacer></v-spacer>
+                <v-btn color="primary" small @click="edit = !edit"><v-icon left small>edit</v-icon>Edit</v-btn>
             </v-card-title>
             <v-card-text>
               <template v-for="data in fields">
                 <v-row :key="data.id">
-                  <v-col md="2" class="sub-title">{{data.field.name}}</v-col>
-                  <v-col md="6" class="display-1">{{data.value}}</v-col>
+                  <v-col class="pb-0"><b>{{data.field.name}}</b></v-col>            
+                </v-row>
+                <v-row :key="data.id">
+                  <v-col class="pt-0">{{data.value}}</v-col>
                 </v-row>
               </template>
             </v-card-text>
@@ -51,8 +68,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
