@@ -316,6 +316,14 @@ const routes = [
         }
       },
       {
+        path: "/personnel/mentoring-feedback-forms/:formId/edit",
+        component: PersonnelMentoringFormBuild,
+        meta: {
+          level: 2,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
         path: "/personnel/program/:programId/coordinator",
         component: CohortCoordinator,
         meta: {

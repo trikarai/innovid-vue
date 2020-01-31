@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-xs>
     <!-- build form module-->
-    <buildform-module @postform="postform" />
+    <buildform-module @postform="postform" :edit="edit" :formtype="formtype" />
     <!-- -->
     <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
@@ -22,7 +22,8 @@ export default {
       key: "",
       loader: false,
       overlay: false,
-      edit: false
+      edit: false,
+      formtype: "mentoring-feedback-forms"
     };
   },
   components: {
