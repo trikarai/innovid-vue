@@ -1,7 +1,15 @@
 <template>
   <v-container grid-list-xs>
-    <v-row>
+    <v-row v-if="loader">
       <v-col>
+        <v-progress-circular size="70" indeterminate color="primary"></v-progress-circular>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col md="6">
+        <v-text-field name="name" label="Name" id="id" v-model="contentName"></v-text-field>
+      </v-col>
+      <v-col md="12">
         <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
           <div class="menubar">
             <button
@@ -60,10 +68,19 @@
         </editor-menu-bar>
         <editor-content :editor="editor" />
       </v-col>
+
+      <v-col md="12">{{content}}</v-col>
+      <v-col md="12">
+        <v-btn color="success" @click="submitContent()">submit</v-btn>
+      </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
+import bus from "@/config/bus";
+import * as config from "@/config/config";
+import auth from "@/config/auth";
+
 import { Editor, EditorContent, EditorMenuBar } from "tiptap";
 import Iframe from "./IFrame.js";
 
@@ -89,7 +106,13 @@ import {
 export default {
   data() {
     return {
+      loader: false,
+      contentName: "",
+      content: "",
       editor: new Editor({
+        onUpdate: ({ getHTML }) => {
+          this.content = getHTML();
+        },
         extensions: [
           new Blockquote(),
           new CodeBlock(),
@@ -144,6 +167,33 @@ export default {
   mounted() {},
   beforeDestroy() {
     this.editor.destroy();
+  },
+  methods: {
+    submitContent() {
+      this.loader = true;
+      this.axios
+        .post(
+          config.baseUri +
+            "/personnel/as-admin/programs/" +
+            this.$route.params.programId +
+            "/missions/" +
+            this.$route.params.missionId +
+            "/learning-materials",
+          { name: this.contentName, content: this.content },
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(() => {
+          bus.$emit("callNotif", "success", "Content Uploaded");
+        })
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
+        .finally(() => {
+          this.loader = false;
+        });
+    }
   }
 };
 </script>

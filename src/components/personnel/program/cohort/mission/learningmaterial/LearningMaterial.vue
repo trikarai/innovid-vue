@@ -110,7 +110,7 @@ export default {
           this.$route.params.programId +
           "/mission/" +
           this.$route.params.missionId +
-          "/learning-material/add"
+          "/learning-material-add"
       });
     },
     openDetail(id) {

@@ -16,6 +16,7 @@ Vue.use(require('vue-moment'));
 Vue.use(VueAxios, axios);
 Vue.config.productionTip = false
 
+var marked = require('marked');
 Vue.mixin({
   data() {
     return {
@@ -27,6 +28,11 @@ Vue.mixin({
       },
       err_msg: "",
     };
+  },
+  methods: {
+    marked: function (input) {
+      return marked(input);
+    }
   }
 });
 

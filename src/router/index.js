@@ -76,6 +76,7 @@ import CohortMentor from '../components/personnel/program/cohort/assign/Mentor';
 import CohortMission from '../components/personnel/program/cohort/mission/Mission';
 //Learning Material
 import CohortMissionLearning from '../components/personnel/program/cohort/mission/learningmaterial/LearningMaterial';
+import CohortMissionLearningPreview from '../components/personnel/program/cohort/mission/learningmaterial/LearningPreview';
 import CohortMissionLearningForm from '../components/personnel/program/cohort/mission/learningmaterial/LearningForm';
 
 import CohortMentoring from '../components/personnel/program/cohort/mentoring/Mentoring';
@@ -368,7 +369,15 @@ const routes = [
         }
       },
       {
-        path: "/personnel/program/:programId/mission/:missionId/learning-material/add",
+        path: "/personnel/program/:programId/mission/:missionId/learning-material/:learningId",
+        component: CohortMissionLearningPreview,
+        meta: {
+          level: 4,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/program/:programId/mission/:missionId/learning-material-add",
         component: CohortMissionLearningForm,
         meta: {
           level: 3,
