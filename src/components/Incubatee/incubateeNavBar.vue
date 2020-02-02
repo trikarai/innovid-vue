@@ -21,10 +21,10 @@
     <v-btn class="ml-3 mt-5" icon v-if="$route.meta.level == 0" @click="$router.go(-1) ">
       <v-icon></v-icon>
     </v-btn>
-  <div class="container extend mt-2">
-    <h2 class="mb-2">{{$route.name}}</h2>
-    <div class="garis"></div>
-  </div>
+    <div class="container extend mt-2">
+      <h2 class="mb-2">{{$route.name}}</h2>
+      <div class="garis"></div>
+    </div>
 
     <v-navigation-drawer app v-model="drawer" :mini-variant="miniVariant" color="sidebar">
       <!-- list head-->
@@ -70,6 +70,7 @@
             item-text="program.name"
             item-value="id"
             v-model="participationId"
+            @change="changeParticipant()"
           ></v-select>
           <!-- {{participationId}} -->
         </v-list-item>
@@ -315,6 +316,10 @@ export default {
       localStorage.removeItem("lbUser");
       this.$router.replace({ path: "/" });
     },
+    changeParticipant() {
+      localStorage.setItem("ParticipantTeamId", this.participationId);
+      bus.$emit("changeDashboardParticipant", this.participationId);
+    },
     getParticipations() {
       localStorage.setItem("DashboardTeamId", this.teamId);
       bus.$emit("changeDashboardTeam", this.teamId);
@@ -333,6 +338,8 @@ export default {
           if (res.data.data.total != 0) {
             this.participationList = res.data.data;
             this.participationId = this.participationList.list[0].id;
+            localStorage.setItem("DashboardParticipantId", this.participationId);
+            // bus.$emit("changeDashboardParticipant", this.participationId);
           } else {
             this.participationList = { total: 0, list: [] };
             this.participationId = "";

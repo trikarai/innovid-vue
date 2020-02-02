@@ -165,6 +165,7 @@ export default {
     return {
       user: "",
       teamId: "",
+      participationId: "",
       participationList: { total: 0, list: [] },
       tableLoad: false,
       registrationList: { total: 0, list: [] },
@@ -177,7 +178,11 @@ export default {
     bus.$on("changeDashboardTeam", teamId => {
       this.teamId = teamId;
     });
+    bus.$on("changeDashboardParticipant", participationId => {
+      this.participationId = participationId;
+    });
     this.teamId = localStorage.getItem("DashboardTeamId");
+    this.participationId = localStorage.getItem("DashboardParticipantId");
   },
   watch: {
     teamId() {
@@ -187,9 +192,16 @@ export default {
     }
   },
   mounted() {
-    // if (this.teamId) {
-    //   this.getParticipant();
-    // }
+    if (this.teamId != "" && this.participationId != "") {
+      this.$router.push({
+        path:
+          "/incubatee/team/" +
+          this.teamId +
+          "/participation/" +
+          this.participationId +
+          "/mission"
+      });
+    }
   },
   methods: {
     getParticipant() {
