@@ -13,6 +13,8 @@
     "axios": "^0.19.1",
     "core-js": "^3.6.2",
     "register-service-worker": "^1.6.2",
+    "tiptap": "^1.26.6",
+    "tiptap-extensions": "^1.28.6",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
     "vue-lodash": "^2.0.2",
