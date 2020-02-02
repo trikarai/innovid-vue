@@ -44,7 +44,7 @@
               :to="'/incubatee/team/'+ teamId +'/team-profile-form/' + item.id + '/add'"
             >
               <v-icon left small>add</v-icon>
-              add
+              Add Form
             </v-btn>
           </template>
         </v-data-table>

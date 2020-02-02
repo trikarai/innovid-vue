@@ -6,7 +6,11 @@
     <v-row>
       <v-col cols="12" md="6" lg="6" xs="12">
         <v-card>
-          <v-card-title primary-title>{{dataSingle.profileForm.name}}</v-card-title>
+          <v-card-title primary-title>
+            {{dataSingle.profileForm.name}}
+            <v-spacer></v-spacer>
+            <v-btn small color="primary" :to="'/incubatee/profile-form/'+ dataSingle.profileForm.id +'/add'">Edit</v-btn>
+          </v-card-title>
           <v-card-text class="pt-0 mt-2 ml-3">
             <template v-for="data in fields">
 
