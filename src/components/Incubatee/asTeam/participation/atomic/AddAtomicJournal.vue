@@ -1,17 +1,6 @@
 <template>
   <v-container grid-list-xs>
     <v-row>
-      <v-col md="12">
-        <!-- {{root}} -->
-        <v-expansion-panels>
-          <v-expansion-panel>
-            <v-expansion-panel-header>Learning Material</v-expansion-panel-header>
-            <v-expansion-panel-content>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
-      </v-col>
-    </v-row>
-    <v-row>
       <v-col md="6">
         <v-card :loading="tableLoad">
           <v-card-title primary-title>
