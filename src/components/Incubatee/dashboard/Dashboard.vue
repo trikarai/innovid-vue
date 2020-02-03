@@ -335,6 +335,6 @@ export default {
   right: 0;
   border-top: 40px solid #fafafa;
   border-left: 40px solid rgb(158, 158, 158);
-  width: 71%;
+  width: 54%;
 }
 </style>
