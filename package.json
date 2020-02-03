@@ -10,6 +10,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^3.1.0",
     "axios": "^0.19.1",
     "core-js": "^3.6.2",
     "marked": "^0.8.0",
