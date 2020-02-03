@@ -3,28 +3,39 @@
     <v-row name="one">
       <!-- <v-col md="3">{{user}}</v-col> -->
       <!-- <v-col md="12">{{teamId}}</v-col> -->
-      <v-col md="3">
+      <v-col cols="12" sm="4" md="4" xs="12">
         <v-card @click="$router.push({path: '/incubatee/profile'})">
-          <v-card-title primary-title>
-            <v-icon left x-large>folder_shared</v-icon>
-            <div>
+          <v-card-title style="word-break: break-word;" primary-title>
+            <v-col style="max-width:100% !important" md="5">
+            <v-card color="primary" class="pa-9 elevation-5">
+              <v-icon color="#fff" x-large>folder_shared</v-icon>
+            </v-card>
+            </v-col>
+            <v-col md="6" sm="12">
               <h3 class="headline mb-0">Profile</h3>
-            </div>
+              <h4 class="subtitle-2 grey--text">fill in the profile form based on your experience</h4>
+            </v-col>
           </v-card-title>
         </v-card>
       </v-col>
-      <v-col md="3">
-        <v-card @click="$router.push({path: '/incubatee/membership'})">
-          <v-card-title primary-title>
-            <v-icon left x-large>groups</v-icon>
-            <div>
+      <v-col cols="12" sm="4" md="4" xs="12">
+        <v-card @click="$router.push({path: '/incubatee/profile'})">
+          <v-card-title style="word-break: break-word;" primary-title>
+            <v-col style="max-width:100% !important" md="5">
+            <v-card color="primary" class="pa-9 elevation-5">
+              <v-icon color="#fff" style="width:40px;position: relative;left: 23px;" x-large>groups</v-icon>
+            </v-card>
+            </v-col>
+            <v-col md="6" sm="12">
               <h3 class="headline mb-0">Team</h3>
-            </div>
+              <h4 class="subtitle-2 grey--text">Create your team before register the program</h4>
+            </v-col>
           </v-card-title>
         </v-card>
       </v-col>
+      
     </v-row>
-    <v-divider></v-divider>
+
     <v-row v-if="participationList.total > 0">
       <v-col>
         <v-data-iterator :items="participationList.list" hide-default-footer :loading="tableLoad">
@@ -79,7 +90,7 @@
         </v-data-iterator>
       </v-col>
     </v-row>
-    <v-divider></v-divider>
+
     <v-row v-if="registrationList.total > 0">
       <v-col>
         <v-data-iterator :items="registrationList.list" hide-default-footer>
@@ -116,7 +127,7 @@
         </v-data-iterator>
       </v-col>
     </v-row>
-    <v-divider></v-divider>
+
     <v-row v-if="teamId != '' ">
       <v-col>
         <v-data-iterator :items="availableList.list" hide-default-footer :loading="tableLoad3">
@@ -280,4 +291,8 @@ export default {
 };
 </script>
 <style scoped>
+.minicard {
+  position: relative;
+  right: 30px;
+}
 </style>
