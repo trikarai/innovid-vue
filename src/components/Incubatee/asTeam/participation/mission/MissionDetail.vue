@@ -15,7 +15,7 @@
           <v-card-text v-else>
             <v-icon color="indigo accent-1" left>trip_origin</v-icon>Root
           </v-card-text>
-          <v-card-actions>
+          <!-- <v-card-actions>
             <v-btn
               v-if="dataList.previousMission !== null"
               text
@@ -41,30 +41,33 @@
               item-value="id"
               clearable
             ></v-select>
-            <!-- {{root}} : {{journalId}} -->
-          </v-card-text>
-          <v-card-actions>
+          </v-card-text> -->
+          <!-- <v-card-actions>
             <v-btn class="mr-2" small color="primary" disabled>View Journal</v-btn>
+
             <v-btn
-              v-if="root"
-              color="primary"
-              small
-              router
-              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + dataList.id + '/atom' "
-            >
-              <v-icon left>add</v-icon>Add Journal
-            </v-btn>
-            <v-btn
-              v-else
+              v-if="!root"
               color="primary"
               small
               router
               :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + dataList.id + '/atom/' + journalId "
             >
-              <v-icon left>add</v-icon>Add Branch Journal
+              <v-icon left>add</v-icon>Add Journal
             </v-btn>
-          </v-card-actions>
+          </v-card-actions> -->
         </v-card>
+      </v-col>
+      <v-col md="12">Learning Material</v-col>
+      <v-col md="12">
+        <!-- {{learningList}} -->
+        <v-expansion-panels>
+          <v-expansion-panel v-for="(learning,i) in learningList.list" :key="i">
+            <v-expansion-panel-header>{{learning.name}}</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <span v-html="learning.content" />
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </v-col>
       <v-col md="12">
         <!-- <pre> {{dataList.worksheetForm}} </pre> -->
@@ -105,6 +108,7 @@ export default {
       search: "",
       dataList: { id: "", name: "", description: "", nextMission: { id: "" } },
       journalList: { total: 0, list: [] },
+      learningList: { total: 0, list: [] },
       journalId: null,
       tableLoad: false,
       loader: false,
@@ -134,7 +138,8 @@ export default {
   },
   mounted() {
     this.getDataList();
-    this.getJournalList();
+    // this.getJournalList();
+    this.getLearningMaterialList();
   },
   watch: {
     $route: "getDataList",
@@ -188,6 +193,30 @@ export default {
         )
         .then(res => {
           this.journalList = res.data.data;
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.tableLoad = false;
+        });
+    },
+    getLearningMaterialList() {
+      this.tableLoad = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/missions/" +
+            this.$route.params.missionId +
+            "/learning-materials",
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          this.learningList = res.data.data;
         })
         .catch(() => {})
         .finally(() => {

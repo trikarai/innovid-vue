@@ -11,7 +11,7 @@
     <v-row>
       <v-col md="12">
         <v-timeline :reverse="true">
-          <v-timeline-item v-for="data in dataList.list" :key="data.id">
+          <v-timeline-item v-for="(data, index) in dataList.list" :key="data.id">
             <v-card class="elevation-5">
               <v-card-title class="headline">{{data.position}} : {{data.name}}</v-card-title>
               <v-card-text v-if="data.previousMission != null">
@@ -21,9 +21,10 @@
               <v-card-text v-else>
                 <v-icon color="indigo accent-1" left>trip_origin</v-icon>Root
               </v-card-text>
-
+              <!-- {{data}} -->
               <v-card-text v-if="data.journal.length != 0">
                 <v-select
+                  :ref="'selectInput'+index"
                   :items="data.journal"
                   item-text="worksheet.name"
                   item-value="id"
@@ -41,7 +42,7 @@
                 >
                   <v-icon small>zoom_in</v-icon>
                 </v-btn>
-                <v-btn class="mr-2" small color="primary" disabled>View Journal</v-btn>
+
                 <v-btn
                   v-if="data.previousMission == null"
                   color="primary"
@@ -213,6 +214,17 @@ export default {
         .finally(() => {
           // this.tableLoad = false;
         });
+    },
+    openJournal(index) {
+      // eslint-disable-next-line no-console
+      console.log(this.$refs["selectInput" + index]);
+      // this.$router.push({
+      //   path:
+      //     "/incubatee/team/" +
+      //     this.$route.params.teamId +
+      //     "/worksheet/" +
+      //     this.$refs['selectInput' + index]
+      // });
     },
     getBranchJournal(event, missionId) {
       // this.tableLoad = true;
