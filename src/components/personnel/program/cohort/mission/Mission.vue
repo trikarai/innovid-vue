@@ -56,8 +56,11 @@
               color="warning"
               @click="leftAct(item, 'publish')"
             >Publish</v-btn>
-            <v-btn small color="primary" @click="openAddBranch(item.id)">
+            <v-btn small class="mr-2" color="primary" @click="openAddBranch(item.id)">
               <v-icon small left>account_tree</v-icon>Add Branch
+            </v-btn>
+            <v-btn small color="primary" @click="openLearningMaterial(item.id)">
+              <v-icon small left>books</v-icon>Learning Material
             </v-btn>
           </template>
         </v-data-table>
@@ -103,15 +106,9 @@
         <v-card-text v-if="loader">
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
-        <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.name">{{dataSingle.name}}</v-card-text>
-        </transition>
-        <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.description">{{dataSingle.description}}</v-card-text>
-        </transition>
-        <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.worksheetForm">{{dataSingle.worksheetForm.name}}</v-card-text>
-        </transition>
+        <v-card-text>{{dataSingle.name}}</v-card-text>
+        <v-card-text>{{dataSingle.description}}</v-card-text>
+        <v-card-text>{{dataSingle.worksheetForm.name}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
@@ -234,6 +231,16 @@ export default {
       this.branch = true;
       this.edit = false;
       this.dialogForm = true;
+    },
+    openLearningMaterial(id) {
+      this.$router.push({
+        path:
+          "/personnel/program/" +
+          this.$route.params.programId +
+          "/mission/" +
+          id +
+          "/learning-material"
+      });
     },
     openDetail(id) {
       this.dialogDetail = true;

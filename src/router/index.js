@@ -74,6 +74,11 @@ import PersonnelProgramCohort from '../components/personnel/program/cohort/Cohor
 import CohortCoordinator from '../components/personnel/program/cohort/assign/Coordinator';
 import CohortMentor from '../components/personnel/program/cohort/assign/Mentor';
 import CohortMission from '../components/personnel/program/cohort/mission/Mission';
+//Learning Material
+import CohortMissionLearning from '../components/personnel/program/cohort/mission/learningmaterial/LearningMaterial';
+import CohortMissionLearningPreview from '../components/personnel/program/cohort/mission/learningmaterial/LearningPreview';
+import CohortMissionLearningForm from '../components/personnel/program/cohort/mission/learningmaterial/LearningForm';
+
 import CohortMentoring from '../components/personnel/program/cohort/mentoring/Mentoring';
 import PersonnelList from '../components/personnel/program/cohort/assign/PersonnelList';
 
@@ -352,6 +357,38 @@ const routes = [
         component: CohortMission,
         meta: {
           level: 2,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/program/:programId/mission/:missionId/learning-material",
+        component: CohortMissionLearning,
+        meta: {
+          level: 3,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/program/:programId/mission/:missionId/learning-material/:learningId",
+        component: CohortMissionLearningPreview,
+        meta: {
+          level: 4,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/program/:programId/mission/:missionId/learning-material-add",
+        component: CohortMissionLearningForm,
+        meta: {
+          level: 3,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/program/:programId/mission/:missionId/learning-material/:learningId/edit",
+        component: CohortMissionLearningForm,
+        meta: {
+          level: 3,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
       },
