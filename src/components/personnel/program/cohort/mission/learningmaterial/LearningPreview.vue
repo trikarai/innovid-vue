@@ -5,13 +5,13 @@
       <v-col md="12" class="title">{{dataSingle.name}}</v-col>
       <v-col md="12">{{dataSingle.content}}</v-col>
     </v-row>
-    <v-row>
+    <!-- <v-row>
       <v-col md="12" class="title">Markdown</v-col>
       <v-col md="12" class="title">{{dataSingle.name}}</v-col>
       <v-col md="12">
         <div v-html="marked(dataSingle.content)"></div>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
       <v-col md="12" class="title">HTML</v-col>
       <v-col md="12" class="title">{{dataSingle.name}}</v-col>
