@@ -1,9 +1,9 @@
 <template>
   <nav>
-    <v-app-bar text app color="primary">
+    <v-app-bar dense dark text app color="black">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="text-uppercase black--text">
-        <span class="font-weight-light">Inovide</span>
+        <!-- <span class="font-weight-light">Inovide</span> -->
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn text @click="rightDrawer =! rightDrawer">
@@ -15,9 +15,16 @@
       <v-icon left>keyboard_backspace</v-icon>Back
     </v-btn>-->
 
-    <v-btn icon v-if="$route.meta.level !== 0" @click="$router.go(-1) ">
+    <v-btn class="ml-3 mt-5" icon v-if="$route.meta.level !== 0" @click="$router.go(-1) ">
       <v-icon>arrow_back</v-icon>
     </v-btn>
+    <!-- <v-btn class="ml-3 mt-5" icon v-if="$route.meta.level == 0" @click="$router.go(-1) ">
+      <v-icon></v-icon>
+    </v-btn> -->
+    <div class="container extend mt-4">
+      <h2 class="mb-2">{{$route.name}}</h2>
+      <div class="garis"></div>
+    </div>
     <!-- <p class="ml-3 mb-2">{{$route.name}}</p> -->
 
     <v-navigation-drawer app v-model="drawer" :mini-variant="miniVariant" color="sidebar">
@@ -31,7 +38,7 @@
         <v-list-item>
           <v-list-item-avatar>
             <!-- <img src="https://randomuser.me/api/portraits/men/85.jpg" /> -->
-            <img src="https://picsum.photos/id/768/85/85" />
+            <img src="/img/personnel-ico.png" />
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>{{user.data.name}}</v-list-item-title>
@@ -102,24 +109,24 @@
       <v-list>
         <v-list-item>
           <v-list-item-avatar>
-            <v-icon>exit_to_app</v-icon>
+            <!-- <v-icon>exit_to_app</v-icon> -->
           </v-list-item-avatar>
           <v-list-item-content></v-list-item-content>
           <v-list-item-action>
-            <v-btn small color="red" @click="logout">
+            <v-btn small dark color="red" @click="logout">
               <span>Sign Out</span>
             </v-btn>
           </v-list-item-action>
         </v-list-item>
-        <v-list-item>
+        <!-- <v-list-item>
           <v-list-item-avatar>
             <v-icon>language</v-icon>
           </v-list-item-avatar>
           <v-list-item-content></v-list-item-content>
           <v-list-item-action>
-            <!-- <LocaleSwitcher /> -->
+            <LocaleSwitcher />
           </v-list-item-action>
-        </v-list-item>
+        </v-list-item> -->
         <v-list-item>
           <v-list-item-avatar>
             <v-icon>brightness_4</v-icon>
@@ -146,12 +153,12 @@ export default {
       fixed: false,
       user: "",
       admins: [
-        {
-          icon: "dashboard",
-          text: "Dashboard",
-          route: "/personnel/dashboard",
-          disabled: true
-        },
+        // {
+        //   icon: "dashboard",
+        //   text: "Dashboard",
+        //   route: "/personnel/dashboard",
+        //   disabled: true
+        // },
         {
           icon: "supervised_user_circle",
           text: "Personnel",
