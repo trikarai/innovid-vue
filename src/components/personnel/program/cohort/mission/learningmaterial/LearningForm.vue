@@ -31,7 +31,13 @@
     }"
         ></editor>
       </v-col>
-      <v-col md="12">{{content}}</v-col>
+      <v-col md="12">
+        <v-alert
+          type="info"
+          border="left"
+          dismissible
+        >allowedIframeHostnames: ['www.youtube.com', 'docs.google.com', 'player.vimeo.com', 'www.dailymotion.com']</v-alert>
+      </v-col>
       <v-col md="12">
         <v-btn :disabled="loader" :loading="loader" color="success" @click="submitContent()">submit</v-btn>
       </v-col>
