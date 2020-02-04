@@ -201,6 +201,7 @@ const routes = [
       {
         path: "/personnel/personnel",
         component: PersonnelPersonnels,
+        name: "Personnel",
         meta: {
           level: 0,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
@@ -217,6 +218,7 @@ const routes = [
       {
         path: "/personnel/program",
         component: PersonnelProgramCohort,
+        name: "Program",
         meta: {
           level: 0,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
