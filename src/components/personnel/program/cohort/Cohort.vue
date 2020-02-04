@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <!-- {{authData.data.id}} -->
       <v-col md="8" xs="12">
@@ -8,7 +8,7 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row>
+    <!-- <v-row>
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -19,7 +19,7 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
       <v-col>
         <v-data-table
@@ -47,8 +47,9 @@
           </template>
           <template v-slot:item.action="{item}">
             <v-btn
+              dark
               small
-              color="green"
+              color="primary"
               class="mr-2"
               @click="publishCohort(item.id)"
               v-if="!item.published"
@@ -60,20 +61,32 @@
             </v-btn>
           </template>
           <template v-slot:item.personnel="{item}">
-            <v-btn small color="accent" class="mr-2" @click="gotoMentor(item.id)">
-              <v-icon left small>person</v-icon>Mentor
+            <v-row>
+            <v-btn small color="primary" class="my-2" @click="gotoMentor(item.id)">
+              <!-- <v-icon left small>person</v-icon> -->
+              Mentor
             </v-btn>
-            <v-btn small color="accent" @click="gotoCoordinator(item.id)">
-              <v-icon left small>person</v-icon>Coordinator
+            </v-row>
+            <v-row>
+            <v-btn small color="primary" class="my-2 mt-0" @click="gotoCoordinator(item.id)">
+              <!-- <v-icon left small>person</v-icon> -->
+              Coordinator
             </v-btn>
+            </v-row>
           </template>
           <template v-slot:item.sub="{item}">
-            <v-btn small color="accent" class="mr-2" @click="gotoMission(item.id)">
-              <v-icon left small>flag</v-icon>Mission
+            <v-row>
+            <v-btn small color="primary" class="my-2" @click="gotoMission(item.id)">
+              <!-- <v-icon left small>flag</v-icon> -->
+              Mission
             </v-btn>
-            <v-btn small color="accent" @click="gotoMentoring(item.id)">
-              <v-icon left small>forum</v-icon>Mentoring
+            </v-row>
+            <v-row>
+            <v-btn small color="primary" class="my-2 mt-0" @click="gotoMentoring(item.id)">
+              <!-- <v-icon left small>forum</v-icon> -->
+              Mentoring
             </v-btn>
+            </v-row>
           </template>
         </v-data-table>
       </v-col>
@@ -89,8 +102,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -98,38 +111,39 @@
     <v-dialog
       v-model="dialogDetail"
       scrollable
-      persistent
       :overlay="false"
-      max-width="300px"
+      max-width="330px"
       transition="dialog-transition"
     >
       <v-card>
         <v-card-title>
-          <p class="text-capitalize"></p>
+          <p class="text-capitalize">Program Detail</p>
         </v-card-title>
         <v-card-text v-if="loader">
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.name">{{dataSingle.name}}</v-card-text>
+          <v-card-text :key="dataSingle.name"><b>Name</b><br>{{dataSingle.name}}</v-card-text>
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.description">{{dataSingle.description}}</v-card-text>
+          <v-card-text :key="dataSingle.description"><b>Description</b><br>{{dataSingle.description}}</v-card-text>
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text
-            :key="dataSingle.startDate"
-          >{{dataSingle.startDate}} until {{dataSingle.endDate}}</v-card-text>
+          <v-card-text :key="dataSingle.startDate">
+            <!-- <v-icon left color="primary">calendar_today</v-icon> -->
+              <b>Time Range</b><br>
+              {{ dataSingle.startDate | moment("MMMM Do YYYY") }} - {{ dataSingle.endDate | moment("MMMM Do YYYY") }}
+          </v-card-text>
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.published">{{dataSingle.published}}</v-card-text>
+          <v-card-text :key="dataSingle.published"><b>Status Publish</b><br>{{dataSingle.published}}</v-card-text>
         </transition>
-        <v-card-actions>
+        <!-- <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
             <v-icon>close</v-icon>
           </v-btn>
-        </v-card-actions>
+        </v-card-actions> -->
       </v-card>
     </v-dialog>
   </v-container>
