@@ -129,7 +129,7 @@ export default {
           authUser.valid_until = res.data.credentials.valid_until;
           window.localStorage.setItem("lbUser", JSON.stringify(authUser));
           window.sessionStorage.setItem("uploadMode", "personnel");
-          this.$router.replace("/personnel/main");
+          this.$router.replace("/personnel/personnel");
         })
         .catch(res => {
           bus.$emit("callNotif", "error", res);
