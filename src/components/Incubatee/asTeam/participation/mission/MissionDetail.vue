@@ -41,7 +41,7 @@
               item-value="id"
               clearable
             ></v-select>
-          </v-card-text> -->
+          </v-card-text>-->
           <!-- <v-card-actions>
             <v-btn class="mr-2" small color="primary" disabled>View Journal</v-btn>
 
@@ -54,7 +54,7 @@
             >
               <v-icon left>add</v-icon>Add Journal
             </v-btn>
-          </v-card-actions> -->
+          </v-card-actions>-->
         </v-card>
       </v-col>
       <v-col md="12">Learning Material</v-col>
@@ -64,7 +64,8 @@
           <v-expansion-panel v-for="(learning,i) in learningList.list" :key="i">
             <v-expansion-panel-header>{{learning.name}}</v-expansion-panel-header>
             <v-expansion-panel-content>
-              <span v-html="learning.content" />
+              <!-- <span v-dompurify-html="learning.content" /> -->
+              <span v-html="$sanitize(learning.content)" />
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
