@@ -333,6 +333,7 @@ const routes = [
       {
         path: "/personnel/program/:programId/coordinator",
         component: CohortCoordinator,
+        name: "Coordinator",
         meta: {
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
@@ -341,6 +342,7 @@ const routes = [
       {
         path: "/personnel/program/:programId/mentor",
         component: CohortMentor,
+        name: "Mentors",
         meta: {
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
@@ -349,6 +351,7 @@ const routes = [
       {
         path: "/personnel/program/:programId/assign",
         component: PersonnelList,
+        name: "Personnel List",
         meta: {
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
@@ -357,6 +360,7 @@ const routes = [
       {
         path: "/personnel/program/:programId/mission",
         component: CohortMission,
+        name: "Mission",
         meta: {
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
@@ -365,6 +369,7 @@ const routes = [
       {
         path: "/personnel/program/:programId/mission/:missionId/learning-material",
         component: CohortMissionLearning,
+        name: "Learning Material",
         meta: {
           level: 3,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false

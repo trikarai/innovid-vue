@@ -81,6 +81,11 @@ export default {
     overflow-y: inherit;
 }
 
+.v-avatar.v-list-item__avatar {
+    position: relative;
+    right: 11px;
+}
+
 @media (min-width: 1264px) {
   .container.extend{
       max-width: 1029px !important;
