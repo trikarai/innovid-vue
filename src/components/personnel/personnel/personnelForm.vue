@@ -3,8 +3,13 @@
     <div class="modal-mask">
       <div class="modal-wrapper" @click="$emit('close')">
         <div class="modal-container" @click.stop>
-          <v-card elevation="0" width="400" :loading="loader">
-            <v-card-text class="pt-4">
+          <v-card class="pa-5 pt-0" elevation="0" width="400" :loading="loader">
+            <v-card-title class="topaccent" primary-title>
+              <div>
+                <h3 class="headline mb-0">Add Personnel</h3>
+              </div>
+            </v-card-title>
+            <v-card-text class="pt-0 mt-0">
               <div>
                 <v-form v-model="valid" ref="form">
                   <v-text-field
@@ -48,6 +53,8 @@
                   </template>
                   <v-layout justify-space-between v-if="!view">
                     <v-btn
+                      block
+                      class="mt-5"
                       v-if="edit == false"
                       @click.once="submit"
                       :loading="loader"
