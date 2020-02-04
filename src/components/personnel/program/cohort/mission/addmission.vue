@@ -1,10 +1,17 @@
 <template>
   <transition name="modal">
     <div class="modal-mask">
-      <div class="modal-wrapper" @click="$emit('close')">
+      <div class="modal-wrapper" style="padding-top:6px !important" @click="$emit('close')">
         <div class="modal-container" @click.stop>
-          <v-card elevation="0" width="400" :loading="loader">
-            <v-card-text class="pt-4">
+          <v-card class="pa-5 pt-0" elevation="0" width="400" :loading="loader">
+            <v-card-title class="topaccent" primary-title>
+              <div>
+                <h3 v-if="!isbranch" class="headline mb-0">Add Mission</h3>
+                <h3 v-else class="headline mb-0">Add Branch Mission</h3>               
+              </div>
+            </v-card-title>
+            <v-card-text>
+              <p v-if="isbranch"><b>Parent Mission:</b> {{rootname}}</p>
               <div>
                 <v-form v-model="valid" ref="form">
                   <v-text-field
@@ -24,11 +31,13 @@
                     maxlength="25"
                   ></v-text-field>
                   <v-textarea
+                    class="mt-5"
                     :disabled="view"
                     label="Description"
                     v-model="params.description"
                     :counter="100"
                     maxlength="100"
+                    height="100"
                     required
                   ></v-textarea>
 
@@ -45,6 +54,7 @@
 
                   <v-layout justify-space-between v-if="!view">
                     <v-btn
+                      block
                       v-if="edit == false"
                       @click.once="submit"
                       :loading="loader"
@@ -70,7 +80,7 @@ import { validationMixins } from "@/mixins/validationMixins";
 
 export default {
   mixins: [validationMixins],
-  props: ["id", "edit", "view", "data", "isbranch", "rootid"],
+  props: ["id", "edit", "view", "data", "isbranch", "rootid", "rootname"],
   data: function() {
     return {
       valid: false,
