@@ -102,9 +102,12 @@ import bus from "@/config/bus";
 import auth from "@/config/auth";
 import * as config from "@/config/config";
 
+import { formDynamicMixins } from "@/mixins/formDynamicMixins";
+
 import RenderForm from "@/components/buildform/incubatee/renderForm";
 
 export default {
+  mixins: [formDynamicMixins],
   data() {
     return {
       mode: false,
@@ -285,33 +288,6 @@ export default {
           this.tableLoad = false;
           this.is_reloadWorksheet = true;
         });
-    },
-    pairFieldValue(data) {
-      //https://stackoverflow.com/questions/56444006/how-to-merge-the-property-with-same-key-in-two-object-array?noredirect=1&lq=1
-      //String
-      var map = new Map(
-        data.stringFieldRecords.map(o => [o.stringField.id, o])
-      );
-      var result = this.dataList.worksheetForm.stringFields.map(o =>
-        Object.assign({}, o, map.get(o.id))
-      );
-      this.dataList.worksheetForm.stringFields = result;
-      //String
-      var mapt = new Map(
-        data.textAreaFieldRecords.map(o => [o.textAreaField.id, o])
-      );
-      var resultt = this.dataList.worksheetForm.textAreaFields.map(o =>
-        Object.assign({}, o, mapt.get(o.id))
-      );
-      this.dataList.worksheetForm.textAreaFields = resultt;
-      //integer
-      var mapi = new Map(
-        data.integerFieldRecords.map(o => [o.integerField.id, o])
-      );
-      var resulti = this.dataList.worksheetForm.integerFields.map(o =>
-        Object.assign({}, o, mapi.get(o.id))
-      );
-      this.dataList.worksheetForm.integerFields = resulti;
     }
   }
 };
