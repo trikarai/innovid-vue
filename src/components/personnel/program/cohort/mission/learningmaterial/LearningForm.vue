@@ -1,16 +1,31 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row v-if="loader">
       <v-col>
         <v-progress-linear indeterminate></v-progress-linear>
       </v-col>
     </v-row>
     <v-row>
-      <v-col md="6">
+      <v-col class="mb-0 pb-0" md="8">
         <!-- Edit mode : {{edit}} -->
-        <v-text-field solo label="Learning Material Name" v-model="dataSingle.name"></v-text-field>
+        <v-row>
+          <v-col>
+            <v-text-field filled label="Learning Material Name" v-model="dataSingle.name"></v-text-field>
+          </v-col>
+          <v-col>
+            <v-btn style="margin-top: 3px;" :disabled="loader" :loading="loader" color="primary" @click="submitContent()" x-large>save</v-btn>
+          </v-col>
+        </v-row>
       </v-col>
-      <v-col md="12">
+      <v-col  class="my-0 py-0" md="12">
+        <v-alert
+        dense
+          type="info"
+          border="left"
+          dismissible
+        >Allowed Iframe: www.youtube.com, docs.google.com, www.dailymotion.com</v-alert>
+      </v-col>
+      <v-col class="mt-0 pt-0" md="12">
         <editor
           apiKey="qwl0dmwea6620culdxb0sbj63braksrehy48ynig0btowjqd"
           v-model="dataSingle.content"
@@ -31,15 +46,9 @@
     }"
         ></editor>
       </v-col>
+      
       <v-col md="12">
-        <v-alert
-          type="info"
-          border="left"
-          dismissible
-        >allowedIframeHostnames: ['www.youtube.com', 'docs.google.com', 'player.vimeo.com', 'www.dailymotion.com']</v-alert>
-      </v-col>
-      <v-col md="12">
-        <v-btn :disabled="loader" :loading="loader" color="success" @click="submitContent()">submit</v-btn>
+        <v-btn :disabled="loader" :loading="loader" color="primary" @click="submitContent()" x-large>save</v-btn>
       </v-col>
     </v-row>
   </v-container>
