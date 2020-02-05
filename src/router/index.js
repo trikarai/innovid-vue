@@ -35,13 +35,14 @@ import TeamMemberWorksheetDetail from "../components/Incubatee/asTeam/worksheet/
 //sub participation
 import TeamMemberMission from "../components/Incubatee/asTeam/participation/mission/Mission";
 import TeamMemberMissionDetail from "../components/Incubatee/asTeam/participation/mission/MissionDetail";
-import TeamMemberJournal from "../components/Incubatee/asTeam/participation/journal/Journal";
 import TeamMemberSchedules from "../components/Incubatee/asTeam/participation/schedule/Schedule";
 import TeamMemberSchedulesDetail from "../components/Incubatee/asTeam/participation/schedule/ScheduleDetail";
 import TeamMemberSchedulesReport from "../components/Incubatee/asTeam/participation/schedule/Report";
 import TeamMemberMentoring from "../components/Incubatee/asTeam/participation/schedule/MentoringList";
 import TeamMemberMentor from "../components/Incubatee/asTeam/participation/schedule/MentorList";
-//Atomic Journal Worksheet
+//Journal
+import TeamMemberJournal from "../components/Incubatee/asTeam/participation/journal/Journal";
+import TeamMemberJournalDetail from "../components/Incubatee/asTeam/participation/journal/JournalDetail";
 import AddAtomicJournal from "../components/Incubatee/asTeam/participation/atomic/AddAtomicJournal";
 
 
@@ -630,7 +631,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/application",
         component: TeamMemberApplication,
-        name: "Program",
+        name: "Program Application",
         meta: {
           level: 2,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -701,6 +702,15 @@ const routes = [
         name: "Journal",
         meta: {
           level: 3,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/team/:teamId/participation/:cohortId/mission/:missionId/journal/:journalId/worksheet/:worksheetId",
+        component: TeamMemberJournalDetail,
+        name: "Journal Detail",
+        meta: {
+          level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
       },
