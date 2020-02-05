@@ -378,6 +378,7 @@ const routes = [
       {
         path: "/personnel/program/:programId/mission/:missionId/learning-material/:learningId",
         component: CohortMissionLearningPreview,
+        name: "Learning Material Preview",
         meta: {
           level: 4,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
@@ -386,6 +387,7 @@ const routes = [
       {
         path: "/personnel/program/:programId/mission/:missionId/learning-material-add",
         component: CohortMissionLearningForm,
+        name: "Add Learning Material",
         meta: {
           level: 3,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
@@ -394,6 +396,7 @@ const routes = [
       {
         path: "/personnel/program/:programId/mission/:missionId/learning-material/:learningId/edit",
         component: CohortMissionLearningForm,
+        name: "Edit Learning Material",
         meta: {
           level: 3,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
@@ -402,6 +405,7 @@ const routes = [
       {
         path: "/personnel/program/:programId/mentoring",
         component: CohortMentoring,
+        name: "Mentoring",
         meta: {
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
