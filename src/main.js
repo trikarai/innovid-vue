@@ -15,15 +15,15 @@ Vue.component('notification', Notification);
 Vue.use(require('vue-moment'));
 
 var defaultOptions = {
-  allowedTags: ['h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
+  allowedTags: ['h1','h2','h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
     'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
-    'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'iframe', 'img'],
+    'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'iframe', 'img'],
   allowedAttributes: {
     'a': ['href', 'target'],
     img: ['src', 'width', 'height'],
     iframe: ['src', 'width', 'height', 'allowfullscreen', 'frameborder'],
   },
-  allowedIframeHostnames: ['www.youtube.com', 'docs.google.com', 'player.vimeo.com', 'www.dailymotion.com']
+  allowedIframeHostnames: ['www.youtube.com', 'docs.google.com', 'www.dailymotion.com']
 };
 Vue.use(VueSanitize, defaultOptions);
 

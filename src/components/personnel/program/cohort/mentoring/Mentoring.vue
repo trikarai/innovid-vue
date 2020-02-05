@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <!-- {{authData.data.id}} -->
       <v-col md="8" xs="12">
@@ -8,7 +8,7 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row>
+    <!-- <v-row>
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -19,9 +19,9 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
-      <v-col>
+      <v-col cols="12" md="6" lg="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -68,8 +68,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -77,32 +77,31 @@
     <v-dialog
       v-model="dialogDetail"
       scrollable
-      persistent
       :overlay="false"
       max-width="300px"
       transition="dialog-transition"
     >
       <v-card>
         <v-card-title>
-          <p class="text-capitalize"></p>
+          <p class="text-capitalize">Mentoring Detail</p>
         </v-card-title>
         <v-card-text v-if="loader">
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.name">{{dataSingle.name}}</v-card-text>
+          <v-card-text :key="dataSingle.name"><b>Name</b><br>{{dataSingle.name}}</v-card-text>
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.sessionDuration">{{dataSingle.sessionDuration}} Minutes</v-card-text>
+          <v-card-text :key="dataSingle.sessionDuration"><b>Duration</b><br>{{dataSingle.sessionDuration}} Minutes</v-card-text>
         </transition>
-        <v-card-text>{{dataSingle.mentorMentoringFeedbackForm.name}}</v-card-text>
-        <v-card-text>{{dataSingle.participantMentoringFeedbackForm.name}}</v-card-text>
-        <v-card-actions>
+        <v-card-text><b>Mentor Feedback Form</b><br>{{dataSingle.mentorMentoringFeedbackForm.name}}</v-card-text>
+        <v-card-text><b>Participant Feedback Form</b><br>{{dataSingle.participantMentoringFeedbackForm.name}}</v-card-text>
+        <!-- <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
             <v-icon>close</v-icon>
           </v-btn>
-        </v-card-actions>
+        </v-card-actions> -->
       </v-card>
     </v-dialog>
   </v-container>
