@@ -15,7 +15,7 @@
               fab
               x-small
               color="primary"
-              @click="openDetail(item.worksheet.id)"
+              @click="openDetail(item.mission.id, item.id, item.worksheet.id)"
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>
@@ -142,10 +142,19 @@ export default {
           this.tableLoad = false;
         });
     },
-    openDetail(id) {
+    openDetail(missionId, journalId, worksheetId) {
       this.$router.push({
         path:
-          "/incubatee/team/" + this.$route.params.teamId + "/worksheet/" + id
+          "/incubatee/team/" +
+          this.$route.params.teamId +
+          "/participation/" +
+          this.$route.params.cohortId +
+          "/mission/" +
+          missionId +
+          "/journal/" +
+          journalId +
+          "/worksheet/" +
+          worksheetId
       });
     }
   }
