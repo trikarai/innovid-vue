@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <!-- <v-row>
       <v-col md="12" class="title">RAW</v-col>
       <v-col md="12" class="title">{{dataSingle.name}}</v-col>
