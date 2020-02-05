@@ -26,6 +26,7 @@
       v-if="field.type === 'radio'"
     ></radio-field>
     <select-field
+      :modeReload="modeReload"
       v-bind:index="index"
       v-bind:field="field"
       v-if="field.type === 'select'"
