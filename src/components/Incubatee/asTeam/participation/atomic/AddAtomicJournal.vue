@@ -58,7 +58,7 @@
           item-value="id"
           item-text="name"
           label="Existing Worksheet"
-          :loading="tableLoad"
+          :loading="worksheetListLoad"
           no-data-text="No worksheet available"
           @change="getWorksheetData"
           solo
@@ -75,10 +75,6 @@
           @submit-form="submitForm"
         />
       </v-col>
-      <!-- <v-col><pre>{{worksheetData}}</pre></v-col> -->
-      <!-- <v-col>
-        <pre>{{dataList.worksheetForm}}</pre>
-      </v-col>-->
     </v-row>
     <v-row v-if="is_newWorksheet">
       <v-col md="12">
@@ -122,6 +118,7 @@ export default {
         nextMission: { id: "" }
       },
       worksheetList: { total: 0, list: [] },
+      worksheetListLoad: false,
       worksheetData: {},
       worksheetDataOK: false,
       tableLoad: false,
@@ -239,7 +236,7 @@ export default {
       this.getWorksheetList();
     },
     getWorksheetList() {
-      this.tableLoad = true;
+      this.worksheetListLoad = true;
       this.axios
         .get(
           config.baseUri +
@@ -259,7 +256,7 @@ export default {
         })
         .catch(() => {})
         .finally(() => {
-          this.tableLoad = false;
+          this.worksheetListLoad = false;
         });
     },
     getWorksheetData() {

@@ -12,7 +12,7 @@
           <v-card-title>Mission : {{dataList.name}}</v-card-title>
           <v-card-title>Worksheet : {{dataList.worksheetForm.name}}</v-card-title>
           <v-card-actions>
-            <template>
+            <template v-if="!updateJ">
               <v-btn color="primary" small v-if="!editWS" @click="editWorksheet">
                 <v-icon small left>edit</v-icon>Edit Worksheet Record
               </v-btn>
@@ -20,8 +20,8 @@
                 <v-icon small left>cancel</v-icon>Cancel Edit
               </v-btn>
             </template>
-            <template>
-              <v-btn color="primary" small v-if="!updateJ" @click="updateJournal" disabled>
+            <template v-if="!editWS">
+              <v-btn color="primary" small v-if="!updateJ" @click="updateJournal">
                 <v-icon small left>edit</v-icon>Update Journal
               </v-btn>
               <v-btn color="warning" small @click="updateJ = !updateJ" v-else>
@@ -29,30 +29,33 @@
               </v-btn>
             </template>
           </v-card-actions>
-          <v-card-text class="pt-0 mt-2 ml-3" v-if="!editWS">
-            <template v-for="data in fields">
-              <!-- {{data}} -->
-              <v-row :key="data.field.id">
-                <b>{{data.field.name}}</b>
-              </v-row>
-              <v-row
-                class="mb-4 grey--text"
-                :key="data.id"
-                v-if="data.type == 'string'"
-              >{{data.value}}</v-row>
-              <v-row
-                class="mb-4 grey--text"
-                :key="data.id"
-                v-if="data.type == 'radio'"
-              >{{data.selectedOption.name}}</v-row>
-              <v-row class="mb-4 grey--text" :key="data.id" v-if="data.type == 'select'">
-                <template v-for="opt in data.selectedOptions">{{opt.option.name}} ,</template>
-              </v-row>
-            </template>
-          </v-card-text>
+          <template v-if="!updateJ">
+            <v-card-text class="pt-0 mt-2 ml-3" v-if="!editWS">
+              <template v-for="data in fields">
+                <v-row :key="data.field.id">
+                  <b>{{data.field.name}}</b>
+                </v-row>
+                <v-row
+                  class="mb-4 grey--text"
+                  :key="data.id"
+                  v-if="data.type == 'string'"
+                >{{data.value}}</v-row>
+                <v-row
+                  class="mb-4 grey--text"
+                  :key="data.id"
+                  v-if="data.type == 'radio'"
+                >{{data.selectedOption.name}}</v-row>
+                <v-row class="mb-4 grey--text" :key="data.id" v-if="data.type == 'select'">
+                  <template v-for="opt in data.selectedOptions">{{opt.option.name}} ,</template>
+                </v-row>
+              </template>
+            </v-card-text>
+          </template>
         </v-card>
       </v-col>
     </v-row>
+
+    <!--edit worksheet jurnal start-->
     <template v-if="!worksheetDataLoad">
       <v-row v-if="editWS">
         <v-col md="6" lg="6" xs="12">
@@ -75,17 +78,70 @@
         </v-col>
       </v-row>
     </template>
-    <!-- <v-row>
-      <v-col cols="12" md="6" lg="6" xs="12">
-        <v-card>
-          <v-card-text>{{worksheetData}}</v-card-text>
-          <v-card-text>{{dataList}}</v-card-text>
-          <v-card-text>
-            <pre>{{params}} </pre>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>-->
+    <!--edit worksheet jurnal end-->
+
+    <!--update jurnal start-->
+    <template v-if="updateJ">
+      <v-row>
+        <v-col md="12">
+          <v-btn
+            small
+            class="ma-2"
+            color="primary"
+            :disabled="mode"
+            @click="createReloadWorksheet"
+          >Reload Existing Worksheet</v-btn>
+          <v-btn
+            small
+            class="ma-2"
+            color="primary"
+            :disabled="!mode"
+            @click="createNewWorksheet"
+          >Create New Worksheet</v-btn>
+        </v-col>
+        <v-col v-if="selectWorksheet" md="6">
+          <v-select
+            class="ml-0"
+            v-model="exworksheetId"
+            :items="worksheetList.list"
+            item-value="id"
+            item-text="name"
+            label="Existing Worksheet"
+            :loading="tableLoad"
+            no-data-text="No worksheet available"
+            @change="getWorksheetData"
+            solo
+          ></v-select>
+        </v-col>
+      </v-row>
+      <v-row v-if="is_newWorksheet">
+        <v-col md="6">
+          <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
+        </v-col>
+        <v-col md="12">
+          <render-form
+            :modeReload="reloadFalse"
+            v-if="!tableLoad"
+            :formTemplate="dataList.worksheetForm"
+            @submit-form="submitForm"
+          />
+        </v-col>
+      </v-row>
+      <v-row v-if="!is_newWorksheet">
+        <v-col md="6" v-if="is_reloadWorksheet">
+          <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
+        </v-col>
+        <v-col md="12" v-if="is_reloadWorksheet">
+          <render-form
+            :modeReload="reloadTrue"
+            v-if="!tableLoad"
+            :formTemplate="dataList.worksheetForm"
+            @submit-form="submitForm"
+          />
+        </v-col>
+      </v-row>
+    </template>
+    <!--update jurnal end-->
   </v-container>
 </template>
 
@@ -101,7 +157,13 @@ export default {
   mixins: [formDynamicMixins],
   data() {
     return {
+      mode: false,
       reloadTrue: true,
+      is_newWorksheet: true,
+      is_reloadWorksheet: false,
+      selectWorksheet: false,
+      exworksheetId: "",
+      worksheetName: "",
       teamId: this.$route.params.teamId,
       authData: "",
       search: "",
@@ -120,12 +182,14 @@ export default {
         description: "",
         nextMission: { id: "" }
       },
+      worksheetList: { total: 0, list: [] },
       dataSingle: {},
       worksheetData: {},
       fields: [],
       tableLoad: false,
       dataLoad: false,
       worksheetDataLoad: false,
+      worksheetDataLoad2: false,
       loader: false,
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
@@ -180,15 +244,24 @@ export default {
       this.dataList = JSON.parse(JSON.stringify(this.dataListTemp));
       this.worksheetData = {};
       // this.worksheetOK = false;
-      // this.is_reloadWorksheet = false;
-      this.worksheetDataLoad = true;
+      this.is_reloadWorksheet = false;
+      var worksheetId;
+      if (this.editWS) {
+        this.worksheetDataLoad = true;
+        worksheetId = this.$route.params.worksheetId;
+      } else {
+        this.worksheetDataLoad2 = true;
+        worksheetId = this.exworksheetId;
+      }
       this.axios
         .get(
           config.baseUri +
             "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/worksheets/" +
-            this.$route.params.worksheetId,
+            worksheetId,
+          // this.exworksheetId,
+          // this.$route.params.worksheetId,
           {
             headers: auth.getAuthHeader()
           }
@@ -201,7 +274,12 @@ export default {
         .catch(() => {})
         .finally(() => {
           this.worksheetDataLoad = false;
-          // this.is_reloadWorksheet = true;
+          this.worksheetDataLoad2 = false;
+          if (this.updateJ) {
+            this.is_reloadWorksheet = true;
+          } else {
+            this.is_reloadWorksheet = false;
+          }
         });
     },
     getMissionDetail() {
@@ -233,8 +311,9 @@ export default {
         params["name"] = this.newWsName;
         this.submitEdit(params);
       } else {
-        params["name"] = "";
-        // this.submitUpdate(params);
+        params["name"] = this.worksheetName;
+        params["worksheetFormId"] = this.worksheetData.worksheetForm.id;
+        this.submitUpdate(params);
       }
       // this.params = params;
     },
@@ -261,13 +340,78 @@ export default {
           this.worksheetDataLoad = false;
         });
     },
+    submitUpdate(params) {
+      this.params = params;
+      this.worksheetDataLoad2 = true;
+      this.axios
+        .patch(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/journals_atomic-worksheet/" +
+            this.$route.params.journalId,
+          params,
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(() => {
+          this.refreshData();
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.worksheetDataLoad2 = false;
+        });
+    },
     editWorksheet() {
       this.editWS = true;
+      this.updateJ = false;
       this.getWorksheetData();
-      // this.pairFieldValue(this.dara);
     },
     updateJournal() {
       this.updateJ = true;
+      this.editWS = false;
+    },
+    createNewWorksheet() {
+      this.mode = false;
+      this.is_newWorksheet = true;
+      this.is_reloadWorksheet = false;
+      this.selectWorksheet = false;
+      this.getDataList();
+    },
+    createReloadWorksheet() {
+      this.mode = true;
+      this.exworksheetId = "";
+      this.is_newWorksheet = false;
+      this.is_reloadWorksheet = false;
+      this.selectWorksheet = true;
+      this.getWorksheetList();
+    },
+    getWorksheetList() {
+      this.tableLoad = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/worksheets",
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          if (res.data.data) {
+            this.worksheetList = res.data.data;
+          } else {
+            this.worksheetList = { total: 0, list: [] };
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.tableLoad = false;
+        });
     },
     refreshData() {
       this.editWS = false;
