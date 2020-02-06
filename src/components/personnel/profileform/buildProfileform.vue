@@ -1,11 +1,13 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs v-scroll:throttle="{fn: onScroll, throttle: 500 }">
     <!-- build form module-->
+    <!-- {{position}} -->
     <buildform-module @postform="postform" :edit="edit" :formtype="formtype" />
     <!-- -->
     <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
+    <!-- {{position}} -->
   </v-container>
 </template>
 <script>
@@ -23,7 +25,8 @@ export default {
       loader: false,
       overlay: false,
       edit: false,
-      formtype: "profile-forms"
+      formtype: "profile-forms",
+      position: { scrollTop: 0, scrollLeft: 0 }
     };
   },
   components: {
@@ -37,6 +40,9 @@ export default {
     }
   },
   methods: {
+    onScroll: function(e, position) {
+      this.position = position;
+    },
     postformtest(params) {
       alert(params);
       this.overlay = true;
