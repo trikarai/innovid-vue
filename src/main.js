@@ -12,6 +12,10 @@ import VueSanitize from "vue-sanitize";
 import Notification from "@/components/Notification";
 Vue.component('notification', Notification);
 
+//scroll
+import vuescroll from 'vue-scroll'
+ Vue.use(vuescroll)
+
 Vue.use(require('vue-moment'));
 
 var defaultOptions = {
