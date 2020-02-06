@@ -1,6 +1,7 @@
 <template>
   <v-col>
     <v-text-field
+      dense
       :placeholder="field.placeholder"
       :hint="field.description"
       outlined
