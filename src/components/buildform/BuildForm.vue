@@ -12,76 +12,89 @@
       </v-col>
       <v-col md="4" v-show="!leftmenu">
         <v-card min-height="100%">
-          <v-card-title primary-title>Element</v-card-title>
+          <v-card-title primary-title>
+            Element
+            <v-spacer></v-spacer>
+            <v-icon>forward</v-icon>
+          </v-card-title>
           <v-card-text>
             <v-row>
-              <v-col md="9">
-                <v-text-field label="String" outlined clearable></v-text-field>
+              <v-col class="my-0 py-0" md="9">
+                <v-text-field disabled dense label="String" outlined clearable></v-text-field>
               </v-col>
-              <v-col md="3">
-                <v-btn x-small fab color="accent" @click="addString">
+              <v-col class="my-0 py-0" md="3">
+                <v-btn class="mt-1" x-small fab color="primary" @click="addString">
                   <v-icon small>add</v-icon>
                 </v-btn>
               </v-col>
-              <v-divider></v-divider>
-              <v-col md="9">
-                <v-textarea rows="2" label="Textarea" outlined clearable></v-textarea>
+              <!-- <v-divider></v-divider> -->
+              <v-col class="my-0 py-0" md="9">
+                <v-textarea class="my-0 py-0" disabled dense rows="2" label="Textarea" outlined clearable></v-textarea>
               </v-col>
-              <v-col md="3">
-                <v-btn x-small fab color="accent" @click="addTextarea">
+              <v-col class="my-0 py-0" md="3">
+                <v-btn class="mt-1" x-small fab color="primary" @click="addTextarea">
                   <v-icon small>add</v-icon>
                 </v-btn>
               </v-col>
-              <v-divider></v-divider>
-              <v-col md="9">
-                <v-text-field label="Integer" type="number" outlined clearable></v-text-field>
+              <!-- <v-divider></v-divider> -->
+              <v-col class="my-0 py-0" md="9">
+                <v-text-field disabled dense label="Integer" type="number" outlined clearable></v-text-field>
               </v-col>
-              <v-col md="3">
-                <v-btn x-small fab color="accent" @click="addInteger">
+              <v-col class="my-0 py-0" md="3">
+                <v-btn class="mt-1" x-small fab color="primary" @click="addInteger">
                   <v-icon small>add</v-icon>
                 </v-btn>
               </v-col>
-              <v-col md="9">
+              <v-col class="my-0 py-0" md="9">
                 <v-radio-group>
-                  <v-radio v-for="n in 3" :key="n" :label="`Radio ${n}`" :value="n"></v-radio>
+                  <v-radio disabled v-for="n in 2" :key="n" :label="`Radio ${n}`" :value="n"></v-radio>
                 </v-radio-group>
               </v-col>
-              <v-col md="3">
-                <v-btn x-small fab color="accent" @click="addRadio">
+              <v-col class="my-0 py-0" md="3">
+                <v-btn class="mt-5" x-small fab color="primary" @click="addRadio">
                   <v-icon small>add</v-icon>
                 </v-btn>
               </v-col>
-              <v-col md="9">
-                <v-select multiple :items="items" label="Select Multiple" clearable outlined></v-select>
+              <v-col class="my-0 py-0" md="9">
+                <v-select
+                  disabled
+                  dense
+                  multiple
+                  :items="items"
+                  label="Select Multiple"
+                  clearable
+                  outlined
+                ></v-select>
               </v-col>
-              <v-col md="3">
-                <v-btn x-small fab color="accent" @click="addSelectMulti">
+              <v-col class="my-0 py-0" md="3">
+                <v-btn class="mt-1" x-small fab color="primary" @click="addSelectMulti">
                   <v-icon small>add</v-icon>
                 </v-btn>
               </v-col>
-              <v-col md="9">
-                <v-file-input label="File input" clearable outlined></v-file-input>
+              <v-col class="my-0 py-0" md="9">
+                <v-file-input disabled dense label="File input" clearable outlined></v-file-input>
               </v-col>
-              <v-col md="3">
-                <v-btn x-small fab color="accent" @click="addAttachment">
+              <v-col class="my-0 py-0" md="3">
+                <v-btn class="mt-1" x-small fab color="primary" @click="addAttachment">
                   <v-icon small>add</v-icon>
                 </v-btn>
               </v-col>
             </v-row>
           </v-card-text>
-          <v-card-actions>
+          <!-- <v-card-actions>
             <v-btn @click="resetField" color="error">reset</v-btn>
-          </v-card-actions>
+          </v-card-actions>-->
         </v-card>
       </v-col>
       <v-col md="8">
-        <v-card min-height="100%" elevation="5" :loading="loader">
+        <v-card min-height="530px" :loading="loader">
+          <!-- <v-card-title v-intersect="onIntersectJudul"> -->
           <v-card-title>
             Form Builder
             <v-spacer></v-spacer>
             <v-btn
               class="ml-5"
-              color="accent"
+              color="primary"
               @click="dialogPreview = true"
               :disabled="fields.length == 0"
             >
@@ -91,23 +104,34 @@
           <v-card-text>
             <v-row>
               <v-col md="12">
-                <v-text-field label="name" v-model="params.name" outlined></v-text-field>
+                <v-text-field label="name" v-model="params.name" filled></v-text-field>
               </v-col>
               <v-col md="12">
-                <v-textarea rows="3" label="Description" v-model="params.description" outlined></v-textarea>
+                <v-textarea rows="3" label="Description" v-model="params.description" filled></v-textarea>
               </v-col>
             </v-row>
           </v-card-text>
-          <v-divider></v-divider>
+          <!-- <v-divider></v-divider> -->
           <v-card-text>
-            <template v-if="fields.length == 0">No Fields Added</template>
+            <v-card-text style="text-align:center;">
+              <template v-if="fields.length == 0">
+                <v-chip color="warning">
+                  <v-avatar left>
+                    <v-icon>post_add</v-icon>
+                  </v-avatar>No Fields Added
+                </v-chip>
+              </template>
+              <template v-else>
+                <v-divider></v-divider>
+              </template>
+            </v-card-text>
             <v-progress-circular indeterminate color="primary" v-if="loader"></v-progress-circular>
             <transition-group name="slide-fade">
               <template v-for="(field, index) in fields">
-                <v-row :key="index">
-                  <v-col md="9">
+                <v-row :key="index" class="my-0 py-0">            
+                  <v-col class="my-0 py-0" md="9">
                     <v-row>
-                      <v-col md="2">
+                      <v-col class="mt-4" md="2">
                         <v-btn fab x-small color="primary" @click="openProperties(field)">
                           <v-icon small>build</v-icon>
                         </v-btn>
@@ -119,26 +143,28 @@
                   </v-col>
                   <v-col md="3">
                     <v-btn
+                      class="mt-3"
                       :disabled="index === 0"
                       icon
                       small
                       fab
-                      color="accent"
+                      color="primary"
                       @click="swapUp(fields, index)"
                     >
                       <v-icon>keyboard_arrow_up</v-icon>
                     </v-btn>
                     <v-btn
+                      class="mt-3"
                       :disabled="index === fields.length - 1"
                       icon
                       small
                       fab
-                      color="accent"
+                      color="primary"
                       @click="swapDown(fields, index)"
                     >
                       <v-icon>keyboard_arrow_down</v-icon>
                     </v-btn>
-                    <v-btn class="ml-3" x-small fab color="warning" @click="deleteEvent(index)">
+                    <v-btn class="ml-3 mt-4" x-small fab color="warning" @click="deleteEvent(index)">
                       <v-icon small>delete</v-icon>
                     </v-btn>
                   </v-col>
@@ -148,9 +174,10 @@
           </v-card-text>
           <v-card-actions v-show="fields.length !== 0">
             <v-spacer></v-spacer>
-            <v-btn color="success" @click="buildFormJSON()" :loading="loadBuild">
+            <v-btn color="primary" @click="buildFormJSON()" :loading="loadBuild">
               <v-icon left>save</v-icon>Save
             </v-btn>
+            <v-btn @click="resetField" color="warning">reset</v-btn>
           </v-card-actions>
           <v-card-text v-show="devmode">
             <v-row>
@@ -162,9 +189,11 @@
               </v-col>
             </v-row>
           </v-card-text>
-          <v-divider></v-divider>
+          <!-- <v-divider></v-divider> -->
         </v-card>
+        <!-- <v-chip v-intersect.quiet="onIntersect"></v-chip>    -->
       </v-col>
+      <!-- <v-vol cols="1"></v-vol> -->
     </v-row>
 
     <v-layout row justify-center>
@@ -230,6 +259,7 @@ export default {
   data() {
     return {
       buildmode: true,
+      isIntersecting: false,
       devmode: false,
       snackbar: false,
       timeout: 700,
@@ -252,7 +282,8 @@ export default {
       items: ["Foo", "Bar", "Fizz", "Buzz"],
       loader: false,
       loadBuild: false,
-      dataSingle: ""
+      dataSingle: "",
+      position: { scrollTop: 0, scrollLeft: 0 }
     };
   },
   components: {
@@ -269,6 +300,7 @@ export default {
     }
   },
   methods: {
+    
     postformtoParent() {
       this.$emit("postform", this.params);
     },
@@ -482,9 +514,24 @@ export default {
         .finally(() => {
           this.loader = false;
         });
+    },
+    onIntersect(entries) {
+      // More information about these options
+      // is located here: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+      this.isIntersecting = entries[0].isIntersecting;
+    },
+    onIntersectJudul() {
+      // More information about these options
+      // is located here: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+      this.isIntersecting = false;
     }
   }
 };
 </script>
 <style scoped>
+.elementextend {
+  position: fixed;
+  width: 371px;
+  top: 71px;
+}
 </style>
