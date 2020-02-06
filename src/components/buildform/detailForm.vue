@@ -1,8 +1,9 @@
 <template>
-  <v-container grid-list-xs>
-    <v-card>
+  <v-container extend grid-list-xs>
+    <v-col cols="12" md="6" lg="6" xs="12">
+    <v-card class="pa-10">
       <v-card-title v-if="!loader">
-        <span class="headline">{{dataSingle.name}} Form Preview</span>
+        <span class="headline">{{dataSingle.name}}</span>
       </v-card-title>
       <v-card-text v-if="loader">
         <v-skeleton-loader ref="skeleton1" type="card-heading"></v-skeleton-loader>
@@ -24,6 +25,7 @@
         </v-btn>-->
       </v-card-actions>
     </v-card>
+    </v-col>
   </v-container>
 </template>
 <script>
