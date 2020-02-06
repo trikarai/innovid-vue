@@ -4,7 +4,7 @@
       <!-- {{authData.data.id}} -->
       <v-col md="8" xs="12">
         <v-btn color="primary" router to="/personnel/profile-forms/build">
-          <v-icon left>add</v-icon>Create a Profile Form
+          <v-icon left>add</v-icon>Create Profile Form
         </v-btn>
       </v-col>
     </v-row>
@@ -19,7 +19,7 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row> -->
+    </v-row>-->
     <v-row>
       <v-col cols="12" md="6" lg="6" xs="12">
         <v-data-table
