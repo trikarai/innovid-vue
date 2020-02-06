@@ -1,6 +1,7 @@
 <template>
   <v-col>
     <v-textarea
+      dense
       :hint="field.description"
       :placeholder="field.placeholder"
       rows="3"
