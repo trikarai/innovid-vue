@@ -236,6 +236,7 @@ const routes = [
       {
         path: "/personnel/preview/:formType/:formId",
         component: PersonnelFormDetail,
+        name: "Form Preview",
         meta: {
           level: 1,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
@@ -269,6 +270,7 @@ const routes = [
       {
         path: "/personnel/profile-forms/build",
         component: PersonnelProfileFormBuild,
+        name: "Create Profile Form",
         meta: {
           level: 1,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
@@ -277,6 +279,7 @@ const routes = [
       {
         path: "/personnel/profile-forms/:formId/edit",
         component: PersonnelProfileFormBuild,
+        name: "Edit Profile Form",
         meta: {
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
