@@ -2,6 +2,7 @@
   <v-col>
     <!-- build mode : {{build}} -->
     <v-select
+      dense
       v-if="build"
       :label="field.name"
       :items="field.options"
