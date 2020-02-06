@@ -1,5 +1,6 @@
 <template>
   <v-col>
+    <!-- {{field}} -->
     <div :class="{required: field.required}">{{field.name}}</div>
     <v-radio-group v-model="option" :rules="checkRequired">
       <v-radio
@@ -19,7 +20,7 @@ import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 export default {
   mixins: [validationMixins, formDynamicMixins],
-  props: ["field", "index"],
+  props: ["field", "index", "modeReload"],
   components: {},
   data: function() {
     return {
@@ -29,11 +30,20 @@ export default {
   },
   watch: {
     option: function() {
-      var params = {
-        fieldId: this.field.id,
-        selectedOptionId: this.option,
-        type: this.field.type
-      };
+      var params;
+      if (this.modeReload) {
+        params = {
+          fieldId: this.field.singleSelectField.id,
+          selectedOptionId: this.option,
+          type: this.field.type
+        };
+      } else {
+        params = {
+          fieldId: this.field.id,
+          selectedOptionId: this.option,
+          type: this.field.type
+        };
+      }
       bus.$emit("getValue", params, this.index);
     }
   }

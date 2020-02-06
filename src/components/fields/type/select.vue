@@ -1,6 +1,8 @@
 <template>
   <v-col>
     <!-- build mode : {{build}} -->
+    <!-- {{modeReload}} -->
+    <!-- {{field}} -->
     <v-select
       dense
       v-if="build"
@@ -34,7 +36,6 @@
       <template v-slot:label>
         <div :class="{required : field.required}">{{field.name}}</div>
       </template>
-
     </v-select>
     <!-- {{optionList}} -->
   </v-col>
@@ -46,7 +47,7 @@ import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 export default {
   mixins: [validationMixins, formDynamicMixins],
-  props: ["field", "index", "build"],
+  props: ["field", "index", "modeReload", "build"],
   components: {},
   data: function() {
     return {
@@ -56,11 +57,20 @@ export default {
   },
   watch: {
     optionList: function() {
-      var params = {
-        fieldId: this.field.id,
-        selectedOptionIdList: this.optionList,
-        type: this.field.type
-      };
+      var params;
+      if (this.modeReload) {
+        params = {
+          fieldId: this.field.multiSelectField.id,
+          selectedOptionIdList: this.optionList,
+          type: this.field.type
+        };
+      } else {
+        params = {
+          fieldId: this.field.id,
+          selectedOptionIdList: this.optionList,
+          type: this.field.type
+        };
+      }
       bus.$emit("getValue", params, this.index);
     }
   }
