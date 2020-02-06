@@ -3,6 +3,7 @@
     <v-col>
       <!-- {{fileInfo}} -->
       <v-file-input
+        dense
         :hint="field.description"
         :clearable="clearable"
         outlined
