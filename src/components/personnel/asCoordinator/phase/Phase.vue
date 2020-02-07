@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col md6>
         <v-btn color="primary" @click="openAdd()">
@@ -7,7 +7,7 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row>
+    <!-- <v-row>
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -18,9 +18,9 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
-      <v-col>
+      <v-col cols="12" md="6" lg="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -41,11 +41,11 @@
             {{item.name}}
           </template>
           <template v-slot:item.action="{item}">
-            <v-btn class="ml-2" small color="accent" @click="openEdit(item)">
+            <v-btn class="ml-2" small color="primary" @click="openEdit(item)">
               <v-icon small left>edit</v-icon>Edit
             </v-btn>
             <v-btn class="ml-2" small color="warning" @click="leftAct(item, 'Remove')">
-              <v-icon small left>delete</v-icon>Remove
+              <v-icon small>delete</v-icon>
             </v-btn>
           </template>
         </v-data-table>
@@ -60,8 +60,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -69,31 +69,38 @@
     <v-dialog
       v-model="dialogDetail"
       scrollable
-      persistent
       :overlay="false"
       max-width="300px"
       transition="dialog-transition"
     >
       <v-card>
         <v-card-title>
-          <p class="text-capitalize"></p>
+          <p class="text-capitalize">Registration Phase Detail</p>
         </v-card-title>
         <v-card-text v-if="loader">
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
-        <v-card-text>{{dataSingle}}</v-card-text>
-        <v-card-actions>
+        <v-card-text><b>Name</b><br>{{dataSingle.name}}</v-card-text>
+        <v-card-text><b>Start Date</b><br>
+        <v-icon left color="primary">calendar_today</v-icon>
+              {{ dataSingle.startDate | moment("MMMM Do YYYY") }}
+        </v-card-text>
+        <v-card-text><b>End Date</b><br>
+          <v-icon left color="primary">calendar_today</v-icon>
+              {{ dataSingle.endDate | moment("MMMM Do YYYY") }}
+        </v-card-text>
+        <!-- <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
             <v-icon>close</v-icon>
           </v-btn>
-        </v-card-actions>
+        </v-card-actions> -->
       </v-card>
     </v-dialog>
 
     <v-layout row justify-center>
       <v-dialog v-model="dialogForm" persistent max-width="500px">
-        <v-card>
+        <v-card class="pa-3">
           <v-card-title>
             <span class="headline">Registration Phase</span>
           </v-card-title>
@@ -175,7 +182,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="red"  @click.native="dialogForm = false">Close</v-btn>
+            <v-btn text color="grey"  @click.native="dialogForm = false">Close</v-btn>
             <v-btn
               v-if="!edit"
               :disabled="!valid"
