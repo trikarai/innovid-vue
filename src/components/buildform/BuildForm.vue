@@ -87,7 +87,7 @@
         </v-card>
       </v-col>
       <v-col md="8">
-        <v-card min-height="530px" :loading="loader">
+        <v-card min-height="550px" :loading="loader">
           <!-- <v-card-title v-intersect="onIntersectJudul"> -->
           <v-card-title>
             Form Builder
@@ -198,7 +198,7 @@
 
     <v-layout row justify-center>
       <v-dialog v-model="dialogPreview" width="500px">
-        <v-card>
+        <v-card class="pa-5">
           <v-card-title>
             <span class="headline">{{params.name}} Form Preview</span>
           </v-card-title>
@@ -209,12 +209,12 @@
               </v-row>
             </template>
           </v-card-text>
-          <v-card-actions>
+          <!-- <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn icon color="red darken-1" text @click="dialogPreview = false">
               <v-icon>close</v-icon>
             </v-btn>
-          </v-card-actions>
+          </v-card-actions> -->
         </v-card>
       </v-dialog>
     </v-layout>
@@ -311,7 +311,7 @@ export default {
         position: "",
         required: true,
         defaultValue: null,
-        minValue: 10,
+        minValue: 3,
         maxValue: 150,
         placeholder: "",
         type: "string"
