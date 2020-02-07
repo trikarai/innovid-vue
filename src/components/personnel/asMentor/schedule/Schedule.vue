@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col>
         <v-data-table
@@ -21,8 +21,28 @@
             </v-btn>
             {{item.mentoring.name}}
           </template>
+          <template v-slot:item.startTime="{item}">
+            <v-row class="my-3">
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ item.startTime | moment("MMMM Do YYYY") }}
+            </v-row>
+            <v-row class="my-3">
+              <v-icon left color="primary">access_time</v-icon>
+              {{ item.startTime | moment("h:mm a") }}
+            </v-row>
+          </template>
+          <template v-slot:item.endTime="{item}">
+            <v-row class="my-3">
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ item.endTime | moment("MMMM Do YYYY") }}
+            </v-row>
+            <v-row class="my-3">
+              <v-icon left color="primary">access_time</v-icon>
+              {{ item.endTime | moment("h:mm a") }}
+            </v-row>
+          </template>
           <template v-slot:item.action="{item}">
-            <v-btn class="ml-2" small color="accent" @click="openReport(item.id)">
+            <v-btn class="ml-2" small color="primary" @click="openReport(item.id)">
               <v-icon small left>assignment</v-icon>Report
             </v-btn>
           </template>

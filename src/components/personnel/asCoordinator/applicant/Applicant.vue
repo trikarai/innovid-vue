@@ -1,6 +1,6 @@
 <template>
-  <v-container grid-list-xs>
-    <v-row>
+  <v-container extend grid-list-xs>
+    <!-- <v-row>
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -11,7 +11,7 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
       <v-col>
         <v-data-table
@@ -22,7 +22,7 @@
           class="elevation-1"
         >
           <template v-slot:item.name="{item}">
-            <v-btn
+            <!-- <v-btn
               class="elevation-0 mr-2"
               fab
               x-small
@@ -30,8 +30,11 @@
               @click="openDetail(item.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn>
+            </v-btn> -->
             {{item.team.name}}
+          </template>
+          <template v-slot:item.note="{item}">
+            <v-chip small v-if="item.note !== null">{{item.note}}</v-chip>
           </template>
           <template v-slot:item.action="{item}">
             <template v-if="!item.concluded">
@@ -55,8 +58,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -103,8 +106,8 @@ export default {
       loader: false,
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
-        { text: "concluded", value: "concluded", sortable: false },
-        { text: "note", value: "note", sortable: false },
+        { text: "Concluded", value: "concluded", sortable: false },
+        { text: "Status", value: "note", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       dialogForm: false,

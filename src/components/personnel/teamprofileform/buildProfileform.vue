@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <!-- build form module-->
     <buildform-module @postform="postform" :edit="edit" :formtype="formtype" />
     <!-- -->

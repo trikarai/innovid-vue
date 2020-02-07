@@ -197,7 +197,7 @@ export default {
         },
         {
           icon: "how_to_reg",
-          text: "Founder",
+          text: "Registrant",
           route: "/personnel/founder",
           disabled: false
         }
