@@ -20,40 +20,43 @@
             <v-card-text class="pa-8">
               <div>
                 <v-form v-model="valid" ref="form">
-                  <v-row>                  
-                      <v-text-field
-                        outlined
-                        label="Incubator Identifier"
-                        v-model="params.incubatorIdentifier"
-                        :rules="rulesName"
-                        required
-                      ></v-text-field>
+                  <v-row>
+                    <v-text-field
+                      outlined
+                      label="Incubator Identifier"
+                      v-model="params.incubatorIdentifier"
+                      :rules="rulesName"
+                      required
+                    ></v-text-field>
                   </v-row>
                   <v-row>
-                      <v-text-field
-                        outlined
-                        label="Email"
-                        v-model="params.email"
-                        autocomplete="email"
-                        :rules="rulesEmail"
-                        required
-                      ></v-text-field>
+                    <v-text-field
+                      outlined
+                      label="Email"
+                      v-model="params.email"
+                      autocomplete="email"
+                      :rules="rulesEmail"
+                      required
+                    ></v-text-field>
                   </v-row>
                   <v-row>
-                      <v-text-field
-                        autocomplete="current-password"
-                        label="Password"
-                        outlined
-                        v-model="params.password"
-                        min="8"
-                        :append-icon="e1 ? 'visibility' : 'visibility_off'"
-                        :type="e1 ? 'password' : 'text'"
-                        :rules="rulesPassword"
-                        counter
-                        required
-                        @click:append="e1 = !e1"
-                        v-on:keyup.enter="submit"
-                      ></v-text-field>
+                    <v-text-field
+                      autocomplete="current-password"
+                      label="Password"
+                      outlined
+                      v-model="params.password"
+                      min="8"
+                      :append-icon="e1 ? 'visibility' : 'visibility_off'"
+                      :type="e1 ? 'password' : 'text'"
+                      :rules="rulesPassword"
+                      counter
+                      required
+                      @click:append="e1 = !e1"
+                      v-on:keyup.enter="submit"
+                      v-on:keyup="checkCaps($event)"
+                    ></v-text-field>
+                    <br>
+                    {{capsText}}
                   </v-row>
                   <v-row justify-end class="mt-2">
                     <v-col class="mt-2"></v-col>
@@ -109,13 +112,24 @@ export default {
         email: "",
         password: ""
       },
+      capsText: "",
       activate: false
     };
+  },
+  watch: {
+    "params.password": "checkCaps"
   },
   created: function() {},
   mounted: function() {},
   components: {},
   methods: {
+    checkCaps(e) {
+      if (e.getModifierState("CapsLock")) {
+        this.capsText = "Caps Is On";
+      } else {
+        this.capsText = "";
+      }
+    },
     submit() {
       if (this.$refs.form.validate()) {
         this.login();
@@ -164,11 +178,11 @@ export default {
 }
 
 #accentlg:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;
-  border-top: 20px solid #249c90 ;
+  border-top: 20px solid #249c90;
   border-left: 20px solid #fff;
   width: 50%;
 }
@@ -176,6 +190,6 @@ export default {
 
 <style>
 span.v-chip__content {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 </style>
