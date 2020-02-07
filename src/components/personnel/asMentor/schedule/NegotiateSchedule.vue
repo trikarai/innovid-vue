@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col>
         <v-data-table
@@ -10,7 +10,7 @@
           class="elevation-1"
         >
           <template v-slot:item.name="{item}">
-            <v-btn
+            <!-- <v-btn
               class="elevation-0 mr-2"
               fab
               x-small
@@ -18,20 +18,55 @@
               @click="openDetail(item.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn>
+            </v-btn> -->
             {{item.mentoring.name}}
+          </template> 
+          <template v-slot:item.startTime="{item}">
+            <v-row class="my-3">
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ item.startTime | moment("MMMM Do YYYY") }}
+            </v-row>
+            <v-row class="my-3">
+              <v-icon left color="primary">access_time</v-icon>
+              {{ item.startTime | moment("h:mm a") }}
+            </v-row>
+          </template>
+          <template v-slot:item.endTime="{item}">
+            <v-row class="my-3">
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ item.endTime | moment("MMMM Do YYYY") }}
+            </v-row>
+            <v-row class="my-3">
+              <v-icon left color="primary">access_time</v-icon>
+              {{ item.endTime | moment("h:mm a") }}
+            </v-row>
+          </template>
+          <template v-slot:item.status="{item}">
+             <v-chip x-small>{{item.status}}</v-chip>
           </template>
           <template v-slot:item.action="{item}">
             <template v-if="!item.concluded">
-              <v-btn class="ml-2" small color="primary" @click="leftAct(item, 'accept')">
-                <v-icon small left>check</v-icon>Accept
-              </v-btn>
-              <v-btn class="ml-2" small color="accent" @click="offerAct(item)">
-                <v-icon small left>update</v-icon>Offer
-              </v-btn>
-              <v-btn class="ml-2" small color="warning" @click="leftAct(item, 'reject')">
-                <v-icon small left>block</v-icon>Reject
-              </v-btn>
+              <v-row>
+                <v-col>
+                  <v-row>
+                  <v-btn small color="primary" @click="leftAct(item, 'accept')">
+                    <v-icon small left>check</v-icon>Accept
+                  </v-btn>
+                  </v-row>               
+                </v-col>
+                <v-col>
+                   <v-row>
+                  <v-btn small color="primary" @click="offerAct(item)">
+                    <v-icon small left>update</v-icon>Offer
+                  </v-btn>
+                  </v-row>
+                  <v-row>
+                  <v-btn class="mt-2" small color="warning" @click="leftAct(item, 'reject')">
+                    <v-icon small left>block</v-icon>Reject
+                  </v-btn>
+                  </v-row>
+                </v-col>
+              </v-row>
             </template>
           </template>
         </v-data-table>
@@ -46,8 +81,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -60,23 +95,45 @@
       max-width="550px"
       transition="dialog-transition"
     >
-      <v-card>
+      <v-card class="pa-3">
         <v-card-title>
-          <p class="text-capitalize"></p>
+          <p class="text-capitalize">Offer New Schedule</p>
         </v-card-title>
         <v-card-text v-if="loader">
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
         <v-card-text>
-          <p>{{dataSingle.mentoring.name}}</p>
-          <p>{{dataSingle.participant.team.name}}</p>
-          <p>{{dataSingle.startTime}}</p>
-          <p>{{dataSingle.endTime}}</p>
+          <p><b>Name</b><br>{{dataSingle.mentoring.name}}</p>
+          <p><b>Team Name</b><br>{{dataSingle.participant.team.name}}</p>
+          <v-row>
+          <v-col>
+             <b>Start Time</b>
+             <v-row class="my-3">
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ dataSingle.startTime | moment("MMMM Do YYYY") }}
+            </v-row>
+            <v-row class="my-3">
+              <v-icon left color="primary">access_time</v-icon>
+              {{ dataSingle.startTime | moment("h:mm a") }}
+            </v-row>
+          </v-col>
+          <v-col>
+            <b>End Time</b>
+            <v-row class="my-3">
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ dataSingle.endTime | moment("MMMM Do YYYY") }}
+            </v-row>
+            <v-row class="my-3">
+              <v-icon left color="primary">access_time</v-icon>
+              {{ dataSingle.endTime | moment("h:mm a") }}
+            </v-row>
+          </v-col>
+          </v-row>
         </v-card-text>
-        <v-card-text>
-          <v-form ref="form" v-model="valid">
-            <v-row>
-              <v-col>
+        <v-card-text class="mt-0 pt-0">
+          <v-form class="mt-0 pt-0" ref="form" v-model="valid">
+            <v-row class="mt-0 pt-0">
+              <v-col class="mt-0 pt-0">
                 <v-menu
                   ref="menu"
                   v-model="menu"
@@ -89,7 +146,7 @@
                   <template v-slot:activator="{ on }">
                     <v-text-field
                       v-model="date"
-                      label="Date Offer"
+                      label="New Date Offer"
                       prepend-icon="today"
                       readonly
                       :rules="rulesRequired"
@@ -106,7 +163,7 @@
                   ></v-date-picker>
                 </v-menu>
               </v-col>
-              <v-col>
+              <v-col class="mt-0 pt-0">
                 <v-menu
                   v-model="menu2"
                   :close-on-content-click="false"
@@ -118,7 +175,7 @@
                   <template v-slot:activator="{ on }">
                     <v-text-field
                       v-model="time"
-                      label="Time"
+                      label="New Time Offer"
                       prepend-icon="schedule"
                       readonly
                       :rules="rulesRequired"
@@ -127,7 +184,7 @@
                   </template>
                   <v-time-picker
                     format="24hr"
-                    color="blue"
+                    color="primary"
                     :locale="$vuetify.lang.current"
                     v-model="time"
                   ></v-time-picker>
@@ -138,12 +195,12 @@
           <!-- {{startTime}} -->
         </v-card-text>
         <v-card-actions>
+          <v-spacer></v-spacer>
           <v-btn color="primary" :disabled="!valid" @click="offerAction()">
             <v-icon left>update</v-icon>Offer
           </v-btn>
-          <div class="flex-grow-1"></div>
-          <v-btn icon color="red" @click="dialogForm = false">
-            <v-icon>close</v-icon>
+          <v-btn text color="grey" @click="dialogForm = false">
+            close
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -215,7 +272,7 @@ export default {
         { text: "startTime", value: "startTime", sortable: false },
         { text: "endTime", value: "endTime", sortable: false },
         { text: "status", value: "status", sortable: false },
-        { text: "concluded", value: "concluded", sortable: false },
+        // { text: "concluded", value: "concluded", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       dialogForm: false,
