@@ -64,7 +64,7 @@
               router
               :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/schedule/' + item.id + '/report'"
             >
-              <v-icon small left>assignment</v-icon>Report
+              <v-icon small left>assignment</v-icon>Report ewe
             </v-btn>
           </template>
         </v-data-table>
@@ -122,6 +122,7 @@
             <v-chip small>{{item.status}}</v-chip>
           </template>
           <template v-slot:item.action="{item}">
+          <template v-if="item.status != 'scheduled'">
             <template v-if="item.status !== 'proposed'">
               <template v-if="item.status !== 'cancelled'">
                 <v-btn class="ml-2" small color="primary" @click="leftAct(item, 'accept')">
@@ -141,6 +142,7 @@
             >
               <v-icon small left>block</v-icon>Cancel
             </v-btn>
+          </template>
           </template>
         </v-data-table>
       </v-col>
