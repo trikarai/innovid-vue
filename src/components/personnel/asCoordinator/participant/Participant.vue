@@ -1,6 +1,6 @@
 <template>
-  <v-container grid-list-xs>
-    <v-row>
+  <v-container extend grid-list-xs>
+    <!-- <v-row>
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -11,7 +11,7 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
       <v-col>
         <v-data-table
@@ -22,7 +22,7 @@
           class="elevation-1"
         >
           <template v-slot:item.name="{item}">
-            <v-btn
+            <!-- <v-btn
               class="elevation-0 mr-2"
               fab
               x-small
@@ -30,7 +30,7 @@
               @click="openDetail(item.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn>
+            </v-btn> -->
             {{item.team.name}}
           </template>
           <template v-slot:item.action="{item}">
