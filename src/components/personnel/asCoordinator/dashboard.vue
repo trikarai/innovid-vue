@@ -1,10 +1,10 @@
 <template>
-  <v-container grid-list-xs>
-    <v-row>
+  <v-container extend grid-list-xs>
+    <!-- <v-row>
       <v-col md2>
         <v-switch v-model="mode" label="table"></v-switch>
       </v-col>
-    </v-row>
+    </v-row> -->
     <template v-if="!mode">
       <v-row>
         <v-col>
@@ -125,7 +125,7 @@ export default {
       dataList: { total: 0, list: [] },
       dataSingle: { name: "", email: "" },
       tableHeaders: [
-        { text: "Name", value: "program.name", sortable: false },
+        { text: "Program Name", value: "program.name", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       tableLoad: false,
