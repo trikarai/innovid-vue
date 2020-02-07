@@ -1,6 +1,6 @@
 <template>
-  <v-container grid-list-xs>
-    <v-row>
+  <v-container extend grid-list-xs>
+    <!-- <v-row>
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -11,7 +11,7 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
       <v-col>
         <v-data-table
@@ -21,7 +21,7 @@
           :items="dataList.list"
           class="elevation-1"
         >
-          <template v-slot:item.name="{item}">
+          <!-- <template v-slot:item.name="{item}">
             <v-btn
               class="elevation-0 mr-2"
               fab
@@ -32,7 +32,7 @@
               <v-icon>zoom_in</v-icon>
             </v-btn>
             {{item.name}}
-          </template>
+          </template> -->
           <template v-slot:item.activated="{item}">
             <v-icon v-if="item.activated" large color="green darken-1">check</v-icon>
             <v-icon v-else large color="red darken-1">remove</v-icon>
