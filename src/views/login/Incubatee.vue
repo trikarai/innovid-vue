@@ -55,9 +55,9 @@
                       v-on:keyup.enter="submit"
                       v-on:keyup="checkCaps($event)"
                     ></v-text-field>
-                    <br>
-                    {{capsText}}
                   </v-row>
+                  <v-alert dense type="error" v-if="capsText != ''">{{capsText}}</v-alert>
+                  <v-row></v-row>
                   <v-row justify-end class="mt-2">
                     <v-col class="mt-2"></v-col>
                     <v-btn
