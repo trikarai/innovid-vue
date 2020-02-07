@@ -45,9 +45,9 @@
             <v-icon large v-if="item.published" color="green darken-1">check</v-icon>
             <v-icon large v-else color="red darken-1">remove</v-icon>
           </template>
-          <template v-slot:item.sub="{item}">
+          <!-- <template v-slot:item.sub="{item}">
             <v-icon v-if="item.previousMission === null">stars</v-icon>
-          </template>
+          </template> -->
           <template v-slot:item.action="{item}">
           <v-row>
             <v-row>
