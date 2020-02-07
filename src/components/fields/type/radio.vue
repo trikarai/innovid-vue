@@ -28,6 +28,11 @@ export default {
       option: ""
     };
   },
+  created() {
+    if (this.modeReload) {
+      this.option = this.field.selectedOption.id;
+    }
+  },
   watch: {
     option: function() {
       var params;
