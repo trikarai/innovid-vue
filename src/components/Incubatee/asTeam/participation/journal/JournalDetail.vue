@@ -53,6 +53,9 @@
           </template>
         </v-card>
       </v-col>
+      <!--comment block-->
+      <comment-module></comment-module>
+      <!--comment block-->
     </v-row>
 
     <!--edit worksheet jurnal start-->
@@ -152,6 +155,7 @@ import auth from "@/config/auth";
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 import RenderForm from "@/components/buildform/incubatee/renderForm";
+import CommentModule from "@/components/buildform/comment/CommentModule";
 
 export default {
   mixins: [formDynamicMixins],
@@ -206,7 +210,7 @@ export default {
       params: ""
     };
   },
-  components: { RenderForm },
+  components: { RenderForm, CommentModule },
   created: function() {
     this.getMissionDetail();
   },
