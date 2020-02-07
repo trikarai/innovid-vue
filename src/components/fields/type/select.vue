@@ -55,6 +55,14 @@ export default {
       optionList: []
     };
   },
+  created() {
+    if (this.modeReload) {
+      this.field.selectedOptions.forEach(element => {
+        this.optionList.push(element.option.id);
+      });
+      // this.optionList = this.field.selectedOption.id;
+    }
+  },
   watch: {
     optionList: function() {
       var params;
