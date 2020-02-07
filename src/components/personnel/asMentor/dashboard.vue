@@ -1,10 +1,10 @@
 <template>
-  <v-container grid-list-xs>
-    <v-row>
+  <v-container extend grid-list-xs>
+    <!-- <v-row>
       <v-col md2>
         <v-switch v-model="mode" label="table"></v-switch>
       </v-col>
-    </v-row>
+    </v-row> -->
     <template v-if="!mode">
       <v-row>
         <v-col>
