@@ -117,7 +117,6 @@ export default {
     };
   },
   watch: {
-    "params.password": "checkCaps"
   },
   created: function() {},
   mounted: function() {},
