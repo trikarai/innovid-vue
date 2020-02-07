@@ -1,14 +1,14 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <!-- {{authData.data.id}} -->
       <v-col md="8" xs="12">
         <v-btn color="primary" router to="/personnel/mentoring-feedback-forms/build">
-          <v-icon left>add</v-icon>Create a Mentoring Feedback Form
+          <v-icon left>add</v-icon>Create Mentoring Feedback Form
         </v-btn>
       </v-col>
     </v-row>
-    <v-row>
+    <!-- <v-row>
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -19,9 +19,9 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
-      <v-col>
+      <v-col cols="12" md="6" lg="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -42,8 +42,8 @@
             {{item.name}}
           </template>
           <template v-slot:item.action="{item}">
-            <v-btn small color="accent" class="mr-2" @click="openEdit(item.id)">
-              <v-icon small>edit</v-icon>
+            <v-btn small color="primary" class="mr-2" @click="openEdit(item.id)">
+              <v-icon left small>edit</v-icon>edit
             </v-btn>
             <v-btn small color="warning" @click="leftAct(item, 'Delete')">
               <v-icon small>delete</v-icon>
@@ -63,8 +63,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
