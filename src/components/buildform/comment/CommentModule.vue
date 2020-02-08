@@ -1,6 +1,7 @@
 <template>
   <v-col cols="12" md="6" lg="6" xs="12">
     <v-row>
+      <!-- {{membershipId}} -->
       <v-col md="12" v-if="loadComment">
         <v-skeleton-loader type="list-item-avatar-two-line@3"></v-skeleton-loader>
       </v-col>
@@ -112,7 +113,7 @@ export default {
       switchMode: false,
       textMode: "Dialog Form",
       content: "",
-      membershipId: "40a28674-83f3-4093-8b4c-ec816a7ee267",
+      membershipId: "",
       parentId: "",
       comments: { total: 0, list: [] },
       dialogDelete: false,
@@ -144,6 +145,9 @@ export default {
         this.isEmpty = false;
       }
     }
+  },
+  created() {
+    this.membershipId = localStorage.getItem("MembershipTeamId");
   },
   mounted() {
     this.getCommentList();
