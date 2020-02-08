@@ -57,8 +57,8 @@
             label="Team"
             :items="user.data.teamMemberships"
             item-text="team.name"
-            item-value="team.id"
-            v-model="teamId"
+            v-model="teamMemberships"
+            return-object
             @change="getParticipations()"
           ></v-select>
           <!-- {{teamId}} -->
@@ -75,7 +75,7 @@
           <!-- {{participationId}} -->
         </v-list-item>
       </v-list>
-
+      <!-- {{teamMemberships}} -->
       <v-list>
         <!--sub list other-->
         <v-list-item
@@ -226,6 +226,7 @@ export default {
       clipped: false,
       fixed: false,
       user: "",
+      teamMemberships: {},
       teamId: "",
       participationList: { total: 0, list: [] },
       participationId: "",
@@ -297,8 +298,11 @@ export default {
   },
   created() {
     this.user = JSON.parse(auth.getAuthData());
+    this.teamMemberships = this.user.data.teamMemberships[0];
     this.teamId = this.user.data.teamMemberships[0].team.id;
     localStorage.setItem("DashboardTeamId", this.teamId);
+    var membershipId = this.user.data.teamMemberships[0].id;
+    localStorage.setItem("MembershipTeamId", membershipId);
   },
   mounted() {
     if (this.teamId != "") {
@@ -321,8 +325,10 @@ export default {
       bus.$emit("changeDashboardParticipant", this.participationId);
     },
     getParticipations() {
-      localStorage.setItem("DashboardTeamId", this.teamId);
-      bus.$emit("changeDashboardTeam", this.teamId);
+      this.teamId = this.teamMemberships.team.id;
+      localStorage.setItem("MembershipTeamId", this.teamMemberships.id);
+      localStorage.setItem("DashboardTeamId", this.teamMemberships.team.id);
+      bus.$emit("changeDashboardTeam", this.teamMemberships.team.id);
       this.tableLoad = true;
       this.axios
         .get(
@@ -338,7 +344,10 @@ export default {
           if (res.data.data.total != 0) {
             this.participationList = res.data.data;
             this.participationId = this.participationList.list[0].id;
-            localStorage.setItem("DashboardParticipantId", this.participationId);
+            localStorage.setItem(
+              "DashboardParticipantId",
+              this.participationId
+            );
             // bus.$emit("changeDashboardParticipant", this.participationId);
           } else {
             this.participationList = { total: 0, list: [] };
