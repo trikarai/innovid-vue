@@ -99,7 +99,7 @@ import { validationMixins } from "@/mixins/validationMixins";
 
 export default {
   mixins: [validationMixins],
-  name: "Login Incubatee",
+  name: "Login-Founder",
   data: function() {
     return {
       loader: false,
