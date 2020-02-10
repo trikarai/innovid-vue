@@ -23,10 +23,16 @@
                   class="font-italic font-weight-light"
                 >
                   <v-card>
-                    <v-card-text>{{item.parent.message}}</v-card-text>
+                    <v-card-text>
+                      <div v-html="marked(item.parent.message)"></div>
+                      <!-- {{item.parent.message}} -->
+                    </v-card-text>
                   </v-card>
                 </v-list-item-subtitle>
-                <v-list-item-subtitle>{{item.message}}</v-list-item-subtitle>
+                <v-list-item-subtitle>
+                  <div v-html="marked(item.message)"></div>
+                  <!-- {{item.message}} -->
+                </v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-icon>
                 <v-btn
@@ -37,10 +43,10 @@
                   class="mr-2"
                   @click="openDialogReply(item.id)"
                 >
-                  <v-icon>chat_bubble</v-icon>
+                  <v-icon>reply</v-icon>
                 </v-btn>
                 <v-btn disabled color="success" small icon class="mr-2" v-else>
-                  <v-icon>chat_bubble</v-icon>
+                  <v-icon>reply</v-icon>
                 </v-btn>
                 <v-btn color="warning" small icon @click="leftAct(item, 'Remove')">
                   <v-icon>delete</v-icon>
@@ -53,11 +59,13 @@
       </v-col>
       <v-col md="6" v-if="!switchMode">
         <v-btn color="success" small class="mr-2" @click="openDialog()" v-if="!loadComment">
-          <v-icon small left>chat_bubble</v-icon>Post Comment
+          <v-icon small left>add_comment</v-icon>Add Comment
         </v-btn>
       </v-col>
       <v-col md="12" v-else>
         <vue-simplemde v-model="params.message" ref="markdownEditor" />
+        <v-btn :disabled="isEmpty" color="green" text @click="postComment()">Post</v-btn>
+        <!-- <v-btn color="red" text @click.native="dialog = false">Cancel</v-btn> -->
       </v-col>
     </v-row>
     <v-row>
@@ -127,7 +135,11 @@ export default {
         message: ""
       },
       isReply: false,
-      isEmpty: true
+      isEmpty: true,
+      mdeConfig: {
+        placeholder: "Type here...",
+        spellChecker: false
+      }
     };
   },
   watch: {
@@ -273,4 +285,13 @@ export default {
 </script>
 <style scoped>
 @import "~simplemde/dist/simplemde.min.css";
+/* min height */
+/* .markdown-editor .CodeMirror,
+.markdown-editor .CodeMirror-scroll {
+  min-height: 200px;
+} */
+/* static height */
+.markdown-editor .CodeMirror {
+  height: 100px;
+}
 </style>
