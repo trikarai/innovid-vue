@@ -44,6 +44,7 @@
               <v-card-text v-if="data.journal.length != 0">
                 <v-select
                    dense
+                   label="Choose a journal"
                   :ref="'selectInput'+index"
                   :items="data.journal"
                   item-text="worksheet.name"
