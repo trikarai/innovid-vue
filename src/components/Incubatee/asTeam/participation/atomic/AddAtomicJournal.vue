@@ -49,26 +49,27 @@
       </v-col>
     </v-row>
 
-  
+    <v-row>
+    <v-col cols="12" md="6" lg="6" xs="12">  
     <v-card class="pa-3 mt-3">
     <v-col md="12">
         <v-btn
           small
-          class="ma-2 ml-0"
+          class="ma-2 mt-4 ml-0"
           color="primary"
           :disabled="mode"
           @click="createReloadWorksheet"
         >Reload Existing Worksheet</v-btn>
         <v-btn
           small
-          class="ma-2"
+          class="mt-2"
           color="primary"
           :disabled="!mode"
           @click="createNewWorksheet"
         >Create New Worksheet</v-btn>
       </v-col>
 
-      <v-col v-if="selectWorksheet" md="6">
+      <v-col v-if="selectWorksheet">
         <v-select
           class="ml-0"
           v-model="exworksheetId"
@@ -85,8 +86,8 @@
     <v-row v-if="!is_newWorksheet">
       <v-col class="my-0 py-0" md="12" v-if="is_reloadWorksheet">
         <v-row>
-          <v-col cols="12" md="6" lg="6" xs="12">
-             <v-text-field label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
+          <v-col>
+             <v-text-field label="Worksheet Name" v-model="worksheetName" outlined></v-text-field>
           </v-col>
         </v-row>
         <render-form
@@ -100,8 +101,8 @@
     <v-row class="my-0 py-0" v-if="is_newWorksheet">
       <v-col class="my-0 py-0" md="12">
         <v-row>
-          <v-col cols="12" md="6" lg="6" xs="12">
-           <v-text-field label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
+          <v-col>
+           <v-text-field label="Worksheet Name" v-model="worksheetName" outlined></v-text-field>
           </v-col>
         </v-row>
         <render-form
@@ -113,6 +114,8 @@
       </v-col>
     </v-row>
     </v-card>
+    </v-col>
+    </v-row>
 
   
 
