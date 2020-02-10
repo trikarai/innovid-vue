@@ -7,7 +7,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <!--- notification start-->
-      <v-menu left absolute :close-on-content-click="false">
+      <v-menu left absolute :close-on-content-click="false" max-height="70%">
         <template v-slot:activator="{ on }">
           <v-btn icon v-on="on">
             <v-icon>notifications</v-icon>
