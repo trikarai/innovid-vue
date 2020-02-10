@@ -10,7 +10,9 @@
       <v-menu left absolute :close-on-content-click="false" max-height="70%">
         <template v-slot:activator="{ on }">
           <v-btn icon v-on="on">
-            <v-icon>notifications</v-icon>
+            <v-badge color="red" :content="notificationList.total" overlap>
+              <v-icon>notifications</v-icon>
+            </v-badge>
           </v-btn>
         </template>
         <v-list dense>
