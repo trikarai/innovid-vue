@@ -1,14 +1,17 @@
 <template>
-  <v-col cols="12" md="6" lg="6" xs="12">
+  <v-col>
     <v-row>
       <!-- {{membershipId}} -->
       <v-col md="12">
         <v-row>
+          <h3>Comment</h3>
+        </v-row>
+        <v-row>
           <v-col md="10">
-            <v-switch v-if="!hideComment" v-model="switchMode" :label="`Comment Mode: ${textMode}`"></v-switch>
+            <v-switch class="font-weight-light" v-if="!hideComment" v-model="switchMode" :label="`Comment Mode: ${textMode}`"></v-switch>
           </v-col>
           <v-col>
-            <v-btn v-if="!hideComment" icon @click="hideComment = true">
+            <v-btn class="mt-4" v-if="!hideComment" icon @click="hideComment = true">
               <v-icon>visibility</v-icon>
             </v-btn>
             <v-btn v-else icon @click="hideComment = false">
@@ -23,7 +26,7 @@
         </v-col>
         <v-col md="12" v-else>
           <template v-if="comments.total == 0">
-            <v-chip color="warning">No Comment Yet</v-chip>
+            <v-chip small color="warning">No Comment Yet</v-chip>
           </template>
           <v-list three-line>
             <template v-for="item in comments.list">
@@ -39,7 +42,10 @@
                   >
                     <v-card>
                       <v-card-text>
-                        <div v-html="marked(item.parent.message)"></div>
+                        <div style="padding-bottom: 1px !important;" class="panel">
+                          <div class="panel-heading" v-html="marked(item.parent.message)"></div>
+                        </div>
+                        
                         <!-- {{item.parent.message}} -->
                       </v-card-text>
                     </v-card>
@@ -52,7 +58,7 @@
                 <v-list-item-icon>
                   <v-btn
                     v-if="!switchMode"
-                    color="success"
+                    color="primary"
                     small
                     icon
                     class="mr-2"
@@ -60,7 +66,7 @@
                   >
                     <v-icon>reply</v-icon>
                   </v-btn>
-                  <v-btn disabled color="success" small icon class="mr-2" v-else>
+                  <v-btn disabled color="primary" small icon class="mr-2" v-else>
                     <v-icon>reply</v-icon>
                   </v-btn>
                   <v-btn color="warning" small icon @click="leftAct(item, 'Remove')">
@@ -75,13 +81,13 @@
       </template>
       <template v-if="!hideComment">
         <v-col md="6" v-if="!switchMode">
-          <v-btn color="success" small class="mr-2" @click="openDialog()" v-if="!loadComment">
+          <v-btn color="primary" small class="mr-2" @click="openDialog()" v-if="!loadComment">
             <v-icon small left>add_comment</v-icon>Add Comment
           </v-btn>
         </v-col>
         <v-col md="12" v-else>
           <vue-simplemde v-model="params.message" ref="markdownEditor" />
-          <v-btn :disabled="isEmpty" color="green" text @click="postComment()">Post</v-btn>
+          <v-btn :disabled="isEmpty" color="primary" @click="postComment()">Post</v-btn>
           <!-- <v-btn color="red" text @click.native="dialog = false">Cancel</v-btn> -->
         </v-col>
       </template>
@@ -104,8 +110,8 @@
               @click="replyComment()"
               v-if="isReply"
             >Reply</v-btn>
-            <v-btn :disabled="isEmpty" color="green" text @click="postComment()" v-else>Post</v-btn>
-            <v-btn color="red" text @click.native="dialog = false">Cancel</v-btn>
+            <v-btn :disabled="isEmpty" color="primary" @click="postComment()" v-else>Post</v-btn>
+            <v-btn color="grey" text @click.native="dialog = false">Cancel</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -312,5 +318,36 @@ export default {
 /* static height */
 .markdown-editor .CodeMirror {
   height: 100px;
+}
+
+.panel {
+	position:relative;
+  background:#a6d731;
+  color:#fff;
+  padding: 13px;
+  border-radius: 6px;
+  margin-bottom: 0px !important;
+}
+.panel>.panel-heading:after,.panel>.panel-heading:before{
+	position:absolute;
+	top:11px;left:-16px;
+	right:100%;
+	width:0;
+	height:0;
+	display:block;
+	content:" ";
+	border-color:transparent;
+	border-style:solid solid outset;
+	pointer-events:none;
+}
+.panel>.panel-heading:after{
+	border-width:7px;
+	border-right-color:rgb(166, 215, 49);
+	margin-top:1px;
+	margin-left:2px;
+}
+.panel>.panel-heading:before{
+	border-right-color:#ddd;
+	border-width:8px;
 }
 </style>
