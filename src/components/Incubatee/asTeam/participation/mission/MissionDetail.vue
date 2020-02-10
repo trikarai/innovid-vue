@@ -2,18 +2,31 @@
   <v-container extend grid-list-xs>
     <v-row>
       <v-col md="6">
-        <v-card :loading="tableLoad">
+        <v-card class="pa-3" :loading="tableLoad">
           <v-card-title primary-title>
-            <h3 class="headline mb-0">{{dataList.name}}</h3>
+              {{dataList.name}}
+              <v-spacer></v-spacer>
+              <span class="dot2"></span>
+              <span class="dot1 ml-1"></span>
           </v-card-title>
           <v-card-text>
             <div class="subtitle">{{dataList.description}}</div>
           </v-card-text>
           <v-card-text v-if="dataList.previousMission != null">
-            <v-icon color="indigo accent-1" left>account_tree</v-icon>
+           <v-chip small>
+              <v-avatar left>
+                <v-icon small color="primary">account_tree</v-icon>
+              </v-avatar>
+              <span style="color:#999">Branch Mission</span>
+            </v-chip>
           </v-card-text>
           <v-card-text v-else>
-            <v-icon color="indigo accent-1" left>trip_origin</v-icon>Root
+            <v-chip small>
+              <v-avatar left>
+                <v-icon small color="primary">assignment_turned_in</v-icon>
+              </v-avatar>
+                <span style="color:#999">Main Mission</span>
+            </v-chip>
           </v-card-text>
           <!-- <v-card-actions>
             <v-btn
@@ -57,8 +70,8 @@
           </v-card-actions>-->
         </v-card>
       </v-col>
-      <v-col md="12">Learning Material</v-col>
-      <v-col md="12">
+      <v-col md="12 mt-5">Learning Material</v-col>
+      <v-col cols="12" md="8" lg="8" xs="12">
         <!-- {{learningList}} -->
         <v-expansion-panels>
           <v-expansion-panel v-for="(learning,i) in learningList.list" :key="i">

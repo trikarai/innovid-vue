@@ -7,10 +7,10 @@
         ></v-skeleton-loader>
       </v-col>
       <v-col cols="12" md="6" lg="6" xs="12" v-if="!dataLoad">
-        <v-card>
-          <v-card-title primary-title>{{dataSingle.name}}</v-card-title>
-          <v-card-title>Mission : {{dataList.name}}</v-card-title>
-          <v-card-title>Worksheet : {{dataList.worksheetForm.name}}</v-card-title>
+        <v-card class="pa-3">
+          <v-card-title primary-title><b>{{dataSingle.name}}</b></v-card-title>
+          <v-card-text class="subtitle-1"><b>Mission</b> <br> {{dataList.name}}</v-card-text>
+          <v-card-text class="subtitle-1"><b>Worksheet</b> <br> {{dataList.worksheetForm.name}}</v-card-text>
           <v-card-actions>
             <template v-if="!updateJ">
               <v-btn color="primary" small v-if="!editWS" @click="editWorksheet">

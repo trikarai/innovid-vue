@@ -10,20 +10,40 @@
     <!-- jangan dihapus end-->
     <v-row>
       <v-col md="12">
-        <v-timeline :reverse="true">
+        <v-timeline :reverse="true" align-top>
           <v-timeline-item v-for="(data, index) in dataList.list" :key="data.id">
-            <v-card class="elevation-5">
-              <v-card-title class="headline">{{data.position}} : {{data.name}}</v-card-title>
+            <template v-slot:icon>
+              <v-avatar>
+                <span style="color:#fff">{{data.position}}</span>
+              </v-avatar>
+            </template>
+            <v-card class="pa-3 elevation-5">
+              <v-card-title class="headline">
+                {{data.name}}
+                <v-spacer></v-spacer>
+                <span class="dot2"></span>
+                <span class="dot1 ml-1"></span>
+              </v-card-title>
               <v-card-text v-if="data.previousMission != null">
-                <v-icon color="indigo accent-1" left>account_tree</v-icon>
-                {{data.previousMission.name}}
+                <v-chip small>
+                  <v-avatar left>
+                    <v-icon small color="primary">account_tree</v-icon>
+                  </v-avatar>
+                  <span style="color:#999">{{data.previousMission.name}}</span>
+                </v-chip>
               </v-card-text>
               <v-card-text v-else>
-                <v-icon color="indigo accent-1" left>trip_origin</v-icon>Root
+                <v-chip small>
+                  <v-avatar left>
+                   <v-icon small color="primary">assignment_turned_in</v-icon>
+                  </v-avatar>
+                   <span style="color:#999">Main Mission</span>
+                </v-chip>
               </v-card-text>
               <!-- {{data}} -->
               <v-card-text v-if="data.journal.length != 0">
                 <v-select
+                   dense
                   :ref="'selectInput'+index"
                   :items="data.journal"
                   item-text="worksheet.name"
@@ -34,13 +54,12 @@
               </v-card-text>
               <v-card-actions>
                 <v-btn
-                  color="success"
-                  fab
-                  x-small
+                  small
+                  color="primary"
                   router
                   :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id "
                 >
-                  <v-icon small>zoom_in</v-icon>
+                  <v-icon left small>zoom_in</v-icon>view
                 </v-btn>
 
                 <v-btn
@@ -78,8 +97,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -285,3 +304,26 @@ export default {
   }
 };
 </script>
+
+<style>
+.dot1 {
+  height: 7px;
+  width: 7px;
+  background-color: #249c90;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  bottom: 23px;
+  left: 13px;
+}
+.dot2 {
+  height: 7px;
+  width: 7px;
+  background-color: rgb(163, 215, 45);
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  bottom: 23px;
+  left: 13px;
+}
+</style>

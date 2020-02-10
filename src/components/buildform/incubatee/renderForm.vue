@@ -3,7 +3,7 @@
   <!-- <v-row>Reload : {{modeReload}}</v-row> -->
 
   <v-row>
-    <v-col cols="12" md="6" lg="6" xs="12">
+    <v-col class="mt-0 pt-0" cols="12" md="6" lg="6" xs="12">
       <v-card class="pa-5 mt-6" :loading="loader">
         <v-card-title class="topaccentform" primary-title>
           <div>

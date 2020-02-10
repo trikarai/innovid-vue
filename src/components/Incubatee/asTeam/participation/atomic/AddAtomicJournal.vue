@@ -1,19 +1,32 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col md="6">
-        <v-card :loading="tableLoad">
+        <v-card class="pa-3" :loading="tableLoad">
           <v-card-title primary-title>
-            <h3 class="headline mb-0">{{dataList.name}}</h3>
+            {{dataList.name}}
+            <v-spacer></v-spacer>
+            <span class="dot2"></span>
+            <span class="dot1 ml-1"></span>
           </v-card-title>
           <v-card-text>
             <div class="subtitle">{{dataList.description}}</div>
           </v-card-text>
           <v-card-text v-if="dataList.previousMission != null">
-            <v-icon color="indigo accent-1" left>account_tree</v-icon>
+            <v-chip small>
+              <v-avatar left>
+                <v-icon small color="primary">account_tree</v-icon>
+              </v-avatar>
+              <span style="color:#999">Branch Mission</span>
+            </v-chip>
           </v-card-text>
           <v-card-text v-else>
-            <v-icon color="indigo accent-1" left>trip_origin</v-icon>Root
+            <v-chip small>
+              <v-avatar left>
+                <v-icon small color="primary">assignment_turned_in</v-icon>
+              </v-avatar>
+                <span style="color:#999">Main Mission</span>
+            </v-chip>
           </v-card-text>
           <v-card-actions>
             <v-btn
@@ -34,10 +47,14 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col md="12">
+    </v-row>
+
+  
+    <v-card class="pa-3 mt-3">
+    <v-col md="12">
         <v-btn
           small
-          class="ma-2"
+          class="ma-2 ml-0"
           color="primary"
           :disabled="mode"
           @click="createReloadWorksheet"
@@ -50,6 +67,7 @@
           @click="createNewWorksheet"
         >Create New Worksheet</v-btn>
       </v-col>
+
       <v-col v-if="selectWorksheet" md="6">
         <v-select
           class="ml-0"
@@ -64,10 +82,13 @@
           solo
         ></v-select>
       </v-col>
-    </v-row>
     <v-row v-if="!is_newWorksheet">
-      <v-col md="12" v-if="is_reloadWorksheet">
-        <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
+      <v-col class="my-0 py-0" md="12" v-if="is_reloadWorksheet">
+        <v-row>
+          <v-col cols="12" md="6" lg="6" xs="12">
+             <v-text-field label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
+          </v-col>
+        </v-row>
         <render-form
           :modeReload="reloadTrue"
           v-if="!tableLoad"
@@ -76,9 +97,13 @@
         />
       </v-col>
     </v-row>
-    <v-row v-if="is_newWorksheet">
-      <v-col md="12">
-        <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
+    <v-row class="my-0 py-0" v-if="is_newWorksheet">
+      <v-col class="my-0 py-0" md="12">
+        <v-row>
+          <v-col cols="12" md="6" lg="6" xs="12">
+           <v-text-field label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
+          </v-col>
+        </v-row>
         <render-form
           :modeReload="reloadFalse"
           v-if="!tableLoad"
@@ -87,6 +112,9 @@
         />
       </v-col>
     </v-row>
+    </v-card>
+
+  
 
     <!-- <v-row>
       <v-col>{{testMap}}</v-col>

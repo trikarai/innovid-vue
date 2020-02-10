@@ -690,6 +690,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/mission",
         component: TeamMemberMission,
+        name: "Mission",
         meta: {
           level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -698,6 +699,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/mission/:missionId",
         component: TeamMemberMissionDetail,
+        name: "Mission Detail",
         meta: {
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
@@ -714,6 +716,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/mission/:missionId/atom/:journalId?",
         component: AddAtomicJournal,
+        name: "Add Journal",
         meta: {
           level: 5,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false

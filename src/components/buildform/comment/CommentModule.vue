@@ -8,7 +8,7 @@
       <v-col md="12" v-else>
         <v-switch v-model="switchMode" :label="`Comment Mode: ${textMode}`"></v-switch>
         <template v-if="comments.total == 0">
-          <v-chip color="warning">No Comment Yet</v-chip>
+          <v-chip small color="warning">No Comment Yet</v-chip>
         </template>
         <v-list three-line>
           <template v-for="item in comments.list">
@@ -31,7 +31,7 @@
               <v-list-item-icon>
                 <v-btn
                   v-if="!switchMode"
-                  color="success"
+                  color="primary"
                   small
                   icon
                   class="mr-2"
@@ -52,7 +52,7 @@
         </v-list>
       </v-col>
       <v-col md="6" v-if="!switchMode">
-        <v-btn color="success" small class="mr-2" @click="openDialog()" v-if="!loadComment">
+        <v-btn color="primary" small class="mr-2" @click="openDialog()" v-if="!loadComment">
           <v-icon small left>chat_bubble</v-icon>Post Comment
         </v-btn>
       </v-col>
