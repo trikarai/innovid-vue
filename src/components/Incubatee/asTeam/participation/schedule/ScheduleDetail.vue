@@ -48,9 +48,17 @@
               </template>
             </v-card-text>
           </template>
+          <template v-if="edit">
+            <v-card-title primary-title>
+                <v-spacer></v-spacer>
+                <v-btn color="warning" small @click="edit = !edit"><v-icon left small>close</v-icon>Cancel Edit</v-btn>
+            </v-card-title>
+          </template>
         </v-card>
       </v-col>
-      <v-col md="12" v-if="edit">
+    </v-row>
+      <v-row>
+      <v-col cols="12" md="6" lg="6" xs="12" v-if="edit">
         <!-- <pre> {{dataList.participantMentoringReport}} </pre> -->
         <render-form
           v-if="!tableLoad"
