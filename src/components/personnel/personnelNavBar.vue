@@ -6,6 +6,9 @@
         <!-- <span class="font-weight-light">Inovide</span> -->
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <!--- notification start-->
+      <personnel-notification />
+      <!-- notification end-->
       <v-btn text @click="rightDrawer =! rightDrawer">
         <v-icon>settings</v-icon>
       </v-btn>
@@ -20,7 +23,7 @@
     </v-btn>
     <!-- <v-btn class="ml-3 mt-5" icon v-if="$route.meta.level == 0" @click="$router.go(-1) ">
       <v-icon></v-icon>
-    </v-btn> -->
+    </v-btn>-->
     <div class="container extend mt-4">
       <h2 class="mb-2">{{$route.name}}</h2>
       <div class="garis"></div>
@@ -126,7 +129,7 @@
           <v-list-item-action>
             <LocaleSwitcher />
           </v-list-item-action>
-        </v-list-item> -->
+        </v-list-item>-->
         <v-list-item>
           <v-list-item-avatar>
             <v-icon>brightness_4</v-icon>
@@ -143,7 +146,12 @@
 <script>
 import auth from "@/config/auth";
 
+import PersonnelNotification from "./personnelNotification";
+
 export default {
+  components: {
+    PersonnelNotification
+  },
   data() {
     return {
       drawer: true,
@@ -208,7 +216,7 @@ export default {
           text: "Coordinator",
           route: "/personnel/coordinator/dashboard",
           disabled: false
-        },
+        }
         // {
         //   icon: "group",
         //   text: "Participant",
@@ -228,7 +236,7 @@ export default {
           text: "Mentor",
           route: "/personnel/mentor/dashboard",
           disabled: false
-        },
+        }
         // {
         //   icon: "schedule",
         //   text: "Schedules",
