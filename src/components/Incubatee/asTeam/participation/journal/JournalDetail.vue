@@ -43,6 +43,16 @@
                 <v-row
                   class="mb-4 grey--text"
                   :key="data.id"
+                  v-if="data.type == 'integer'"
+                >{{data.value}}</v-row>
+                <v-row
+                  class="mb-4 grey--text"
+                  :key="data.id"
+                  v-if="data.type == 'textarea'"
+                >{{data.value}}</v-row>
+                <v-row
+                  class="mb-4 grey--text"
+                  :key="data.id"
                   v-if="data.type == 'radio'"
                 >{{data.selectedOption.name}}</v-row>
                 <v-row class="mb-4 grey--text" :key="data.id" v-if="data.type == 'select'">
@@ -51,37 +61,40 @@
               </template>
             </v-card-text>
           </template>
+          <!--edit worksheet jurnal start-->
+          <template v-if="!worksheetDataLoad">
+            <v-row class="mt-5" v-if="editWS">
+              <v-col>
+                <v-text-field label="Worksheet Name" outlined v-model="newWsName"></v-text-field>
+              </v-col>
+              <v-col md="12" lg="12" xs="12">
+                <render-form
+                  :modeReload="reloadTrue"
+                  v-if="!tableLoad"
+                  :formTemplate="dataList.worksheetForm"
+                  @submit-form="submitForm"
+                />
+              </v-col>
+            </v-row>
+          </template>
+          <template v-else>
+            <v-row>
+              <v-col md="6" lg="6" xs="12">
+                <v-skeleton-loader type="card-heading, article, actions"></v-skeleton-loader>
+              </v-col>
+            </v-row>
+          </template>
+    <!--edit worksheet jurnal end-->
         </v-card>
       </v-col>
       <!--comment block-->
+      <v-col>
       <comment-module></comment-module>
+      </v-col>
       <!--comment block-->
     </v-row>
 
-    <!--edit worksheet jurnal start-->
-    <template v-if="!worksheetDataLoad">
-      <v-row v-if="editWS">
-        <v-col md="6" lg="6" xs="12">
-          <v-text-field label="Worksheet Name" outlined v-model="newWsName"></v-text-field>
-        </v-col>
-        <v-col md="12" lg="12" xs="12">
-          <render-form
-            :modeReload="reloadTrue"
-            v-if="!tableLoad"
-            :formTemplate="dataList.worksheetForm"
-            @submit-form="submitForm"
-          />
-        </v-col>
-      </v-row>
-    </template>
-    <template v-else>
-      <v-row>
-        <v-col md="6" lg="6" xs="12">
-          <v-skeleton-loader type="card-heading, article, actions"></v-skeleton-loader>
-        </v-col>
-      </v-row>
-    </template>
-    <!--edit worksheet jurnal end-->
+    
 
     <!--update jurnal start-->
     <template v-if="updateJ">
