@@ -91,6 +91,7 @@ import CoordinatorApplicant from '../components/personnel/asCoordinator/applican
 import MentorDashboard from '../components/personnel/asMentor/dashboard';
 import MentorParticipant from '../components/personnel/asMentor/participant/participant';
 import MentorParticipantJournal from '../components/personnel/asMentor/participant/journal/journal';
+import MentorParticipantJournalDetail from '../components/personnel/asMentor/participant/journal/journalDetail';
 import MentorSchedule from '../components/personnel/asMentor/schedule/Schedule';
 import MentorScheduleDetail from '../components/personnel/asMentor/schedule/ScheduleDetail';
 import MentorScheduleReport from '../components/personnel/asMentor/schedule/Report';
@@ -497,6 +498,15 @@ const routes = [
         name: "Program's Participant Journal",
         meta: {
           level: 3,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/mentor/:programId/participant/:participantId/journal/:journalId",
+        component: MentorParticipantJournalDetail,
+        name: "Program's Participant Journal Detail",
+        meta: {
+          level: 4,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
       },
