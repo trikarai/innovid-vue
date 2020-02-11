@@ -10,16 +10,16 @@
     <v-list dense>
       <v-list-item v-for="(notif, index) in notificationList.list" :key="index" three-line>
         <v-list-item-avatar>
-          <!-- <v-btn
-                depressed
-                color="primary"
-                x-small
-                fab
-                @click="gotoJournal(notif.comment)"
-                v-if="notif.comment != null"
-              >
-                <v-icon small>zoom_in</v-icon>
-          </v-btn>-->
+          <v-btn
+            depressed
+            color="primary"
+            x-small
+            fab
+            @click="gotoJournal(notif.comment)"
+            v-if="notif.comment != null"
+          >
+            <v-icon small>zoom_in</v-icon>
+          </v-btn>
           <v-btn
             depressed
             color="primary"
@@ -129,9 +129,11 @@ export default {
           "/participation/" +
           comment.journal.participant.id +
           "/mission/" +
-          comment.journal.participant.id +
+          comment.journal.mission.id +
           "/journal/" +
-          comment.journal.id
+          comment.journal.id +
+          "/worksheet/" +
+          comment.journal.worksheet.id
       });
     }
   }
