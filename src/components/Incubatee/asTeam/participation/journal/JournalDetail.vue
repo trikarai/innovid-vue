@@ -8,9 +8,19 @@
       </v-col>
       <v-col cols="12" md="6" lg="6" xs="12" v-if="!dataLoad">
         <v-card class="pa-3">
-          <v-card-title primary-title><b>{{dataSingle.name}}</b></v-card-title>
-          <v-card-text class="subtitle-1"><b>Mission</b> <br> {{dataList.name}}</v-card-text>
-          <v-card-text class="subtitle-1"><b>Worksheet</b> <br> {{dataList.worksheetForm.name}}</v-card-text>
+          <v-card-title primary-title>
+            <b>{{dataSingle.name}}</b>
+          </v-card-title>
+          <v-card-text class="subtitle-1">
+            <b>Mission</b>
+            <br />
+            {{dataList.name}}
+          </v-card-text>
+          <v-card-text class="subtitle-1">
+            <b>Worksheet</b>
+            <br />
+            {{dataList.worksheetForm.name}}
+          </v-card-text>
           <v-card-actions>
             <template v-if="!updateJ">
               <v-btn color="primary" small v-if="!editWS" @click="editWorksheet">
@@ -31,34 +41,7 @@
           </v-card-actions>
           <template v-if="!updateJ">
             <v-card-text class="pt-0 mt-2 ml-3" v-if="!editWS">
-              <template v-for="data in fields">
-                <v-row :key="data.field.id">
-                  <b>{{data.field.name}}</b>
-                </v-row>
-                <v-row
-                  class="mb-4 grey--text"
-                  :key="data.id"
-                  v-if="data.type == 'string'"
-                >{{data.value}}</v-row>
-                <v-row
-                  class="mb-4 grey--text"
-                  :key="data.id"
-                  v-if="data.type == 'integer'"
-                >{{data.value}}</v-row>
-                <v-row
-                  class="mb-4 grey--text"
-                  :key="data.id"
-                  v-if="data.type == 'textarea'"
-                >{{data.value}}</v-row>
-                <v-row
-                  class="mb-4 grey--text"
-                  :key="data.id"
-                  v-if="data.type == 'radio'"
-                >{{data.selectedOption.name}}</v-row>
-                <v-row class="mb-4 grey--text" :key="data.id" v-if="data.type == 'select'">
-                  <template v-for="opt in data.selectedOptions">{{opt.option.name}} ,</template>
-                </v-row>
-              </template>
+              <render-record :fields="fields" />
             </v-card-text>
           </template>
           <!--edit worksheet jurnal start-->
@@ -84,17 +67,15 @@
               </v-col>
             </v-row>
           </template>
-    <!--edit worksheet jurnal end-->
+          <!--edit worksheet jurnal end-->
         </v-card>
       </v-col>
       <!--comment block-->
       <v-col>
-      <comment-module></comment-module>
+        <comment-module></comment-module>
       </v-col>
       <!--comment block-->
     </v-row>
-
-    
 
     <!--update jurnal start-->
     <template v-if="updateJ">
@@ -168,6 +149,7 @@ import auth from "@/config/auth";
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 import RenderForm from "@/components/buildform/incubatee/renderForm";
+import RenderRecord from "@/components/buildform/incubatee/renderRecord";
 import CommentModule from "@/components/buildform/comment/CommentModule";
 
 export default {
@@ -223,7 +205,7 @@ export default {
       params: ""
     };
   },
-  components: { RenderForm, CommentModule },
+  components: { RenderForm, RenderRecord, CommentModule },
   created: function() {
     this.getMissionDetail();
   },
