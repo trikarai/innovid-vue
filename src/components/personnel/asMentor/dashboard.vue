@@ -64,7 +64,7 @@
               <v-btn
                 class="mr-2"
                 color="primary"
-                :to="'/personnel/mentor/' + item.program.id +'/participant'"
+                :to="'/personnel/mentor/'+ item.id + '/'+ item.program.id +'/participant'"
               >
                 <v-icon left>group</v-icon>Participant
               </v-btn>

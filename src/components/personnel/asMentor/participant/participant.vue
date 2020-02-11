@@ -68,6 +68,8 @@ export default {
       this.$router.push({
         path:
           "/personnel/mentor/" +
+          this.$route.params.mentorId +
+          "/" +
           this.$route.params.programId +
           "/participant/" +
           id +

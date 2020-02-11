@@ -484,7 +484,7 @@ const routes = [
         }
       },
       {
-        path: "/personnel/mentor/:programId/participant",
+        path: "/personnel/mentor/:mentorId/:programId/participant",
         component: MentorParticipant,
         name: "Program's Participant",
         meta: {
@@ -493,7 +493,7 @@ const routes = [
         }
       },
       {
-        path: "/personnel/mentor/:programId/participant/:participantId/journal",
+        path: "/personnel/mentor/:mentorId/:programId/participant/:participantId/journal",
         component: MentorParticipantJournal,
         name: "Program's Participant Journal",
         meta: {
@@ -502,7 +502,7 @@ const routes = [
         }
       },
       {
-        path: "/personnel/mentor/:programId/participant/:participantId/journal/:journalId",
+        path: "/personnel/mentor/:mentorId/:programId/participant/:cohortId/journal/:journalId",
         component: MentorParticipantJournalDetail,
         name: "Program's Participant Journal Detail",
         meta: {

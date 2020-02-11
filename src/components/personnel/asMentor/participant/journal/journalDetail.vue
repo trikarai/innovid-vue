@@ -3,9 +3,7 @@
     <v-row>
       <!-- col 1 record -->
       <v-col cols="12" md="6" lg="6" xs="12" v-if="dataLoad">
-        <v-skeleton-loader
-          type="card-heading, card-heading, list-item-avatar-two-line@3"
-        ></v-skeleton-loader>
+        <v-skeleton-loader type="card-heading, card-heading, list-item-avatar-two-line@3"></v-skeleton-loader>
       </v-col>
       <v-col cols="12" md="6" lg="6" xs="12" v-if="!dataLoad">
         <v-card class="pa-3">
@@ -20,7 +18,9 @@
         </v-card>
       </v-col>
       <!-- col 2 comment -->
-      <v-col md="6">this is comment module place</v-col>
+      <v-col md="6">
+        <comment-module></comment-module>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -31,6 +31,7 @@ import auth from "@/config/auth";
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 import RenderRecord from "@/components/buildform/incubatee/renderRecord";
+import CommentModule from "@/components/buildform/comment/CommentModule";
 
 export default {
   mixins: [formDynamicMixins],
@@ -42,7 +43,8 @@ export default {
     };
   },
   components: {
-    RenderRecord
+    RenderRecord,
+    CommentModule
   },
   mounted() {
     this.getJournalDetail();
@@ -56,7 +58,7 @@ export default {
             "/personnel/as-mentor/" +
             this.$route.params.programId +
             "/participants/" +
-            this.$route.params.participantId +
+            this.$route.params.cohortId +
             "/journals/" +
             this.$route.params.journalId,
           {
