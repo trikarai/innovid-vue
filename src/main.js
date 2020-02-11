@@ -49,7 +49,7 @@ Vue.mixin({
   },
   methods: {
     marked: function (input) {
-      return marked(input, { sanitize: true });
+      return marked(input);
     }
   }
 });
