@@ -1,7 +1,7 @@
 <template>
   <div>
-    <template v-for="data in fields">
-      <v-row :key="data.id">
+    <template v-for="(data, index) in fields">
+      <v-row :key="index">
         <b>{{data.field.name}}</b>
       </v-row>
       <v-row class="mb-4 grey--text" :key="data.id" v-if="data.type == 'string'">{{data.value}}</v-row>
