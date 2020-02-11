@@ -1,14 +1,18 @@
 <template>
   <v-col>
     <v-row>
-      <!-- {{membershipId}} -->
       <v-col md="12">
         <v-row>
           <h3>Comment</h3>
         </v-row>
         <v-row>
           <v-col md="10">
-            <v-switch class="font-weight-light" v-if="!hideComment" v-model="switchMode" :label="`Comment Mode: ${textMode}`"></v-switch>
+            <v-switch
+              class="font-weight-light"
+              v-if="!hideComment"
+              v-model="switchMode"
+              :label="`Comment Mode: ${textMode}`"
+            ></v-switch>
           </v-col>
           <v-col>
             <v-btn class="mt-4" v-if="!hideComment" icon @click="hideComment = true">
@@ -29,13 +33,14 @@
             <v-chip small color="warning">No Comment Yet</v-chip>
           </template>
           <v-list three-line>
-            <template v-for="item in comments.list">
+            <template v-for="(item, index) in comments.list">
               <v-list-item :key="item.id">
                 <v-list-item-avatar>
                   <v-icon>face</v-icon>
                 </v-list-item-avatar>
                 <v-list-item-content>
-                  <v-list-item-title>{{item.member.founder.name}}</v-list-item-title>
+                  <v-list-item-title v-if="item.member != null">{{item.member.founder.name}}</v-list-item-title>
+                  <v-list-item-title v-if="item.mentor != null">{{item.mentor.personnel.name}}</v-list-item-title>
                   <v-list-item-subtitle
                     v-if="item.parent !== null"
                     class="font-italic font-weight-light"
@@ -45,7 +50,7 @@
                         <div style="padding-bottom: 1px !important;" class="panel">
                           <div class="panel-heading" v-html="marked(item.parent.message)"></div>
                         </div>
-                        
+
                         <!-- {{item.parent.message}} -->
                       </v-card-text>
                     </v-card>
@@ -69,12 +74,31 @@
                   <v-btn disabled color="primary" small icon class="mr-2" v-else>
                     <v-icon>reply</v-icon>
                   </v-btn>
-                  <v-btn color="warning" small icon @click="leftAct(item, 'Remove')">
-                    <v-icon>delete</v-icon>
-                  </v-btn>
+                  <template v-if="item.mentor !== null">
+                    <v-btn
+                      v-if="item.mentor.id == $route.params.mentorId"
+                      color="warning"
+                      small
+                      icon
+                      @click="leftAct(item, 'Remove')"
+                    >
+                      <v-icon>delete</v-icon>
+                    </v-btn>
+                  </template>
+                  <template v-if="item.member !== null">
+                    <v-btn
+                      v-if="item.member.founder.id === user.data.id"
+                      color="warning"
+                      small
+                      icon
+                      @click="leftAct(item, 'Remove')"
+                    >
+                      <v-icon>delete</v-icon>
+                    </v-btn>
+                  </template>
                 </v-list-item-icon>
               </v-list-item>
-              <v-divider :key="item.id" inset></v-divider>
+              <v-divider :key="index" inset></v-divider>
             </template>
           </v-list>
         </v-col>
@@ -111,6 +135,7 @@
               v-if="isReply"
             >Reply</v-btn>
             <v-btn :disabled="isEmpty" color="primary" @click="postComment()" v-else>Post</v-btn>
+
             <v-btn color="grey" text @click.native="dialog = false">Cancel</v-btn>
           </v-card-actions>
         </v-card>
@@ -147,6 +172,7 @@ export default {
       textMode: "Dialog Form",
       content: "",
       membershipId: "",
+      mentorshipId: "",
       parentId: "",
       comments: { total: 0, list: [] },
       dialogDelete: false,
@@ -161,6 +187,10 @@ export default {
       },
       isReply: false,
       isEmpty: true,
+      user: {
+        role: "",
+        data: { id: "" }
+      },
       mdeConfig: {
         placeholder: "Type here...",
         spellChecker: false
@@ -184,10 +214,17 @@ export default {
     }
   },
   created() {
-    this.membershipId = localStorage.getItem("MembershipTeamId");
+    this.user = JSON.parse(auth.getAuthData());
+    if (this.user.role != "PERSONNEL") {
+      this.membershipId = localStorage.getItem("MembershipTeamId");
+    }
   },
   mounted() {
-    this.getCommentList();
+    if (this.user.role == "PERSONNEL") {
+      this.getPersonnelCommentList();
+    } else {
+      this.getCommentList();
+    }
   },
   components: {
     VueSimplemde
@@ -219,45 +256,118 @@ export default {
           this.loadComment = false;
         });
     },
-    postComment() {
-      this.loaderDelete = true;
+    getPersonnelCommentList() {
+      this.loadComment = true;
       this.axios
-        .post(
+        .get(
           config.baseUri +
-            "/founder/team-memberships/" +
-            this.membershipId +
+            "/personnel/as-mentor/" +
+            this.$route.params.programId +
+            "/participants/" +
+            this.$route.params.cohortId +
+            "/journals/" +
+            this.$route.params.journalId +
             "/comments",
-          this.params,
           {
             headers: auth.getAuthHeader()
           }
         )
-        .then(() => {
-          this.refreshData();
+        .then(res => {
+          this.comments = res.data.data;
         })
-        .catch(() => {})
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
         .finally(() => {
-          this.loaderDelete = false;
+          this.loadComment = false;
         });
     },
+    postComment() {
+      this.loaderDelete = true;
+      if (this.user.role !== "PERSONNEL") {
+        this.axios
+          .post(
+            config.baseUri +
+              "/founder/team-memberships/" +
+              this.membershipId +
+              "/comments",
+            this.params,
+            {
+              headers: auth.getAuthHeader()
+            }
+          )
+          .then(() => {
+            this.refreshData();
+          })
+          .catch(() => {})
+          .finally(() => {
+            this.loaderDelete = false;
+          });
+      } else {
+        this.axios
+          .post(
+            config.baseUri +
+              "/personnel/mentorships/" +
+              this.$route.params.mentorId +
+              "/comments",
+            this.params,
+            {
+              headers: auth.getAuthHeader()
+            }
+          )
+          .then(() => {
+            this.refreshData();
+          })
+          .catch(() => {})
+          .finally(() => {
+            this.loaderDelete = false;
+          });
+      }
+    },
     replyComment() {
-      this.axios
-        .post(
-          config.baseUri +
-            "/founder/team-memberships/" +
-            this.membershipId +
-            "/comments/" +
-            this.parentId,
-          this.params,
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
-        .then(() => {
-          this.refreshData();
-        })
-        .catch(() => {})
-        .finally(() => {});
+      this.loaderDelete = true;
+
+      if (this.user.role !== "PERSONNEL") {
+        this.axios
+          .post(
+            config.baseUri +
+              "/founder/team-memberships/" +
+              this.membershipId +
+              "/comments/" +
+              this.parentId,
+            this.params,
+            {
+              headers: auth.getAuthHeader()
+            }
+          )
+          .then(() => {
+            this.refreshData();
+          })
+          .catch(() => {})
+          .finally(() => {
+            this.loaderDelete = false;
+          });
+      } else {
+        this.axios
+          .post(
+            config.baseUri +
+              "/personnel/mentorships/" +
+              this.$route.params.mentorId +
+              "/comments/" +
+              this.parentId,
+            this.params,
+            {
+              headers: auth.getAuthHeader()
+            }
+          )
+          .then(() => {
+            this.refreshData();
+          })
+          .catch(() => {})
+          .finally(() => {
+            this.loaderDelete = false;
+          });
+      }
     },
     openDialog() {
       this.parentId = "";
@@ -277,32 +387,60 @@ export default {
     },
     deleteComment(id) {
       this.loaderDelete = true;
-      this.axios
-        .delete(
-          config.baseUri +
-            "/founder/team-memberships/" +
-            this.membershipId +
-            "/comments/" +
-            id,
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
-        .then(() => {
-          bus.$emit("callNotif", "info", "Comment Deleted");
-          this.refreshData();
-        })
-        .catch(res => {
-          bus.$emit("callNotif", "error", res);
-        })
-        .finally(() => {
-          this.loaderDelete = false;
-        });
+      if (this.user.role !== "PERSONNEL") {
+        this.axios
+          .delete(
+            config.baseUri +
+              "/founder/team-memberships/" +
+              this.membershipId +
+              "/comments/" +
+              id,
+            {
+              headers: auth.getAuthHeader()
+            }
+          )
+          .then(() => {
+            bus.$emit("callNotif", "info", "Comment Deleted");
+            this.refreshData();
+          })
+          .catch(res => {
+            bus.$emit("callNotif", "error", res);
+          })
+          .finally(() => {
+            this.loaderDelete = false;
+          });
+      } else {
+        this.axios
+          .delete(
+            config.baseUri +
+              "/personnel/mentorships/" +
+              this.$route.params.mentorId +
+              "/comments/" +
+              id,
+            {
+              headers: auth.getAuthHeader()
+            }
+          )
+          .then(() => {
+            bus.$emit("callNotif", "info", "Comment Deleted");
+            this.refreshData();
+          })
+          .catch(res => {
+            bus.$emit("callNotif", "error", res);
+          })
+          .finally(() => {
+            this.loaderDelete = false;
+          });
+      }
     },
     refreshData() {
+      if (this.user.role !== "PERSONNEL") {
+        this.getCommentList();
+      } else {
+        this.getPersonnelCommentList();
+      }
       this.dialog = false;
       this.dialogDelete = false;
-      this.getCommentList();
       this.params.message = "";
     }
   }
@@ -321,33 +459,35 @@ export default {
 }
 
 .panel {
-	position:relative;
-  background:#a6d731;
-  color:#fff;
+  position: relative;
+  background: #a6d731;
+  color: #fff;
   padding: 13px;
   border-radius: 6px;
   margin-bottom: 0px !important;
 }
-.panel>.panel-heading:after,.panel>.panel-heading:before{
-	position:absolute;
-	top:11px;left:-16px;
-	right:100%;
-	width:0;
-	height:0;
-	display:block;
-	content:" ";
-	border-color:transparent;
-	border-style:solid solid outset;
-	pointer-events:none;
+.panel > .panel-heading:after,
+.panel > .panel-heading:before {
+  position: absolute;
+  top: 11px;
+  left: -16px;
+  right: 100%;
+  width: 0;
+  height: 0;
+  display: block;
+  content: " ";
+  border-color: transparent;
+  border-style: solid solid outset;
+  pointer-events: none;
 }
-.panel>.panel-heading:after{
-	border-width:7px;
-	border-right-color:rgb(166, 215, 49);
-	margin-top:1px;
-	margin-left:2px;
+.panel > .panel-heading:after {
+  border-width: 7px;
+  border-right-color: rgb(166, 215, 49);
+  margin-top: 1px;
+  margin-left: 2px;
 }
-.panel>.panel-heading:before{
-	border-right-color:#ddd;
-	border-width:8px;
+.panel > .panel-heading:before {
+  border-right-color: #ddd;
+  border-width: 8px;
 }
 </style>
