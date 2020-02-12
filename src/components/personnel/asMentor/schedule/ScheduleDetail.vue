@@ -1,8 +1,8 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <!-- <v-col md="12">{{dataList}}</v-col> -->
-      <v-col md="12">
+      <v-col md="6">
         <v-card :loading="tableLoad">
           <v-card-title primary-title>
             <div>
@@ -11,9 +11,38 @@
           </v-card-title>
           <v-card-text>
             <v-row>
-              <v-col md="12">{{dataList.participant.team.name}}</v-col>
-              <v-col md="12">{{dataList.startTime}}</v-col>
-              <v-col md="12">{{dataList.endTime}}</v-col>
+              <v-col md="12"><b>Team Name</b><br>{{dataList.participant.team.name}}</v-col>
+              <v-col md="6">
+                <b>Start Time</b>
+                <v-row>
+                  <v-col>
+                  <v-icon left color="primary">calendar_today</v-icon>
+                  {{ dataList.startTime | moment("MMMM Do YYYY") }}
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col class="mt-0 pt-0">
+                  <v-icon left color="primary">access_time</v-icon>
+                  {{ dataList.startTime | moment("h:mm a") }}
+                  </v-col>
+                </v-row>
+              </v-col>
+              <v-col md="6">
+                <b>End Time</b>
+                <v-row>
+                  <v-col>
+                  <v-icon left color="primary">calendar_today</v-icon>
+                  {{ dataList.endTime | moment("MMMM Do YYYY") }}
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col class="mt-0 pt-0"> 
+                  <v-icon left color="primary">access_time</v-icon>
+                  {{ dataList.endTime | moment("h:mm a") }}
+                  </v-col>
+                </v-row>
+              </v-col>
+              
             </v-row>
           </v-card-text>
           <template v-if="!edit">
