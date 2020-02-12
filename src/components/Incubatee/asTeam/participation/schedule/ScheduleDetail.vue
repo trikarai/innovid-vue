@@ -10,54 +10,55 @@
           </v-card-title>
           <v-card-text>
             <v-row>
-              <v-col md="12"><b>Mentor Name</b><br>{{dataList.mentor.personnel.name}}</v-col>
+              <v-col md="12">
+                <b>Mentor Name</b>
+                <br />
+                {{dataList.mentor.personnel.name}}
+              </v-col>
               <v-col>
-              <b>Start time</b>
-              <br />
-              <v-icon left color="primary">calendar_today</v-icon>
-              {{ dataList.startTime | moment("MMMM Do YYYY") }}
-              <br />
-              <v-icon left color="primary">access_time</v-icon>
-              {{ dataList.startTime | moment("h:mm a") }}
-            </v-col>
-            <v-col>
-              <b>End time</b>
-              <br />
-              <v-icon left color="primary">calendar_today</v-icon>
-              {{ dataList.endTime | moment("MMMM Do YYYY") }}
-              <br />
-              <v-icon left color="primary">access_time</v-icon>
-              {{ dataList.endTime | moment("h:mm a") }}
-            </v-col>
+                <b>Start time</b>
+                <br />
+                <v-icon left color="primary">calendar_today</v-icon>
+                {{ dataList.startTime | moment("MMMM Do YYYY") }}
+                <br />
+                <v-icon left color="primary">access_time</v-icon>
+                {{ dataList.startTime | moment("h:mm a") }}
+              </v-col>
+              <v-col>
+                <b>End time</b>
+                <br />
+                <v-icon left color="primary">calendar_today</v-icon>
+                {{ dataList.endTime | moment("MMMM Do YYYY") }}
+                <br />
+                <v-icon left color="primary">access_time</v-icon>
+                {{ dataList.endTime | moment("h:mm a") }}
+              </v-col>
             </v-row>
           </v-card-text>
           <template v-if="!edit">
             <v-card-title primary-title>
-                <h3 class="headline mb-0">Report</h3>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" small @click="edit = !edit"><v-icon left small>edit</v-icon>Edit</v-btn>
+              <h3 class="headline mb-0">Report</h3>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" small @click="edit = !edit">
+                <v-icon left small>edit</v-icon>Edit
+              </v-btn>
             </v-card-title>
             <v-card-text>
-              <template v-for="data in fields">
-                <v-row :key="data.id">
-                  <v-col class="pb-0"><b>{{data.field.name}}</b></v-col>            
-                </v-row>
-                <v-row :key="data.id">
-                  <v-col class="pt-0">{{data.value}}</v-col>
-                </v-row>
-              </template>
+              <render-record :fields="fields" />
             </v-card-text>
           </template>
           <template v-if="edit">
             <v-card-title primary-title>
-                <v-spacer></v-spacer>
-                <v-btn color="warning" small @click="edit = !edit"><v-icon left small>close</v-icon>Cancel Edit</v-btn>
+              <v-spacer></v-spacer>
+              <v-btn color="warning" small @click="edit = !edit">
+                <v-icon left small>close</v-icon>Cancel Edit
+              </v-btn>
             </v-card-title>
           </template>
         </v-card>
       </v-col>
     </v-row>
-      <v-row>
+    <v-row>
       <v-col cols="12" md="6" lg="6" xs="12" v-if="edit">
         <!-- <pre> {{dataList.participantMentoringReport}} </pre> -->
         <render-form
@@ -90,6 +91,7 @@ import * as config from "@/config/config";
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 import RenderForm from "@/components/buildform/incubatee/renderForm";
+import RenderRecord from "@/components/buildform/incubatee/renderRecord";
 
 export default {
   mixins: [formDynamicMixins],
@@ -122,7 +124,6 @@ export default {
         }
       },
       fields: [],
-
       tableLoad: false,
       loader: false,
       dialog: false,
@@ -136,7 +137,8 @@ export default {
     };
   },
   components: {
-    RenderForm
+    RenderForm,
+    RenderRecord
   },
   mounted() {
     this.getDataList();

@@ -1,7 +1,8 @@
 <template>
   <v-container grid-list-xs>
     <v-row>
-      <v-col md="6">
+      <!-- <v-col md="12">{{dataList}}</v-col> -->
+      <v-col md="12">
         <v-card :loading="tableLoad">
           <v-card-title primary-title>
             <div>
@@ -15,10 +16,31 @@
               <v-col md="12">{{dataList.endTime}}</v-col>
             </v-row>
           </v-card-text>
+          <template v-if="!edit">
+            <v-card-title primary-title>
+              <h3 class="headline mb-0">Report</h3>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" small @click="edit = !edit">
+                <v-icon left small>edit</v-icon>Edit
+              </v-btn>
+            </v-card-title>
+            <v-card-text>
+              <render-record :fields="fields" />
+            </v-card-text>
+          </template>
+          <template v-if="edit">
+            <v-card-title primary-title v-if="dataList.mentorMentoringReport !== null">
+              <v-spacer></v-spacer>
+              <v-btn color="warning" small @click="edit = !edit">
+                <v-icon left small>close</v-icon>Cancel Edit
+              </v-btn>
+            </v-card-title>
+          </template>
         </v-card>
       </v-col>
-      <v-col md="12">
-        <!-- <pre> {{dataList.worksheetForm}} </pre> -->
+    </v-row>
+    <v-row>
+      <v-col cols="12" md="6" lg="6" xs="12" v-if="edit">
         <render-form
           v-if="!tableLoad"
           :formTemplate="dataList.mentoring.mentorMentoringFeedbackForm"
@@ -46,13 +68,17 @@
 import bus from "@/config/bus";
 import auth from "@/config/auth";
 import * as config from "@/config/config";
+import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 import RenderForm from "@/components/buildform/incubatee/renderForm";
+import RenderRecord from "@/components/buildform/incubatee/renderRecord";
 
 export default {
+  mixins: [formDynamicMixins],
   data() {
     return {
       search: "",
+      edit: true,
       dataList: {
         id: "",
         mentoring: { id: "", name: "" },
@@ -69,12 +95,13 @@ export default {
         },
         startTime: "",
         endTime: "",
-        mentor: {
+        participant: {
           id: "",
-          personnel: {
+          team: {
             name: ""
           }
-        }
+        },
+        mentorMentoringReport: null
       },
       tableLoad: false,
       loader: false,
@@ -83,14 +110,15 @@ export default {
       dialogApply: false,
       dialogDelete: false,
       dialogDetail: false,
-      edit: false,
       leftId: "",
       leftName: "",
-      leftAction: ""
+      leftAction: "",
+      fields: []
     };
   },
   components: {
-    RenderForm
+    RenderForm,
+    RenderRecord
   },
   mounted() {
     this.getDataList();
@@ -111,6 +139,12 @@ export default {
         )
         .then(res => {
           this.dataList = res.data.data;
+          if (res.data.data.mentorMentoringReport !== null) {
+            this.refactorRecordJSON(res.data.data.mentorMentoringReport);
+            this.edit = false;
+          } else {
+            this.edit = true;
+          }
         })
         .catch(() => {})
         .finally(() => {
@@ -119,7 +153,7 @@ export default {
     },
     submitForm(params) {
       this.loader = true;
-      params["Form_id"] = this.mentorMentoringFeedbackForm.id;
+      params["Form_id"] = this.dataList.mentoring.mentorMentoringFeedbackForm.id;
 
       this.axios
         .put(
@@ -136,7 +170,7 @@ export default {
         )
         .then(() => {
           bus.$emit("callNotif", "success", "Report Data Uploaded");
-          this.$router.go(-2);
+          this.$router.go(-1);
         })
         .catch(res => {
           bus.$emit("callNotif", "error", res);
