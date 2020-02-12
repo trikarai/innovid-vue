@@ -31,7 +31,21 @@
         </v-card-text>-->
 
         <v-card-actions>
-          <v-btn block color="primary" :disabled="!valid" @click="sendtoParent">Submit</v-btn>
+          <!--generic button-->
+          <v-btn v-if="!modeAtom" color="primary" :disabled="!valid" @click="sendtoParent">Submit</v-btn>
+          <!--atomic journal button-->
+          <v-btn
+            v-if="modeAtom"
+            color="accent"
+            :disabled="!valid"
+            @click="sendtoParent2"
+          >Assign Worksheet</v-btn>
+          <v-btn
+            v-if="modeAtom"
+            color="accent"
+            :disabled="!valid"
+            @click="sendtoParent"
+          >Save as New Worksheet</v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -47,7 +61,7 @@ import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 export default {
   mixins: [formDynamicMixins],
-  props: ["formTemplate", "modeReload"],
+  props: ["formTemplate", "modeReload", "modeAtom"],
   data() {
     return {
       loader: false,
@@ -79,6 +93,10 @@ export default {
     sendtoParent() {
       this.test = this.refactorParams(this.params);
       this.$emit("submit-form", this.test);
+    },
+    sendtoParent2() {
+      this.test = this.refactorParams(this.params);
+      this.$emit("assignworksheet", this.test);
     }
   }
 };

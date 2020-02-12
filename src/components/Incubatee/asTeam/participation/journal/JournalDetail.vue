@@ -85,16 +85,14 @@
             small
             class="ma-2"
             color="primary"
-            :disabled="mode"
+            :outlined="!mode"
             @click="createReloadWorksheet"
-          >Reload Existing Worksheet</v-btn>
-          <v-btn
-            small
-            class="ma-2"
-            color="primary"
-            :disabled="!mode"
-            @click="createNewWorksheet"
-          >Create New Worksheet</v-btn>
+          >
+            <v-icon left v-if="mode" small>star</v-icon>Reload Existing Worksheet
+          </v-btn>
+          <v-btn small class="ma-2" color="primary" :outlined="mode" @click="createNewWorksheet">
+            <v-icon left v-if="!mode" small>star</v-icon>Create New Worksheet
+          </v-btn>
         </v-col>
         <v-col v-if="selectWorksheet" md="6">
           <v-select

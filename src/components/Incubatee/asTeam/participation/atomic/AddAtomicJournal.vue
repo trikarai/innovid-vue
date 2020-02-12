@@ -1,7 +1,7 @@
 <template>
   <v-container extend grid-list-xs>
     <v-row>
-      <v-col md="6">
+      <v-col md="12">
         <v-card class="pa-3" :loading="tableLoad">
           <v-card-title primary-title>
             {{dataList.name}}
@@ -25,7 +25,7 @@
               <v-avatar left>
                 <v-icon small color="primary">assignment_turned_in</v-icon>
               </v-avatar>
-                <span style="color:#999">Main Mission</span>
+              <span style="color:#999">Main Mission</span>
             </v-chip>
           </v-card-text>
           <v-card-actions>
@@ -50,78 +50,73 @@
     </v-row>
 
     <v-row>
-    <v-col cols="12" md="6" lg="6" xs="12">  
-    <v-card class="pa-3 mt-3">
-    <v-col md="12">
-        <v-btn
-          small
-          class="ma-2 mt-4 ml-0"
-          color="primary"
-          :disabled="mode"
-          @click="createReloadWorksheet"
-        >Reload Existing Worksheet</v-btn>
-        <v-btn
-          small
-          class="mt-2"
-          color="primary"
-          :disabled="!mode"
-          @click="createNewWorksheet"
-        >Create New Worksheet</v-btn>
-      </v-col>
-
-      <v-col v-if="selectWorksheet">
-        <v-select
-          class="ml-0"
-          v-model="exworksheetId"
-          :items="worksheetList.list"
-          item-value="id"
-          item-text="name"
-          label="Existing Worksheet"
-          :loading="worksheetListLoad"
-          no-data-text="No worksheet available"
-          @change="getWorksheetData"
-          solo
-        ></v-select>
-      </v-col>
-    <v-row v-if="!is_newWorksheet">
-      <v-col class="my-0 py-0" md="12" v-if="is_reloadWorksheet">
-        <v-row>
-          <v-col>
-             <v-text-field label="Worksheet Name" v-model="worksheetName" outlined></v-text-field>
+      <v-col cols="12" md="12" lg="12" xs="12">
+        <v-card class="pa-3 mt-3">
+          <v-col md="6">
+            <v-btn
+              small
+              class="ma-2 mt-4 ml-0"
+              color="primary"
+              @click="createReloadWorksheet"
+              :outlined="!mode"
+            >
+              <v-icon left v-if="mode" small>star</v-icon>Reload Existing Worksheet
+            </v-btn>
+            <v-btn small class="mt-2" color="primary" @click="createNewWorksheet" :outlined="mode">
+              <v-icon left v-if="!mode" small>star</v-icon>Create New Worksheet
+            </v-btn>
           </v-col>
-        </v-row>
-        <render-form
-          :modeReload="reloadTrue"
-          v-if="!tableLoad"
-          :formTemplate="dataList.worksheetForm"
-          @submit-form="submitForm"
-        />
-      </v-col>
-    </v-row>
-    <v-row class="my-0 py-0" v-if="is_newWorksheet">
-      <v-col class="my-0 py-0" md="12">
-        <v-row>
-          <v-col>
-           <v-text-field label="Worksheet Name" v-model="worksheetName" outlined></v-text-field>
+
+          <v-col v-if="selectWorksheet">
+            <v-select
+              class="ml-0"
+              v-model="exworksheetId"
+              :items="worksheetList.list"
+              item-value="id"
+              item-text="name"
+              label="Existing Worksheet"
+              :loading="worksheetListLoad"
+              no-data-text="No worksheet available"
+              @change="getWorksheetData"
+              solo
+            ></v-select>
           </v-col>
-        </v-row>
-        <render-form
-          :modeReload="reloadFalse"
-          v-if="!tableLoad"
-          :formTemplate="dataList.worksheetForm"
-          @submit-form="submitForm"
-        />
+          <v-row v-if="!is_newWorksheet">
+            <v-col class="my-0 py-0" md="12" v-if="is_reloadWorksheet">
+              <v-row>
+                <v-col>
+                  <v-text-field label="Worksheet Name" v-model="worksheetName" outlined></v-text-field>
+                </v-col>
+              </v-row>
+              <render-form
+                :modeReload="reloadTrue"
+                :modeAtom="true"
+                v-if="!tableLoad"
+                :formTemplate="dataList.worksheetForm"
+                @submit-form="submitForm"
+                @assignworksheet="assignWorksheet"
+              />
+            </v-col>
+          </v-row>
+          <v-row class="my-0 py-0" v-if="is_newWorksheet">
+            <v-col class="my-0 py-0" md="12">
+              <v-row>
+                <v-col>
+                  <v-text-field label="Worksheet Name" v-model="worksheetName" outlined></v-text-field>
+                </v-col>
+              </v-row>
+              <render-form
+                :modeAtom="false"
+                :modeReload="reloadFalse"
+                v-if="!tableLoad"
+                :formTemplate="dataList.worksheetForm"
+                @submit-form="submitForm"
+              />
+            </v-col>
+          </v-row>
+        </v-card>
       </v-col>
     </v-row>
-    </v-card>
-    </v-col>
-    </v-row>
-
-  
-
-    <!-- <v-row>
-      <v-col>{{testMap}}</v-col>
-    </v-row>-->
   </v-container>
 </template>
 <script>
@@ -242,6 +237,38 @@ export default {
         )
         .then(() => {
           bus.$emit("callNotif", "success", "Worksheet Data Uploaded");
+          this.$router.go(-1);
+        })
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
+        .finally(() => {
+          this.loader = false;
+        });
+    },
+    assignWorksheet(params) {
+      params["missionId"] = this.dataList.id;
+      params["worksheetId"] = this.exworksheetId;
+      params["name"] = this.worksheetName;
+
+      // this.params = params;
+      this.loader = true;
+      this.axios
+        .post(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/journals" +
+            this.branchUri,
+          params,
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(() => {
+          bus.$emit("callNotif", "success", "Worksheet Assigned");
           this.$router.go(-1);
         })
         .catch(res => {
