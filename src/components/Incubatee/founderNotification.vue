@@ -1,13 +1,13 @@
 <template>
   <v-menu left absolute :close-on-content-click="false" max-height="70%">
     <template v-slot:activator="{ on }">
-      <v-btn icon v-on="on">
+      <v-btn text v-on="on">
         <v-badge color="red" :content="notificationList.total" overlap>
           <v-icon>notifications</v-icon>
         </v-badge>
       </v-btn>
     </template>
-    <v-list dense>
+    <v-list class="pa-5" dense>
       <v-list-item v-for="(notif, index) in notificationList.list" :key="index" three-line>
         <v-list-item-avatar>
           <v-btn
