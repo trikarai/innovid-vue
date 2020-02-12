@@ -2,7 +2,7 @@
   <div class="home">
     <Navbar />
     <transition name="slide" mode="out-in">
-      <router-view></router-view>
+      <router-view style="margin-left:50px;"></router-view>
     </transition>
     <v-spacer></v-spacer>
     <Footer />
