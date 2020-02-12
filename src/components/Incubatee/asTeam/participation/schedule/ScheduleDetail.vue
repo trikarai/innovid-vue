@@ -43,7 +43,7 @@
                 <v-icon left small>edit</v-icon>Edit
               </v-btn>
             </v-card-title>
-            <v-card-text>
+            <v-card-text class="pt-0 mt-2 ml-3">
               <render-record :fields="fields" />
             </v-card-text>
           </template>
