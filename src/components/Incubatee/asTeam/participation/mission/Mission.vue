@@ -35,31 +35,23 @@
               <v-card-text v-else>
                 <v-chip small>
                   <v-avatar left>
-                    <v-icon small color="primary">assignment_turned_in</v-icon>
+                   <v-icon small color="primary">assignment_turned_in</v-icon>
                   </v-avatar>
-                  <span style="color:#999">Main Mission</span>
+                   <span style="color:#999">Main Mission</span>
                 </v-chip>
               </v-card-text>
               <!-- {{data}} -->
               <v-card-text v-if="data.journal.length != 0">
-                {{data.journal}}
                 <v-select
-                  dense
-                  label="Choose a journal"
+                   dense
+                   label="Choose a journal"
+                  :ref="'selectInput'+index"
                   :items="data.journal"
                   item-text="worksheet.name"
                   item-value="id"
                   outlined
-                  return-object
-                  v-model="selectedJournalinMission[index]"
                   @change="getBranchJournal($event, data.id)"
                 ></v-select>
-                {{selectedJournalinMission[index]}}
-                <v-btn
-                  v-if="selectedJournalinMission[index] !== ''"
-                  color="success"
-                  @click="openJournal(selectedJournalinMission[index])"
-                >view journal</v-btn>
               </v-card-text>
               <v-card-actions>
                 <v-btn
@@ -121,7 +113,6 @@ import * as config from "@/config/config";
 export default {
   data() {
     return {
-      selectedJournalinMission: [],
       search: "",
       journalIdRoot: "",
       dataList: { total: 0, list: [] },
@@ -244,21 +235,16 @@ export default {
           // this.tableLoad = false;
         });
     },
-    openJournal(journal) {
+    openJournal(index) {
       // eslint-disable-next-line no-console
-      this.$router.push({
-        path:
-          "/incubatee/team/" +
-          this.$route.params.teamId +
-          "/participation/" +
-          this.$route.params.cohortId +
-          "/mission/" +
-          journal.mission.id +
-          "/journal/" +
-          journal.id +
-          "/worksheet/" +
-          journal.worksheet.id
-      });
+      console.log(this.$refs["selectInput" + index]);
+      // this.$router.push({
+      //   path:
+      //     "/incubatee/team/" +
+      //     this.$route.params.teamId +
+      //     "/worksheet/" +
+      //     this.$refs['selectInput' + index]
+      // });
     },
     getBranchJournal(event, missionId) {
       // this.tableLoad = true;
