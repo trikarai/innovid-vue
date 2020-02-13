@@ -143,10 +143,10 @@
             <v-row class="mt-5">
               <v-col md="2"></v-col>
               <v-col md="4">
-                <v-img width="400" src="/img/no-data-program.png"></v-img>
+                <v-img width="300" src="/img/no-data-program.png"></v-img>
               </v-col>
               <v-col md="4">
-                <v-card v-if="teamId == '' " style="margin-top:70px;" flat>
+                <v-card v-if="teamId == '' " style="margin-top:27px;" flat>
                   <v-card-title>
                     Create team first
                   </v-card-title>
@@ -154,13 +154,16 @@
                     You can join a program if you have a team, minimum with 2 members
                   </v-card-subtitle>
                 </v-card>
-                <v-card v-else style="margin-top:70px;" flat>
+                <v-card v-else style="margin-top:27px;" flat>
                   <v-card-title>
                     No Program Available
                   </v-card-title>
                   <v-card-subtitle class="grey--text">
-                    You have already join all available program or you haven't join at all
+                    You have already join all available program or you haven't join at all, create team first before join a program
                   </v-card-subtitle>
+                  <v-card-text>
+                    <v-btn v-if="teamId != '' " router to="/incubatee/membership">create Team</v-btn>
+                  </v-card-text>
                 </v-card>
               </v-col>
               <v-col md="2"></v-col>
