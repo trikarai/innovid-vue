@@ -42,7 +42,7 @@
               </v-card-text>
               <!-- {{data}} -->
               <v-card-text v-if="data.journal.length != 0">
-                {{data.journal}}
+                <!-- {{data.journal}} -->
                 <v-select
                   dense
                   label="Choose a journal"
@@ -53,23 +53,25 @@
                   return-object
                   v-model="selectedJournalinMission[index]"
                   @change="getBranchJournal($event, data.id)"
+                  append-outer-icon="zoom_in"
+                  @click:append-outer="openJournal(selectedJournalinMission[index])"
                 ></v-select>
-                {{selectedJournalinMission[index]}}
-                <v-btn
-                  v-if="selectedJournalinMission[index] !== ''"
-                  color="success"
-                  @click="openJournal(selectedJournalinMission[index])"
-                >view journal</v-btn>
               </v-card-text>
               <v-card-actions>
-                <v-btn
+                <!-- <v-btn
+                  small
+                  color="primary"
+                  v-if="selectedJournalinMission[index] !== ''"
+                  @click="openJournal(selectedJournalinMission[index])"
+                >view journal</v-btn>-->
+                <!-- <v-btn
                   small
                   color="primary"
                   router
                   :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id "
                 >
                   <v-icon left small>zoom_in</v-icon>view
-                </v-btn>
+                </v-btn>-->
 
                 <v-btn
                   v-if="data.previousMission == null"
@@ -282,7 +284,7 @@ export default {
             "/program-participations/" +
             this.$route.params.cohortId +
             "/journals?parentJournalId=" +
-            event,
+            event.id,
           {
             headers: auth.getAuthHeader()
           }
