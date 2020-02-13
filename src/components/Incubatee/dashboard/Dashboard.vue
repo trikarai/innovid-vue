@@ -333,7 +333,7 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  border-top: 40px solid #fafafa;
+  border-top: 40px solid #fff;
   border-left: 40px solid rgb(158, 158, 158);
   width: 54%;
 }

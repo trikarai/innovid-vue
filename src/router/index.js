@@ -513,6 +513,7 @@ const routes = [
       {
         path: "/personnel/mentor/:mentorshipId/schedule/:scheduleId",
         component: MentorScheduleDetail,
+        name: "Mentor Schedule Detail",
         meta: {
           level: 3,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false

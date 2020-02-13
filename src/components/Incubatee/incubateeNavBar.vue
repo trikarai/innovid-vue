@@ -18,13 +18,13 @@
       <v-icon left>keyboard_backspace</v-icon>Back
     </v-btn>-->
 
-    <v-btn class="ml-3 mt-5" icon v-if="$route.meta.level !== 0" @click="$router.go(-1) ">
+    <v-btn style="position: fixed;" class="ml-3 mt-5" icon v-if="$route.meta.level !== 0" @click="$router.go(-1) ">
       <v-icon>arrow_back</v-icon>
     </v-btn>
-    <v-btn class="ml-3 mt-5" icon v-if="$route.meta.level == 0" @click="$router.go(-1) ">
+    <!-- <v-btn class="ml-3 mt-5" icon v-if="$route.meta.level == 0" @click="$router.go(-1) ">
       <v-icon></v-icon>
-    </v-btn>
-    <div class="container extend mt-2">
+    </v-btn> -->
+    <div style="margin-left: 49px;" class="container extend mt-2">
       <h2 class="mb-2">{{$route.name}}</h2>
       <div class="garis"></div>
     </div>
