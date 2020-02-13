@@ -158,8 +158,8 @@
                   <v-card-title>
                     No Program Available
                   </v-card-title>
-                  <v-card-subtitle>
-                    You have already join all available program
+                  <v-card-subtitle class="grey--text">
+                    You have already join all available program or you haven't join at all
                   </v-card-subtitle>
                 </v-card>
               </v-col>

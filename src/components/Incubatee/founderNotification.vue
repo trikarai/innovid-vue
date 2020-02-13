@@ -1,8 +1,8 @@
 <template>
   <v-menu left absolute :close-on-content-click="false" max-height="70%">
     <template v-slot:activator="{ on }">
-      <v-btn text v-on="on">
-        <v-badge color="red" :content="notificationList.total" overlap>
+      <v-btn :disabled="notificationList.total == 0" text v-on="on">
+        <v-badge :value="notificationList.total !=0" color="red" :content="notificationList.total" overlap>
           <v-icon>notifications</v-icon>
         </v-badge>
       </v-btn>
