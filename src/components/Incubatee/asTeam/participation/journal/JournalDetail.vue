@@ -15,6 +15,8 @@
             <b>Mission</b>
             <br />
             {{dataList.name}}
+            <br />
+            <blockquote class="blockquote">{{dataList.description}}</blockquote>
           </v-card-text>
           <v-card-text class="subtitle-1">
             <b>Worksheet</b>
