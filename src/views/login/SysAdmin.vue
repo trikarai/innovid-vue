@@ -88,8 +88,8 @@ export default {
       alert: false,
       e1: true,
       params: {
-        email: "sys_admin@email.org",
-        password: "Bismill4h123"
+        email: "",
+        password: ""
       },
       activate: false
     };
