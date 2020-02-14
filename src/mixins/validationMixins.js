@@ -29,6 +29,10 @@ export const validationMixins = {
                 return pattern.test(value) || "E-mail must be valid";
             }
             ],
+            rulesIncubatorIdentifier: [v => !!v || "Field is required", v => v.length >= 3 || "Name must be more than 3 characters", v => {
+                const pattern = /^[a-z0-9]*$/;
+                return pattern.test(v) || "Lowercase Alphanumeric Only , no special characters"
+            }],
             rulesPassword: [
                 value => !!value || "Password Required.",
                 value => value.length >= 8 || "Min 8 characters"

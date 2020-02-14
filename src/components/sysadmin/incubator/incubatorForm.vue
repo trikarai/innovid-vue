@@ -20,7 +20,7 @@
                     :disabled="view"
                     label="Identifier"
                     v-model="params.identifier"
-                    :rules="rulesName"
+                    :rules="rulesIncubatorIdentifier"
                     :counter="25"
                     maxlength="25"
                     required
