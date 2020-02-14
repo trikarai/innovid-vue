@@ -7,9 +7,9 @@
         <v-card @click="$router.push({path: '/incubatee/profile'})">
           <v-card-title style="word-break: break-word;" primary-title>
             <v-col style="max-width:100% !important" md="5">
-              <v-card color="primary" class="pa-9 elevation-7">
-                <v-icon color="#fff" x-large>folder_shared</v-icon>
-              </v-card>
+            <v-card color="primary" class="pa-9 elevation-7">
+              <v-icon color="#fff" x-large>folder_shared</v-icon>
+            </v-card>
             </v-col>
             <v-col md="6" sm="12">
               <h3 class="headline mb-0">Profile</h3>
@@ -22,13 +22,9 @@
         <v-card @click="$router.push({path: '/incubatee/membership'})">
           <v-card-title style="word-break: break-word;" primary-title>
             <v-col style="max-width:100% !important" md="5">
-              <v-card color="primary" class="pa-9 elevation-7">
-                <v-icon
-                  color="#fff"
-                  style="width:40px;position: relative;left: 23px;"
-                  x-large
-                >groups</v-icon>
-              </v-card>
+            <v-card color="primary" class="pa-9 elevation-7">
+              <v-icon color="#fff" style="width:40px;position: relative;left: 23px;" x-large>groups</v-icon>
+            </v-card>
             </v-col>
             <v-col md="6" sm="12">
               <h3 class="headline mb-0">Team</h3>
@@ -37,6 +33,7 @@
           </v-card-title>
         </v-card>
       </v-col>
+      
     </v-row>
 
     <v-row v-if="participationList.total > 0">
@@ -150,14 +147,20 @@
               </v-col>
               <v-col md="4">
                 <v-card v-if="teamId == '' " style="margin-top:27px;" flat>
-                  <v-card-title>Create team first</v-card-title>
-                  <v-card-subtitle>You can join a program if you have a team, minimum with 2 members</v-card-subtitle>
+                  <v-card-title>
+                    Create team first
+                  </v-card-title>
+                  <v-card-subtitle>
+                    You can join a program if you have a team, minimum with 2 members
+                  </v-card-subtitle>
                 </v-card>
                 <v-card v-else style="margin-top:27px;" flat>
-                  <v-card-title>No Program Available</v-card-title>
-                  <v-card-subtitle
-                    class="grey--text"
-                  >You have already join all available program or you haven't join at all, create team first before join a program</v-card-subtitle>
+                  <v-card-title>
+                    No Program Available
+                  </v-card-title>
+                  <v-card-subtitle class="grey--text">
+                    You have already join all available program or you haven't join at all, create team first before join a program
+                  </v-card-subtitle>
                   <v-card-text>
                     <v-btn v-if="teamId != '' " router to="/incubatee/membership">create Team</v-btn>
                   </v-card-text>
@@ -175,9 +178,9 @@
                   <v-divider></v-divider>
                   <v-list dense>
                     <v-list-item>
-                      <v-list-item-content>Description:</v-list-item-content>
+                      <v-list-item-content>Description: </v-list-item-content>
                     </v-list-item>
-                    <v-list-item>
+                     <v-list-item>
                       <v-list-item-content class="grey--text">{{ item.description }}</v-list-item-content>
                     </v-list-item>
                     <v-list-item>
@@ -329,12 +332,12 @@ export default {
   right: 30px;
 }
 .kastemtoolbar:before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 0;
-  border-top: 40px solid #fff;
-  border-left: 40px solid var(--v-primary-base);
+  border-top: 40px solid var(--v-kastemkolor-base);
+  border-left: 40px solid rgb(158, 158, 158);
   width: 54%;
 }
 </style>
