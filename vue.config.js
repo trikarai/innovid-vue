@@ -4,7 +4,7 @@ module.exports = {
   ],
 
   pwa: {
-    name: 'Innovide',
+    name: 'innov.id',
     themeColor: '#14DA51',
     manifestOptions: {
       background_color: '#2D693C'
