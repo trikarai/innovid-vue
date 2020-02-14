@@ -1,5 +1,7 @@
 <template>
-  <v-row>
+   <div>
+    <v-card-title>Selection Properties</v-card-title>
+    <v-row class="pa-5">
     <v-col md="12">
       <v-text-field label="Label Name" v-model="field.name"></v-text-field>
     </v-col>
@@ -62,6 +64,7 @@
       </v-list>
     </v-col>
   </v-row>
+   </div>
 </template>
 <script>
 export default {
