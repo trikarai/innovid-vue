@@ -21,6 +21,9 @@ export default new Vuetify({
     },
     dark: false,
     theme: {
-        themes: tema
+        themes: tema,
+        options: {
+            customProperties: true
+        },
     }
 });
