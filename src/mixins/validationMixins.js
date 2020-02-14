@@ -42,6 +42,11 @@ export const validationMixins = {
                 () =>
                     this.cpassword === this.signup.password || "Password does not match"
             ],
+            rulesPasswordConfirmationPersonnel: [
+                v => !!v || "Confirmation Password is required",
+                () =>
+                    this.cpassword === this.params.personnelPassword || "Password does not match"
+            ],
             rulesChangePasswordConfirmation: [
                 v => !!v || "Confirmation Password is required",
                 () =>
