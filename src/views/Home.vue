@@ -29,13 +29,13 @@
         </v-list> -->
         <v-list>
           <v-list-item>
-            <v-btn text>Home</v-btn>
+            <v-btn block text>Home</v-btn>
           </v-list-item>
           <v-list-item>
-            <v-btn to="/signup" text>Registration</v-btn>
+            <v-btn block to="/signup" text>Registration</v-btn>
           </v-list-item>
           <v-list-item>
-            <v-btn to="/login" text>Login</v-btn>
+            <v-btn block to="/login" text>Login</v-btn>
           </v-list-item>
         </v-list>
       </v-menu>

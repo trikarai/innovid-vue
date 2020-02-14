@@ -2,7 +2,7 @@
   <v-app>
     <v-container fluid id="loginpage">
       <v-row align="center" justify="center">
-        <v-col xs="10" sm="8" md="4" lg="4" class="text-xs-center ma-12 pa-0 elevation-6">
+        <v-col xs="10" sm="8" md="4" lg="4" class="text-xs-center ma-3 pa-0 elevation-6">
           <v-toolbar class="pt-0" color="primary">
             <v-toolbar-title class="white--text ml-2">
               <h4>
