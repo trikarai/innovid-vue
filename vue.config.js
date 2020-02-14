@@ -5,13 +5,16 @@ module.exports = {
 
   pwa: {
     name: 'innov.id',
-    themeColor: '#14DA51',
+    themeColor: '#249c90',
     manifestOptions: {
-      background_color: '#2D693C'
+      background_color: '#249C90'
     },
     msTileColor: '#121212',
     workboxOptions: {
-      skipWaiting: true
-    }
+      // skipWaiting: true,
+      swSrc: './src/sw.js',
+      swDest: 'service-worker.js',
+    },
+    workboxPluginMode: 'InjectManifest'
   }
 }
