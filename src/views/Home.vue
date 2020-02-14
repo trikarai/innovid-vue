@@ -3,7 +3,9 @@
     <v-app-bar class="px-lg-12 pt-lg-5 elevation-0 toolbarcustom">
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
-      <v-toolbar-title><strong>INNOV</strong>.ID</v-toolbar-title>
+      <v-toolbar-title>
+        <v-img class="mt-2" max-width="110" src="/img/logo.png"></v-img>
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 

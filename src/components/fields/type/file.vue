@@ -37,17 +37,17 @@
         <v-img class="ml-5" :src="imageUrl" contain max-width="250" v-if="imageUrl" />
       </v-expand-transition>
     </v-col>
-    <v-col md="3">
+    <v-col md="5">
       <template v-if="!uploaded">
-        <v-btn v-if="imageUrl" small fab color="warning" @click="uploadFile">
-          <v-icon>cloud_upload</v-icon>
+        <v-btn v-if="imageUrl" x-small color="primary" @click="uploadFile">
+          <v-icon left small>cloud_upload</v-icon>upload 
         </v-btn>
       </template>
-      <v-btn depressed fab small color="green" v-if="uploaded">
+      <v-btn dark depressed fab small color="green" v-if="uploaded">
         <v-icon>check</v-icon>
       </v-btn>
       <v-btn icon small color="red" @click="removeFile" v-if="removeFileBtn">
-        <v-icon>close</v-icon>
+        <v-icon small>close</v-icon>
       </v-btn>
     </v-col>
   </v-row>

@@ -1,5 +1,7 @@
 <template>
-  <v-row>
+    <div>
+    <v-card-title>String/Text Area/Integer Properties</v-card-title>
+    <v-row class="pa-5">
     <v-col md="12">
       <v-text-field label="Label Name" v-model="field.name"></v-text-field>
     </v-col>
@@ -31,6 +33,7 @@
     ></v-checkbox>
     </v-col>
   </v-row>
+  </div>
 </template>
 <script>
 export default {

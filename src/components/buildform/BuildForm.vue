@@ -222,16 +222,13 @@
     <v-layout row justify-center>
       <v-dialog v-model="dialogPropesties" width="500px">
         <v-card>
-          <v-card-title>
-            <span class="headline"></span>
-          </v-card-title>
           <v-card-text>
             <props-module :field="field" />
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn icon color="red darken-1" text @click="dialogPropesties = false">
-              <v-icon>close</v-icon>
+            <v-btn class="mb-5" color="primary" text @click="dialogPropesties = false">
+              Done
             </v-btn>
           </v-card-actions>
         </v-card>
