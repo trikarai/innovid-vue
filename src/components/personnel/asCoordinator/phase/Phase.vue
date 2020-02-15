@@ -308,7 +308,7 @@ export default {
           config.baseUri +
             "/personnel/as-coordinator/" +
             this.$route.params.programId +
-            "/registration-phases/",
+            "/registration-phases",
           this.params,
           {
             headers: auth.getAuthHeader()
