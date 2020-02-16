@@ -13,7 +13,7 @@
             </v-col>
             <v-col md="6" sm="12">
               <h3 class="headline mb-0">Profile</h3>
-              <h4 class="subtitle-2 grey--text">fill in the profile form based on your experience</h4>
+              <h4 class="subtitle-2 grey--text" style="word-break: normal !important;">fill in the profile form based on your experience</h4>
             </v-col>
           </v-card-title>
         </v-card>
@@ -28,7 +28,7 @@
             </v-col>
             <v-col md="6" sm="12">
               <h3 class="headline mb-0">Team</h3>
-              <h4 class="subtitle-2 grey--text">Create your team before register the program</h4>
+              <h4 class="subtitle-2 grey--text" style="word-break: normal !important;">Create your team before register the program</h4>
             </v-col>
           </v-card-title>
         </v-card>
@@ -334,7 +334,7 @@ export default {
 .kastemtoolbar:before {
   content: '';
   position: absolute;
-  top: 0;
+  /* top: 0; */
   right: 0;
   border-top: 40px solid var(--v-kastemkolor-base);
   border-left: 40px solid rgb(158, 158, 158);
