@@ -18,7 +18,7 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row> -->
+    </v-row>-->
     <v-row>
       <v-col cols="12" md="6" lg="6" xs="12">
         <v-data-table
@@ -80,27 +80,35 @@
         <v-card-text v-if="loader">
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
-        <v-card-text><b>Name</b><br>{{dataSingle.name}}</v-card-text>
-        <v-card-text><b>Start Date</b><br>
-        <v-icon left color="primary">calendar_today</v-icon>
-              {{ dataSingle.startDate | moment("MMMM Do YYYY") }}
+        <v-card-text>
+          <b>Name</b>
+          <br />
+          {{dataSingle.name}}
         </v-card-text>
-        <v-card-text><b>End Date</b><br>
+        <v-card-text>
+          <b>Start Date</b>
+          <br />
           <v-icon left color="primary">calendar_today</v-icon>
-              {{ dataSingle.endDate | moment("MMMM Do YYYY") }}
+          {{ dataSingle.startDate | moment("MMMM Do YYYY") }}
+        </v-card-text>
+        <v-card-text>
+          <b>End Date</b>
+          <br />
+          <v-icon left color="primary">calendar_today</v-icon>
+          {{ dataSingle.endDate | moment("MMMM Do YYYY") }}
         </v-card-text>
         <!-- <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
             <v-icon>close</v-icon>
           </v-btn>
-        </v-card-actions> -->
+        </v-card-actions>-->
       </v-card>
     </v-dialog>
 
     <v-layout row justify-center>
       <v-dialog v-model="dialogForm" persistent max-width="500px">
-        <v-card class="pa-3">
+        <v-card class="pa-3" :loading="loader">
           <v-card-title>
             <span class="headline">Registration Phase</span>
           </v-card-title>
@@ -182,15 +190,21 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn text color="grey"  @click.native="dialogForm = false">Close</v-btn>
+            <v-btn text color="grey" @click.native="dialogForm = false">Close</v-btn>
             <v-btn
               v-if="!edit"
               :disabled="!valid"
               color="primary"
-              
-              @click.native="createPhase"
+              :loading="loader"
+              @click="createPhase()"
             >Save</v-btn>
-            <v-btn v-else :disabled="!valid" color="primary" @click.native="editPhase">edit</v-btn>
+            <v-btn
+              v-else
+              :loading="loader"
+              :disabled="!valid"
+              color="primary"
+              @click="editPhase()"
+            >edit</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -294,7 +308,7 @@ export default {
           config.baseUri +
             "/personnel/as-coordinator/" +
             this.$route.params.programId +
-            "/registration-phases/",
+            "/registration-phases",
           this.params,
           {
             headers: auth.getAuthHeader()

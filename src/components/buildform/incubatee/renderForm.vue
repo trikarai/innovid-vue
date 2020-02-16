@@ -16,7 +16,7 @@
         <v-card-text class="subtitle grey--text">{{formDesc}}</v-card-text>
         <v-card-text>
           <v-form ref="form" v-model="valid">
-            <template v-for="(field, index) in fields">
+          <template v-for="(field, index) in reOrderField(fields)">
               <v-row :key="index">
                 <field-module :field="field" :index="index" :modeReload="modeReload" />
               </v-row>

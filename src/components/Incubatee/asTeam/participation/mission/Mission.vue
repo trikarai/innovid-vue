@@ -11,7 +11,7 @@
     <v-row>
       <v-col md="12">
         <v-timeline :reverse="true" align-top>
-          <v-timeline-item v-for="(data, index) in dataList.list" :key="data.id">
+          <v-timeline-item v-for="(data, index) in reOrderMission(dataList.list)" :key="data.id">
             <template v-slot:icon>
               <v-avatar>
                 <span style="color:#fff">{{data.position}}</span>
@@ -120,6 +120,11 @@ import bus from "@/config/bus";
 import auth from "@/config/auth";
 import * as config from "@/config/config";
 
+import Vue from "vue";
+import VueLodash from "vue-lodash";
+const options = { name: "lodash" }; // customize the way you want to call it
+Vue.use(VueLodash, options); // options is optional
+
 export default {
   data() {
     return {
@@ -153,6 +158,9 @@ export default {
     this.getRootMissionJurnal();
   },
   methods: {
+    reOrderMission: function(params) {
+      return Vue._.orderBy(params, "position", "asc");
+    },
     getDataList() {
       this.tableLoad = true;
       this.axios

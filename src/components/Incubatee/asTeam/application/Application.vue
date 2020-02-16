@@ -273,7 +273,7 @@ export default {
           config.baseUri +
             "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/program-registrations/",
+            "/program-registrations",
           this.params,
           {
             headers: auth.getAuthHeader()

@@ -29,7 +29,15 @@
               </v-col>
               <!-- <v-divider></v-divider> -->
               <v-col class="my-0 py-0" md="9">
-                <v-textarea class="my-0 py-0" disabled dense rows="2" label="Textarea" outlined clearable></v-textarea>
+                <v-textarea
+                  class="my-0 py-0"
+                  disabled
+                  dense
+                  rows="2"
+                  label="Textarea"
+                  outlined
+                  clearable
+                ></v-textarea>
               </v-col>
               <v-col class="my-0 py-0" md="3">
                 <v-btn class="mt-1" x-small fab color="primary" @click="addTextarea">
@@ -128,7 +136,7 @@
             <v-progress-circular indeterminate color="primary" v-if="loader"></v-progress-circular>
             <transition-group name="slide-fade">
               <template v-for="(field, index) in fields">
-                <v-row :key="index" class="my-0 py-0">            
+                <v-row :key="index" class="my-0 py-0">
                   <v-col class="my-0 py-0" md="9">
                     <v-row>
                       <v-col class="mt-4" md="2">
@@ -164,7 +172,13 @@
                     >
                       <v-icon>keyboard_arrow_down</v-icon>
                     </v-btn>
-                    <v-btn class="ml-3 mt-4" x-small fab color="warning" @click="deleteEvent(index)">
+                    <v-btn
+                      class="ml-3 mt-4"
+                      x-small
+                      fab
+                      color="warning"
+                      @click="deleteEvent(index)"
+                    >
                       <v-icon small>delete</v-icon>
                     </v-btn>
                   </v-col>
@@ -182,10 +196,11 @@
           <v-card-text v-show="devmode">
             <v-row>
               <v-col md="6">
-                <pre>{{params}}</pre>
+                <!-- <pre>{{params}}</pre> -->
+                <pre>{{fields}}</pre>
               </v-col>
               <v-col md="6">
-                <pre>{{fields}}</pre>
+                <!-- <pre>{{fields}}</pre> -->
               </v-col>
             </v-row>
           </v-card-text>
@@ -203,7 +218,7 @@
             <span class="headline">{{params.name}} Form Preview</span>
           </v-card-title>
           <v-card-text>
-            <template v-for="(field, index) in fields">
+            <template v-for="(field, index) in reOrderField(fields)">
               <v-row :key="index">
                 <field-module :field="field" :index="index" :build="buildmode" />
               </v-row>
@@ -214,7 +229,7 @@
             <v-btn icon color="red darken-1" text @click="dialogPreview = false">
               <v-icon>close</v-icon>
             </v-btn>
-          </v-card-actions> -->
+          </v-card-actions>-->
         </v-card>
       </v-dialog>
     </v-layout>
@@ -227,9 +242,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn class="mb-5" color="primary" text @click="dialogPropesties = false">
-              Done
-            </v-btn>
+            <v-btn class="mb-5" color="primary" text @click="dialogPropesties = false">Done</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -275,6 +288,7 @@ export default {
         multiSelectFields: []
       },
       fields: [],
+      fieldsOrdered: [],
       field: {},
       items: ["Foo", "Bar", "Fizz", "Buzz"],
       loader: false,
@@ -297,7 +311,6 @@ export default {
     }
   },
   methods: {
-    
     postformtoParent() {
       this.$emit("postform", this.params);
     },

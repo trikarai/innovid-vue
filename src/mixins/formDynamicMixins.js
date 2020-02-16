@@ -1,3 +1,8 @@
+import Vue from "vue";
+import VueLodash from "vue-lodash";
+const options = { name: "lodash" }; // customize the way you want to call it
+Vue.use(VueLodash, options); // options is optional
+
 import bus from "@/config/bus";
 
 export const formDynamicMixins = {
@@ -15,10 +20,10 @@ export const formDynamicMixins = {
                     params = { fieldId: this.field.integerField.id, value: this.value, type: this.field.type };
                 } else if (this.field.type == 'textarea') {
                     params = { fieldId: this.field.textAreaField.id, value: this.value, type: this.field.type };
-                // } else if (this.field.type == 'radio') {
-                //     params = { fieldId: this.field.singleSelectField.id, value: this.value, type: this.field.type };
-                // } else if (this.field.type == 'select') {
-                //     params = { fieldId: this.field.multiSelectField.id, value: this.value, type: this.field.type };
+                    // } else if (this.field.type == 'radio') {
+                    //     params = { fieldId: this.field.singleSelectField.id, value: this.value, type: this.field.type };
+                    // } else if (this.field.type == 'select') {
+                    //     params = { fieldId: this.field.multiSelectField.id, value: this.value, type: this.field.type };
                 } else if (this.field.type == 'attachment') {
                     params = { fieldId: this.field.attachmentField.id, value: this.value, type: this.field.type };
                 }
@@ -29,6 +34,9 @@ export const formDynamicMixins = {
         }
     },
     methods: {
+        reOrderField: function (params) {
+            return Vue._.orderBy(params, function (o) { return new Number(o.position); }, ["asc"]);
+        },
         refactorJSON(data) {
             data.stringFields.forEach(element => {
                 element.type = "string";
@@ -54,6 +62,7 @@ export const formDynamicMixins = {
                 element.type = "attachment";
                 this.fields.push(element);
             });
+            this.fields = this.reOrderField(this.fields);
         },
         refactorRecordJSON(data) {
             data.stringFieldRecords.forEach(element => {
@@ -128,52 +137,52 @@ export const formDynamicMixins = {
             //https://stackoverflow.com/questions/56444006/how-to-merge-the-property-with-same-key-in-two-object-array?noredirect=1&lq=1
             //String
             var map = new Map(
-              data.stringFieldRecords.map(o => [o.stringField.id, o])
+                data.stringFieldRecords.map(o => [o.stringField.id, o])
             );
             var result = this.dataList.worksheetForm.stringFields.map(o =>
-              Object.assign({}, o, map.get(o.id))
+                Object.assign({}, o, map.get(o.id))
             );
             this.dataList.worksheetForm.stringFields = result;
             //textarea
             var mapt = new Map(
-              data.textAreaFieldRecords.map(o => [o.textAreaField.id, o])
+                data.textAreaFieldRecords.map(o => [o.textAreaField.id, o])
             );
             var resultt = this.dataList.worksheetForm.textAreaFields.map(o =>
-              Object.assign({}, o, mapt.get(o.id))
+                Object.assign({}, o, mapt.get(o.id))
             );
             this.dataList.worksheetForm.textAreaFields = resultt;
             //integer
             var mapi = new Map(
-              data.integerFieldRecords.map(o => [o.integerField.id, o])
+                data.integerFieldRecords.map(o => [o.integerField.id, o])
             );
             var resulti = this.dataList.worksheetForm.integerFields.map(o =>
-              Object.assign({}, o, mapi.get(o.id))
+                Object.assign({}, o, mapi.get(o.id))
             );
             this.dataList.worksheetForm.integerFields = resulti;
             //single select / radio
             var mapr = new Map(
-              data.singleSelectFieldRecords.map(o => [o.singleSelectField.id, o])
+                data.singleSelectFieldRecords.map(o => [o.singleSelectField.id, o])
             );
             var resultr = this.dataList.worksheetForm.singleSelectFields.map(o =>
-              Object.assign({}, o, mapr.get(o.id))
+                Object.assign({}, o, mapr.get(o.id))
             );
             this.dataList.worksheetForm.singleSelectFields = resultr;
             //multi select
             var mapm = new Map(
-              data.multiSelectFieldRecords.map(o => [o.multiSelectField.id, o])
+                data.multiSelectFieldRecords.map(o => [o.multiSelectField.id, o])
             );
             var resultm = this.dataList.worksheetForm.multiSelectFields.map(o =>
-              Object.assign({}, o, mapm.get(o.id))
+                Object.assign({}, o, mapm.get(o.id))
             );
             this.dataList.worksheetForm.multiSelectFields = resultm;
             //attachment
             var mapa = new Map(
-              data.attachmentFieldRecords.map(o => [o.attachmentField.id, o])
+                data.attachmentFieldRecords.map(o => [o.attachmentField.id, o])
             );
             var resulta = this.dataList.worksheetForm.attachmentFields.map(o =>
-              Object.assign({}, o, mapa.get(o.id))
+                Object.assign({}, o, mapa.get(o.id))
             );
             this.dataList.worksheetForm.attachmentFields = resulta;
-          }
+        }
     },
 }
