@@ -197,10 +197,10 @@
             <v-row>
               <v-col md="6">
                 <!-- <pre>{{params}}</pre> -->
-                <pre>{{fieldsOrdered}}</pre>
+                <pre>{{fields}}</pre>
               </v-col>
               <v-col md="6">
-                <pre>{{fields}}</pre>
+                <!-- <pre>{{fields}}</pre> -->
               </v-col>
             </v-row>
           </v-card-text>
