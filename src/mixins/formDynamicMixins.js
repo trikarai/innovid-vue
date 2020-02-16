@@ -62,6 +62,7 @@ export const formDynamicMixins = {
                 element.type = "attachment";
                 this.fields.push(element);
             });
+            this.fields = this.reOrderField(this.fields);
         },
         refactorRecordJSON(data) {
             data.stringFieldRecords.forEach(element => {

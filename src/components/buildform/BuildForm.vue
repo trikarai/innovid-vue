@@ -133,11 +133,9 @@
                 <v-divider></v-divider>
               </template>
             </v-card-text>
-            <!-- <pre> {{fields}} </pre> -->
             <v-progress-circular indeterminate color="primary" v-if="loader"></v-progress-circular>
             <transition-group name="slide-fade">
-              
-              <template v-for="(field, index) in reOrderField(fields)">
+              <template v-for="(field, index) in fields">
                 <v-row :key="index" class="my-0 py-0">
                   <v-col class="my-0 py-0" md="9">
                     <v-row>
@@ -198,7 +196,8 @@
           <v-card-text v-show="devmode">
             <v-row>
               <v-col md="6">
-                <pre>{{params}}</pre>
+                <!-- <pre>{{params}}</pre> -->
+                <pre>{{fieldsOrdered}}</pre>
               </v-col>
               <v-col md="6">
                 <pre>{{fields}}</pre>
@@ -289,6 +288,7 @@ export default {
         multiSelectFields: []
       },
       fields: [],
+      fieldsOrdered: [],
       field: {},
       items: ["Foo", "Bar", "Fizz", "Buzz"],
       loader: false,
