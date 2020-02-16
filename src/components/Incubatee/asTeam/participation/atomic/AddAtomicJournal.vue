@@ -2,7 +2,8 @@
   <v-container extend grid-list-xs>
     <v-row>
       <v-col md="12">
-        <v-card class="pa-3" :loading="tableLoad">
+        <v-skeleton-loader class="mx-auto" type="card" v-if="tableLoad"></v-skeleton-loader>
+        <v-card class="pa-3" v-else>
           <v-card-title primary-title>
             {{dataList.name}}
             <v-spacer></v-spacer>
@@ -46,6 +47,27 @@
             >Prev Mission</v-btn>
           </v-card-actions>
         </v-card>
+      </v-col>
+      <v-col md="12 mt-5" class="title">Learning Material</v-col>
+      <v-col cols="12" md="12" lg="12" xs="12" v-if="learningLoad">
+        <v-skeleton-loader :loading="true" class="mx-auto" type="list-item-two-line@2" v-></v-skeleton-loader>
+      </v-col>
+      <v-col
+        cols="12"
+        md="8"
+        lg="8"
+        xs="12"
+        v-if="learningList.total == 0"
+      >No Learning Material Added</v-col>
+      <v-col cols="12" md="12" lg="12" xs="12" v-else>
+        <v-expansion-panels>
+          <v-expansion-panel v-for="(learning,i) in learningList.list" :key="i">
+            <v-expansion-panel-header>{{learning.name}}</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <span v-html="$sanitize(learning.content)" />
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </v-col>
     </v-row>
 
@@ -132,6 +154,8 @@ export default {
   mixins: [formDynamicMixins],
   data() {
     return {
+      learningList: { total: 0, list: [] },
+      learningLoad: false,
       mode: false,
       reloadFalse: false,
       reloadTrue: true,
@@ -188,6 +212,7 @@ export default {
   },
   mounted() {
     this.getDataList();
+    this.getLearningMaterialList();
   },
   methods: {
     getDataList() {
@@ -342,6 +367,30 @@ export default {
         .finally(() => {
           this.tableLoad = false;
           this.is_reloadWorksheet = true;
+        });
+    },
+    getLearningMaterialList() {
+      this.learningLoad = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/missions/" +
+            this.$route.params.missionId +
+            "/learning-materials",
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          this.learningList = res.data.data;
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.learningLoad = false;
         });
     }
   }
