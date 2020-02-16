@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <v-content color="bgcolor">
+    <!-- <v-content color="bgcolor"> -->
+    <v-content>
       <notification :message="err_msg" :stats="status" />
       <router-view />
       <v-snackbar v-model="snackWithButtons" :timeout="timeout" bottom left class="snack">
