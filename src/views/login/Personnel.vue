@@ -90,7 +90,7 @@ import { validationMixins } from "@/mixins/validationMixins";
 
 export default {
   mixins: [validationMixins],
-  name: "Login Personnel",
+  name: "Login-Personnel",
   data: function() {
     return {
       loader: false,
