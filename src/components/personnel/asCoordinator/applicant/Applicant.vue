@@ -214,6 +214,7 @@ export default {
     refresh() {
       this.dialogForm = false;
       this.dialogDelete = false;
+      this.dialogDetail = false;
       this.getDataList();
     }
   }
