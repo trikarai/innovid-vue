@@ -169,7 +169,7 @@
                 <v-card v-else style="margin-top:27px;" flat>
                   <v-card-title>No Program Available</v-card-title>
                   <v-card-subtitle class="grey--text">
-                    You have already join all available program or you haven't join at all
+                    You have already join all available program or the coordinator hasn't made a program yet 
                     <template
                       v-if="user.data.teamMemberships.length == 0"
                     >, create team first before join a program</template>
