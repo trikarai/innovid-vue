@@ -42,7 +42,7 @@
           </template>
           <template v-slot:item.action="{item}">
             <template v-if="authData.data.id !== item.founder.id">
-              <v-btn small color="warning" @click="leftAct(item, 'Remove')">
+              <v-btn v-if="!item.concluded" small color="warning" @click="leftAct(item, 'Remove')">
                 <v-icon left small>block</v-icon>Cancel Invitation
               </v-btn>
             </template>
@@ -115,6 +115,7 @@ export default {
       loader: false,
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
+        { text: "Note", value: "note", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       dialog: false,

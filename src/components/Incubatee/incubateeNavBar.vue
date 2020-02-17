@@ -115,18 +115,6 @@
       <v-list v-if="participationId != ''">
         <v-list-item
           router
-          :to="'/incubatee/team/' + teamId +'/participation/' + participationId + '/schedule' "
-        >
-          <v-list-item-action>
-            <v-icon>today</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title class="grey--text">Mentoring</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-list-item
-          router
           :to="'/incubatee/team/' + teamId +'/participation/' + participationId + '/mission' "
         >
           <v-list-item-action>
@@ -134,6 +122,17 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title class="grey--text">Program Mission</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+          router
+          :to="'/incubatee/team/' + teamId +'/participation/' + participationId + '/schedule' "
+        >
+          <v-list-item-action>
+            <v-icon>today</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="grey--text">Mentoring</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item

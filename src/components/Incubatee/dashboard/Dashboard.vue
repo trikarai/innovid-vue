@@ -7,13 +7,16 @@
         <v-card @click="$router.push({path: '/incubatee/profile'})">
           <v-card-title style="word-break: break-word;" primary-title>
             <v-col style="max-width:100% !important" md="5">
-            <v-card color="primary" class="pa-9 elevation-7">
-              <v-icon color="#fff" x-large>folder_shared</v-icon>
-            </v-card>
+              <v-card color="primary" class="pa-9 elevation-7">
+                <v-icon color="#fff" x-large>folder_shared</v-icon>
+              </v-card>
             </v-col>
             <v-col md="6" sm="12">
               <h3 class="headline mb-0">Profile</h3>
-              <h4 class="subtitle-2 grey--text" style="word-break: normal !important;">fill in the profile form based on your experience</h4>
+              <h4
+                class="subtitle-2 grey--text"
+                style="word-break: normal !important;"
+              >fill in the profile form based on your experience</h4>
             </v-col>
           </v-card-title>
         </v-card>
@@ -22,18 +25,24 @@
         <v-card @click="$router.push({path: '/incubatee/membership'})">
           <v-card-title style="word-break: break-word;" primary-title>
             <v-col style="max-width:100% !important" md="5">
-            <v-card color="primary" class="pa-9 elevation-7">
-              <v-icon color="#fff" style="width:40px;position: relative;left: 23px;" x-large>groups</v-icon>
-            </v-card>
+              <v-card color="primary" class="pa-9 elevation-7">
+                <v-icon
+                  color="#fff"
+                  style="width:40px;position: relative;left: 23px;"
+                  x-large
+                >groups</v-icon>
+              </v-card>
             </v-col>
             <v-col md="6" sm="12">
               <h3 class="headline mb-0">Team</h3>
-              <h4 class="subtitle-2 grey--text" style="word-break: normal !important;">Create your team before register the program</h4>
+              <h4
+                class="subtitle-2 grey--text"
+                style="word-break: normal !important;"
+              >Create your team before register the program</h4>
             </v-col>
           </v-card-title>
         </v-card>
       </v-col>
-      
     </v-row>
 
     <v-row v-if="participationList.total > 0">
@@ -93,9 +102,9 @@
       </v-col>
     </v-row>
 
-    <v-row v-if="registrationList.total > 0">
+    <v-row v-if="filterRegistration(registrationList.list).length > 0">
       <v-col>
-        <v-data-iterator :items="registrationList.list" hide-default-footer>
+        <v-data-iterator :items="filterRegistration(registrationList.list)" hide-default-footer>
           <template v-slot:header>
             <v-toolbar class="kastemtoolbar mb-2" color="grey darken-5" dark flat dense>
               <v-toolbar-title>Registered Program</v-toolbar-title>
@@ -133,7 +142,14 @@
 
     <v-row v-if="teamId != '' ">
       <v-col>
-        <v-data-iterator :items="availableList.list" hide-default-footer :loading="tableLoad3">
+        <v-skeleton-loader max-width="230" type="card" v-if="availLoader"></v-skeleton-loader>
+
+        <v-data-iterator
+          :items="availableList.list"
+          hide-default-footer
+          :loading="tableLoad3"
+          v-else
+        >
           <template v-slot:header>
             <v-toolbar class="kastemtoolbar mb-2" color="grey darken-5" dark flat dense>
               <v-toolbar-title>Available Program</v-toolbar-title>
@@ -147,20 +163,14 @@
               </v-col>
               <v-col md="4">
                 <v-card v-if="teamId == '' " style="margin-top:27px;" flat>
-                  <v-card-title>
-                    Create team first
-                  </v-card-title>
-                  <v-card-subtitle>
-                    You can join a program if you have a team, minimum with 2 members
-                  </v-card-subtitle>
+                  <v-card-title>Create team first</v-card-title>
+                  <v-card-subtitle>You can join a program if you have a team, minimum with 2 members</v-card-subtitle>
                 </v-card>
                 <v-card v-else style="margin-top:27px;" flat>
-                  <v-card-title>
-                    No Program Available
-                  </v-card-title>
-                  <v-card-subtitle class="grey--text">
-                    You have already join all available program or you haven't join at all, create team first before join a program
-                  </v-card-subtitle>
+                  <v-card-title>No Program Available</v-card-title>
+                  <v-card-subtitle
+                    class="grey--text"
+                  >You have already join all available program or you haven't join at all, create team first before join a program</v-card-subtitle>
                   <v-card-text>
                     <v-btn v-if="teamId != '' " router to="/incubatee/membership">create Team</v-btn>
                   </v-card-text>
@@ -178,9 +188,9 @@
                   <v-divider></v-divider>
                   <v-list dense>
                     <v-list-item>
-                      <v-list-item-content>Description: </v-list-item-content>
+                      <v-list-item-content>Description:</v-list-item-content>
                     </v-list-item>
-                     <v-list-item>
+                    <v-list-item>
                       <v-list-item-content class="grey--text">{{ item.description }}</v-list-item-content>
                     </v-list-item>
                     <v-list-item>
@@ -207,7 +217,10 @@ import * as config from "@/config/config";
 import auth from "@/config/auth";
 import bus from "@/config/bus";
 
+import { programMixins } from "@/mixins/programMixins";
+
 export default {
+  mixins: [programMixins],
   data() {
     return {
       user: "",
@@ -218,7 +231,8 @@ export default {
       registrationList: { total: 0, list: [] },
       tableLoad2: false,
       availableList: { total: 0, list: [] },
-      tableLoad3: false
+      tableLoad3: false,
+      availLoader: false
     };
   },
   created() {
@@ -277,6 +291,7 @@ export default {
     },
     getDataList() {
       this.tableLoad2 = true;
+      this.availLoader = true;
       this.axios
         .get(
           config.baseUri +
@@ -297,6 +312,7 @@ export default {
         .catch(() => {})
         .finally(() => {
           this.tableLoad2 = false;
+          this.availLoader = false;
         });
     },
     getDataList2() {
@@ -332,7 +348,7 @@ export default {
   right: 30px;
 }
 .kastemtoolbar:before {
-  content: '';
+  content: "";
   position: absolute;
   /* top: 0; */
   right: 0;
