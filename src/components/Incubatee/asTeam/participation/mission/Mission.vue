@@ -12,8 +12,12 @@
       <v-col md="12" v-if="missionLoader">
         <v-skeleton-loader max-width="500" type="article"></v-skeleton-loader>
       </v-col>
-      <v-col md="12" v-if="dataList.total == 0">
-        <div v-if="!missionLoader">Incubator not yet publish a mission at the momment</div>
+      <v-col md="6" v-if="dataList.total == 0">
+        <div v-if="!missionLoader">
+          <v-alert type="info" :value="true">
+              Incubator hasn't publish a mission at the momment for this program
+          </v-alert>
+        </div>
       </v-col>
       <v-col md="12" v-else>
         <v-timeline :reverse="true" align-top>
