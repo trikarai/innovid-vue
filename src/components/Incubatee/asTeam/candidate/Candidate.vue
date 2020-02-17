@@ -18,7 +18,7 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row> -->
+    </v-row>-->
     <v-row>
       <v-col cols="12" lg="6" md="6" xs="12">
         <v-data-table
@@ -74,22 +74,26 @@
     >
       <v-card>
         <v-card-title class="topaccent" primary-title>
-              <div>
-                <h3 class="headline mb-0">Candidate Detail</h3>
-              </div>
-            </v-card-title>
+          <div>
+            <h3 class="headline mb-0">Candidate Detail</h3>
+          </div>
+        </v-card-title>
         <v-card-text v-if="loader">
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.founder.name"><b>Founder Name</b><br>{{dataSingle.founder.name}}</v-card-text>
+          <v-card-text :key="dataSingle.founder.name">
+            <b>Founder Name</b>
+            <br />
+            {{dataSingle.founder.name}}
+          </v-card-text>
         </transition>
         <!-- <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
             <v-icon>close</v-icon>
           </v-btn>
-        </v-card-actions> -->
+        </v-card-actions>-->
       </v-card>
     </v-dialog>
   </v-container>
@@ -210,6 +214,12 @@ export default {
         .finally(() => {
           this.tableLoad = false;
         });
+    },
+    refresh() {
+      this.dialogDelete = false;
+      this.dialogForm = false;
+      this.dialogDetail = false;
+      this.getDataList();
     }
   }
 };
