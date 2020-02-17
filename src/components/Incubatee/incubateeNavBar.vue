@@ -18,12 +18,18 @@
       <v-icon left>keyboard_backspace</v-icon>Back
     </v-btn>-->
 
-    <v-btn style="position: fixed;" class="ml-3 mt-5" icon v-if="$route.meta.level !== 0" @click="$router.go(-1) ">
+    <v-btn
+      style="position: fixed;"
+      class="ml-3 mt-5"
+      icon
+      v-if="$route.meta.level !== 0"
+      @click="$router.go(-1) "
+    >
       <v-icon>arrow_back</v-icon>
     </v-btn>
     <!-- <v-btn class="ml-3 mt-5" icon v-if="$route.meta.level == 0" @click="$router.go(-1) ">
       <v-icon></v-icon>
-    </v-btn> -->
+    </v-btn>-->
     <div style="margin-left: 49px;" class="container extend mt-2">
       <h2 class="mb-2">{{$route.name}}</h2>
       <div class="garis"></div>
@@ -97,22 +103,62 @@
         </v-list-item>
       </v-list>
 
+      <!-- <v-list-group value="true" no-action v-if="participationId != ''">
+        <template v-slot:activator>
+          <v-list-item-action>
+            <v-icon color="#676767">how_to_reg</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="grey--text">Participation</v-list-item-title>
+          </v-list-item-content>
+      </template>-->
+      <v-list v-if="participationId != ''">
+        <v-list-item
+          router
+          :to="'/incubatee/team/' + teamId +'/participation/' + participationId + '/schedule' "
+        >
+          <v-list-item-action>
+            <v-icon>today</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="grey--text">Mentoring</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item
+          router
+          :to="'/incubatee/team/' + teamId +'/participation/' + participationId + '/mission' "
+        >
+          <v-list-item-action>
+            <v-icon>emoji_objects</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="grey--text">Program Mission</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+          router
+          :to="'/incubatee/team/' + teamId +'/participation/' + participationId + '/journal' "
+        >
+          <v-list-item-action>
+            <v-icon>assignment</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="grey--text">Journal</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <!-- </v-list-group> -->
+      </v-list>
+
       <v-list-group value="true" no-action v-if="teamId != ''">
         <template v-slot:activator>
           <v-list-item-action>
             <v-icon color="#676767">group</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text">Team</v-list-item-title>
+            <v-list-item-title class="grey--text">Team Management</v-list-item-title>
           </v-list-item-content>
         </template>
-
-        <v-list-item class="ml-5" router :to="'/incubatee/team/' + teamId +'/member' ">
-          <v-list-item-title class="grey--text">Members</v-list-item-title>
-          <v-list-item-icon>
-            <!-- <v-icon>group</v-icon> -->
-          </v-list-item-icon>
-        </v-list-item>
 
         <v-list-item class="ml-5" router :to="'/incubatee/team/' + teamId +'/profile' ">
           <v-list-item-title class="grey--text">Team Profile</v-list-item-title>
@@ -121,10 +167,10 @@
           </v-list-item-icon>
         </v-list-item>
 
-        <v-list-item class="ml-5" router :to="'/incubatee/team/' + teamId +'/application' ">
-          <v-list-item-title class="grey--text">Program</v-list-item-title>
+        <v-list-item class="ml-5" router :to="'/incubatee/team/' + teamId +'/member' ">
+          <v-list-item-title class="grey--text">Members</v-list-item-title>
           <v-list-item-icon>
-            <!-- <v-icon>how_to_vote</v-icon> -->
+            <!-- <v-icon>group</v-icon> -->
           </v-list-item-icon>
         </v-list-item>
 
@@ -134,48 +180,39 @@
             <!-- <v-icon>assignments</v-icon> -->
           </v-list-item-icon>
         </v-list-item>
+
+        <v-list-item class="ml-5" router :to="'/incubatee/team/' + teamId +'/application' ">
+          <v-list-item-title class="grey--text">Participation</v-list-item-title>
+          <v-list-item-icon>
+            <!-- <v-icon>how_to_vote</v-icon> -->
+          </v-list-item-icon>
+        </v-list-item>
       </v-list-group>
 
-      <v-list-group value="true" no-action v-if="participationId != ''">
+      <v-list-group value="true" no-action>
         <template v-slot:activator>
           <v-list-item-action>
-            <v-icon color="#676767">how_to_reg</v-icon>
+            <v-icon color="#676767">account_circle</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text">Participation</v-list-item-title>
+            <v-list-item-title class="grey--text">My Profile</v-list-item-title>
           </v-list-item-content>
         </template>
 
+        <!--sub list other-->
         <v-list-item
-          class="ml-5"
+          v-for="link in links2"
+          :key="link.text"
           router
-          :to="'/incubatee/team/' + teamId +'/participation/' + participationId + '/schedule' "
+          :to="link.route"
+          :disabled="link.disabled"
         >
-          <v-list-item-title class="grey--text">Mentoring</v-list-item-title>
-          <v-list-item-icon>
-            <!-- <v-icon>today</v-icon> -->
-          </v-list-item-icon>
-        </v-list-item>
-
-        <v-list-item
-          class="ml-5"
-          router
-          :to="'/incubatee/team/' + teamId +'/participation/' + participationId + '/mission' "
-        >
-          <v-list-item-title class="grey--text">Mission</v-list-item-title>
-          <v-list-item-icon>
-            <!-- <v-icon>emoji_objects</v-icon> -->
-          </v-list-item-icon>
-        </v-list-item>
-        <v-list-item
-          class="ml-5"
-          router
-          :to="'/incubatee/team/' + teamId +'/participation/' + participationId + '/journal' "
-        >
-          <v-list-item-title class="grey--text">Journal</v-list-item-title>
-          <v-list-item-icon>
-            <!-- <v-icon>emoji_objects</v-icon> -->
-          </v-list-item-icon>
+          <!-- <v-list-item-action>
+            <v-icon color="#676767">{{link.icon}}</v-icon>
+          </v-list-item-action>-->
+          <v-list-item-content>
+            <v-list-item-title class="grey--text">{{link.text}}</v-list-item-title>
+          </v-list-item-content>
         </v-list-item>
       </v-list-group>
     </v-navigation-drawer>
@@ -242,10 +279,12 @@ export default {
       links: [
         {
           icon: "dashboard",
-          text: "Dashboard",
+          text: "Home",
           route: "/incubatee/dashboard",
           disabled: false
-        },
+        }
+      ],
+      links2: [
         {
           icon: "account_circle",
           text: "My Account",
@@ -254,13 +293,13 @@ export default {
         },
         {
           icon: "folder_shared",
-          text: "Profile",
+          text: "Biodata",
           route: "/incubatee/profile",
           disabled: false
         },
         {
           icon: "group_work",
-          text: "Membership",
+          text: "My Team",
           route: "/incubatee/membership",
           disabled: false
         }
