@@ -9,7 +9,13 @@
     </v-row>
     <!-- jangan dihapus end-->
     <v-row>
-      <v-col md="12">
+      <v-col md="12" v-if="missionLoader">
+        <v-skeleton-loader max-width="500" type="article"></v-skeleton-loader>
+      </v-col>
+      <v-col md="12" v-if="dataList.total == 0">
+        <div v-if="!missionLoader">Incubator not yet publish a mission at the momment</div>
+      </v-col>
+      <v-col md="12" v-else>
         <v-timeline :reverse="true" align-top>
           <v-timeline-item v-for="(data, index) in reOrderMission(dataList.list)" :key="data.id">
             <template v-slot:icon>
@@ -132,6 +138,7 @@ export default {
       search: "",
       journalIdRoot: "",
       dataList: { total: 0, list: [] },
+      missionLoader: false,
       journalList: { total: 0, list: [] },
       journalList2: [],
       tableLoad: false,
@@ -159,10 +166,17 @@ export default {
   },
   methods: {
     reOrderMission: function(params) {
-      return Vue._.orderBy(params, "position", "asc");
+      return Vue._.orderBy(
+        params,
+        function(o) {
+          return new Number(o.position);
+        },
+        "asc"
+      );
     },
     getDataList() {
       this.tableLoad = true;
+      this.missionLoader = true;
       this.axios
         .get(
           config.baseUri +
@@ -185,6 +199,7 @@ export default {
         .catch(() => {})
         .finally(() => {
           this.tableLoad = false;
+          this.missionLoader = false;
         });
     },
     leftAct(item, action) {
