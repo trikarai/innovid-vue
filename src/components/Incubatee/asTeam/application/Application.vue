@@ -46,7 +46,7 @@
           :search="search"
           :loading="tableLoad2"
           :headers="tableHeaders2"
-          :items="dataList2.list"
+          :items="filterRegistration(dataList2.list)"
           class="elevation-1"
         >
           <template v-slot:item.name="{item}">
@@ -58,7 +58,7 @@
               @click="openDetail(item.program.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn> -->
+            </v-btn>-->
             {{item.program.name}}
           </template>
 
