@@ -149,7 +149,7 @@
         <!-- </v-list-group> -->
       </v-list>
 
-      <v-list-group value="true" no-action v-if="teamId != ''">
+      <v-list-group :value="false" no-action v-if="teamId != ''">
         <template v-slot:activator>
           <v-list-item-action>
             <v-icon color="#676767">group</v-icon>
@@ -188,7 +188,7 @@
         </v-list-item>
       </v-list-group>
 
-      <v-list-group value="true" no-action>
+      <v-list-group :value="false" no-action>
         <template v-slot:activator>
           <v-list-item-action>
             <v-icon color="#676767">account_circle</v-icon>
@@ -200,6 +200,7 @@
 
         <!--sub list other-->
         <v-list-item
+           class="ml-5"
           v-for="link in links2"
           :key="link.text"
           router
