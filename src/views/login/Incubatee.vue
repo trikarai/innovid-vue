@@ -2,7 +2,7 @@
   <v-app>
     <v-container fluid id="loginpage">
       <v-row align="center" justify="center">
-        <v-col xs="10" sm="8" md="4" lg="4" class="pertikal text-xs-center ma-3 pa-0 elevation-6">
+        <v-col xs="10" sm="8" md="4" lg="4" class="pertikal text-xs-center pa-0 elevation-6">
           <v-toolbar class="pt-0" color="primary">
             <v-toolbar-title class="white--text ml-2">
               <h4>
@@ -56,12 +56,14 @@
                       v-on:keyup="checkCaps($event)"
                     ></v-text-field>
                   </v-row>
+                  <template v-if="!isEdge">
                   <v-chip dense color="red" class="white--text" type="error" v-if="capsText != ''">
                     <v-avatar left>
                       <v-icon small>priority_high</v-icon>
                     </v-avatar>
                     {{capsText}}
                   </v-chip>
+                  </template>
                   <v-row></v-row>
                   <v-row justify-end class="mt-2">
                     <v-col class="mt-2"></v-col>
@@ -98,15 +100,20 @@
 </template>
 <script>
 import bus from "@/config/bus";
+import Vue from "vue";
 
 import * as config from "@/config/config";
 import { validationMixins } from "@/mixins/validationMixins";
+
+import browserDetect from "vue-browser-detect-plugin";
+Vue.use(browserDetect);
 
 export default {
   mixins: [validationMixins],
   name: "Login-Founder",
   data: function() {
     return {
+      isEdge: false,
       loader: false,
       response: "",
       valid: true,
@@ -124,7 +131,9 @@ export default {
   watch: {
   },
   created: function() {},
-  mounted: function() {},
+  mounted: function() {
+    this.isEdge = this.$browserDetect.isEdge;
+  },
   components: {},
   methods: {
     checkCaps(e) {
@@ -197,9 +206,10 @@ span.v-chip__content {
   margin: 0 auto;
 }
 .pertikal {
-  position: absolute;
+  /* position: absolute;
   top: 47%;
   left: 50%;
-  transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%) */
+  margin-top: calc(3% + 5px) !important;
 }
 </style>
