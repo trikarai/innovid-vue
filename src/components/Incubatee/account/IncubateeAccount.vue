@@ -208,7 +208,7 @@ export default {
       // this.loaderEmail = true;
       // var authData = JSON.parse(auth.getAuthData());
       // this.axios
-      //   .get(config.baseUri + "/incubatee/update-account" + authData.data.id, {
+      //   .get(config.baseUri + "/founder/update-account" + authData.data.id, {
       //     headers: auth.getAuthHeader()
       //   })
       //   .then(res => {
