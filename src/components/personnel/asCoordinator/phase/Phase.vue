@@ -108,7 +108,9 @@
 
     <v-layout row justify-center>
       <v-dialog v-model="dialogForm" persistent max-width="500px">
-        <v-card class="pa-3" :loading="loader">
+        <v-progress-linear style="position:relative; top:4px;z-index:9;" :indeterminate="true" v-if="loader"></v-progress-linear>
+        <v-card class="pa-3">
+          
           <v-card-title>
             <span class="headline">Registration Phase</span>
           </v-card-title>
