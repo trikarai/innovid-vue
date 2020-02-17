@@ -168,11 +168,18 @@
                 </v-card>
                 <v-card v-else style="margin-top:27px;" flat>
                   <v-card-title>No Program Available</v-card-title>
-                  <v-card-subtitle
-                    class="grey--text"
-                  >You have already join all available program or you haven't join at all, create team first before join a program</v-card-subtitle>
+                  <v-card-subtitle class="grey--text">
+                    You have already join all available program or you haven't join at all
+                    <template
+                      v-if="user.data.teamMemberships.length == 0"
+                    >, create team first before join a program</template>
+                  </v-card-subtitle>
                   <v-card-text>
-                    <v-btn v-if="teamId != '' " router to="/incubatee/membership">create Team</v-btn>
+                    <v-btn
+                      v-if="user.data.teamMemberships.length == 0"
+                      router
+                      to="/incubatee/membership"
+                    >create Team</v-btn>
                   </v-card-text>
                 </v-card>
               </v-col>
@@ -223,7 +230,11 @@ export default {
   mixins: [programMixins],
   data() {
     return {
-      user: "",
+      user: {
+        data: {
+          teamMemberships: []
+        }
+      },
       teamId: "",
       participationId: "",
       participationList: { total: 0, list: [] },
@@ -253,6 +264,7 @@ export default {
     }
   },
   mounted() {
+    this.user = JSON.parse(auth.getAuthData());
     // if (this.teamId != "" && this.participationId != "") {
     //   this.$router.push({
     //     path:
