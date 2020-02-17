@@ -2,13 +2,13 @@
   <v-container extend grid-list-xs>
     <v-row>
       <!-- {{authData.data.id}} -->
-      <v-col md="8" xs="12">
-        <!-- <v-btn color="primary" @click="openAdd">
+      <!-- <v-col md="8" xs="12"> -->
+      <!-- <v-btn color="primary" @click="openAdd">
           <v-icon left>add</v-icon>Create Team
-        </v-btn>-->
-      </v-col>
+      </v-btn>-->
+      <!-- </v-col> -->
     </v-row>
-    <v-row>
+    <!-- <v-row>
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -19,7 +19,7 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row>
+    </v-row>-->
     <v-row>
       <v-col>
         <v-data-table
@@ -46,7 +46,7 @@
             <v-icon v-else color="red darken-1">removed</v-icon>
           </template>
           <template v-slot:item.action="{item}">
-            <template v-if="item.note == 'invited'">
+            <template v-if="!item.concluded">
               <v-btn small color="primary" class="mr-2" @click="leftAct(item, 'accept')">
                 <v-icon left small>check</v-icon>Accept
               </v-btn>
@@ -67,8 +67,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text class="grey--text" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

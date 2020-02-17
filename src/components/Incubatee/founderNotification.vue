@@ -2,7 +2,12 @@
   <v-menu left absolute :close-on-content-click="false" max-height="70%">
     <template v-slot:activator="{ on }">
       <v-btn :disabled="notificationList.total == 0" text v-on="on">
-        <v-badge :value="notificationList.total !=0" color="red" :content="notificationList.total" overlap>
+        <v-badge
+          :value="notificationList.total !=0"
+          color="red"
+          :content="notificationList.total"
+          overlap
+        >
           <v-icon>notifications</v-icon>
         </v-badge>
       </v-btn>
@@ -10,6 +15,16 @@
     <v-list class="pa-5" dense>
       <v-list-item v-for="(notif, index) in notificationList.list" :key="index" three-line>
         <v-list-item-avatar>
+          <v-btn
+            depressed
+            color="primary"
+            x-small
+            fab
+            @click="gotoCandidate(notif.memberCandidate)"
+            v-if="notif.memberCandidate != null"
+          >
+            <v-icon small>zoom_in</v-icon>
+          </v-btn>
           <v-btn
             depressed
             color="primary"
@@ -134,6 +149,12 @@ export default {
           comment.journal.id +
           "/worksheet/" +
           comment.journal.worksheet.id
+      });
+    },
+    gotoCandidate() {
+      this.$router.push({
+        path: "/incubatee/candidateship"
+        // path: "/incubatee/membership"
       });
     }
   }
