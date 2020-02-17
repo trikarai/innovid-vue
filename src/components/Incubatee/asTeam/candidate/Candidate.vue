@@ -192,7 +192,7 @@ export default {
       this.axios
         .delete(
           config.baseUri +
-            "/incubatee/as-team-member/" +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/member-candidates/" +
             id,
