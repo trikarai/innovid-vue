@@ -2,12 +2,7 @@
   <v-menu left absolute :close-on-content-click="false" max-height="70%">
     <template v-slot:activator="{ on }">
       <v-btn :disabled="notificationList.total == 0" text v-on="on">
-        <v-badge
-          :value="notificationList.total !=0"
-          color="red"
-          :content="notificationList.total"
-          overlap
-        >
+        <v-badge :value="unRead !=0" color="red" :content="unRead" overlap>
           <v-icon>notifications</v-icon>
         </v-badge>
       </v-btn>
@@ -88,13 +83,22 @@ import auth from "@/config/auth";
 export default {
   data() {
     return {
-      notificationList: { total: 0, list: [] }
+      notificationList: { total: 0, list: [] },
+      unRead: 0
     };
   },
   mounted() {
     this.getFounderNotification();
   },
   methods: {
+    countUnread(array) {
+      this.unRead = 0;
+      array.forEach(element => {
+        if (element.read == false) {
+          this.unRead += 1;
+        }
+      });
+    },
     getFounderNotification() {
       this.axios
         .get(config.baseUri + "/founder/founder-notifications", {
@@ -102,6 +106,7 @@ export default {
         })
         .then(res => {
           this.notificationList = res.data.data;
+          this.countUnread(res.data.data.list);
         })
         .catch(() => {})
         .finally(() => {});
