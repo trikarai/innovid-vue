@@ -22,11 +22,11 @@
             {{item.worksheet.name}}
           </template>
 
-          <template v-slot:item.action="{item}">
-            <v-btn small color="warning" @click="leftAct(item, 'Remove')">
+          <!-- <template v-slot:item.action="{item}"> -->
+            <!-- <v-btn small color="warning" @click="leftAct(item, 'Remove')">
               <v-icon left>delete</v-icon>Remove
-            </v-btn>
-          </template>
+            </v-btn> -->
+          <!-- </template> -->
         </v-data-table>
       </v-col>
     </v-row>
