@@ -139,6 +139,9 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-overlay :value="loader">
+      <v-progress-circular color="primary" indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </v-container>
 </template>
 <script>
