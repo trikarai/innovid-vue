@@ -49,7 +49,7 @@
                 <v-row justify-end class="">
                   <v-col class=""></v-col>
                   <v-btn
-                    @click="submit"
+                    @click="resetPassword"
                     block
                     :loading="loader"
                     :class=" { 'primary white--text' : valid}"
