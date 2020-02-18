@@ -32,7 +32,7 @@ export default {
         { text: "Mission", value: "mission.name", sortable: false },
         {
           text: "Worksheet",
-          value: "worksheet.worksheetForm.name",
+          value: "worksheet.name",
           sortable: false
         },
         { text: "", value: "action", sortable: false, align: "right" }
