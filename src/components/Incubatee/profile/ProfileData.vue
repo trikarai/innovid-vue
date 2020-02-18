@@ -2,27 +2,21 @@
   <v-container extend grid-list-xs>
     <!-- <v-row>
       <v-col md="8" xs="12"></v-col>
-    </v-row> -->
+    </v-row>-->
     <v-row>
       <v-col cols="12" md="6" lg="6" xs="12">
         <v-card>
           <v-card-title primary-title>
             {{dataSingle.profileForm.name}}
             <v-spacer></v-spacer>
-            <v-btn small color="primary" :to="'/incubatee/profile-form/'+ dataSingle.profileForm.id +'/add'">Edit</v-btn>
+            <v-btn
+              small
+              color="primary"
+              :to="'/incubatee/profile-form/'+ dataSingle.profileForm.id +'/add'"
+            >Edit</v-btn>
           </v-card-title>
           <v-card-text class="pt-0 mt-2 ml-3">
-            <template v-for="data in fields">
-
-                <!-- {{data}} -->
-                <v-row :key="data.id">
-                  <b>{{data.field.name}}</b>
-                </v-row>
-                <v-row class="mb-4 grey--text" :key="data.id">
-                  {{data.value}}
-                </v-row>
-
-            </template>
+            <render-record :fields="fields" />
           </v-card-text>
         </v-card>
       </v-col>
@@ -35,6 +29,7 @@ import bus from "@/config/bus";
 import * as config from "@/config/config";
 import auth from "@/config/auth";
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
+import RenderRecord from "@/components/buildform/incubatee/renderRecord";
 
 export default {
   mixins: [formDynamicMixins],
@@ -60,7 +55,7 @@ export default {
       leftAction: ""
     };
   },
-  components: {},
+  components: { RenderRecord },
   created: function() {},
   mounted: function() {
     this.getDataSingle();
@@ -71,9 +66,7 @@ export default {
       this.loader = true;
       this.axios
         .get(
-          config.baseUri +
-            "/founder/profiles/" +
-            this.$route.params.profileId,
+          config.baseUri + "/founder/profiles/" + this.$route.params.profileId,
           {
             headers: auth.getAuthHeader()
           }

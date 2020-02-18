@@ -1,6 +1,7 @@
 <template>
   <div>
-    <template v-for="(data, index) in fields">
+    <!-- {{fields}} -->
+    <template v-for="(data, index) in reOrderField(fields)">
       <v-row :key="index">
         <b>{{data.field.name}}</b>
       </v-row>
@@ -19,7 +20,10 @@
   </div>
 </template>
 <script>
+import { formDynamicMixins } from "@/mixins/formDynamicMixins";
+
 export default {
+  mixins: [formDynamicMixins],
   props: ["fields"],
   data() {
     return {};
