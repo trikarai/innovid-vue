@@ -294,6 +294,14 @@ export default {
         .finally(() => {
           this.tableLoad = false;
         });
+    },
+    refresh() {
+      this.dialogApply = false;
+      this.dialogForm = false;
+      this.dialogDelete = false;
+      this.dialogDetail = false;
+      this.getDataList();
+      this.getDataList2();
     }
   }
 };
