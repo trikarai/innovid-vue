@@ -32,8 +32,16 @@
       <v-col md="4" v-if="!async">
         <v-card class="pa-5">
           <v-card-text>
-            <p><b>Name</b><br>{{incubatee.name}}</p>
-            <p><b>Email</b><br>{{incubatee.email}}</p>
+            <p>
+              <b>Name</b>
+              <br />
+              {{incubatee.name}}
+            </p>
+            <p>
+              <b>Email</b>
+              <br />
+              {{incubatee.email}}
+            </p>
           </v-card-text>
           <v-card-text>
             <v-form v-model="valid" ref="form">
@@ -149,6 +157,7 @@ export default {
         )
         .then(() => {
           bus.$emit("callNotif", "info", "Invitation Sent");
+          this.$router.got(-1);
         })
         .catch(res => {
           bus.$emit("callNotif", "error", res);
