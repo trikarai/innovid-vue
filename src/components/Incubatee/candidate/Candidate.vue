@@ -45,6 +45,9 @@
             <v-icon v-if="item.concluded" color="green darken-1">check</v-icon>
             <v-icon v-else color="red darken-1">removed</v-icon>
           </template>
+          <template v-slot:item.note="{item}">
+           <v-chip v-if="item.note != null">{{item.note}}</v-chip>
+          </template>
           <template v-slot:item.action="{item}">
             <template v-if="!item.concluded">
               <v-btn small color="primary" class="mr-2" @click="leftAct(item, 'accept')">
@@ -124,7 +127,7 @@ export default {
         { text: "Name", value: "name", sortable: false },
         { text: "Position", value: "position", sortable: false },
         { text: "Concluded", value: "concluded", sortable: false },
-        { text: "Note", value: "note", sortable: false },
+        { text: "Status", value: "note", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       dialogForm: false,

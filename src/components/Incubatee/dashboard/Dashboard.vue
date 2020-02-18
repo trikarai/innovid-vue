@@ -112,7 +112,7 @@
           </template>
           <template v-slot:default="props">
             <v-row>
-              <v-col v-for="item in props.items" :key="item.id" cols="12" sm="6" md="4" lg="3">
+              <v-col v-for="item in props.items" :key="item.id" cols="12" sm="6" md="4" lg="4">
                 <v-card>
                   <v-card-title class="subheading font-weight-bold">{{ item.program.name }}</v-card-title>
                   <v-divider></v-divider>

@@ -6,7 +6,12 @@
       </v-col>
     </v-row>
 
-    <render-form v-if="!loader" :formTemplate="formTemplate" @submit-form="submitForm" />
+    <v-row>
+      <v-col md="6">
+        <render-form v-if="!loader" :formTemplate="formTemplate" @submit-form="submitForm" />
+      </v-col>
+    </v-row>
+
   </v-container>
 </template>
 <script>

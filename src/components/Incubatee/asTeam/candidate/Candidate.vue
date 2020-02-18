@@ -40,6 +40,9 @@
             </v-btn>
             {{item.founder.name}}
           </template>
+           <template v-slot:item.note="{item}">
+             <v-chip v-if="item.note != null">{{item.note}}</v-chip>
+          </template>
           <template v-slot:item.action="{item}">
             <template v-if="authData.data.id !== item.founder.id">
               <v-btn v-if="!item.concluded" small color="warning" @click="leftAct(item, 'Remove')">
@@ -115,7 +118,7 @@ export default {
       loader: false,
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
-        { text: "Note", value: "note", sortable: false },
+        { text: "Status", value: "note", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       dialog: false,

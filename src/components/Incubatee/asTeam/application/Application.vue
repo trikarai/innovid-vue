@@ -64,7 +64,7 @@
 
           <template v-slot:item.action="{item}">
             <v-btn small color="warning" class="mr-2" @click="leftAct(item, 'Cancel')">
-              <v-icon left>cancel</v-icon>Cancel
+              <v-icon left>cancel</v-icon>Cancel Registration
             </v-btn>
           </template>
         </v-data-table>

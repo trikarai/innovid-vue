@@ -402,7 +402,7 @@ export default {
         position: "",
         required: true,
         defaultValue: "",
-        minValue: 2,
+        minValue: 1,
         maxValue: 4,
         options: [
           {
