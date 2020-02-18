@@ -413,6 +413,7 @@ export default {
         });
     },
     refreshData() {
+      this.fields = [];
       this.editWS = false;
       this.getDataSingle();
     }
