@@ -6,12 +6,21 @@
           <v-card class="pa-5 pt-0" elevation="0" width="400" :loading="loader">
             <v-card-title class="topaccent" primary-title>
               <div>
-                <h3 v-if="!isbranch" class="headline mb-0">Add Mission</h3>
-                <h3 v-else class="headline mb-0">Add Branch Mission</h3>               
+                <h3 v-if="!isbranch" class="headline mb-0">
+                  <template v-if="!edit">Add</template>
+                  <template v-else>Edit</template> Mission
+                </h3>
+                <h3 v-else class="headline mb-0">
+                  <template v-if="!edit">Add</template>
+                  <template v-else>Edit</template> Branch Mission
+                </h3>
               </div>
             </v-card-title>
             <v-card-text>
-              <p v-if="isbranch"><b>Parent Mission:</b> {{rootname}}</p>
+              <p v-if="isbranch">
+                <b>Parent Mission:</b>
+                {{rootname}}
+              </p>
               <div>
                 <v-form v-model="valid" ref="form">
                   <v-text-field
@@ -42,6 +51,7 @@
                   ></v-textarea>
 
                   <v-select
+                    v-if="!edit"
                     :rules="rulesRequired"
                     v-model="params.worksheetFormId"
                     label="Worksheet"
@@ -61,6 +71,14 @@
                       color="primary"
                       :disabled="!valid"
                     >{{$vuetify.lang.t('$vuetify.action.add')}}</v-btn>
+                    <v-btn
+                      block
+                      v-if="edit"
+                      @click.once="update"
+                      :loading="loader"
+                      color="primary"
+                      :disabled="!valid"
+                    >{{$vuetify.lang.t('$vuetify.action.edit')}}</v-btn>
                   </v-layout>
                 </v-form>
               </div>
@@ -80,7 +98,16 @@ import { validationMixins } from "@/mixins/validationMixins";
 
 export default {
   mixins: [validationMixins],
-  props: ["id", "edit", "view", "data", "isbranch", "rootid", "rootname"],
+  props: [
+    "id",
+    "edit",
+    "view",
+    "data",
+    "isbranch",
+    "rootid",
+    "rootname",
+    "missionid"
+  ],
   data: function() {
     return {
       valid: false,
@@ -100,9 +127,10 @@ export default {
   components: {},
   created: function() {},
   mounted: function() {
-    this.getDataList();
     if (this.edit) {
-      this.getSingleData(this.data.id);
+      this.getSingleData(this.rootid);
+    } else {
+      this.getDataList();
     }
   },
   methods: {
@@ -185,8 +213,50 @@ export default {
           this.loader = false;
         });
     },
-    updateData: function() {},
-    getSingleData: function() {}
+    updateData() {
+      this.loader = true;
+      this.axios
+        .patch(
+          config.baseUri +
+            "/personnel/as-admin/programs/" +
+            this.$route.params.programId +
+            "/missions/" + this.rootid,
+          this.params,
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(() => {
+          this.$emit("refresh");
+        })
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
+        .finally(() => {
+          this.loader = false;
+        });
+    },
+    getSingleData() {
+      this.loader = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/personnel/as-admin/programs/" +
+            this.$route.params.programId +
+            "/missions/" +
+            this.rootid,
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          this.params = res.data.data;
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.loader = false;
+        });
+    }
   }
 };
 </script>
