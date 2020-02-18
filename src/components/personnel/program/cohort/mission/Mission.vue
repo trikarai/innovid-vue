@@ -19,7 +19,7 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row> -->
+    </v-row>-->
     <v-row>
       <v-col>
         <v-data-table
@@ -47,33 +47,45 @@
           </template>
           <!-- <template v-slot:item.sub="{item}">
             <v-icon v-if="item.previousMission === null">stars</v-icon>
-          </template> -->
+          </template>-->
           <template v-slot:item.action="{item}">
-          <v-row>
             <v-row>
+              <v-row>
+                <v-col>
+                  <v-btn
+                    v-if="!item.published"
+                    class="mr-2"
+                    small
+                    color="primary"
+                    @click="leftAct(item, 'publish')"
+                  >
+                    <v-icon left>check</v-icon>Publish
+                  </v-btn>
+                </v-col>
+              </v-row>
               <v-col>
-              <v-btn
-                v-if="!item.published"
-                class="mr-2"
-                small
-                color="primary"
-                @click="leftAct(item, 'publish')"
-              ><v-icon left>check</v-icon>Publish</v-btn>
+                <v-row>
+                  <v-btn
+                    small
+                    class="mr-2"
+                    color="primary"
+                    @click="openAddBranch(item.id,item.name)"
+                  >
+                    <v-icon small left>account_tree</v-icon>Add Branch
+                  </v-btn>
+                </v-row>
+                <v-row>
+                  <v-btn class="mt-2" small color="primary" @click="openLearningMaterial(item.id)">
+                    <v-icon small>books</v-icon>Learning Material
+                  </v-btn>
+                </v-row>
+                <v-row>
+                  <v-btn v-if="!item.published" class="mt-2" small color="primary" @click="openEdit(item.id)">
+                    <v-icon small>edit</v-icon>Edit
+                  </v-btn>
+                </v-row>
               </v-col>
             </v-row>
-            <v-col>
-            <v-row>
-            <v-btn small class="mr-2" color="primary" @click="openAddBranch(item.id,item.name)">
-              <v-icon small left>account_tree</v-icon>Add Branch
-            </v-btn>
-            </v-row>
-            <v-row>
-            <v-btn class="mt-2" small color="primary" @click="openLearningMaterial(item.id)">
-              <v-icon small>books</v-icon>Learning Material
-            </v-btn>
-            </v-row>
-            </v-col>
-          </v-row>
           </template>
         </v-data-table>
       </v-col>
@@ -118,15 +130,27 @@
         <v-card-text v-if="loader">
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
-        <v-card-text><b>Name</b><br>{{dataSingle.name}}</v-card-text>
-        <v-card-text><b>Description</b><br>{{dataSingle.description}}</v-card-text>
-        <v-card-text><b>Worksheet Name</b><br>{{dataSingle.worksheetForm.name}}</v-card-text>
+        <v-card-text>
+          <b>Name</b>
+          <br />
+          {{dataSingle.name}}
+        </v-card-text>
+        <v-card-text>
+          <b>Description</b>
+          <br />
+          {{dataSingle.description}}
+        </v-card-text>
+        <v-card-text>
+          <b>Worksheet Name</b>
+          <br />
+          {{dataSingle.worksheetForm.name}}
+        </v-card-text>
         <!-- <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
             <v-icon>close</v-icon>
           </v-btn>
-        </v-card-actions> -->
+        </v-card-actions>-->
       </v-card>
     </v-dialog>
   </v-container>
@@ -174,7 +198,8 @@ export default {
       leftAction: "",
       rootId: "",
       rootName: "",
-      branch: false
+      branch: false,
+      missionId: ""
     };
   },
   components: {
@@ -239,7 +264,13 @@ export default {
       this.edit = false;
       this.dialogForm = true;
     },
-    openAddBranch(id,name) {
+    openEdit(missionId) {
+      this.rootId = missionId;
+      this.branch = false;
+      this.edit = true;
+      this.dialogForm = true;
+    },
+    openAddBranch(id, name) {
       this.rootId = id;
       this.rootName = name;
       this.branch = true;
