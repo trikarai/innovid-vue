@@ -35,14 +35,12 @@
           <v-btn block v-if="!modeAtom" color="primary" :disabled="!valid" @click="sendtoParent">Submit</v-btn>
           <!--atomic journal button-->
           <v-btn
-            block
             v-if="modeAtom"
             color="accent"
             :disabled="!valid"
             @click="sendtoParent2"
           >Assign Worksheet</v-btn>
           <v-btn
-            block
             v-if="modeAtom"
             color="accent"
             :disabled="!valid"
