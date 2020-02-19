@@ -137,7 +137,7 @@
             <transition-group name="slide-fade">
               <template v-for="(field, index) in fields">
                 <v-row :key="index" class="my-0 py-0">
-                  <v-col class="my-0 py-0" md="9">
+                  <v-col class="my-0 py-0" md="8">
                     <v-row>
                       <v-col class="mt-4" md="2">
                         <v-btn fab x-small color="primary" @click="openProperties(field)">
@@ -149,7 +149,7 @@
                       </v-col>
                     </v-row>
                   </v-col>
-                  <v-col md="3">
+                  <v-col md="4">
                     <v-btn
                       class="mt-3"
                       :disabled="index === 0"
@@ -173,7 +173,16 @@
                       <v-icon>keyboard_arrow_down</v-icon>
                     </v-btn>
                     <v-btn
-                      class="ml-3 mt-4"
+                      class="ml-2 mt-4"
+                      x-small
+                      fab
+                      color="accent"
+                      @click="duplicateEvent(index, field)"
+                    >
+                      <v-icon small>control_point_duplicate</v-icon>
+                    </v-btn>
+                    <v-btn
+                      class="ml-2 mt-4"
                       x-small
                       fab
                       color="warning"
@@ -440,6 +449,13 @@ export default {
     },
     deleteEvent: function(index) {
       this.fields.splice(index, 1);
+    },
+    duplicateEvent(index, field) {
+      var item = JSON.parse(JSON.stringify(field));
+      item.position = this.fields.length + 1;
+      this.fields.push(item);
+      this.snackbar = true;
+      this.text = "Field Duplicated";
     },
     swapUp(arr, index) {
       var temp = this.fields[index];
