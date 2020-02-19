@@ -45,7 +45,7 @@
                     label="Description"
                     v-model="params.description"
                     :counter="100"
-                    maxlength="100"
+                    maxlength="500"
                     height="100"
                     required
                   ></v-textarea>

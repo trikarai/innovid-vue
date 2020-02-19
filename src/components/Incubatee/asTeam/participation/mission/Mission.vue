@@ -68,6 +68,7 @@
                 ></v-select>
               </v-card-text>
               <v-card-actions>
+                <v-spacer></v-spacer>
                 <!-- <v-btn
                   small
                   color="primary"
@@ -90,7 +91,7 @@
                   router
                   :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom' "
                 >
-                  <v-icon left>add</v-icon>View Detail
+                  <v-icon small left>search</v-icon>View Detail
                 </v-btn>
                 <template v-else>
                   <v-btn
@@ -100,7 +101,7 @@
                     router
                     :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom/'+ data.selectedParentJournal "
                   >
-                    <v-icon left>add</v-icon>View Detail
+                    <v-icon small left>search</v-icon>View Detail
                   </v-btn>
                 </template>
               </v-card-actions>
