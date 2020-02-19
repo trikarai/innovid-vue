@@ -180,7 +180,7 @@
           </v-list-item-icon>
         </v-list-item>
 
-        <v-list-item class="ml-5" router :to="'/incubatee/team/' + teamId +'/application' ">
+        <v-list-item class="ml-5" router :to="'/incubatee/team/' + teamId +'/participation' ">
           <v-list-item-title class="grey--text">Participation</v-list-item-title>
           <v-list-item-icon>
             <!-- <v-icon>how_to_vote</v-icon> -->
