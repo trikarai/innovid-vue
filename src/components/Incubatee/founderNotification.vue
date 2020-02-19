@@ -8,7 +8,7 @@
       </v-btn>
     </template>
     <v-list class="pa-5" dense>
-      <v-list-item v-for="(notif, index) in notificationList.list" :key="index" three-line>
+      <v-list-item v-for="(notif, index) in reOrderNotification(notificationList.list)" :key="index" three-line>
         <v-list-item-avatar>
           <v-btn
             depressed
@@ -77,6 +77,11 @@
   </v-menu>
 </template>
 <script>
+import Vue from "vue";
+import VueLodash from "vue-lodash";
+const options = { name: "lodash" }; // customize the way you want to call it
+Vue.use(VueLodash, options); // options is optional
+
 import * as config from "@/config/config";
 import auth from "@/config/auth";
 // import bus from "@/config/bus";
@@ -91,6 +96,15 @@ export default {
     this.getFounderNotification();
   },
   methods: {
+    reOrderNotification(params) {
+      return Vue._.orderBy(
+        params,
+        function(o) {
+          return new Date(o.notifiedTime);
+        },
+        ["desc"]
+      );
+    },
     countUnread(array) {
       this.unRead = 0;
       array.forEach(element => {
