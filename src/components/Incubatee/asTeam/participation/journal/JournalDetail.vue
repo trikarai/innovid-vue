@@ -70,6 +70,66 @@
             </v-row>
           </template>
           <!--edit worksheet jurnal end-->
+          <!--update jurnal start-->
+          <template v-if="updateJ">
+            <v-row>
+              <v-col md="12">
+                <v-btn
+                  small
+                  class="ma-2"
+                  color="primary"
+                  :outlined="!mode"
+                  @click="createReloadWorksheet"
+                >
+                  <v-icon left v-if="mode" small>star</v-icon>Reload Existing Worksheet
+                </v-btn>
+                <v-btn small class="ma-2" color="primary" :outlined="mode" @click="createNewWorksheet">
+                  <v-icon left v-if="!mode" small>star</v-icon>Create New Worksheet
+                </v-btn>
+              </v-col>
+              <v-col v-if="selectWorksheet">
+                <v-select
+                  class="ml-0"
+                  v-model="exworksheetId"
+                  :items="worksheetList.list"
+                  item-value="id"
+                  item-text="name"
+                  label="Existing Worksheet"
+                  :loading="tableLoad"
+                  no-data-text="No worksheet available"
+                  @change="getWorksheetData"
+                  solo
+                ></v-select>
+              </v-col>
+            </v-row>
+            <v-row v-if="is_newWorksheet">
+              <v-col>
+                <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
+              </v-col>
+              <v-col md="12">
+                <render-form
+                  :modeReload="reloadFalse"
+                  v-if="!tableLoad"
+                  :formTemplate="dataList.worksheetForm"
+                  @submit-form="submitForm"
+                />
+              </v-col>
+            </v-row>
+            <v-row v-if="!is_newWorksheet">
+              <v-col v-if="is_reloadWorksheet">
+                <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
+              </v-col>
+              <v-col md="12" v-if="is_reloadWorksheet">
+                <render-form
+                  :modeReload="reloadTrue"
+                  v-if="!tableLoad"
+                  :formTemplate="dataList.worksheetForm"
+                  @submit-form="submitForm"
+                />
+              </v-col>
+            </v-row>
+          </template>
+          <!--update jurnal end-->
         </v-card>
       </v-col>
       <!--comment block-->
@@ -79,66 +139,7 @@
       <!--comment block-->
     </v-row>
 
-    <!--update jurnal start-->
-    <template v-if="updateJ">
-      <v-row>
-        <v-col md="12">
-          <v-btn
-            small
-            class="ma-2"
-            color="primary"
-            :outlined="!mode"
-            @click="createReloadWorksheet"
-          >
-            <v-icon left v-if="mode" small>star</v-icon>Reload Existing Worksheet
-          </v-btn>
-          <v-btn small class="ma-2" color="primary" :outlined="mode" @click="createNewWorksheet">
-            <v-icon left v-if="!mode" small>star</v-icon>Create New Worksheet
-          </v-btn>
-        </v-col>
-        <v-col v-if="selectWorksheet" md="6">
-          <v-select
-            class="ml-0"
-            v-model="exworksheetId"
-            :items="worksheetList.list"
-            item-value="id"
-            item-text="name"
-            label="Existing Worksheet"
-            :loading="tableLoad"
-            no-data-text="No worksheet available"
-            @change="getWorksheetData"
-            solo
-          ></v-select>
-        </v-col>
-      </v-row>
-      <v-row v-if="is_newWorksheet">
-        <v-col md="6">
-          <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
-        </v-col>
-        <v-col md="12">
-          <render-form
-            :modeReload="reloadFalse"
-            v-if="!tableLoad"
-            :formTemplate="dataList.worksheetForm"
-            @submit-form="submitForm"
-          />
-        </v-col>
-      </v-row>
-      <v-row v-if="!is_newWorksheet">
-        <v-col md="6" v-if="is_reloadWorksheet">
-          <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
-        </v-col>
-        <v-col md="12" v-if="is_reloadWorksheet">
-          <render-form
-            :modeReload="reloadTrue"
-            v-if="!tableLoad"
-            :formTemplate="dataList.worksheetForm"
-            @submit-form="submitForm"
-          />
-        </v-col>
-      </v-row>
-    </template>
-    <!--update jurnal end-->
+    
   </v-container>
 </template>
 
