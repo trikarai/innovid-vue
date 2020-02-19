@@ -62,7 +62,7 @@
       <v-col cols="12" md="12" lg="12" xs="12" v-else>
         <v-expansion-panels focusable>
           <v-expansion-panel v-for="(learning,i) in learningList.list" :key="i">
-            <v-expansion-panel-header class="expand">
+            <v-expansion-panel-header>
             <template v-slot:actions>
               <v-chip color="#505050" dark>Expand<v-icon class="ml-3" color="white">keyboard_arrow_down</v-icon></v-chip>
             </template>
@@ -405,9 +405,3 @@ export default {
   }
 };
 </script>
-
-<style>
- .expand .v-application--is-ltr .v-expansion-panel-header__icon {
-    margin-left: 10px !important;
-}
-</style>
