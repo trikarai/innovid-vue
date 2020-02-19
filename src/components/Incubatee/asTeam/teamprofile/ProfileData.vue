@@ -5,17 +5,7 @@
         <v-card>
           <v-card-title primary-title>{{dataSingle.teamProfileForm.name}}</v-card-title>
           <v-card-text class="pt-0 mt-2 ml-3">
-            <template v-for="data in fields">
-
-                <!-- {{data}} -->
-                <v-row :key="data.id">
-                  <b>{{data.field.name}}</b>
-                </v-row>
-                <v-row class="mb-4 grey--text" :key="data.id">
-                  {{data.value}}
-                </v-row>
-
-            </template>
+            <render-record :fields="fields" />
           </v-card-text>
         </v-card>
       </v-col>
@@ -28,6 +18,7 @@ import bus from "@/config/bus";
 import * as config from "@/config/config";
 import auth from "@/config/auth";
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
+import RenderRecord from "@/components/buildform/incubatee/renderRecord";
 
 export default {
   mixins: [formDynamicMixins],
@@ -54,7 +45,7 @@ export default {
       leftAction: ""
     };
   },
-  components: {},
+  components: { RenderRecord },
   created: function() {},
   mounted: function() {
     this.getDataSingle();
