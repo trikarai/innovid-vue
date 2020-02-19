@@ -14,9 +14,10 @@
       </v-col>
       <v-col md="6" v-if="dataList.total == 0">
         <div v-if="!missionLoader">
-          <v-alert type="info" :value="true">
-              Incubator hasn't publish a mission at the momment for this program
-          </v-alert>
+          <v-alert
+            type="info"
+            :value="true"
+          >Incubator hasn't publish a mission at the momment for this program</v-alert>
         </div>
       </v-col>
       <v-col md="12" v-else>
@@ -50,7 +51,7 @@
                   <span style="color:#999">Main Mission</span>
                 </v-chip>
               </v-card-text>
-              <!-- {{data}} -->
+              <v-card-text class="subtitle">{{data.description}}</v-card-text>
               <v-card-text v-if="data.journal.length != 0">
                 <!-- {{data.journal}} -->
                 <v-select
