@@ -225,6 +225,12 @@ export default {
         .finally(() => {
           this.tableLoad = false;
         });
+    },
+    refresh(){
+      this.dialogForm = false;
+      this.dialogDelete = false;
+      this.dialogDetail = false;
+      this.getDataList()
     }
   }
 };
