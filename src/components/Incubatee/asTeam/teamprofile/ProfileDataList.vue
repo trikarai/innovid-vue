@@ -42,8 +42,7 @@
           </template>
           <template v-slot:item.action="{item}">
             <v-btn small color="warning" @click="leftAct(item, 'Remove')">
-              <v-icon left small>delete</v-icon>
-              remove
+              <v-icon left small>delete</v-icon>remove
             </v-btn>
           </template>
         </v-data-table>
@@ -121,7 +120,9 @@ export default {
     };
   },
   components: {},
-  created: function() {},
+  created() {
+    window.sessionStorage.setItem("uploadMode", "team");
+  },
   mounted: function() {
     this.getDataList();
   },
@@ -129,9 +130,15 @@ export default {
     getDataList() {
       this.tableLoad = true;
       this.axios
-        .get(config.baseUri + "/founder/as-team-member/" + this.teamId + "/profiles", {
-          headers: auth.getAuthHeader()
-        })
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.teamId +
+            "/profiles",
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
         .then(res => {
           if (res.data.data) {
             this.dataList = res.data.data;

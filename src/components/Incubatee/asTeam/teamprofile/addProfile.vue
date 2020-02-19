@@ -41,7 +41,7 @@ export default {
     };
   },
   created() {
-    window.sessionStorage.setItem("uploadMode", "founder");
+    window.sessionStorage.setItem("uploadMode", "team");
   },
   components: {
     RenderForm
