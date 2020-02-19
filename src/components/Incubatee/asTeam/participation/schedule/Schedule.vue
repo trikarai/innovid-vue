@@ -122,27 +122,27 @@
             <v-chip small>{{item.status}}</v-chip>
           </template>
           <template v-slot:item.action="{item}">
-          <template v-if="item.status != 'scheduled'">
-            <template v-if="item.status !== 'proposed'">
-              <template v-if="item.status !== 'cancelled'">
-                <v-btn class="ml-2" small color="primary" @click="leftAct(item, 'accept')">
-                  <v-icon small left>check</v-icon>Accept
+            <template v-if="item.status != 'scheduled'">
+              <template v-if="item.status !== 'proposed'">
+                <template v-if="item.status !== 'cancelled'">
+                  <v-btn class="ml-2" small color="primary" @click="leftAct(item, 'accept')">
+                    <v-icon small left>check</v-icon>Accept
+                  </v-btn>
+                </template>
+                <v-btn class="ml-2" small color="primary" @click="reproposeAct(item)">
+                  <v-icon small left>update</v-icon>Re-schedule
                 </v-btn>
               </template>
-              <v-btn class="ml-2" small color="primary" @click="reproposeAct(item)">
-                <v-icon small left>update</v-icon>Re-schedule
+              <v-btn
+                v-if="item.status !== 'cancelled'"
+                class="ml-2"
+                small
+                color="warning"
+                @click="leftAct(item, 'cancel')"
+              >
+                <v-icon small left>block</v-icon>Cancel
               </v-btn>
             </template>
-            <v-btn
-              v-if="item.status !== 'cancelled'"
-              class="ml-2"
-              small
-              color="warning"
-              @click="leftAct(item, 'cancel')"
-            >
-              <v-icon small left>block</v-icon>Cancel
-            </v-btn>
-          </template>
           </template>
         </v-data-table>
       </v-col>
@@ -196,7 +196,7 @@
       max-width="550px"
       transition="dialog-transition"
     >
-      <v-card>
+      <v-card :loading="tableLoad">
         <v-card-title>
           <p class="text-capitalize">Reschedule Mentoring</p>
           <v-spacer></v-spacer>
@@ -306,7 +306,13 @@
           <!-- {{startTime}} -->
         </v-card-text>
         <v-card-actions class="pa-5">
-          <v-btn block color="primary" :disabled="!valid" @click="proposeAction()">
+          <v-btn
+            block
+            color="primary"
+            :disabled="!valid"
+            @click="proposeAction()"
+            :loading="tableLoad"
+          >
             <v-icon left>update</v-icon>RePropose
           </v-btn>
         </v-card-actions>
@@ -553,7 +559,7 @@ export default {
             this.$route.params.teamId +
             "/program-participations/" +
             this.$route.params.cohortId +
-            "/mentoring-negotiate-schedules/" +
+            "/negotiate-mentoring-schedules/" +
             this.dataSingle.id +
             "/re-propose",
           this.params,
@@ -575,6 +581,7 @@ export default {
     refresh() {
       this.dialogForm = false;
       this.dialogDelete = false;
+      this.dialogDetail = false;
       this.getDataList();
       this.getDataList2();
     }
