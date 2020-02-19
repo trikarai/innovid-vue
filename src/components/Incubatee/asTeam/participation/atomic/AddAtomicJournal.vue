@@ -60,10 +60,15 @@
         v-if="learningList.total == 0"
       >No Learning Material Added</v-col>
       <v-col cols="12" md="12" lg="12" xs="12" v-else>
-        <v-expansion-panels>
+        <v-expansion-panels focusable>
           <v-expansion-panel v-for="(learning,i) in learningList.list" :key="i">
-            <v-expansion-panel-header>{{learning.name}}</v-expansion-panel-header>
-            <v-expansion-panel-content>
+            <v-expansion-panel-header>
+            <template v-slot:actions>
+              <v-chip color="#505050" dark>Expand<v-icon class="ml-3" color="white">keyboard_arrow_down</v-icon></v-chip>
+            </template>
+              {{learning.name}}
+            </v-expansion-panel-header>
+            <v-expansion-panel-content class="mt-10 ml-4">
               <span v-html="$sanitize(learning.content)" />
             </v-expansion-panel-content>
           </v-expansion-panel>
@@ -72,6 +77,7 @@
     </v-row>
 
     <v-row>
+      <v-col md="12 mt-5" class="title">Worksheet</v-col>
       <v-col cols="12" md="12" lg="12" xs="12">
         <v-card class="pa-3 mt-3">
           <v-col md="6">
