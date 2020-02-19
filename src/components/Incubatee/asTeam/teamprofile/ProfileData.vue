@@ -2,9 +2,18 @@
   <v-container extend grid-list-xs>
     <v-row>
       <v-col cols="12" md="6" lg="6" xs="12">
-        <v-card>
-          <v-card-title primary-title>{{dataSingle.teamProfileForm.name}}</v-card-title>
-          <v-card-text class="pt-0 mt-2 ml-3">
+          <v-card class="pt-0 mt-5">
+          <v-card-title class="topaccentform" primary-title>
+            <h3 class="headline mb-0">{{dataSingle.teamProfileForm.name}}</h3>
+            <v-spacer></v-spacer>
+            <v-btn
+              dark
+              small
+              color="#505050"
+              :to="'/incubatee/team/'+ $route.params.teamId +'/team-profile-form/'+ dataSingle.teamProfileForm.id +'/add'"
+            >Edit</v-btn>
+          </v-card-title>
+          <v-card-text>
             <render-record :fields="fields" />
           </v-card-text>
         </v-card>
@@ -90,5 +99,15 @@ export default {
 /* .slide-fade-leave-active for <2.1.8 */ {
   /* transform: translateX(10px); */
   opacity: 0;
+}
+.topaccentform {
+  background: #249c90;
+  color: #fff;
+  margin-bottom: 18px;
+  width: 95%;
+  margin: 0 auto;
+  border-radius: 5px;
+  position: relative;
+  bottom: 24px;
 }
 </style>
