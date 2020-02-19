@@ -22,10 +22,10 @@
       </v-col>
       <template v-if="field.required">
         <v-col md="6">
-          <v-text-field label="Min Char" v-model="field.minValue" type="number"></v-text-field>
+          <v-text-field label="Min Value" v-model="field.minValue" type="number"></v-text-field>
         </v-col>
         <v-col md="6">
-          <v-text-field label="Max Char" v-model="field.maxValue" type="number"></v-text-field>
+          <v-text-field label="Max Value" v-model="field.maxValue" type="number"></v-text-field>
         </v-col>
       </template>
       <v-col md="12">
