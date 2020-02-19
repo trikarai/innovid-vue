@@ -1,6 +1,6 @@
 <template>
     <div>
-    <v-card-title>String/Text Area/Integer Properties</v-card-title>
+    <v-card-title>String/Text Area Properties</v-card-title>
     <v-row class="pa-5">
     <v-col md="12">
       <v-text-field label="Label Name" v-model="field.name"></v-text-field>
