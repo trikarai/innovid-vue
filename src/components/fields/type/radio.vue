@@ -2,7 +2,7 @@
   <v-col>
     <!-- {{field}} -->
     <div :class="{required: field.required}">{{field.name}}</div>
-    <v-radio-group v-model="option" :rules="checkRequired">
+    <v-radio-group v-model="option" :rules="checkRequired" :mandatory="field.required">
       <v-radio
         v-for="(option, index) in field.options"
         :key="index"
@@ -25,7 +25,9 @@ export default {
   data: function() {
     return {
       clearable: true,
-      option: ""
+      option: "",
+      isError: false,
+      errorMessages: ["cuk"]
     };
   },
   created() {
@@ -33,6 +35,7 @@ export default {
       this.option = this.field.selectedOption.id;
     }
   },
+  mounted() {},
   watch: {
     option: function() {
       var params;

@@ -1,10 +1,15 @@
 <template>
   <v-container extend grid-list-xs>
     <!-- <v-row>
-      <v-col md="8" xs="12"></v-col>
+      <v-col md="8" xs="12">{{dataSingle}}</v-col>
     </v-row>-->
     <v-row>
-      <v-col cols="12" md="6" lg="6" xs="12">
+      <v-col cols="12" md="6" lg="6" xs="12" v-if="loader">
+        <v-card class="pa-3">
+          <v-skeleton-loader max-width="300" type="heading, list-item-two-line@4"></v-skeleton-loader>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="6" lg="6" xs="12" v-else>
         <v-card>
           <v-card-title primary-title>
             {{dataSingle.profileForm.name}}

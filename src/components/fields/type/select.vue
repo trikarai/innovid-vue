@@ -35,6 +35,7 @@
       outlined
       :error-messages="errorMessages"
       counter
+      :error="isError"
       @change="checkMinMax()"
     >
       <template v-slot:label>
@@ -58,7 +59,8 @@ export default {
     return {
       clearable: true,
       errorMessages: [],
-      optionList: []
+      optionList: [],
+      isError: false
     };
   },
   created() {
@@ -67,6 +69,14 @@ export default {
         this.optionList.push(element.option.id);
       });
       // this.optionList = this.field.selectedOption.id;
+      // this.checkMinMax();
+    }
+  },
+  mounted() {
+    if (this.field.required) {
+      this.isError = true;
+    } else {
+      this.isError = false;
     }
   },
   watch: {
@@ -101,6 +111,7 @@ export default {
           );
         } else {
           this.errorMessages = [];
+          this.isError = false;
         }
       }
     }
