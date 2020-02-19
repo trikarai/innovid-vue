@@ -31,6 +31,7 @@
         <div :class="{required : field.required}">{{field.name}}</div>
       </template>
     </v-text-field>
+    <template v-if="field.required">Min Value: {{field.minValue}} - Max Value: {{field.maxValue}}</template>
   </v-col>
 </template>
 <script>
@@ -44,7 +45,7 @@ export default {
   data: function() {
     return {
       clearable: true,
-      value: ""
+      value: 0
     };
   },
   watch: {},
