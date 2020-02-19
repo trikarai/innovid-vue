@@ -90,7 +90,7 @@
                   router
                   :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom' "
                 >
-                  <v-icon left>add</v-icon>Add Journal
+                  <v-icon left>add</v-icon>View Detail
                 </v-btn>
                 <template v-else>
                   <v-btn
@@ -100,7 +100,7 @@
                     router
                     :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom/'+ data.selectedParentJournal "
                   >
-                    <v-icon left>add</v-icon>Add Journal
+                    <v-icon left>add</v-icon>View Detail
                   </v-btn>
                 </template>
               </v-card-actions>
