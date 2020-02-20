@@ -33,7 +33,7 @@
               </v-btn>
             </template>
             <template v-if="!editWS">
-              <v-btn color="primary" small v-if="!updateJ" @click="updateJournal">
+              <v-btn color="primary" small v-if="!updateJ" @click="updateJournal" disabled>
                 <v-icon small left>edit</v-icon>Update Journal
               </v-btn>
               <v-btn color="warning" small @click="updateJ = !updateJ" v-else>
@@ -83,7 +83,13 @@
                 >
                   <v-icon left v-if="mode" small>star</v-icon>Reload Existing Worksheet
                 </v-btn>
-                <v-btn small class="ma-2" color="primary" :outlined="mode" @click="createNewWorksheet">
+                <v-btn
+                  small
+                  class="ma-2"
+                  color="primary"
+                  :outlined="mode"
+                  @click="createNewWorksheet"
+                >
                   <v-icon left v-if="!mode" small>star</v-icon>Create New Worksheet
                 </v-btn>
               </v-col>
@@ -138,8 +144,9 @@
       </v-col>
       <!--comment block-->
     </v-row>
-
-    
+    <v-overlay :value="worksheetDataLoad">
+      <v-progress-circular color="primary" indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </v-container>
 </template>
 
