@@ -136,9 +136,10 @@ import * as config from "@/config/config";
 import auth from "@/config/auth";
 
 import { programMixins } from "@/mixins/programMixins";
+import { teamWatcherMixins } from "@/mixins/teamWatcherMixins";
 
 export default {
-  mixins: [programMixins],
+  mixins: [programMixins,teamWatcherMixins],
   data() {
     return {
       search: "",
@@ -177,7 +178,14 @@ export default {
     this.getDataList2();
   },
   watch: {
-    $route: "getDataList"
+    teamId() {
+      this.$router.replace({
+        path: "/incubatee/team/" + this.teamId + "/application"
+      });
+    },
+    $route() {
+      this.getDataList();
+    }
   },
   methods: {
     getDataList() {

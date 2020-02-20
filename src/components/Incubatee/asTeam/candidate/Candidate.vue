@@ -40,8 +40,8 @@
             </v-btn>
             {{item.founder.name}}
           </template>
-           <template v-slot:item.note="{item}">
-             <v-chip v-if="item.note != null">{{item.note}}</v-chip>
+          <template v-slot:item.note="{item}">
+            <v-chip v-if="item.note != null">{{item.note}}</v-chip>
           </template>
           <template v-slot:item.action="{item}">
             <template v-if="authData.data.id !== item.founder.id">
@@ -106,8 +106,10 @@ import bus from "@/config/bus";
 
 import * as config from "@/config/config";
 import auth from "@/config/auth";
+import { teamWatcherMixins } from "@/mixins/teamWatcherMixins";
 
 export default {
+  mixins: [teamWatcherMixins],
   data() {
     return {
       authData: "",
@@ -130,6 +132,16 @@ export default {
       leftName: "",
       leftAction: ""
     };
+  },
+  watch: {
+    teamId() {
+      this.$router.replace({
+        path: "/incubatee/team/" + this.teamId + "/candidateship"
+      });
+    },
+    $route() {
+      this.getDataList();
+    }
   },
   created() {
     this.authData = JSON.parse(auth.getAuthData());

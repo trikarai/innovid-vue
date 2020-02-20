@@ -52,8 +52,10 @@
 import bus from "@/config/bus";
 import auth from "@/config/auth";
 import * as config from "@/config/config";
+import { teamWatcherMixins } from "@/mixins/teamWatcherMixins";
 
 export default {
+  mixins: [teamWatcherMixins],
   data() {
     return {
       search: "",
@@ -76,6 +78,16 @@ export default {
       leftName: "",
       leftAction: ""
     };
+  },
+  watch: {
+    teamId() {
+      this.$router.replace({
+        path: "/incubatee/team/" + this.teamId + "/worksheet"
+      });
+    },
+    $route() {
+      this.getDataList();
+    }
   },
   mounted() {
     this.getDataList();

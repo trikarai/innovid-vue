@@ -2,7 +2,11 @@
   <v-container extend grid-list-xs>
     <v-row>
       <v-col md="8" xs="12">
-        <v-btn color="primary" router :to="'/incubatee/team/'+teamId+'/team-profile-form'">
+        <v-btn
+          color="primary"
+          router
+          :to="'/incubatee/team/'+ $route.params.teamId +'/team-profile-form'"
+        >
           <v-icon left>add</v-icon>Add Team Profiles
         </v-btn>
       </v-col>
@@ -92,14 +96,15 @@
 
 <script>
 import bus from "@/config/bus";
-
 import * as config from "@/config/config";
 import auth from "@/config/auth";
+import { teamWatcherMixins } from "@/mixins/teamWatcherMixins";
 
 export default {
+  mixins: [teamWatcherMixins],
   data() {
     return {
-      teamId: this.$route.params.teamId,
+      teamId: "",
       authData: "",
       search: "",
       dataList: { total: 0, list: [] },
@@ -120,6 +125,16 @@ export default {
     };
   },
   components: {},
+  watch: {
+    teamId() {
+      this.$router.replace({
+        path: "/incubatee/team/" + this.teamId + "/profile"
+      });
+    },
+    $route() {
+      this.getDataList();
+    }
+  },
   created() {
     window.sessionStorage.setItem("uploadMode", "team");
   },
@@ -133,7 +148,7 @@ export default {
         .get(
           config.baseUri +
             "/founder/as-team-member/" +
-            this.teamId +
+            this.$route.params.teamId +
             "/profiles",
           {
             headers: auth.getAuthHeader()
@@ -156,7 +171,11 @@ export default {
       this.loader = true;
       this.axios
         .get(
-          config.baseUri + "/founder/team/" + this.teamId + "profiles/" + id,
+          config.baseUri +
+            "/founder/team/" +
+            this.$route.params.teamId +
+            "profiles/" +
+            id,
           {
             headers: auth.getAuthHeader()
           }
@@ -175,7 +194,7 @@ export default {
       // this.dialogDetail = true;
       // this.getDataSingle(id);
       this.$router.push({
-        path: "/incubatee/team/" + this.teamId + "/profile/" + id
+        path: "/incubatee/team/" + this.$route.params.teamId + "/profile/" + id
       });
     },
     leftAct(item, action) {
@@ -190,7 +209,7 @@ export default {
         .delete(
           config.baseUri +
             "/founder/as-team-member/" +
-            this.teamId +
+            this.$route.params.teamId +
             "/profiles/" +
             id,
           {
