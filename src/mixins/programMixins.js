@@ -9,6 +9,9 @@ import auth from "@/config/auth";
 
 export const programMixins = {
     methods: {
+        filterActiveParticipation(params) {
+            return Vue._.filter(params, ["active", true]);
+        },
         filterRegistration(params) {
             return Vue._.filter(params, ["concluded", false]);
         },

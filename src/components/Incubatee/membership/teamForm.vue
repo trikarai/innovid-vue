@@ -97,6 +97,7 @@ export default {
         })
         .then(() => {
           this.$emit("refresh");
+          bus.$emit("reloadNavTeamMembership");
         })
         .catch(res => {
           bus.$emit("callNotif", "error", res);

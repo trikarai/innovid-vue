@@ -21,7 +21,7 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row> -->
+    </v-row>-->
 
     <v-row>
       <v-col>
@@ -63,48 +63,47 @@
                 color="primary"
                 router
                 :to="'/incubatee/team/' + item.team.id + '/worksheet' "
-              >Worksheet
-              </v-btn>
+              >Worksheet</v-btn>
             </v-col>
           </template>
           <template v-slot:item.action2="{item}">
-          <v-col>
-            <v-btn
-              class="ma-1"
-              small
-              color="primary"
-              router
-              :to="'/incubatee/team/' + item.team.id + '/application' "
-            >
-              <!-- <v-icon left small>how_to_vote</v-icon> -->
-              Programs
-            </v-btn>
-            <v-btn
-              class="ma-1"
-              small
-              color="primary"
-              router
-              :to="'/incubatee/team/' + item.team.id + '/participation' "
-            >
-              <!-- <v-icon left small>how_to_reg</v-icon> -->
-              Participation
-            </v-btn>
-          </v-col>
+            <v-col>
+              <v-btn
+                class="ma-1"
+                small
+                color="primary"
+                router
+                :to="'/incubatee/team/' + item.team.id + '/application' "
+              >
+                <!-- <v-icon left small>how_to_vote</v-icon> -->
+                Programs
+              </v-btn>
+              <v-btn
+                class="ma-1"
+                small
+                color="primary"
+                router
+                :to="'/incubatee/team/' + item.team.id + '/participation' "
+              >
+                <!-- <v-icon left small>how_to_reg</v-icon> -->
+                Participation
+              </v-btn>
+            </v-col>
           </template>
           <template v-slot:item.action3="{item}">
-          <v-col>
-            <v-btn small color="primary" @click="updateAct(item, 'Update')">
-              <v-icon small>edit</v-icon>
-              <!-- Update Name -->
-            </v-btn>
-          </v-col>
+            <v-col>
+              <v-btn small color="primary" @click="updateAct(item, 'Update')">
+                <v-icon small>edit</v-icon>
+                <!-- Update Name -->
+              </v-btn>
+            </v-col>
           </template>
           <template v-slot:item.action4="{item}">
-          <v-col>
-            <v-btn small color="warning" @click="leftAct(item, 'Quit')">
-              <v-icon left small>flag</v-icon>Quit
-            </v-btn>
-          </v-col>
+            <v-col>
+              <v-btn small color="warning" @click="leftAct(item, 'Quit')">
+                <v-icon left small>flag</v-icon>Quit
+              </v-btn>
+            </v-col>
           </template>
         </v-data-table>
       </v-col>
@@ -138,7 +137,7 @@
             <v-icon v-else color="red darken-1">removed</v-icon>
           </template>
           <template v-slot:item.note="{item}">
-           <v-chip v-if="item.note != null">{{item.note}}</v-chip>
+            <v-chip v-if="item.note != null">{{item.note}}</v-chip>
           </template>
           <template v-slot:item.action="{item}">
             <template v-if="!item.concluded">
@@ -183,26 +182,26 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
- 
-      <v-dialog content-class="vmember" v-model="dialog" persistent max-width="400">
-        <v-card :loading="tableLoad">
-          <v-card-title class="topaccent" primary-title>
-              <div>
-                <h3 class="headline mb-0">Update Name</h3>
-              </div>
+
+    <v-dialog content-class="vmember" v-model="dialog" persistent max-width="400">
+      <v-card :loading="tableLoad">
+        <v-card-title class="topaccent" primary-title>
+          <div>
+            <h3 class="headline mb-0">Update Name</h3>
+          </div>
         </v-card-title>
-          <v-card-text>
-            <v-form>
-              <v-text-field label="Team Name" v-model="leftName"></v-text-field>
-            </v-form>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn small color="primary" @click="updateTeamName()">Update</v-btn>
-            <v-btn small text color="grey" @click.native="dialog = false">Cancel</v-btn>          
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+        <v-card-text>
+          <v-form>
+            <v-text-field label="Team Name" v-model="leftName"></v-text-field>
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn small color="primary" @click="updateTeamName()">Update</v-btn>
+          <v-btn small text color="grey" @click.native="dialog = false">Cancel</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <v-dialog
       content-class="vmember"
@@ -213,25 +212,33 @@
     >
       <v-card>
         <v-card-title class="topaccent" primary-title>
-              <div>
-                <h3 class="headline mb-0">Team Detail</h3>
-              </div>
+          <div>
+            <h3 class="headline mb-0">Team Detail</h3>
+          </div>
         </v-card-title>
         <v-card-text v-if="loader">
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.team.name"><b>Team Name</b><br>{{dataSingle.team.name}}</v-card-text>
+          <v-card-text :key="dataSingle.team.name">
+            <b>Team Name</b>
+            <br />
+            {{dataSingle.team.name}}
+          </v-card-text>
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.position"><b>Your Position</b><br>{{dataSingle.position}}</v-card-text>
+          <v-card-text :key="dataSingle.position">
+            <b>Your Position</b>
+            <br />
+            {{dataSingle.position}}
+          </v-card-text>
         </transition>
         <!-- <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
             <v-icon>close</v-icon>
           </v-btn>
-        </v-card-actions> -->
+        </v-card-actions>-->
       </v-card>
     </v-dialog>
   </v-container>
@@ -256,12 +263,36 @@ export default {
       tableLoad2: false,
       loader: false,
       tableHeaders: [
-        { text: "Team Name", value: "name", width: "25%",sortable: false },
+        { text: "Team Name", value: "name", width: "25%", sortable: false },
         { text: "Your Position", value: "position", sortable: false },
-        { text: "", value: "action", width: "15%", sortable: false, align: "right" },
-        { text: "", value: "action2", width: "15%", sortable: false, align: "right" },
-        { text: "", value: "action3", width: "10%", sortable: false, align: "center" },
-        { text: "", value: "action4", width: "10%", sortable: false, align: "center" }
+        {
+          text: "",
+          value: "action",
+          width: "15%",
+          sortable: false,
+          align: "right"
+        },
+        {
+          text: "",
+          value: "action2",
+          width: "15%",
+          sortable: false,
+          align: "right"
+        },
+        {
+          text: "",
+          value: "action3",
+          width: "10%",
+          sortable: false,
+          align: "center"
+        },
+        {
+          text: "",
+          value: "action4",
+          width: "10%",
+          sortable: false,
+          align: "center"
+        }
       ],
       tableHeaders2: [
         { text: "Name", value: "name", sortable: false },
@@ -374,6 +405,7 @@ export default {
         })
         .then(() => {
           bus.$emit("callNotif", "info", "Successfully Quit from team");
+          bus.$emit("reloadNavTeamMembership");
           this.refresh();
         })
         .catch(res => {
