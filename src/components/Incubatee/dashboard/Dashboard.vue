@@ -166,7 +166,7 @@
     <!-- team registered program end-->
     <v-row v-if="filterRegistration(registeredPrograms.list).length !== 0">
       <v-col>
-        <v-data-iterator :items="filterRegistration(registeredPrograms.list)">
+        <v-data-iterator hide-default-footer :items="filterRegistration(registeredPrograms.list)">
           <template v-slot:header>
             <v-toolbar class="kastemtoolbar mb-2" color="grey darken-5" dark flat dense>
               <v-toolbar-title>Registered Program</v-toolbar-title>
