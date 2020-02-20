@@ -61,7 +61,7 @@ export const validationMixins = {
                     "Min " + this.field.minValue + " characters",
                 maxValue: value =>
                     value <= this.field.maxValue ||
-                    "Max value is" + this.field.maxValue,
+                    "Max value is " + this.field.maxValue,
                 minValue: value =>
                     value >= this.field.minValue ||
                     "Min Value is " + this.field.minValue,
@@ -82,7 +82,7 @@ export const validationMixins = {
     methods: {
         checkRequired(value) {
             if (value.length === 0 && this.field.required) {
-                return "Field is Required?";
+                return "Field is Required!";
             } else {
                 return true;
             }
