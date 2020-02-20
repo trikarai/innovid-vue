@@ -10,8 +10,9 @@
       :autocomplete="false"
       :min="field.minValue"
       :max="field.maxValue"
-      :rules="[rules.minValue, checkRequired]"
+      :rules="[rules.minValue, rules.maxValue, checkRequired]"
       v-model="value"
+      :error="isError"
     >
       <template v-slot:label>
         <div :class="{required : field.required}">{{field.name}}</div>
@@ -45,10 +46,20 @@ export default {
   data: function() {
     return {
       clearable: true,
-      value: 0
+      isError: true,
+      value: null
     };
   },
-  watch: {},
+  watch: {
+    
+  },
+  mounted () {
+    if (this.field.required) {
+      this.isError = true;
+    } else {
+      this.isError = false;
+    }
+  },
   created() {
     if (this.modeReload) {
       this.value = this.field.value;

@@ -11,8 +11,9 @@ export const formDynamicMixins = {
         }
     },
     watch: {
-        value: function () {
+        value() {
             var params;
+            this.isError = false;
             if (this.modeReload) {
                 if (this.field.type == 'string') {
                     params = { fieldId: this.field.stringField.id, value: this.value, type: this.field.type };
