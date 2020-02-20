@@ -269,7 +269,7 @@
                     ref="picker"
                     :locale="$vuetify.lang.current"
                     v-model="date"
-                    min="1950-01-01"
+                    :min="nowDate"
                     @input="menu = false"
                   ></v-date-picker>
                 </v-menu>
@@ -370,7 +370,8 @@ export default {
         startTime: ""
       },
       date: "",
-      time: ""
+      time: "",
+      nowDate: new Date().toISOString().slice(0, 10)
     };
   },
   watch: {
