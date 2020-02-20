@@ -54,7 +54,7 @@
             </v-btn>-->
           </template>
           <template v-slot:item.action="{item}">
-            <v-btn small color="warning" class="mr-2" @click="leftAct(item, 'Quit')">
+            <v-btn v-if="item.active" small color="warning" class="mr-2" @click="leftAct(item, 'Quit')">
               <v-icon left>flag</v-icon>Quit
             </v-btn>
           </template>
@@ -163,6 +163,7 @@ export default {
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
         { text: "", value: "sub", sortable: false, align: "left" },
+        { text: "Status", value: "note", sortable: false, align: "left" },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       tableHeaders2: [
@@ -286,6 +287,7 @@ export default {
         )
         .then(() => {
           bus.$emit("callNotif", "info", "Successfully Quit");
+          bus.$emit("reloadNavParticipation");
           this.refresh();
         })
         .catch(res => {

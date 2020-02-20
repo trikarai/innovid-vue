@@ -84,7 +84,7 @@ Vue.use(VueLodash, options); // options is optional
 
 import * as config from "@/config/config";
 import auth from "@/config/auth";
-// import bus from "@/config/bus";
+import bus from "@/config/bus";
 export default {
   data() {
     return {
@@ -141,6 +141,7 @@ export default {
         .finally(() => {});
     },
     gotoParticipant(item) {
+      bus.$emit("reloadNavParticipation");
       this.$router.push({
         path: "/incubatee/team/" + item.team.id + "/participation"
       });

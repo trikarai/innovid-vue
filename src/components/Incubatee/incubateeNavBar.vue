@@ -12,6 +12,9 @@
       <v-btn text @click="rightDrawer =! rightDrawer">
         <v-icon>settings</v-icon>
       </v-btn>
+      <v-btn text depressed small @click="logout">
+        <v-icon>exit_to_app</v-icon>
+      </v-btn>
     </v-app-bar>
 
     <!-- <v-btn class="ml-3 mt-2 bm-2" text @click="goback()">
@@ -27,9 +30,6 @@
     >
       <v-icon>arrow_back</v-icon>
     </v-btn>
-    <!-- <v-btn class="ml-3 mt-5" icon v-if="$route.meta.level == 0" @click="$router.go(-1) ">
-      <v-icon></v-icon>
-    </v-btn>-->
     <div style="margin-left: 49px;" class="container extend mt-2">
       <h2 class="mb-2">{{$route.name}}</h2>
       <div class="garis"></div>
@@ -45,7 +45,6 @@
         </v-list-item>
         <v-list-item>
           <v-list-item-avatar>
-            <!-- <img src="https://randomuser.me/api/portraits/men/85.jpg" /> -->
             <img src="/img/profile2.png" />
           </v-list-item-avatar>
           <v-list-item-content>
@@ -58,33 +57,36 @@
           </v-list-item-action>
         </v-list-item>
       </v-list>
-
-      <v-list v-if="user.data.teamMemberships.length != 0">
+      <v-list v-if="teamMemberships.total != 0">
         <v-list-item>
           <v-select
-            :loading="tableLoad"
+            :loading="teamLoad"
             label="Team"
-            :items="user.data.teamMemberships"
+            :items="teamMemberships.list"
             item-text="team.name"
-            v-model="teamMemberships"
             return-object
+            v-model="selectedMembership"
             @change="getParticipations()"
           ></v-select>
-          <!-- {{teamId}} -->
         </v-list-item>
         <v-list-item>
           <v-select
             label="Program"
-            :items="participationList.list"
+            :loading="participationLoad"
+            :items="filterActiveParticipation(participationList.list)"
             item-text="program.name"
             item-value="id"
             v-model="participationId"
             @change="changeParticipant()"
           ></v-select>
-          <!-- {{participationId}} -->
         </v-list-item>
       </v-list>
-      <!-- {{teamMemberships}} -->
+      <v-list v-else>
+        <v-list-item>
+          <v-select :loading="teamLoad" disabled label="No Team" :items="[]"></v-select>
+        </v-list-item>
+      </v-list>
+
       <v-list>
         <!--sub list other-->
         <v-list-item
@@ -103,15 +105,6 @@
         </v-list-item>
       </v-list>
 
-      <!-- <v-list-group value="true" no-action v-if="participationId != ''">
-        <template v-slot:activator>
-          <v-list-item-action>
-            <v-icon color="#676767">how_to_reg</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title class="grey--text">Participation</v-list-item-title>
-          </v-list-item-content>
-      </template>-->
       <v-list v-if="participationId != ''">
         <v-list-item
           router
@@ -146,7 +139,48 @@
             <v-list-item-title class="grey--text">Journal</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <!-- </v-list-group> -->
+      </v-list>
+      <!--disabled menu-->
+      <v-list v-else>
+        <v-tooltip right color="warning">
+          <template v-slot:activator="{ on }">
+            <v-list-item v-on="on">
+              <v-list-item-action>
+                <v-icon>emoji_objects</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title class="grey--text">Program Mission</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+          <span>You must join a program to access program mission</span>
+        </v-tooltip>
+        <v-tooltip right color="warning">
+          <template v-slot:activator="{ on }">
+            <v-list-item v-on="on">
+              <v-list-item-action>
+                <v-icon>today</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title class="grey--text">Mentoring</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+          <span>You must join a program to access mentoring</span>
+        </v-tooltip>
+        <v-tooltip right color="warning">
+          <template v-slot:activator="{ on }">
+            <v-list-item v-on="on">
+              <v-list-item-action>
+                <v-icon>assignment</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title class="grey--text">Journal</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+          <span>You must join a program to access journal</span>
+        </v-tooltip>
       </v-list>
 
       <v-list-group :value="false" no-action v-if="teamId != ''">
@@ -187,6 +221,21 @@
           </v-list-item-icon>
         </v-list-item>
       </v-list-group>
+      <v-list v-else>
+        <v-tooltip right color="warning">
+          <template v-slot:activator="{ on }">
+            <v-list-item v-on="on">
+              <v-list-item-action>
+                <v-icon>group</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title class="grey--text">Team Management</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+          <span>You must join/create a team to access team management</span>
+        </v-tooltip>
+      </v-list>
 
       <v-list-group :value="false" no-action>
         <template v-slot:activator>
@@ -200,7 +249,7 @@
 
         <!--sub list other-->
         <v-list-item
-           class="ml-5"
+          class="ml-5"
           v-for="link in links2"
           :key="link.text"
           router
@@ -257,8 +306,10 @@ import auth from "@/config/auth";
 import bus from "@/config/bus";
 
 import FounderNotification from "./founderNotification";
+import { programMixins } from "@/mixins/programMixins";
 
 export default {
+  mixins: [programMixins],
   components: {
     FounderNotification
   },
@@ -271,10 +322,14 @@ export default {
       clipped: false,
       fixed: false,
       user: "",
-      teamMemberships: {},
+      // teamMemberships: {},
+      teamMemberships: { total: 0, list: [] },
+      selectedMembership: { id: "", team: { id: "", name: "" } },
+      teamLoad: false,
       teamId: "",
       notificationList: { total: 0, list: [] },
       participationList: { total: 0, list: [] },
+      participationLoad: false,
       participationId: "",
       links: [
         {
@@ -346,16 +401,29 @@ export default {
   },
   created() {
     this.user = JSON.parse(auth.getAuthData());
-    this.teamMemberships = this.user.data.teamMemberships[0];
-    this.teamId = this.user.data.teamMemberships[0].team.id;
-    localStorage.setItem("DashboardTeamId", this.teamId);
-    var membershipId = this.user.data.teamMemberships[0].id;
-    localStorage.setItem("MembershipTeamId", membershipId);
+    // this.teamMemberships = this.user.data.lastTeamMembership[0];
+    // this.teamId = this.user.data.teamMemberships[0].team.id;
+    // localStorage.setItem("DashboardTeamId", this.teamId);
+    // var membershipId = this.user.data.teamMemberships[0].id;
+    // localStorage.setItem("MembershipTeamId", membershipId);
+
+    bus.$on("reloadNavTeamMembership", () => {
+      this.getTeamMembership();
+    });
+    bus.$on("reloadNavParticipation", () => {
+      this.getParticipations();
+    });
   },
-  mounted() {
-    if (this.teamId != "") {
+  watch: {
+    selectedMembership() {
       this.getParticipations();
     }
+  },
+  mounted() {
+    this.getTeamMembership();
+    // if (this.teamId !== "") {
+    //   this.getParticipations();
+    // }
   },
   methods: {
     goback: function() {
@@ -372,12 +440,34 @@ export default {
       localStorage.setItem("ParticipantTeamId", this.participationId);
       bus.$emit("changeDashboardParticipant", this.participationId);
     },
+    getTeamMembership() {
+      this.teamLoad = true;
+      this.axios
+        .get(config.baseUri + "/founder/team-memberships", {
+          headers: auth.getAuthHeader()
+        })
+        .then(res => {
+          this.teamMemberships = res.data.data;
+          if (this.teamMemberships.total !== 0) {
+            this.selectedMembership = this.teamMemberships.list[0];
+            this.teamId = this.teamMemberships.list[0].team.id;
+            localStorage.setItem("DashboardTeamId", this.teamId);
+          } else {
+            this.teamId = "";
+            this.selectedMembership = { id: "", team: { id: "" } };
+            localStorage.removeItem("DashboardTeamId");
+          }
+        })
+        .finally(() => {
+          this.teamLoad = false;
+        });
+    },
     getParticipations() {
-      this.teamId = this.teamMemberships.team.id;
-      localStorage.setItem("MembershipTeamId", this.teamMemberships.id);
-      localStorage.setItem("DashboardTeamId", this.teamMemberships.team.id);
-      bus.$emit("changeDashboardTeam", this.teamMemberships.team.id);
-      this.tableLoad = true;
+      this.teamId = this.selectedMembership.team.id;
+      localStorage.setItem("MembershipTeamId", this.selectedMembership.id);
+      localStorage.setItem("DashboardTeamId", this.selectedMembership.team.id);
+      bus.$emit("changeDashboardTeam", this.selectedMembership.team.id);
+      this.participationLoad = true;
       this.axios
         .get(
           config.baseUri +
@@ -390,13 +480,15 @@ export default {
         )
         .then(res => {
           if (res.data.data.total != 0) {
-            this.participationList = res.data.data;
+            this.participationList.total = res.data.data.total;
+            this.participationList.list = this.filterActiveParticipation(
+              res.data.data.list
+            );
             this.participationId = this.participationList.list[0].id;
             localStorage.setItem(
               "DashboardParticipantId",
               this.participationId
             );
-            // bus.$emit("changeDashboardParticipant", this.participationId);
           } else {
             this.participationList = { total: 0, list: [] };
             this.participationId = "";
@@ -404,7 +496,7 @@ export default {
         })
         .catch(() => {})
         .finally(() => {
-          this.tableLoad = false;
+          this.participationLoad = false;
         });
     }
   }

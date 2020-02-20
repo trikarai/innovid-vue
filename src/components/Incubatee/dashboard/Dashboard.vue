@@ -1,8 +1,6 @@
 <template>
   <v-container extend grid-list-xs>
     <v-row name="one">
-      <!-- <v-col md="3">{{user}}</v-col> -->
-      <!-- <v-col md="12">{{teamId}}</v-col> -->
       <v-col cols="12" sm="4" md="4" xs="12">
         <v-card @click="$router.push({path: '/incubatee/profile'})">
           <v-card-title style="word-break: break-word;" primary-title>
@@ -44,10 +42,69 @@
         </v-card>
       </v-col>
     </v-row>
-
-    <v-row v-if="participationList.total > 0">
+    <!-- non team founder program start-->
+    <v-row v-if="showFounderProgram">
       <v-col>
-        <v-data-iterator :items="participationList.list" hide-default-footer :loading="tableLoad">
+        <v-skeleton-loader max-width="230" type="card" v-if="founderprogramLoad"></v-skeleton-loader>
+        <v-data-iterator
+          :items="founderprograms.list"
+          hide-default-footer
+          :loading="founderprogramLoad"
+          v-else
+        >
+          <template v-slot:header>
+            <v-toolbar class="kastemtoolbar mb-2" color="grey darken-5" dark flat dense>
+              <v-toolbar-title>Incubator Program</v-toolbar-title>
+            </v-toolbar>
+          </template>
+          <template v-slot:no-data>
+            <v-row class="mt-5">
+              <v-col md="2"></v-col>
+              <v-col md="4">
+                <v-img width="300" src="/img/no-data-program.png"></v-img>
+              </v-col>
+              <v-col md="4">
+                <v-card style="margin-top:27px;" flat>
+                  <v-card-title>No Program Available</v-card-title>
+                  <v-card-subtitle class="grey--text">The coordinator hasn't publish a program yet</v-card-subtitle>
+                  <v-card-text></v-card-text>
+                </v-card>
+              </v-col>
+              <v-col md="2"></v-col>
+            </v-row>
+          </template>
+          <template v-slot:default="props">
+            <v-row>
+              <v-col v-for="item in props.items" :key="item.id" cols="12" sm="6" md="4" lg="4">
+                <v-card>
+                  <v-img src="/img/hero-program.jpg"></v-img>
+                  <v-card-title class="subheading font-weight-bold">{{ item.name }}</v-card-title>
+                  <v-divider></v-divider>
+                  <v-list dense>
+                    <v-list-item>
+                      <v-list-item-content>Description:</v-list-item-content>
+                    </v-list-item>
+                    <v-list-item>
+                      <v-list-item-content class="grey--text">{{ item.description }}</v-list-item-content>
+                    </v-list-item>
+                  </v-list>
+                </v-card>
+              </v-col>
+            </v-row>
+          </template>
+        </v-data-iterator>
+      </v-col>
+    </v-row>
+    <!-- non team founder program end-->
+    <!-- team participated program end-->
+    <v-row v-if="participatedPrograms.total != 0">
+      <v-col>
+        <v-skeleton-loader max-width="230" type="card" v-if="participatedLoad"></v-skeleton-loader>
+        <v-data-iterator
+          :items="participatedPrograms.list"
+          hide-default-footer
+          :loading="participatedLoad"
+        >
           <template v-slot:header>
             <v-toolbar class="kastemtoolbar mb-2" color="grey darken-5" dark flat dense>
               <v-toolbar-title>Participated Program</v-toolbar-title>
@@ -58,13 +115,17 @@
               <v-col v-for="item in props.items" :key="item.id" cols="12" sm="6" md="4" lg="4">
                 <v-card class="elevation-7">
                   <v-img src="/img/part-program.png"></v-img>
-                  <v-card-title class="subheading font-weight-bold">{{ item.program.name }}</v-card-title>
+                  <v-card-title class="subheading font-weight-bold">
+                    <v-badge
+                      left
+                      color="primary"
+                      icon="star"
+                      inline
+                      :value="item.id == participationId"
+                    >{{ item.program.name }}</v-badge>
+                  </v-card-title>
                   <v-divider></v-divider>
                   <v-list dense>
-                    <!-- <v-list-item>
-                      <v-list-item-content>Description:</v-list-item-content>
-                      <v-list-item-content class="align-end">{{ item.program.description }}</v-list-item-content>
-                    </v-list-item>-->
                     <v-list-item>
                       <v-list-item-content>
                         <v-btn
@@ -101,10 +162,11 @@
         </v-data-iterator>
       </v-col>
     </v-row>
-
-    <v-row v-if="filterRegistration(registrationList.list).length > 0">
+    <!-- team participated program end-->
+    <!-- team registered program end-->
+    <v-row v-if="filterRegistration(registeredPrograms.list).length !== 0">
       <v-col>
-        <v-data-iterator :items="filterRegistration(registrationList.list)" hide-default-footer>
+        <v-data-iterator :items="filterRegistration(registeredPrograms.list)">
           <template v-slot:header>
             <v-toolbar class="kastemtoolbar mb-2" color="grey darken-5" dark flat dense>
               <v-toolbar-title>Registered Program</v-toolbar-title>
@@ -117,10 +179,6 @@
                   <v-card-title class="subheading font-weight-bold">{{ item.program.name }}</v-card-title>
                   <v-divider></v-divider>
                   <v-list dense>
-                    <!-- <v-list-item>
-                      <v-list-item-content>Description:</v-list-item-content>
-                      <v-list-item-content class="align-end">{{ item.program.description }}</v-list-item-content>
-                    </v-list-item>-->
                     <v-list-item>
                       <v-list-item-content>
                         <v-btn
@@ -139,15 +197,15 @@
         </v-data-iterator>
       </v-col>
     </v-row>
-
-    <v-row v-if="teamId != '' ">
+    <!-- team registered program end-->
+    <!-- team available program start-->
+    <v-row v-if="!showFounderProgram">
       <v-col>
         <v-skeleton-loader max-width="230" type="card" v-if="availLoader"></v-skeleton-loader>
-
         <v-data-iterator
-          :items="availableList.list"
+          :items="availablePrograms.list"
           hide-default-footer
-          :loading="tableLoad3"
+          :loading="availLoader"
           v-else
         >
           <template v-slot:header>
@@ -164,12 +222,12 @@
               <v-col md="4">
                 <v-card v-if="teamId == '' " style="margin-top:27px;" flat>
                   <v-card-title>Create team first</v-card-title>
-                  <v-card-subtitle>You can join a program if you have a team, minimum with 2 members</v-card-subtitle>
+                  <v-card-subtitle>You can join a program if you have a team</v-card-subtitle>
                 </v-card>
                 <v-card v-else style="margin-top:27px;" flat>
                   <v-card-title>No Program Available</v-card-title>
                   <v-card-subtitle class="grey--text">
-                    You have already join all available program or the coordinator hasn't made a program yet 
+                    You have already join all available program or the coordinator hasn't made a program yet
                     <template
                       v-if="user.data.teamMemberships.length == 0"
                     >, create team first before join a program</template>
@@ -217,6 +275,7 @@
         </v-data-iterator>
       </v-col>
     </v-row>
+    <!-- team available program end-->
   </v-container>
 </template>
 <script>
@@ -237,13 +296,17 @@ export default {
       },
       teamId: "",
       participationId: "",
-      participationList: { total: 0, list: [] },
+      participatedPrograms: { total: 0, list: [] },
+      participatedLoad: false,
       tableLoad: false,
-      registrationList: { total: 0, list: [] },
+      registeredPrograms: { total: 0, list: [] },
       tableLoad2: false,
-      availableList: { total: 0, list: [] },
+      availablePrograms: { total: 0, list: [] },
       tableLoad3: false,
-      availLoader: false
+      availLoader: false,
+      founderprograms: { total: 0, list: [] },
+      founderprogramLoad: false,
+      showFounderProgram: true
     };
   },
   created() {
@@ -253,32 +316,45 @@ export default {
     bus.$on("changeDashboardParticipant", participationId => {
       this.participationId = participationId;
     });
-    this.teamId = localStorage.getItem("DashboardTeamId");
-    this.participationId = localStorage.getItem("DashboardParticipantId");
+    if (localStorage.getItem("DashboardTeamId")) {
+      this.teamId = localStorage.getItem("DashboardTeamId");
+    }
+    if (localStorage.getItem("DashboardParticipantId")) {
+      this.participationId = localStorage.getItem("DashboardParticipantId");
+    }
   },
   watch: {
     teamId() {
       this.getParticipant();
-      this.getDataList();
-      this.getDataList2();
+      this.getAvailablePrograms();
+      this.getRegisteredPrograms();
     }
   },
   mounted() {
     this.user = JSON.parse(auth.getAuthData());
-    // if (this.teamId != "" && this.participationId != "") {
-    //   this.$router.push({
-    //     path:
-    //       "/incubatee/team/" +
-    //       this.teamId +
-    //       "/participation/" +
-    //       this.participationId +
-    //       "/mission"
-    //   });
-    // }
+    if (!localStorage.getItem("DashboardTeamId")) {
+      this.getFounderProgram();
+    } else {
+      this.showFounderProgram = false;
+    }
   },
   methods: {
+    getFounderProgram() {
+      this.founderprogramLoad = true;
+      this.axios
+        .get(config.baseUri + "/founder/programs", {
+          headers: auth.getAuthHeader()
+        })
+        .then(res => {
+          this.founderprograms = res.data.data;
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.founderprogramLoad = false;
+        });
+    },
     getParticipant() {
-      this.tableLoad = true;
+      this.participatedLoad = true;
       this.axios
         .get(
           config.baseUri +
@@ -291,17 +367,22 @@ export default {
         )
         .then(res => {
           if (res.data.data.total != 0) {
-            this.participationList = res.data.data;
+            this.participatedPrograms.total = this.filterActiveParticipation(
+              res.data.data.list
+            ).length;
+            this.participatedPrograms.list = this.filterActiveParticipation(
+              res.data.data.list
+            );
           } else {
-            this.participationList = { total: 0, list: [] };
+            this.participatedPrograms = { total: 0, list: [] };
           }
         })
         .catch(() => {})
         .finally(() => {
-          this.tableLoad = false;
+          this.participatedLoad = false;
         });
     },
-    getDataList() {
+    getAvailablePrograms() {
       this.tableLoad2 = true;
       this.availLoader = true;
       this.axios
@@ -316,9 +397,9 @@ export default {
         )
         .then(res => {
           if (res.data.data) {
-            this.availableList = res.data.data;
+            this.availablePrograms = res.data.data;
           } else {
-            this.availableList = { total: 0, list: [] };
+            this.availablePrograms = { total: 0, list: [] };
           }
         })
         .catch(() => {})
@@ -327,7 +408,7 @@ export default {
           this.availLoader = false;
         });
     },
-    getDataList2() {
+    getRegisteredPrograms() {
       this.tableLoad3 = true;
       this.axios
         .get(
@@ -341,9 +422,9 @@ export default {
         )
         .then(res => {
           if (res.data.data) {
-            this.registrationList = res.data.data;
+            this.registeredPrograms = res.data.data;
           } else {
-            this.registrationList = { total: 0, list: [] };
+            this.registeredPrograms = { total: 0, list: [] };
           }
         })
         .catch(() => {})
