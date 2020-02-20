@@ -1,7 +1,6 @@
 <template>
   <v-row>
-    <v-col>
-      <!-- {{fileInfo}} -->
+    <v-col md="8">
       <v-file-input
         dense
         :hint="field.description"
@@ -10,6 +9,7 @@
         max-width="100%"
         show-size
         counter
+        :error="isError"
         accept="image/*"
         v-model="file"
         @change="onFilePicked"
@@ -19,6 +19,7 @@
           <div :class="{required : field.required}">{{field.name}}</div>
         </template>
       </v-file-input>
+      <span class="subtitle">Min: {{field.minSize}} - Max: {{field.maxSize}} Byte</span>
     </v-col>
     <v-col md="3">
       <v-expand-x-transition>
@@ -40,7 +41,7 @@
     <v-col md="5">
       <template v-if="!uploaded">
         <v-btn v-if="imageUrl" x-small color="primary" @click="uploadFile">
-          <v-icon left small>cloud_upload</v-icon>upload 
+          <v-icon left small>cloud_upload</v-icon>upload
         </v-btn>
       </template>
       <v-btn dark depressed fab small color="green" v-if="uploaded">
@@ -50,6 +51,7 @@
         <v-icon small>close</v-icon>
       </v-btn>
     </v-col>
+    <!-- <v-col>{{fileInfo}}</v-col> -->
   </v-row>
 </template>
 <script>
@@ -65,7 +67,7 @@ export default {
   components: {},
   data: function() {
     return {
-      clearable: true,
+      clearable: false,
       valueDeterminate: 0,
       value: [],
       imageName: "",
@@ -77,7 +79,8 @@ export default {
       removeFileBtn: false,
       fileInfo: { id: "", path: "", size: "" },
       ext: "",
-      uploadUri: ""
+      uploadUri: "",
+      isError: true
     };
   },
   watch: {
@@ -88,6 +91,13 @@ export default {
         type: this.field.type
       };
       bus.$emit("getValue", params, this.index);
+    }
+  },
+  mounted() {
+    if (this.field.required) {
+      this.isError = true;
+    } else {
+      this.isError = false;
     }
   },
   created() {
@@ -130,6 +140,12 @@ export default {
       this.ext = "";
       this.removeFileBtn = false;
       this.uploaded = false;
+      this.fileInfo = { id: "", path: "", size: "" };
+      if (this.field.required) {
+        this.isError = true;
+      } else {
+        this.isError = false;
+      }
     },
     uploadFile() {
       this.headers["Content-Type"] = "image/*";
@@ -150,6 +166,7 @@ export default {
           this.uploaded = true;
           this.value[0] = res.data.data.id;
           this.fileInfo = res.data.data;
+          this.isError = false;
         })
         .catch(res => {
           this.uploaded = false;
