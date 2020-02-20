@@ -54,7 +54,13 @@
             </v-btn>-->
           </template>
           <template v-slot:item.action="{item}">
-            <v-btn v-if="item.active" small color="warning" class="mr-2" @click="leftAct(item, 'Quit')">
+            <v-btn
+              v-if="item.active"
+              small
+              color="warning"
+              class="mr-2"
+              @click="leftAct(item, 'Quit')"
+            >
               <v-icon left>flag</v-icon>Quit
             </v-btn>
           </template>
@@ -148,9 +154,10 @@ import bus from "@/config/bus";
 import * as config from "@/config/config";
 import auth from "@/config/auth";
 import { programMixins } from "@/mixins/programMixins";
+import { teamWatcherMixins } from "@/mixins/teamWatcherMixins";
 
 export default {
-  mixins: [programMixins],
+  mixins: [programMixins, teamWatcherMixins],
   data() {
     return {
       search: "",
@@ -181,6 +188,16 @@ export default {
       leftName: "",
       leftAction: ""
     };
+  },
+  watch: {
+    teamId() {
+      this.$router.replace({
+        path: "/incubatee/team/" + this.teamId + "/participation"
+      });
+    },
+    $route() {
+      this.getDataList();
+    }
   },
   mounted() {
     this.getDataList();

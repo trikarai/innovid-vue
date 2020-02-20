@@ -137,7 +137,10 @@ import VueLodash from "vue-lodash";
 const options = { name: "lodash" }; // customize the way you want to call it
 Vue.use(VueLodash, options); // options is optional
 
+import { participationWatcherMixins } from "@/mixins/participationWatcherMixins";
+
 export default {
+  mixins: [participationWatcherMixins],
   data() {
     return {
       selectedJournalinMission: [],
@@ -165,6 +168,23 @@ export default {
       leftName: "",
       leftAction: ""
     };
+  },
+  watch: {
+    $route() {
+      this.dataList = { total: 0, list: [] };
+      this.getDataList();
+      this.getRootMissionJurnal();
+    },
+    participationId() {
+      this.$router.replace({
+        path:
+          "/incubatee/team/" +
+          this.$route.params.teamId +
+          "/participation/" +
+          this.participationId +
+          "/mission"
+      });
+    }
   },
   mounted() {
     this.getDataList();

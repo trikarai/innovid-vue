@@ -50,8 +50,10 @@
 import bus from "@/config/bus";
 import auth from "@/config/auth";
 import * as config from "@/config/config";
+import { participationWatcherMixins } from "@/mixins/participationWatcherMixins";
 
 export default {
+  mixins: [participationWatcherMixins],
   data() {
     return {
       search: "",
@@ -75,6 +77,21 @@ export default {
       leftName: "",
       leftAction: ""
     };
+  },
+  watch: {
+    $route() {
+      this.getDataList();
+    },
+    participationId() {
+      this.$router.replace({
+        path:
+          "/incubatee/team/" +
+          this.$route.params.teamId +
+          "/participation/" +
+          this.participationId +
+          "/journal"
+      });
+    }
   },
   mounted() {
     this.getDataList();

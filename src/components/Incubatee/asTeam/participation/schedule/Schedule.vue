@@ -325,9 +325,10 @@ import bus from "@/config/bus";
 import * as config from "@/config/config";
 import auth from "@/config/auth";
 import { validationMixins } from "@/mixins/validationMixins";
+import { participationWatcherMixins } from "@/mixins/participationWatcherMixins";
 
 export default {
-  mixins: [validationMixins],
+  mixins: [validationMixins, participationWatcherMixins],
   data() {
     return {
       menu: false,
@@ -374,7 +375,21 @@ export default {
   },
   watch: {
     date: "setDateTime",
-    time: "setDateTime"
+    time: "setDateTime",
+    $route() {
+      this.getDataList();
+      this.getDataList2();
+    },
+    participationId() {
+      this.$router.replace({
+        path:
+          "/incubatee/team/" +
+          this.$route.params.teamId +
+          "/participation/" +
+          this.participationId +
+          "/schedule"
+      });
+    }
   },
   mounted: function() {
     this.getDataList();
