@@ -20,7 +20,7 @@
       <v-row>
         <v-col md="6" sm="12">
           <v-card :disabled="selectedCohort.program.id == ''">
-            <v-card-title primary-title>negotiate schedule</v-card-title>
+            <v-card-title primary-title>Requested Mentoring</v-card-title>
             <v-card-actions>
               <v-btn
                 depressed
@@ -36,7 +36,7 @@
         </v-col>
         <v-col md="6" sm="12">
           <v-card :disabled="selectedCohort.program.id == ''">
-            <v-card-title primary-title>schedules</v-card-title>
+            <v-card-title primary-title>Scheduled Mentoring</v-card-title>
             <v-card-actions>
               <v-btn
                 depressed
