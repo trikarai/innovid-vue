@@ -13,6 +13,7 @@
     </v-row>
     <v-row>
       <v-col>Schedule</v-col>
+      <!-- <v-col><pre>{{dataList.list}}</pre></v-col> -->
     </v-row>
     <v-row>
       <v-col>
@@ -57,14 +58,13 @@
           </template>
           <template v-slot:item.action="{item}">
             <v-btn
-              v-if="item.participantMentoringReport != null"
+              v-if="item.participantMentoringReport == null"
               class="ml-2"
               small
               color="primary"
-              router
-              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/schedule/' + item.id + '/report'"
+              @click="openDetail(item.id)"
             >
-              <v-icon small left>assignment</v-icon>Report ewe
+              <v-icon small left>assignment</v-icon>Report
             </v-btn>
           </template>
         </v-data-table>
@@ -356,7 +356,6 @@ export default {
         { text: "Mentor", value: "mentor.personnel.name", sortable: false },
         { text: "startTime", value: "startTime", sortable: false },
         { text: "endTime", value: "endTime", sortable: false },
-        { text: "status", value: "status", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       dialogForm: false,
@@ -542,7 +541,8 @@ export default {
             "/negotiate-mentoring-schedules/" +
             id +
             "/" +
-            this.leftAction, {},
+            this.leftAction,
+          {},
           {
             headers: auth.getAuthHeader()
           }
