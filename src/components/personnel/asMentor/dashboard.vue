@@ -73,10 +73,10 @@
                 color="primary"
                 :to="'/personnel/mentor/' + item.id +'/negotiate-schedule'"
               >
-                <v-icon left>today</v-icon>Negotiate Schedule
+                <v-icon left>today</v-icon>Requested Mentoring
               </v-btn>
               <v-btn class="mr-2" color="primary" :to="'/personnel/mentor/' + item.id +'/schedule'">
-                <v-icon left>how_to_vote</v-icon>Schedule
+                <v-icon left>how_to_vote</v-icon>Scheduled Mentoring
               </v-btn>
             </template>
           </v-data-table>
