@@ -280,6 +280,17 @@
         </v-list-item>
         <v-list-item>
           <v-list-item-avatar>
+            <v-icon>contact_support</v-icon>
+          </v-list-item-avatar>
+          <v-list-item-content></v-list-item-content>
+          <v-list-item-action>
+            <v-btn dark small color="accent" @click="dialogHelp = !dialogHelp">
+              <span>Support</span>
+            </v-btn>
+          </v-list-item-action>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-avatar>
             <v-icon>brightness_4</v-icon>
           </v-list-item-avatar>
           <v-list-item-content>Dark Theme</v-list-item-content>
@@ -298,6 +309,20 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+
+    <v-dialog
+      v-model="dialogHelp"
+      :overlay="false"
+      max-width="500px"
+      transition="dialog-transition"
+    >
+      <v-card>
+        <v-card-title primary-title>Technical Support</v-card-title>
+        <v-card-title>
+          <a href="mailto:support@innov.id">support@innov.id</a>
+        </v-card-title>
+      </v-card>
+    </v-dialog>
   </nav>
 </template>
 <script>
@@ -315,6 +340,7 @@ export default {
   },
   data() {
     return {
+      dialogHelp: false,
       drawer: true,
       tableLoad: true,
       rightDrawer: false,
