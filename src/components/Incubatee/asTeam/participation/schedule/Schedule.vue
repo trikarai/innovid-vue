@@ -542,7 +542,7 @@ export default {
             "/negotiate-mentoring-schedules/" +
             id +
             "/" +
-            this.leftAction,
+            this.leftAction, {},
           {
             headers: auth.getAuthHeader()
           }
