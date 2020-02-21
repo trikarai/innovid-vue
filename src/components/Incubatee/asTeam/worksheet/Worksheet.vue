@@ -25,7 +25,7 @@
           </template>
 
           <template v-slot:item.action="{item}">
-            <v-btn small color="warning" @click="leftAct(item, 'Remove')">
+            <v-btn disabled small color="warning" @click="leftAct(item, 'Remove')">
               <v-icon left>delete</v-icon>Remove
             </v-btn>
           </template>
