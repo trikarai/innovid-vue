@@ -63,9 +63,12 @@
         <v-expansion-panels focusable>
           <v-expansion-panel v-for="(learning,i) in learningList.list" :key="i">
             <v-expansion-panel-header>
-            <template v-slot:actions>
-              <v-chip color="#505050" dark>Expand<v-icon class="ml-3" color="white">keyboard_arrow_down</v-icon></v-chip>
-            </template>
+              <template v-slot:actions>
+                <v-chip color="#505050" dark>
+                  Expand
+                  <v-icon class="ml-3" color="white">keyboard_arrow_down</v-icon>
+                </v-chip>
+              </template>
               {{learning.name}}
             </v-expansion-panel-header>
             <v-expansion-panel-content class="mt-10 ml-4">
@@ -334,7 +337,12 @@ export default {
           config.baseUri +
             "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/worksheets",
+            "/worksheets?programParticipationId=" +
+            this.$route.params.cohortId +
+            "&worksheetFormIds[]=" +
+            this.dataList.worksheetForm.id +
+            "&missionIds[]=" +
+            this.dataList.id,
           {
             headers: auth.getAuthHeader()
           }
