@@ -145,6 +145,7 @@
                         </v-btn>
                       </v-col>
                       <v-col md="10">
+                        <!-- Order : {{field.position}} -->
                         <field-module :field="field" :index="index" :build="buildmode" />
                       </v-col>
                     </v-row>
@@ -323,6 +324,15 @@ export default {
     postformtoParent() {
       this.$emit("postform", this.params);
     },
+    getLastOrder() {
+      var lastPost;
+      if (this.fields.length == 0) {
+        lastPost = 1;
+      } else {
+        lastPost = this.fields.slice(-1)[0].position + 1;
+      }
+      return lastPost;
+    },
     addString() {
       var field = new Object({
         name: "String",
@@ -335,7 +345,7 @@ export default {
         placeholder: "",
         type: "string"
       });
-      field.position = this.fields.length + 1;
+      field.position = this.getLastOrder();
       this.fields.push(field);
       this.snackbar = true;
       this.text = "string Field Added";
@@ -352,7 +362,7 @@ export default {
         placeholder: "",
         type: "textarea"
       });
-      field.position = this.fields.length + 1;
+      field.position = this.getLastOrder();
       this.fields.push(field);
       this.snackbar = true;
       this.text = "textarea Field Added";
@@ -369,7 +379,7 @@ export default {
         placeholder: "",
         type: "integer"
       });
-      field.position = this.fields.length + 1;
+      field.position = this.getLastOrder();
       this.fields.push(field);
       this.snackbar = true;
 
@@ -398,7 +408,7 @@ export default {
         ],
         type: "radio"
       });
-      field.position = this.fields.length + 1;
+      field.position = this.getLastOrder();
       this.fields.push(field);
       this.snackbar = true;
 
@@ -423,7 +433,7 @@ export default {
         ],
         type: "select"
       });
-      field.position = this.fields.length + 1;
+      field.position = this.getLastOrder();
       this.fields.push(field);
       this.snackbar = true;
 
@@ -441,7 +451,7 @@ export default {
         maxSize: 4000,
         type: "attachment"
       });
-      field.position = this.fields.length + 1;
+      field.position = this.getLastOrder();
       this.fields.push(field);
       this.snackbar = true;
 
