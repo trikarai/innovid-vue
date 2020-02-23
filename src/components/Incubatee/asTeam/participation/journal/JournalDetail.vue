@@ -215,6 +215,7 @@ export default {
   },
   components: { RenderForm, RenderRecord, CommentModule },
   created: function() {
+    window.sessionStorage.setItem("uploadMode", "team");
     this.getMissionDetail();
   },
   mounted: function() {

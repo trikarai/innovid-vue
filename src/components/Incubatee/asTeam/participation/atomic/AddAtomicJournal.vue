@@ -211,6 +211,7 @@ export default {
     };
   },
   created() {
+    window.sessionStorage.setItem("uploadMode", "team");
     if (this.$route.params.journalId) {
       this.root = false;
       this.branchUri = "/" + this.$route.params.journalId;
