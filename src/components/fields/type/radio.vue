@@ -10,7 +10,8 @@
         :value="option.id"
       ></v-radio>
     </v-radio-group>
-    <!-- {{option}} -->
+    <!-- <pre>{{option}}</pre>
+    <pre>{{field.options}}</pre> -->
   </v-col>
 </template>
 <script>
@@ -34,6 +35,7 @@ export default {
     if (this.modeReload) {
       this.option = this.field.selectedOption.id;
     }
+    this.field.options = this.reOrderField(this.field.options);
   },
   mounted() {
     if (this.field.required) {
