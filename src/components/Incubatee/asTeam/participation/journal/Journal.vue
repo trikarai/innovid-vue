@@ -1,7 +1,7 @@
 <template>
   <v-container extend grid-list-xs>
     <v-row>
-      <v-col>
+      <v-col md="6" lg="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
