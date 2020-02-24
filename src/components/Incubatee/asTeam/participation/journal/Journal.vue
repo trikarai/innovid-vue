@@ -10,7 +10,7 @@
           class="elevation-1"
         >
           <template v-slot:item.worksheet="{item}">
-            <v-btn
+            <!-- <v-btn
               class="elevation-0 mr-2"
               fab
               x-small
@@ -18,15 +18,23 @@
               @click="openDetail(item.mission.id, item.id, item.worksheet.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn>
+            </v-btn>-->
             {{item.worksheet.name}}
           </template>
 
-          <!-- <template v-slot:item.action="{item}"> -->
+          <template v-slot:item.action="{item}">
+            <v-btn
+              class="elevation-0 mr-2"
+              color="primary"
+              small
+              @click="openDetail(item.mission.id, item.id, item.worksheet.id)"
+            >
+              <v-icon>zoom_in</v-icon>
+            </v-btn>
             <!-- <v-btn small color="warning" @click="leftAct(item, 'Remove')">
               <v-icon left>delete</v-icon>Remove
-            </v-btn> -->
-          <!-- </template> -->
+            </v-btn>-->
+          </template>
         </v-data-table>
       </v-col>
     </v-row>
