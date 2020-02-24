@@ -1,7 +1,7 @@
 <template>
   <v-container extend grid-list-xs>
     <v-row name="one">
-      <v-col cols="12" sm="4" md="4" xs="12">
+      <v-col cols="12" sm="4" md="5" xs="12">
         <v-card @click="$router.push({path: '/incubatee/profile'})">
           <v-card-title style="word-break: break-word;" primary-title>
             <v-col style="max-width:100% !important" md="5">
@@ -19,7 +19,7 @@
           </v-card-title>
         </v-card>
       </v-col>
-      <v-col cols="12" sm="4" md="4" xs="12">
+      <v-col cols="12" sm="4" md="5" xs="12">
         <v-card @click="$router.push({path: '/incubatee/membership'})">
           <v-card-title style="word-break: break-word;" primary-title>
             <v-col style="max-width:100% !important" md="5">
@@ -53,7 +53,7 @@
           v-else
         >
           <template v-slot:header>
-            <v-toolbar class="kastemtoolbar mb-2" color="grey darken-5" dark flat dense>
+            <v-toolbar class="kastemtoolbar mb-2" color="grey lighten-1" dark flat dense>
               <v-toolbar-title>Incubator Program</v-toolbar-title>
             </v-toolbar>
           </template>
@@ -106,7 +106,7 @@
           :loading="participatedLoad"
         >
           <template v-slot:header>
-            <v-toolbar class="kastemtoolbar mb-2" color="grey darken-5" dark flat dense>
+            <v-toolbar class="kastemtoolbar mb-2" color="grey lighten-1" dark flat dense>
               <v-toolbar-title>Participated Program</v-toolbar-title>
             </v-toolbar>
           </template>
@@ -168,7 +168,7 @@
       <v-col>
         <v-data-iterator hide-default-footer :items="filterRegistration(registeredPrograms.list)">
           <template v-slot:header>
-            <v-toolbar class="kastemtoolbar mb-2" color="grey darken-5" dark flat dense>
+            <v-toolbar class="kastemtoolbar mb-2" color="grey lighten-1" dark flat dense>
               <v-toolbar-title>Registered Program</v-toolbar-title>
             </v-toolbar>
           </template>
@@ -209,7 +209,7 @@
           v-else
         >
           <template v-slot:header>
-            <v-toolbar class="kastemtoolbar mb-2" color="grey darken-5" dark flat dense>
+            <v-toolbar class="kastemtoolbar mb-2" color="grey lighten-1" dark flat dense>
               <v-toolbar-title>Available Program</v-toolbar-title>
             </v-toolbar>
           </template>
@@ -446,7 +446,7 @@ export default {
   /* top: 0; */
   right: 0;
   border-top: 40px solid var(--v-kastemkolor-base);
-  border-left: 40px solid rgb(158, 158, 158);
+  border-left: 40px solid #bdbdbd;
   width: 54%;
 }
 </style>
