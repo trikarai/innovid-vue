@@ -3,7 +3,7 @@
     <v-row>
       <v-col md="8" xs="12">
         <v-btn color="primary" router to="/incubatee/profile-form">
-          <v-icon left>add</v-icon>Add Profiles
+          <v-icon left>add</v-icon>Add Data
         </v-btn>
       </v-col>
     </v-row>
