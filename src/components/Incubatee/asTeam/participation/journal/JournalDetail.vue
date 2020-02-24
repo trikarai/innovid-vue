@@ -33,7 +33,7 @@
               </v-btn>
             </template>
             <template v-if="!editWS">
-              <v-btn color="primary" small v-if="!updateJ" @click="updateJournal" disabled>
+              <v-btn color="primary" small v-if="!updateJ" @click="updateJournal">
                 <v-icon small left>edit</v-icon>Update Journal
               </v-btn>
               <v-btn color="warning" small @click="updateJ = !updateJ" v-else>
@@ -81,7 +81,7 @@
                   :outlined="!mode"
                   @click="createReloadWorksheet"
                 >
-                  <v-icon left v-if="mode" small>star</v-icon>Reload Existing Worksheet
+                  <v-icon left v-if="mode" small>star</v-icon>Replace With Existing Worksheet
                 </v-btn>
                 <v-btn
                   small
@@ -123,7 +123,7 @@
             </v-row>
             <v-row v-if="!is_newWorksheet">
               <v-col v-if="is_reloadWorksheet">
-                <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
+                <!-- <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field> -->
               </v-col>
               <v-col md="12" v-if="is_reloadWorksheet">
                 <render-form
@@ -167,6 +167,7 @@ export default {
       mode: false,
       reloadTrue: true,
       is_newWorksheet: true,
+      is_updateAtom: true,
       is_reloadWorksheet: false,
       selectWorksheet: false,
       exworksheetId: "",
@@ -319,9 +320,15 @@ export default {
         params["name"] = this.newWsName;
         this.submitEdit(params);
       } else {
-        params["name"] = this.worksheetName;
-        params["worksheetFormId"] = this.worksheetData.worksheetForm.id;
-        this.submitUpdate(params);
+        if (this.is_updateAtom == false) {
+          params["worksheetId"] = this.exworksheetId;
+          params["missionId"] = this.dataList.id;
+          this.submitUpdate(params);
+        } else {
+          params["worksheetFormId"] = this.dataList.worksheetForm.id;
+          params["name"] = this.worksheetName;
+          this.submitUpdateAtom(params);
+        }
       }
       // this.params = params;
     },
@@ -350,7 +357,35 @@ export default {
     },
     submitUpdate(params) {
       this.params = params;
-      this.worksheetDataLoad2 = true;
+      this.worksheetDataLoad = true;
+      this.axios
+        .patch(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/journals/" +
+            this.$route.params.journalId,
+          params,
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(() => {
+          // this.refreshData();
+          this.$router.go(-1);
+        })
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
+        .finally(() => {
+          this.worksheetDataLoad = false;
+        });
+    },
+    submitUpdateAtom(params) {
+      this.params = params;
+      this.worksheetDataLoad = true;
       this.axios
         .patch(
           config.baseUri +
@@ -366,11 +401,12 @@ export default {
           }
         )
         .then(() => {
-          this.refreshData();
+          // this.refreshData();
+          this.$router.go(-1);
         })
         .catch(() => {})
         .finally(() => {
-          this.worksheetDataLoad2 = false;
+          this.worksheetDataLoad = false;
         });
     },
     editWorksheet() {
@@ -383,8 +419,10 @@ export default {
       this.editWS = false;
     },
     createNewWorksheet() {
+      this.worksheetData = {};
       this.mode = false;
       this.is_newWorksheet = true;
+      this.is_updateAtom = true;
       this.is_reloadWorksheet = false;
       this.selectWorksheet = false;
       this.getDataList();
@@ -393,6 +431,7 @@ export default {
       this.mode = true;
       this.exworksheetId = "";
       this.is_newWorksheet = false;
+      this.is_updateAtom = false;
       this.is_reloadWorksheet = false;
       this.selectWorksheet = true;
       this.getWorksheetList();
@@ -424,6 +463,8 @@ export default {
     refreshData() {
       this.fields = [];
       this.editWS = false;
+      this.updateJ = false;
+      this.getMissionDetail();
       this.getDataSingle();
     }
   }
