@@ -22,6 +22,7 @@
     </v-row>-->
     <v-row>
       <v-col>
+        <pre>  {{dataList.list}}</pre>
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -80,7 +81,13 @@
                   </v-btn>
                 </v-row>
                 <v-row>
-                  <v-btn v-if="!item.published" class="mt-2" small color="primary" @click="openEdit(item.id)">
+                  <v-btn
+                    v-if="!item.published"
+                    class="mt-2"
+                    small
+                    color="primary"
+                    @click="openEdit(item.id)"
+                  >
                     <v-icon small>edit</v-icon>Edit
                   </v-btn>
                 </v-row>
@@ -129,6 +136,11 @@
         </v-card-title>
         <v-card-text v-if="loader">
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
+        </v-card-text>
+        <v-card-text v-if="dataSingle.previousMission != null">
+          <b>Mission Parent</b>
+          <br />
+          {{dataSingle.previousMission.name}}
         </v-card-text>
         <v-card-text>
           <b>Name</b>
