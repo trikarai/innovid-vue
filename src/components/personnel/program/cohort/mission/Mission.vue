@@ -22,7 +22,7 @@
     </v-row>-->
     <v-row>
       <v-col>
-        <pre>  {{dataList.list}}</pre>
+        <!-- <pre>  {{dataList.list}}</pre> -->
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -46,9 +46,10 @@
             <v-icon large v-if="item.published" color="green darken-1">check</v-icon>
             <v-icon large v-else color="red darken-1">remove</v-icon>
           </template>
-          <!-- <template v-slot:item.sub="{item}">
+          <template v-slot:item.parent="{item}">
             <v-icon v-if="item.previousMission === null">stars</v-icon>
-          </template>-->
+            <template v-else>{{item.previousMission.name}}</template>
+          </template>
           <template v-slot:item.action="{item}">
             <v-row>
               <v-row>
@@ -195,6 +196,12 @@ export default {
         {
           text: "Published",
           value: "published",
+          sortable: false,
+          align: "right"
+        },
+        {
+          text: "Parent Mission",
+          value: "parent",
           sortable: false,
           align: "right"
         },
