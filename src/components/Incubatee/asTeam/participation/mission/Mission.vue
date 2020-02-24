@@ -51,7 +51,9 @@
                   <span style="color:#999">Main Mission</span>
                 </v-chip>
               </v-card-text>
-              <v-card-text class="subtitle">{{data.description}}</v-card-text>
+              <v-card-text class="subtitle">
+                <span class="textlimit">{{data.description}}</span>
+              </v-card-text>
               <v-card-text v-if="data.journal.length != 0">
                 <!-- {{data.journal}} -->
                 <v-select
@@ -392,5 +394,15 @@ export default {
   position: relative;
   bottom: 23px;
   left: 13px;
+}
+</style>
+
+<style scoped>
+.textlimit {
+  display: block;
+  max-width: 480px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>
