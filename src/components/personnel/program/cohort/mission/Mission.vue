@@ -81,7 +81,7 @@
                     <v-icon small>books</v-icon>Learning Material
                   </v-btn>
                 </v-row>
-                <v-row>
+                <!-- <v-row>
                   <v-btn
                     v-if="!item.published"
                     class="mt-2"
@@ -90,6 +90,11 @@
                     @click="openEdit(item.id)"
                   >
                     <v-icon small>edit</v-icon>Edit
+                  </v-btn>
+                </v-row> -->
+                <v-row>
+                  <v-btn class="mt-2" small color="primary" @click="openEdit(item.id)">
+                    <v-icon small left>edit</v-icon>Edit
                   </v-btn>
                 </v-row>
               </v-col>
