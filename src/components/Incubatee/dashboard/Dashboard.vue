@@ -128,19 +128,14 @@
                   <v-list dense>
                     <v-list-item>
                       <v-list-item-content>
-                        <v-btn
-                          color="primary"
-                          router
-                          :to="'/incubatee/team/' + teamId + '/participation/' + item.id + '/mission'"
-                        >Mission</v-btn>
+                        <v-btn @click="gotoMission(teamId, item, 'mission')" color="primary">Mission</v-btn>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item>
                       <v-list-item-content>
                         <v-btn
                           color="primary"
-                          router
-                          :to="'/incubatee/team/' + teamId + '/participation/' + item.id + '/schedule'"
+                          @click="gotoMission(teamId, item, 'schedule')"
                         >Mentoring</v-btn>
                       </v-list-item-content>
                     </v-list-item>
@@ -431,6 +426,13 @@ export default {
         .finally(() => {
           this.tableLoad3 = false;
         });
+    },
+    gotoMission(teamId, item, uri) {
+      bus.$emit("changeNavbarParticipant", item.id);
+      this.$router.push({
+        path:
+          "/incubatee/team/" + teamId + "/participation/" + item.id + "/" + uri
+      });
     }
   }
 };
