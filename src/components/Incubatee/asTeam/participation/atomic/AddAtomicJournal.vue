@@ -29,7 +29,7 @@
               <span style="color:#999">Main Mission</span>
             </v-chip>
           </v-card-text>
-          <v-card-actions>
+          <!-- <v-card-actions>
             <v-btn
               v-if="dataList.previousMission !== null"
               text
@@ -45,7 +45,7 @@
               :disabled="dataList.previousMission == null"
               router
             >Prev Mission</v-btn>
-          </v-card-actions>
+          </v-card-actions> -->
         </v-card>
       </v-col>
       <v-col md="12 mt-5" class="title">Learning Material</v-col>
@@ -54,11 +54,15 @@
       </v-col>
       <v-col
         cols="12"
-        md="8"
-        lg="8"
+        md="6"
+        lg="6"
         xs="12"
         v-if="learningList.total == 0"
-      >No Learning Material Added</v-col>
+      >
+        <v-alert dense type="info" :value="true">
+          No Learning Material Added
+        </v-alert>    
+      </v-col>
       <v-col cols="12" md="12" lg="12" xs="12" v-else>
         <v-expansion-panels focusable>
           <v-expansion-panel v-for="(learning,i) in learningList.list" :key="i">
