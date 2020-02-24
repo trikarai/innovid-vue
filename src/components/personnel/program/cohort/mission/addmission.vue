@@ -38,9 +38,11 @@
                     v-model="params.position"
                     :counter="25"
                     maxlength="25"
+                    type="number"
+                    :rules="rulesRequired"
                   ></v-text-field>
                   <v-textarea
-                    class="mt-5"
+                    class="mt-8"
                     :disabled="view"
                     label="Description"
                     v-model="params.description"
