@@ -180,6 +180,12 @@ export default {
           disabled: false
         },
         {
+          icon: "assignment",
+          text: "Worksheet",
+          route: "/personnel/worksheet-forms",
+          disabled: false
+        },
+        {
           icon: "contacts",
           text: "Profile Form",
           route: "/personnel/profile-forms",
@@ -189,12 +195,6 @@ export default {
           icon: "group_work",
           text: "Team Profile Form",
           route: "/personnel/team-profile-forms",
-          disabled: false
-        },
-        {
-          icon: "assignment",
-          text: "Worksheet",
-          route: "/personnel/worksheet-forms",
           disabled: false
         },
         {
