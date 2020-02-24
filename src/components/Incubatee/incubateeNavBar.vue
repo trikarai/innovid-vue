@@ -35,7 +35,7 @@
       <div class="garis"></div>
     </div>
 
-    <v-navigation-drawer app v-model="drawer" :mini-variant="miniVariant" color="sidebar">
+    <v-navigation-drawer height="100%" app v-model="drawer" :mini-variant="miniVariant" color="sidebar">
       <!-- list head-->
       <v-list class="pa-1">
         <v-list-item v-if="miniVariant" @click.stop="miniVariant = !miniVariant">
