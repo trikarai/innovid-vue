@@ -54,9 +54,13 @@
               <v-card-text class="subtitle">
                 <span class="textlimit">{{data.description}}</span>
               </v-card-text>
+              <v-card-text v-if="journalCreateLoading">
+                <v-skeleton-loader v-if="data.journal.length == 0" max-width="350" type="list-item"></v-skeleton-loader>
+              </v-card-text>
               <v-card-text v-if="data.journal.length != 0">
                 <!-- {{data.journal}} -->
                 <v-select
+                  :loading="journalCreateLoading"
                   dense
                   label="Choose a journal"
                   :items="data.journal"
@@ -66,10 +70,25 @@
                   return-object
                   v-model="selectedJournalinMission[index]"
                   @change="getBranchJournal($event, data.id)"
-                  append-outer-icon="zoom_in"
-                  @click:append-outer="openJournal(selectedJournalinMission[index])"
+                  append-icon="zoom_in"
+                  append-outer-icon="autorenew"
+                  @click:append="openJournal(selectedJournalinMission[index])"
+                  @click:append-outer="refreshRootJournal"
                 ></v-select>
               </v-card-text>
+              <v-card-text v-else>
+                <template v-if="!journalCreateLoading">
+                  <template
+                    v-if="data.previousMission != null"
+                  >No Journal Data Found for this mission in selected parent journal</template>
+                  <template v-else>
+                    <v-btn color="success" icon @click="refreshRootJournal()">
+                      <v-icon>autorenew</v-icon>
+                    </v-btn>No Journal Data Found for this main mission
+                  </template>
+                </template>
+              </v-card-text>
+
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <!-- <v-btn
@@ -169,7 +188,8 @@ export default {
       edit: false,
       leftId: "",
       leftName: "",
-      leftAction: ""
+      leftAction: "",
+      journalCreateLoading: false
     };
   },
   watch: {
@@ -268,7 +288,7 @@ export default {
         });
     },
     getRootMissionJurnal() {
-      // this.tableLoad = true;
+      this.journalCreateLoading = true;
       this.axios
         .get(
           config.baseUri +
@@ -295,7 +315,7 @@ export default {
         })
         .catch(() => {})
         .finally(() => {
-          // this.tableLoad = false;
+          this.journalCreateLoading = false;
         });
     },
     openJournal(journal) {
@@ -315,10 +335,8 @@ export default {
       });
     },
     getBranchJournal(event, missionId) {
-      // this.tableLoad = true;
-
+      this.journalCreateLoading = true;
       this.resetElement(missionId);
-
       this.dataList.list.forEach(element => {
         if (
           element.previousMission != null &&
@@ -327,7 +345,6 @@ export default {
           element["selectedParentJournal"] = event;
         }
       });
-
       this.axios
         .get(
           config.baseUri +
@@ -356,7 +373,7 @@ export default {
         })
         .catch(() => {})
         .finally(() => {
-          // this.tableLoad = false;
+          this.journalCreateLoading = false;
         });
     },
     resetElement(parentMissionId) {
@@ -369,6 +386,12 @@ export default {
           element.journal = new Array();
         }
       });
+    },
+    refreshRootJournal() {
+      this.getRootMissionJurnal();
+    },
+    refreshBranchJournal() {
+      this.getBranchJournal();
     }
   }
 };
