@@ -32,7 +32,8 @@
 
         <v-card-actions>
           <!--generic button-->
-          <v-btn block v-if="!modeAtom" color="primary" :disabled="!valid" @click="sendtoParent">Submit</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn v-if="!modeAtom" color="primary" :disabled="!valid" @click="sendtoParent">Submit</v-btn>
           <!--atomic journal button-->
           <v-btn
             v-if="modeAtom"
