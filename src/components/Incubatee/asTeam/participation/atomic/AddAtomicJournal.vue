@@ -98,7 +98,7 @@
             </v-btn>
           </v-col>
 
-          <v-col v-if="selectWorksheet">
+          <v-col class="px-5" md="6" v-if="selectWorksheet">
             <v-select
               class="ml-0"
               v-model="exworksheetId"
