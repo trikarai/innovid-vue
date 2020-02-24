@@ -76,15 +76,16 @@
                   @click:append-outer="refreshRootJournal"
                 ></v-select>
               </v-card-text>
-              <v-card-text v-else>
+              <v-card-text class="grey--text text--lighten-1 caption" v-else>
                 <template v-if="!journalCreateLoading">
                   <template
                     v-if="data.previousMission != null"
                   >No Journal Data Found for this mission in selected parent journal</template>
                   <template v-else>
+                    No Journal Data Found for this main mission
                     <v-btn color="success" icon @click="refreshRootJournal()">
                       <v-icon>autorenew</v-icon>
-                    </v-btn>No Journal Data Found for this main mission
+                    </v-btn>
                   </template>
                 </template>
               </v-card-text>
