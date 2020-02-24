@@ -58,6 +58,7 @@ import SysAdminIncubator from '../components/sysadmin/incubator/Incubator';
 
 import PersonnelLogin from '../views/login/Personnel';
 import PersonnelNav from '../views/main/Personnel';
+import PersonnelAccount from '../components/personnel/account/PersonnelAccount';
 import PersonnelPersonnels from '../components/personnel/personnel/Personnel';
 import PersonnelFounders from '../components/personnel/founder/Founder';
 import PersonnelWorksheet from '../components/personnel/worksheet/Worksheet';
@@ -202,6 +203,16 @@ const routes = [
       requiredAuth: true, personnelAuth: true, sysadminAuth: false
     },
     children: [
+      {
+        path: "/personnel/account",
+        component: PersonnelAccount,
+        name: " My Account Personnel",
+        meta: {
+          text: " My Account",
+          level: 0,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
       {
         path: "/personnel/personnel",
         component: PersonnelPersonnels,

@@ -74,6 +74,18 @@
       <v-divider></v-divider>
       <v-list>
         <!--coordinator menu-->
+        <v-list-item router to="/personnel/account">
+          <v-list-item-action>
+            <v-icon color="#676767">account_circle</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="grey--text">My Account</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-divider></v-divider>
+      <v-list>
+        <!--coordinator menu-->
         <v-list-item
           v-for="link in coordinators"
           :key="link.text"
