@@ -462,7 +462,7 @@ export default {
     },
     duplicateEvent(index, field) {
       var item = JSON.parse(JSON.stringify(field));
-      item.position = this.fields.length + 1;
+      item.position = this.getLastOrder();
       this.fields.push(item);
       this.snackbar = true;
       this.text = "Field Duplicated";
