@@ -43,7 +43,7 @@
     <v-content>
       <section>
         <v-img class="imgkastem" src="/img/mainbanner.jpg">
-        <div class="container" style="margin-top:230px;">
+        <div class="container" style="margin-top:190px;">
           <v-row>
               <v-col cols="12" xs="6" sm="6">
                 <h1>Can you effectively track & manage all innovation innitiatives inside your organization?</h1>
