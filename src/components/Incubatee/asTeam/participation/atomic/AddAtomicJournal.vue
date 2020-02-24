@@ -83,7 +83,7 @@
       <v-col md="12 mt-5" class="title">Worksheet</v-col>
       <v-col cols="12" md="12" lg="12" xs="12">
         <v-card class="pa-3 mt-3">
-          <v-col md="6">
+          <v-col class="px-5">
             <v-btn
               small
               class="ma-2 mt-4 ml-0"
@@ -115,8 +115,8 @@
           <v-row v-if="!is_newWorksheet">
             <v-col class="my-0 py-0" md="12" v-if="is_reloadWorksheet">
               <v-row>
-                <v-col>
-                  <v-text-field label="Worksheet Name" v-model="worksheetName" outlined></v-text-field>
+                <v-col md="6" lg="6" xs="12">
+                  <v-text-field class="mx-5" label="Worksheet Name" v-model="worksheetName" outlined></v-text-field>
                 </v-col>
               </v-row>
               <render-form
@@ -132,8 +132,8 @@
           <v-row class="my-0 py-0" v-if="is_newWorksheet">
             <v-col class="my-0 py-0" md="12">
               <v-row>
-                <v-col>
-                  <v-text-field label="Worksheet Name" v-model="worksheetName" outlined></v-text-field>
+                <v-col md="6" lg="6" xs="12">
+                  <v-text-field class="mx-5" label="Worksheet Name" v-model="worksheetName" outlined></v-text-field>
                 </v-col>
               </v-row>
               <render-form
