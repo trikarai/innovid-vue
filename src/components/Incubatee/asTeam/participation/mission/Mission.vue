@@ -95,12 +95,13 @@
                   <v-icon small left>search</v-icon>View Detail
                 </v-btn>
                 <template v-else>
+                  <!-- {{data.selectedParentJournal.id}} -->
                   <v-btn
                     v-if="data.selectedParentJournal"
                     color="primary"
                     small
                     router
-                    :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom/'+ data.selectedParentJournal "
+                    :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom/'+ data.selectedParentJournal.id "
                   >
                     <v-icon small left>search</v-icon>View Detail
                   </v-btn>
