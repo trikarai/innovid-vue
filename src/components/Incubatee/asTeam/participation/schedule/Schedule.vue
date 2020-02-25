@@ -7,12 +7,12 @@
           router
           :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mentoring' "
         >
-          <v-icon left>add</v-icon>Propose New Mentoring
+          <v-icon left>add</v-icon>Propose New Mentoring Schedule to Mentor
         </v-btn>
       </v-col>
       <v-col md="6">
         <v-btn color="primary" @click="openIncidental()">
-          <v-icon left>rate_review</v-icon>Report Incidental Mentoring
+          <v-icon left>rate_review</v-icon>Add Schedule that Mentor have Agreed
         </v-btn>
       </v-col>
     </v-row>
@@ -69,9 +69,9 @@
               color="primary"
               @click="openDetail(item.id)"
             >
-              <v-icon small left>assignment</v-icon>Report
+              <v-icon small left>assignment</v-icon>Submit Report
             </v-btn>
-            <template v-else>Report Submited</template>
+            <template v-else>Report Submitted</template>
           </template>
         </v-data-table>
       </v-col>
