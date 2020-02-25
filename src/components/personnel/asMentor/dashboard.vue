@@ -75,7 +75,11 @@
               >
                 <v-icon left>today</v-icon>Requested Mentoring
               </v-btn>
-              <v-btn class="mr-2" color="primary" :to="'/personnel/mentor/' + item.id +'/schedule'">
+              <v-btn
+                class="mr-2"
+                color="primary"
+                :to="'/personnel/mentor/' + item.id + '/'+ item.program.id +'/schedule'"
+              >
                 <v-icon left>how_to_vote</v-icon>Scheduled Mentoring
               </v-btn>
             </template>

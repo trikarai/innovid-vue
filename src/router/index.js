@@ -486,7 +486,7 @@ const routes = [
         }
       },
       {
-        path: "/personnel/mentor/:mentorshipId/schedule",
+        path: "/personnel/mentor/:mentorshipId/:programId/schedule",
         component: MentorSchedule,
         name: "Mentor Schedule",
         meta: {
