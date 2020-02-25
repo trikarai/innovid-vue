@@ -210,19 +210,18 @@
           </template>
           <template v-slot:no-data>
             <v-row class="mt-5">
-              <v-col md="2"></v-col>
-              <v-col md="4">
-                <v-img width="300" src="/img/no-data-program.png"></v-img>
+              <v-col md="6" lg="6" xs="12" sm="12">
+                <v-img class="mx-auto" width="300" src="/img/no-data-program.png"></v-img>
               </v-col>
-              <v-col md="4">
+              <v-col md="6" lg="6" xs="12" sm="12">
                 <v-card v-if="teamId == '' " style="margin-top:27px;" flat>
                   <v-card-title>Create team first</v-card-title>
                   <v-card-subtitle>You can join a program if you have a team</v-card-subtitle>
                 </v-card>
-                <v-card v-else style="margin-top:27px;" flat>
+                <v-card class="mx-auto" v-else style="margin-top:57px;" flat>
                   <v-card-title>No Program Available</v-card-title>
                   <v-card-subtitle class="grey--text">
-                    You have already join all available program or the coordinator hasn't made a program yet
+                    You have already join all available program <br>or the coordinator hasn't made a program yet
                     <template
                       v-if="user.data.teamMemberships.length == 0"
                     >, create team first before join a program</template>
@@ -236,7 +235,6 @@
                   </v-card-text>
                 </v-card>
               </v-col>
-              <v-col md="2"></v-col>
             </v-row>
           </template>
           <template v-slot:default="props">
@@ -449,6 +447,6 @@ export default {
   right: 0;
   border-top: 40px solid var(--v-kastemkolor-base);
   border-left: 40px solid #bdbdbd;
-  width: 54%;
+  width: 24%;
 }
 </style>
