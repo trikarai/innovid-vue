@@ -140,6 +140,9 @@ export default {
     RenderForm,
     RenderRecord
   },
+  created() {
+    window.sessionStorage.setItem("uploadMode", "team");
+  },
   mounted() {
     this.getDataList();
   },
