@@ -33,7 +33,7 @@
                     required
                   ></v-text-field>
                   <v-text-field
-                    :disabled="view"
+                    :disabled="edit"
                     label="Position"
                     v-model="params.position"
                     :counter="25"
