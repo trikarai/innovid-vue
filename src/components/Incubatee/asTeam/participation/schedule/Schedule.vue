@@ -300,7 +300,7 @@
                   </template>
                   <v-time-picker
                     format="24hr"
-                    color="blue"
+                    color="primary"
                     :locale="$vuetify.lang.current"
                     v-model="time"
                   ></v-time-picker>
