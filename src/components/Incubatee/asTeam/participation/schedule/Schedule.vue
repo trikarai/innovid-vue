@@ -424,8 +424,8 @@
             </v-row>
           </v-form>
         </v-card-text>
-        <v-card-actions>
-          <v-btn :disabled="!valid" color="primary" @click="submitIncidentalMentoring">Report</v-btn>
+        <v-card-actions class="pa-5">
+          <v-btn block :disabled="!valid" color="primary" @click="submitIncidentalMentoring">Report</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
