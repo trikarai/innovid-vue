@@ -45,11 +45,7 @@
       <!-- list head-->
       <v-list class="pa-1">
         <template v-if="!failed_image">
-          <v-list-item v-if="!miniVariant">
-            <v-list-item-content>
-              <v-img :src="cPicture" contain v-on:error="onImgError" />
-            </v-list-item-content>
-          </v-list-item>
+              <v-img class="logoinc" max-width="180" v-if="!miniVariant" :src="cPicture" contain v-on:error="onImgError" />
         </template>
         <v-list-item v-if="miniVariant" @click.stop="miniVariant = !miniVariant">
           <v-list-item-action>
@@ -73,6 +69,7 @@
       <v-list v-if="teamMemberships.total != 0">
         <v-list-item>
           <v-select
+            v-if="!miniVariant"
             :loading="teamLoad"
             label="Team"
             :items="teamMemberships.list"
@@ -84,6 +81,7 @@
         </v-list-item>
         <v-list-item>
           <v-select
+            v-if="!miniVariant"
             label="Program"
             :loading="participationLoad"
             :items="filterActiveParticipation(participationList.list)"
@@ -297,7 +295,7 @@
           </v-list-item-avatar>
           <v-list-item-content></v-list-item-content>
           <v-list-item-action>
-            <v-btn dark small color="accent" @click="dialogHelp = !dialogHelp">
+            <v-btn dark small color="primary" @click="dialogHelp = !dialogHelp">
               <span>Support</span>
             </v-btn>
           </v-list-item-action>
@@ -326,14 +324,17 @@
     <v-dialog
       v-model="dialogHelp"
       :overlay="false"
-      max-width="500px"
+      max-width="300px"
       transition="dialog-transition"
     >
-      <v-card>
-        <v-card-title primary-title>Technical Support</v-card-title>
-        <v-card-title>
-          <a href="mailto:support@innov.id">support@innov.id</a>
-        </v-card-title>
+      <v-card class="mx-auto">
+        <v-list-item>
+          <v-list-item-avatar color="transparent"><v-icon class="pl-3" right>mail</v-icon></v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-subtitle>Technical Support</v-list-item-subtitle>
+            <v-list-item-title class="title"><a style="text-decoration: none" href="mailto:support@innov.id">support@innov.id</a></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-card>
     </v-dialog>
   </nav>
@@ -558,4 +559,9 @@ export default {
 };
 </script>
 <style scoped>
+.logoinc {
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 </style>
