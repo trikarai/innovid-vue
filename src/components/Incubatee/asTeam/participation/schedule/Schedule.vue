@@ -17,7 +17,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>Schedule</v-col>
+      <v-col>Mentoring Agenda: Approved Schedule</v-col>
       <!-- <v-col><pre>{{dataList.list}}</pre></v-col> -->
     </v-row>
     <v-row>
@@ -71,6 +71,7 @@
             >
               <v-icon small left>assignment</v-icon>Report
             </v-btn>
+            <template v-else>Report Submited</template>
           </template>
         </v-data-table>
       </v-col>
@@ -79,7 +80,7 @@
     <!-- <v-divider></v-divider> -->
 
     <v-row>
-      <v-col>Negotiate Schedule</v-col>
+      <v-col>Mentoring Agenda: Waiting for Schedule Approval</v-col>
     </v-row>
     <v-row>
       <v-col>
