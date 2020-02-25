@@ -44,6 +44,13 @@
     >
       <!-- list head-->
       <v-list class="pa-1">
+        <template v-if="!failed_image">
+          <v-list-item v-if="!miniVariant">
+            <v-list-item-content>
+              <v-img :src="cPicture" contain v-on:error="onImgError" />
+            </v-list-item-content>
+          </v-list-item>
+        </template>
         <v-list-item v-if="miniVariant" @click.stop="miniVariant = !miniVariant">
           <v-list-item-action>
             <v-icon>chevron_right</v-icon>
@@ -346,6 +353,8 @@ export default {
   },
   data() {
     return {
+      failed_image: false,
+      incubatorIdentifier: "",
       dialogHelp: false,
       drawer: true,
       tableLoad: true,
@@ -432,6 +441,7 @@ export default {
     };
   },
   created() {
+    this.incubatorIdentifier = localStorage.getItem("incubator");
     this.user = JSON.parse(auth.getAuthData());
     // this.teamMemberships = this.user.data.lastTeamMembership[0];
     // this.teamId = this.user.data.teamMemberships[0].team.id;
@@ -460,9 +470,19 @@ export default {
     //   this.getParticipations();
     // }
   },
+  computed: {
+    cPicture() {
+      return this.failed_image
+        ? "/img/incubator-logo/bara.png"
+        : "/img/incubator-logo/" + this.incubatorIdentifier + ".png";
+    }
+  },
   methods: {
     goback: function() {
       this.$router.go(-1);
+    },
+    onImgError() {
+      this.failed_image = true;
     },
     switchTheme: function() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;

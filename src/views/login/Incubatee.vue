@@ -57,12 +57,18 @@
                     ></v-text-field>
                   </v-row>
                   <template v-if="!isEdge">
-                  <v-chip dense color="red" class="white--text" type="error" v-if="capsText != ''">
-                    <v-avatar left>
-                      <v-icon small>priority_high</v-icon>
-                    </v-avatar>
-                    {{capsText}}
-                  </v-chip>
+                    <v-chip
+                      dense
+                      color="red"
+                      class="white--text"
+                      type="error"
+                      v-if="capsText != ''"
+                    >
+                      <v-avatar left>
+                        <v-icon small>priority_high</v-icon>
+                      </v-avatar>
+                      {{capsText}}
+                    </v-chip>
                   </template>
                   <v-row></v-row>
                   <v-row justify-end class="mt-2">
@@ -128,8 +134,7 @@ export default {
       activate: false
     };
   },
-  watch: {
-  },
+  watch: {},
   created: function() {},
   mounted: function() {
     this.isEdge = this.$browserDetect.isEdge;
@@ -161,6 +166,10 @@ export default {
           authUser.token = res.data.credentials.token;
           authUser.valid_until = res.data.credentials.valid_until;
           window.localStorage.setItem("lbUser", JSON.stringify(authUser));
+          window.localStorage.setItem(
+            "incubator",
+            this.params.incubatorIdentifier
+          );
 
           this.$router.replace("/incubatee/dashboard");
         })
