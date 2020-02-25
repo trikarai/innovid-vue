@@ -10,11 +10,6 @@
           <v-icon left>add</v-icon>Propose New Mentoring
         </v-btn>
       </v-col>
-      <v-col md="6">
-        <v-btn color="primary" @click="openIncidental()">
-          <v-icon left>rate_review</v-icon>Report Incidental Mentoring
-        </v-btn>
-      </v-col>
     </v-row>
     <v-row>
       <v-col>Schedule</v-col>
@@ -323,110 +318,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog
-      v-model="dialogIncidental"
-      scrollable
-      persistent
-      :overlay="true"
-      max-width="500px"
-      transition="dialog-transition"
-    >
-      <v-card :loading="loader">
-        <v-card-title>
-          <p class="text-capitalize">Report Incidental Mentoring</p>
-          <v-spacer></v-spacer>
-          <v-btn icon color="primary" @click="dialogIncidental = false">
-            <v-icon>close</v-icon>
-          </v-btn>
-        </v-card-title>
-        <v-card-text>
-          <v-form ref="form" v-model="valid">
-            <v-row>
-              <v-col md="12">
-                <v-select
-                  :loading="mentoringLoad"
-                  :items="mentorings.list"
-                  v-model="incidentalParams.mentoringId"
-                  label="Mentoring Event"
-                  item-text="name"
-                  item-value="id"
-                ></v-select>
-              </v-col>
-              <v-col md="12">
-                <v-autocomplete
-                  :loading="mentorLoad"
-                  :hide-no-data="true"
-                  :items="mentors.list"
-                  v-model="incidentalParams.mentorId"
-                  item-text="personnel.name"
-                  item-value="id"
-                  label="Mentor"
-                ></v-autocomplete>
-              </v-col>
-              <v-col>
-                <v-menu
-                  ref="menu"
-                  v-model="menu"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on }">
-                    <v-text-field
-                      v-model="date"
-                      label="Date Offer"
-                      prepend-icon="today"
-                      readonly
-                      :rules="rulesRequired"
-                      v-on="on"
-                      clearable
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    ref="picker"
-                    :locale="$vuetify.lang.current"
-                    v-model="date"
-                    @input="menu = false"
-                  ></v-date-picker>
-                </v-menu>
-              </v-col>
-              <v-col>
-                <v-menu
-                  v-model="menu2"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on }">
-                    <v-text-field
-                      v-model="time"
-                      label="Time"
-                      prepend-icon="schedule"
-                      readonly
-                      :rules="rulesRequired"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-time-picker
-                    format="24hr"
-                    color="blue"
-                    :locale="$vuetify.lang.current"
-                    v-model="time"
-                  ></v-time-picker>
-                </v-menu>
-              </v-col>
-            </v-row>
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn :disabled="!valid" color="primary" @click="submitIncidentalMentoring">Report</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-container>
 </template>
 <script>
@@ -470,7 +361,6 @@ export default {
       dialogForm: false,
       dialogDelete: false,
       dialogDetail: false,
-      dialogIncidental: false,
       edit: false,
       leftId: "",
       leftName: "",
@@ -478,15 +368,6 @@ export default {
       params: {
         startTime: ""
       },
-      incidentalParams: {
-        mentoringId: "",
-        mentorId: "",
-        startTime: ""
-      },
-      mentoringLoad: false,
-      mentorings: { total: 0, list: [] },
-      mentorLoad: false,
-      mentors: { total: 0, list: [] },
       date: "",
       time: "",
       nowDate: new Date().toISOString().slice(0, 10)
@@ -517,7 +398,6 @@ export default {
   methods: {
     setDateTime: function() {
       this.params.startTime = this.date + " " + this.time;
-      this.incidentalParams.startTime = this.date + " " + this.time;
     },
     getDataList() {
       this.tableLoad = true;
@@ -714,89 +594,7 @@ export default {
           this.tableLoad = false;
         });
     },
-    openIncidental() {
-      this.dialogIncidental = true;
-      this.getMentoringList();
-      this.getMentorList();
-    },
-    getMentoringList() {
-      this.mentoringLoad = true;
-      this.axios
-        .get(
-          config.baseUri +
-            "/founder/as-team-member/" +
-            this.$route.params.teamId +
-            "/program-participations/" +
-            this.$route.params.cohortId +
-            "/mentorings",
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
-        .then(res => {
-          if (res.data.data) {
-            this.mentorings = res.data.data;
-          } else {
-            this.mentorings = { total: 0, list: [] };
-          }
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.mentoringLoad = false;
-        });
-    },
-    getMentorList() {
-      this.mentorLoad = true;
-      this.axios
-        .get(
-          config.baseUri +
-            "/founder/as-team-member/" +
-            this.$route.params.teamId +
-            "/program-participations/" +
-            this.$route.params.cohortId +
-            "/mentors",
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
-        .then(res => {
-          if (res.data.data) {
-            this.mentors = res.data.data;
-          } else {
-            this.mentors = { total: 0, list: [] };
-          }
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.mentorLoad = false;
-        });
-    },
-    submitIncidentalMentoring() {
-      this.loader = true;
-      this.axios
-        .post(
-          config.baseUri +
-            "/founder/as-team-member/" +
-            this.$route.params.teamId +
-            "/program-participations/" +
-            this.$route.params.cohortId +
-            "/mentoring-schedules",
-          this.incidentalParams,
-
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
-        .then(() => {
-          this.refresh();
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.loader = false;
-        });
-    },
     refresh() {
-      this.dialogIncidental = false;
       this.dialogForm = false;
       this.dialogDelete = false;
       this.dialogDetail = false;
