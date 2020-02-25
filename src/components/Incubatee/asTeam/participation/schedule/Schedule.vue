@@ -345,6 +345,7 @@
               <v-col md="12">
                 <v-select
                   :loading="mentoringLoad"
+                  :rules="rulesRequired"
                   :items="mentorings.list"
                   v-model="incidentalParams.mentoringId"
                   label="Mentoring Event"
@@ -355,6 +356,7 @@
               <v-col md="12">
                 <v-autocomplete
                   :loading="mentorLoad"
+                  :rules="rulesRequired"
                   :hide-no-data="true"
                   :items="mentors.list"
                   v-model="incidentalParams.mentorId"
