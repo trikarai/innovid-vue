@@ -563,7 +563,7 @@ const routes = [
         component: IncubateeDashboard,
         name: "Dashboard",
         meta: {
-          level: 1,
+          level: 0,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
       },
