@@ -37,13 +37,13 @@
           <!--atomic journal button-->
           <v-btn
             v-if="modeAtom"
-            color="accent"
+            color="primary"
             :disabled="!valid"
             @click="sendtoParent2"
           >Assign Worksheet</v-btn>
           <v-btn
             v-if="modeAtom"
-            color="accent"
+            color="primary"
             :disabled="!valid"
             @click="sendtoParent"
           >Save as New Worksheet</v-btn>
