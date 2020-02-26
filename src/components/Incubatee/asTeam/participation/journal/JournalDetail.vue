@@ -122,7 +122,7 @@
                 <render-form
                   :modeReload="reloadFalse"
                   v-if="!tableLoad"
-                  :formTemplate="dataList.worksheetForm"
+                  :formTemplate="dataListTemp.worksheetForm"
                   @submit-form="submitForm"
                 />
               </v-col>
@@ -171,6 +171,7 @@ export default {
   data() {
     return {
       mode: false,
+      reloadFalse: false,
       reloadTrue: true,
       is_newWorksheet: true,
       is_updateAtom: true,
@@ -314,7 +315,8 @@ export default {
         )
         .then(res => {
           this.dataList = res.data.data;
-          Object.assign(this.dataListTemp, this.dataList);
+          // Object.assign(this.dataListTemp, this.dataList);
+          this.dataListTemp = JSON.parse(JSON.stringify(res.data.data));
         })
         .catch(() => {})
         .finally(() => {
@@ -425,13 +427,13 @@ export default {
       this.editWS = false;
     },
     createNewWorksheet() {
-      this.worksheetData = {};
+      // this.worksheetData = {};
       this.mode = false;
       this.is_newWorksheet = true;
       this.is_updateAtom = true;
       this.is_reloadWorksheet = false;
       this.selectWorksheet = false;
-      this.getDataList();
+      this.getMissionDetail();
     },
     createReloadWorksheet() {
       this.mode = true;
