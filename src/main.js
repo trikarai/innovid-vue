@@ -27,7 +27,7 @@ var defaultOptions = {
     img: ['src', 'width', 'height'],
     iframe: ['src', 'width', 'height', 'allowfullscreen', 'frameborder'],
   },
-  allowedIframeHostnames: ['www.youtube.com', 'docs.google.com', 'www.dailymotion.com']
+  allowedIframeHostnames: ['www.youtube.com', 'docs.google.com', 'www.dailymotion.com', 'www.slideshare.net']
 };
 Vue.use(VueSanitize, defaultOptions);
 

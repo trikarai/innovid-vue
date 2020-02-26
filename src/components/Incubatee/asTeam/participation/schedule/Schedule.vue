@@ -1,23 +1,27 @@
 <template>
   <v-container extend grid-list-xs>
     <v-row>
-      <v-col md="6">
+      <v-col md="5">
         <v-btn
           color="primary"
           router
+          small
           :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mentoring' "
         >
           <v-icon left>add</v-icon>Propose New Mentoring Schedule to Mentor
         </v-btn>
       </v-col>
-      <v-col md="6">
-        <v-btn color="primary" @click="openIncidental()">
-          <v-icon left>rate_review</v-icon>Add Schedule that Mentor have Agreed
+      <v-col md="1">
+        or
+      </v-col>
+      <v-col md="3">
+        <v-btn small color="primary" @click="openIncidental()">
+          <v-icon left>add</v-icon>Add Schedule that Mentor have Agreed
         </v-btn>
       </v-col>
     </v-row>
     <v-row>
-      <v-col>Mentoring Agenda: Approved Schedule</v-col>
+      <v-col><span class="title">Mentoring Agenda: Approved Schedule </span></v-col>
       <!-- <v-col><pre>{{dataList.list}}</pre></v-col> -->
     </v-row>
     <v-row>
@@ -82,7 +86,7 @@
     <!-- <v-divider></v-divider> -->
 
     <v-row>
-      <v-col>Mentoring Agenda: Waiting for Schedule Approval</v-col>
+      <v-col><span class="title">Mentoring Agenda: Waiting for Schedule Approval</span></v-col>
     </v-row>
     <v-row>
       <v-col>
