@@ -64,11 +64,11 @@
       <v-col cols="12" md="6" lg="6" xs="12" v-if="edit">
         <!-- <pre> {{dataList.participantMentoringReport}} </pre>
         <v-divider></v-divider>
-        <pre> {{dataList.mentoring.participantMentoringFeedbackForm}} </pre> -->
+        <pre> {{dataListTemp.mentoring.participantMentoringFeedbackForm}} </pre>-->
         <render-form
           v-if="!tableLoad"
           :modeReload="isReload"
-          :formTemplate="dataList.mentoring.participantMentoringFeedbackForm"
+          :formTemplate="dataListTemp.mentoring.participantMentoringFeedbackForm"
           @submit-form="submitForm"
         />
       </v-col>
@@ -136,6 +136,33 @@ export default {
           }
         }
       },
+      dataListTemp: {
+        id: "",
+        mentoring: {
+          id: "",
+          name: "",
+          participantMentoringFeedbackForm: {
+            id: "",
+            name: "",
+            description: "",
+            stringFields: [],
+            integerFields: [],
+            textAreaFields: [],
+            attachmentFields: [],
+            singleSelectFields: [],
+            multiSelectFields: []
+          }
+        },
+        startTime: "",
+        endTime: "",
+        participantMentoringReport: null,
+        mentor: {
+          id: "",
+          personnel: {
+            name: ""
+          }
+        }
+      },
       fields: [],
       tableLoad: false,
       loader: false,
@@ -177,11 +204,14 @@ export default {
         )
         .then(res => {
           this.dataList = res.data.data;
+          this.dataListTemp = JSON.parse(JSON.stringify(res.data.data));
           if (res.data.data.participantMentoringReport !== null) {
             this.edit = false;
             this.isReload = true;
-            this.refactorRecordJSON(res.data.data.participantMentoringReport);
-            // this.pairFieldValueReport(res.data.data.participantMentoringReport);
+            this.refactorRecordJSON(this.dataList.participantMentoringReport);
+            this.pairFieldValueReport(
+              this.dataListTemp.participantMentoringReport
+            );
           } else {
             this.edit = true;
             this.isReload = false;
@@ -239,51 +269,51 @@ export default {
       var map = new Map(
         data.stringFieldRecords.map(o => [o.stringField.id, o])
       );
-      var result = this.dataList.mentoring.participantMentoringFeedbackForm.stringFields.map(
+      var result = this.dataListTemp.mentoring.participantMentoringFeedbackForm.stringFields.map(
         o => Object.assign({}, o, map.get(o.id))
       );
-      this.dataList.mentoring.participantMentoringFeedbackForm.stringFields = result;
+      this.dataListTemp.mentoring.participantMentoringFeedbackForm.stringFields = result;
       // eslint-disable-next-line no-console
       //textarea
       var mapt = new Map(
         data.textAreaFieldRecords.map(o => [o.textAreaField.id, o])
       );
-      var resultt = this.dataList.mentoring.participantMentoringFeedbackForm.textAreaFields.map(
+      var resultt = this.dataListTemp.mentoring.participantMentoringFeedbackForm.textAreaFields.map(
         o => Object.assign({}, o, mapt.get(o.id))
       );
-      this.dataList.mentoring.participantMentoringFeedbackForm.textAreaFields = resultt;
+      this.dataListTemp.mentoring.participantMentoringFeedbackForm.textAreaFields = resultt;
       //integer
       var mapi = new Map(
         data.integerFieldRecords.map(o => [o.integerField.id, o])
       );
-      var resulti = this.dataList.mentoring.participantMentoringFeedbackForm.integerFields.map(
+      var resulti = this.dataListTemp.mentoring.participantMentoringFeedbackForm.integerFields.map(
         o => Object.assign({}, o, mapi.get(o.id))
       );
-      this.dataList.mentoring.participantMentoringFeedbackForm.integerFields = resulti;
+      this.dataListTemp.mentoring.participantMentoringFeedbackForm.integerFields = resulti;
       //single select / radio
       var mapr = new Map(
         data.singleSelectFieldRecords.map(o => [o.singleSelectField.id, o])
       );
-      var resultr = this.dataList.mentoring.participantMentoringFeedbackForm.singleSelectFields.map(
+      var resultr = this.dataListTemp.mentoring.participantMentoringFeedbackForm.singleSelectFields.map(
         o => Object.assign({}, o, mapr.get(o.id))
       );
-      this.dataList.mentoring.participantMentoringFeedbackForm.singleSelectFields = resultr;
+      this.dataListTemp.mentoring.participantMentoringFeedbackForm.singleSelectFields = resultr;
       //multi select
       var mapm = new Map(
         data.multiSelectFieldRecords.map(o => [o.multiSelectField.id, o])
       );
-      var resultm = this.dataList.mentoring.participantMentoringFeedbackForm.multiSelectFields.map(
+      var resultm = this.dataListTemp.mentoring.participantMentoringFeedbackForm.multiSelectFields.map(
         o => Object.assign({}, o, mapm.get(o.id))
       );
-      this.dataList.mentoring.participantMentoringFeedbackForm.multiSelectFields = resultm;
+      this.dataListTemp.mentoring.participantMentoringFeedbackForm.multiSelectFields = resultm;
       //attachment
       var mapa = new Map(
         data.attachmentFieldRecords.map(o => [o.attachmentField.id, o])
       );
-      var resulta = this.dataList.mentoring.participantMentoringFeedbackForm.attachmentFields.map(
+      var resulta = this.dataListTemp.mentoring.participantMentoringFeedbackForm.attachmentFields.map(
         o => Object.assign({}, o, mapa.get(o.id))
       );
-      this.dataList.mentoring.participantMentoringFeedbackForm.attachmentFields = resulta;
+      this.dataListTemp.mentoring.participantMentoringFeedbackForm.attachmentFields = resulta;
     }
   }
 };
