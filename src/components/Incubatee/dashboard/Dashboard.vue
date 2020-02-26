@@ -42,60 +42,6 @@
         </v-card>
       </v-col>
     </v-row>
-    <!-- non team founder program start-->
-    <v-row v-if="showFounderProgram">
-      <v-col>
-        <v-skeleton-loader max-width="230" type="card" v-if="founderprogramLoad"></v-skeleton-loader>
-        <v-data-iterator
-          :items="founderprograms.list"
-          hide-default-footer
-          :loading="founderprogramLoad"
-          v-else
-        >
-          <template v-slot:header>
-            <v-toolbar class="kastemtoolbar mb-2" color="grey lighten-1" dark flat dense>
-              <v-toolbar-title>Incubator Program</v-toolbar-title>
-            </v-toolbar>
-          </template>
-          <template v-slot:no-data>
-            <v-row class="mt-5">
-              <v-col md="2"></v-col>
-              <v-col md="4">
-                <v-img width="300" src="/img/no-data-program.png"></v-img>
-              </v-col>
-              <v-col md="4">
-                <v-card style="margin-top:27px;" flat>
-                  <v-card-title>No Program Available</v-card-title>
-                  <v-card-subtitle class="grey--text">The coordinator hasn't publish a program yet</v-card-subtitle>
-                  <v-card-text></v-card-text>
-                </v-card>
-              </v-col>
-              <v-col md="2"></v-col>
-            </v-row>
-          </template>
-          <template v-slot:default="props">
-            <v-row>
-              <v-col v-for="item in props.items" :key="item.id" cols="12" sm="6" md="4" lg="4">
-                <v-card>
-                  <v-img src="/img/hero-program.jpg"></v-img>
-                  <v-card-title class="subheading font-weight-bold">{{ item.name }}</v-card-title>
-                  <v-divider></v-divider>
-                  <v-list dense>
-                    <v-list-item>
-                      <v-list-item-content>Description:</v-list-item-content>
-                    </v-list-item>
-                    <v-list-item>
-                      <v-list-item-content class="grey--text">{{ item.description }}</v-list-item-content>
-                    </v-list-item>
-                  </v-list>
-                </v-card>
-              </v-col>
-            </v-row>
-          </template>
-        </v-data-iterator>
-      </v-col>
-    </v-row>
-    <!-- non team founder program end-->
     <!-- team participated program end-->
     <v-row v-if="participatedPrograms.total != 0">
       <v-col>
@@ -221,7 +167,8 @@
                 <v-card class="mx-auto" v-else style="margin-top:57px;" flat>
                   <v-card-title>No Program Available</v-card-title>
                   <v-card-subtitle class="grey--text">
-                    You have already join all available program <br>or the coordinator hasn't made a program yet
+                    You have already join all available program
+                    <br />or the coordinator hasn't made a program yet
                     <template
                       v-if="user.data.teamMemberships.length == 0"
                     >, create team first before join a program</template>
@@ -269,6 +216,60 @@
       </v-col>
     </v-row>
     <!-- team available program end-->
+    <!-- non team founder program start-->
+    <v-row v-if="showFounderProgram">
+      <v-col>
+        <v-skeleton-loader max-width="230" type="card" v-if="founderprogramLoad"></v-skeleton-loader>
+        <v-data-iterator
+          :items="founderprograms.list"
+          hide-default-footer
+          :loading="founderprogramLoad"
+          v-else
+        >
+          <template v-slot:header>
+            <v-toolbar class="kastemtoolbar mb-2" color="grey lighten-1" dark flat dense>
+              <v-toolbar-title>Incubator Program</v-toolbar-title>
+            </v-toolbar>
+          </template>
+          <template v-slot:no-data>
+            <v-row class="mt-5">
+              <v-col md="2"></v-col>
+              <v-col md="4">
+                <v-img width="300" src="/img/no-data-program.png"></v-img>
+              </v-col>
+              <v-col md="4">
+                <v-card style="margin-top:27px;" flat>
+                  <v-card-title>No Program Available</v-card-title>
+                  <v-card-subtitle class="grey--text">The coordinator hasn't publish a program yet</v-card-subtitle>
+                  <v-card-text></v-card-text>
+                </v-card>
+              </v-col>
+              <v-col md="2"></v-col>
+            </v-row>
+          </template>
+          <template v-slot:default="props">
+            <v-row>
+              <v-col v-for="item in props.items" :key="item.id" cols="12" sm="6" md="4" lg="4">
+                <v-card>
+                  <v-img src="/img/hero-program.jpg"></v-img>
+                  <v-card-title class="subheading font-weight-bold">{{ item.name }}</v-card-title>
+                  <v-divider></v-divider>
+                  <v-list dense>
+                    <v-list-item>
+                      <v-list-item-content>Description:</v-list-item-content>
+                    </v-list-item>
+                    <v-list-item>
+                      <v-list-item-content class="grey--text">{{ item.description }}</v-list-item-content>
+                    </v-list-item>
+                  </v-list>
+                </v-card>
+              </v-col>
+            </v-row>
+          </template>
+        </v-data-iterator>
+      </v-col>
+    </v-row>
+    <!-- non team founder program end-->
   </v-container>
 </template>
 <script>
