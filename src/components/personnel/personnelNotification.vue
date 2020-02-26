@@ -88,12 +88,12 @@ export default {
     },
     gotoSchedule(item) {
       this.$router.replace({
-        path: "/personnel/mentor/" + item.mentor.id + "/schedule"
+        path: "/personnel/mentor/" + item.mentor.id + "/" + item.mentor.program.id + "/schedule"
       });
     },
     gotoNegotiate(item) {
       this.$router.replace({
-        path: "/personnel/mentor/" + item.mentor.id + "/negotiate-schedule"
+        path: "/personnel/mentor/" + item.mentor.id + "/" + item.mentor.program.id + "/negotiate-schedule"
       });
     }
   }
