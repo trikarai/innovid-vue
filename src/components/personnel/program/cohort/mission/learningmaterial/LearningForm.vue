@@ -13,17 +13,24 @@
             <v-text-field filled label="Learning Material Name" v-model="dataSingle.name"></v-text-field>
           </v-col>
           <v-col>
-            <v-btn style="margin-top: 3px;" :disabled="loader" :loading="loader" color="primary" @click="submitContent()" x-large>save</v-btn>
+            <v-btn
+              style="margin-top: 3px;"
+              :disabled="loader"
+              :loading="loader"
+              color="primary"
+              @click="submitContent()"
+              x-large
+            >save</v-btn>
           </v-col>
         </v-row>
       </v-col>
-      <v-col  class="my-0 py-0" md="12">
+      <v-col class="my-0 py-0" md="12">
         <v-alert
-        dense
+          dense
           type="info"
           border="left"
           dismissible
-        >Allowed Iframe: www.youtube.com, docs.google.com, www.dailymotion.com</v-alert>
+        >Allowed Iframe: youtube.com, docs.google.com, dailymotion.com, slideshare.net</v-alert>
       </v-col>
       <v-col class="mt-0 pt-0" md="12">
         <editor
@@ -46,9 +53,15 @@
     }"
         ></editor>
       </v-col>
-      
+
       <v-col md="12">
-        <v-btn :disabled="loader" :loading="loader" color="primary" @click="submitContent()" x-large>save</v-btn>
+        <v-btn
+          :disabled="loader"
+          :loading="loader"
+          color="primary"
+          @click="submitContent()"
+          x-large
+        >save</v-btn>
       </v-col>
     </v-row>
   </v-container>
