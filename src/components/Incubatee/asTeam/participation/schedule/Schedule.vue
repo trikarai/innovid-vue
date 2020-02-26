@@ -71,7 +71,9 @@
             >
               <v-icon small left>assignment</v-icon>Submit Report
             </v-btn>
-            <template v-else>Report Submitted</template>
+            <template v-else>
+              <v-chip small>Report Submitted</v-chip>
+            </template>
           </template>
         </v-data-table>
       </v-col>
@@ -793,7 +795,9 @@ export default {
         .then(() => {
           this.refresh();
         })
-        .catch(() => {})
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
         .finally(() => {
           this.loader = false;
         });
