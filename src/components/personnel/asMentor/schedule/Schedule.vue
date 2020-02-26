@@ -378,9 +378,12 @@ export default {
           }
         )
         .then(() => {
+          bus.$emit("callNotif", "success", "Mentoring Submitted");
           this.refresh();
         })
-        .catch(() => {})
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
         .finally(() => {
           this.loader = false;
         });
