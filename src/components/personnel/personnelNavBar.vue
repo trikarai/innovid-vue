@@ -225,7 +225,7 @@ export default {
       coordinators: [
         {
           icon: "dashboard",
-          text: "Coordinator",
+          text: "as Coordinator",
           route: "/personnel/coordinator/dashboard",
           disabled: false
         }
@@ -245,7 +245,7 @@ export default {
       mentors: [
         {
           icon: "dashboard",
-          text: "Mentor",
+          text: "as Mentor",
           route: "/personnel/mentor/dashboard",
           disabled: false
         }
