@@ -45,23 +45,15 @@
               :disabled="dataList.previousMission == null"
               router
             >Prev Mission</v-btn>
-          </v-card-actions> -->
+          </v-card-actions>-->
         </v-card>
       </v-col>
       <v-col md="12 mt-5" class="title">Learning Material</v-col>
       <v-col cols="12" md="12" lg="12" xs="12" v-if="learningLoad">
         <v-skeleton-loader :loading="true" class="mx-auto" type="list-item-two-line@2" v-></v-skeleton-loader>
       </v-col>
-      <v-col
-        cols="12"
-        md="6"
-        lg="6"
-        xs="12"
-        v-if="learningList.total == 0"
-      >
-        <v-alert dense type="info" :value="true">
-          No Learning Material Added
-        </v-alert>    
+      <v-col cols="12" md="6" lg="6" xs="12" v-if="learningList.total == 0">
+        <v-alert dense type="info" :value="true">No Learning Material Added</v-alert>
       </v-col>
       <v-col cols="12" md="12" lg="12" xs="12" v-else>
         <v-expansion-panels focusable>
@@ -120,7 +112,12 @@
             <v-col class="my-0 py-0" md="12" v-if="is_reloadWorksheet">
               <v-row>
                 <v-col md="6" lg="6" xs="12">
-                  <v-text-field class="mx-5" label="Worksheet Name" v-model="worksheetName" outlined></v-text-field>
+                  <v-text-field
+                    class="mx-5"
+                    label="Worksheet Name"
+                    v-model="worksheetName"
+                    outlined
+                  ></v-text-field>
                 </v-col>
               </v-row>
               <render-form
@@ -137,7 +134,12 @@
             <v-col class="my-0 py-0" md="12">
               <v-row>
                 <v-col md="6" lg="6" xs="12">
-                  <v-text-field class="mx-5" label="Worksheet Name" v-model="worksheetName" outlined></v-text-field>
+                  <v-text-field
+                    class="mx-5"
+                    label="Worksheet Name"
+                    v-model="worksheetName"
+                    outlined
+                  ></v-text-field>
                 </v-col>
               </v-row>
               <render-form
@@ -342,10 +344,10 @@ export default {
           config.baseUri +
             "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/worksheets?programParticipationId=" +
-            this.$route.params.cohortId +
-            "&worksheetFormIds[]=" +
+            "/worksheets?worksheetFormIds[]=" +
             this.dataList.worksheetForm.id +
+            // "&programParticipationId=" +
+            // this.$route.params.cohortId +
             "&missionIds[]=" +
             this.dataList.id,
           {
