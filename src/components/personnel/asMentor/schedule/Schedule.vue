@@ -48,11 +48,20 @@
               {{ item.endTime | moment("h:mm a") }}
             </v-row>
           </template>
-          <!-- <template v-slot:item.action="{item}">
-            <v-btn class="ml-2" small color="primary" @click="openReport(item.id)">
-              <v-icon small left>assignment</v-icon>Report
+          <template v-slot:item.action="{item}">
+            <v-btn
+              v-if="item.mentorMentoringReport == null"
+              class="ml-2"
+              small
+              color="primary"
+              @click="openDetail(item.id)"
+            >
+              <v-icon small left>assignment</v-icon>Submit Report
             </v-btn>
-          </template>-->
+            <template v-else>
+              <v-chip small>Report Submitted</v-chip>
+            </template>
+          </template>
         </v-data-table>
       </v-col>
     </v-row>
