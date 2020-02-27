@@ -1,6 +1,85 @@
 <template>
   <v-row>
-    <v-col md="8">
+    <!--image reload start-->
+    <!-- <v-col md="12">{{value}}</v-col> -->
+    <template v-if="modeReload">
+      <template v-if="field.required">
+        <!-- <v-col md="12">
+          <em>* Required field record only to be replaced</em>
+        </v-col>-->
+        <v-col md="12" v-if="!isReplace">
+          <div :class="{required : field.required}">
+            <b>{{field.name}}</b>
+          </div>
+          <template v-for="(file, index) in field.attachedFiles">
+            <v-img :key="file.id" :src="base_uri+file.fileInfo.path" max-width="350"></v-img>
+            <template v-if="field.required">
+              <v-btn x-small :key="index" color="error" @click="replaceAttached(index)">
+                <v-icon small left>autorenew</v-icon>Replace
+              </v-btn>
+            </template>
+          </template>
+        </v-col>
+        <v-col md="8" v-else>
+          <v-file-input
+            dense
+            :hint="field.description"
+            :clearable="clearable"
+            outlined
+            max-width="100%"
+            show-size
+            counter
+            :error="isError"
+            accept="image/*"
+            v-model="file"
+            @change="onFilePicked"
+          >
+            <template v-slot:label>
+              <div :class="{required : field.required}">{{field.name}}</div>
+            </template>
+          </v-file-input>
+          <v-btn x-small color="accent" @click="cancelReplaceAttached" v-if="isReplaceBtn">
+            <v-icon small left>replay</v-icon>cancel replace
+          </v-btn>
+        </v-col>
+      </template>
+      <template v-else>
+        <v-col md="12" v-if="field.attachedFiles.length > 0">
+          <div :class="{required : field.required}">
+            <b>{{field.name}}</b>
+          </div>
+          <template v-for="(file, index) in field.attachedFiles">
+            <v-img :key="file.id" :src="base_uri+file.fileInfo.path" max-width="350"></v-img>
+            <v-btn x-small :key="index" color="error" @click="removeAttached(index)">
+              <v-icon small left>delete</v-icon>remove
+            </v-btn>
+          </template>
+        </v-col>
+        <v-col md="8" v-else>
+          <v-file-input
+            dense
+            :hint="field.description"
+            :clearable="clearable"
+            outlined
+            max-width="100%"
+            show-size
+            counter
+            :error="isError"
+            accept="image/*"
+            v-model="file"
+            @change="onFilePicked"
+          >
+            <template v-slot:label>
+              <div :class="{required : field.required}">{{field.name}}</div>
+            </template>
+          </v-file-input>
+        </v-col>
+      </template>
+    </template>
+    <!--image reload end-->
+
+    <!-- image new start -->
+    <v-col md="8" v-if="!modeReload">
       <v-file-input
         dense
         :hint="field.description"
@@ -21,6 +100,8 @@
       </v-file-input>
       <span class="subtitle">Min: {{field.minSize}} - Max: {{field.maxSize}} Byte</span>
     </v-col>
+    <!-- image new end -->
+    <!--image preview new start-->
     <v-col md="3">
       <v-expand-x-transition>
         <v-progress-circular
@@ -51,7 +132,7 @@
         <v-icon small>close</v-icon>
       </v-btn>
     </v-col>
-    <!-- <v-col>{{fileInfo}}</v-col> -->
+    <!--image preview new end-->
   </v-row>
 </template>
 <script>
@@ -63,10 +144,12 @@ import * as config from "@/config/config";
 
 export default {
   mixins: [validationMixins],
-  props: ["field", "index"],
+  props: ["field", "index", "modeReload"],
   components: {},
   data: function() {
     return {
+      isReplace: false,
+      isReplaceBtn: true,
       clearable: false,
       valueDeterminate: 0,
       value: [],
@@ -80,7 +163,9 @@ export default {
       fileInfo: { id: "", path: "", size: "" },
       ext: "",
       uploadUri: "",
-      isError: true
+      base_uri: "",
+      isError: true,
+      jancux: ""
     };
   },
   watch: {
@@ -90,6 +175,17 @@ export default {
         fileInfoIdList: this.value,
         type: this.field.type
       };
+      bus.$emit("getValue", params, this.index);
+    },
+    value() {
+      var params;
+      if (this.modeReload) {
+        params = {
+          fieldId: this.field.id,
+          value: this.value,
+          type: this.field.type
+        };
+      }
       bus.$emit("getValue", params, this.index);
     }
   },
@@ -102,6 +198,17 @@ export default {
   },
   created() {
     var mode = sessionStorage.getItem("uploadMode");
+    if (process.env.NODE_ENV === "production") {
+      this.base_uri = "https://innov.id/bara-inovasi/storage/app";
+    } else {
+      // this.base_uri = "http://localhost:8001/bara-inovasi/storage/app";
+      this.base_uri = "http://localhost/bara-inovasi/storage/app";
+    }
+    if (this.modeReload) {
+      for (var i = 0; i < this.field.attachedFiles.length; i++) {
+        this.value[i] = this.field.attachedFiles[i].fileInfo.id;
+      }
+    }
     if (mode == "founder") {
       this.uploadUri = "/founder/file-upload";
     } else if (mode == "team") {
@@ -146,6 +253,9 @@ export default {
       } else {
         this.isError = false;
       }
+      if (!this.modeReload) {
+        this.value = [];
+      }
     },
     uploadFile() {
       this.headers["Content-Type"] = "image/*";
@@ -167,6 +277,7 @@ export default {
           this.value[0] = res.data.data.id;
           this.fileInfo = res.data.data;
           this.isError = false;
+          this.isReplaceBtn = false;
         })
         .catch(res => {
           this.uploaded = false;
@@ -175,6 +286,24 @@ export default {
         .finally(() => {
           this.progressShow = false;
         });
+    },
+    // eslint-disable-next-line no-unused-vars
+    replaceAttached(index) {
+      this.isReplace = true;
+      if (this.field.required) {
+        this.isError = true;
+      } else {
+        this.isError = false;
+      }
+    },
+    // eslint-disable-next-line no-unused-vars
+    removeAttached(index) {
+      this.field.attachedFiles = [];
+      this.value = [];
+    },
+    cancelReplaceAttached() {
+      this.isReplace = false;
+      this.removeFile();
     }
   }
 };
