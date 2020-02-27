@@ -4,7 +4,7 @@
       <v-col>Participation List</v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col md="10" lg="10">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -57,11 +57,14 @@
             <template v-if="!item.program.removed">
               <v-chip v-if="item.note">{{item.note}} program</v-chip>
             </template>
-          </template>
-          <template v-slot:item.action="{item}">
             <template v-if="item.program.removed">
-              <v-chip color="error">Program Removed</v-chip>
+              <v-chip small color="error">Program Removed</v-chip>
             </template>
+          </template>
+          <template v-slot:item.action="{item}">      
+            <template v-if="item.program.removed">
+
+            </template>    
             <template v-else>
               <v-btn
                 v-if="item.active"
@@ -70,7 +73,7 @@
                 class="mr-2"
                 @click="leftAct(item, 'Quit')"
               >
-                <v-icon left>flag</v-icon>Quit
+                <v-icon left>flag</v-icon>Quit Program
               </v-btn>
             </template>
           </template>
