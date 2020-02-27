@@ -70,11 +70,11 @@
                   return-object
                   v-model="selectedJournalinMission[index]"
                   @change="getBranchJournal($event, data.id)"
-                  append-icon="zoom_in"
                   append-outer-icon="autorenew"
-                  @click:append="openJournal(selectedJournalinMission[index])"
                   @click:append-outer="refreshRootJournal"
                 ></v-select>
+                <!-- append-icon="zoom_in"
+                @click:append="openJournal(selectedJournalinMission[index])"-->
               </v-card-text>
               <v-card-text class="grey--text text--lighten-1 caption" v-else>
                 <template v-if="!journalCreateLoading">
@@ -92,40 +92,48 @@
 
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <!-- <v-btn
-                  small
-                  color="primary"
-                  v-if="selectedJournalinMission[index] !== ''"
-                  @click="openJournal(selectedJournalinMission[index])"
-                >view journal</v-btn>-->
-                <!-- <v-btn
-                  small
-                  color="primary"
-                  router
-                  :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id "
-                >
-                  <v-icon left small>zoom_in</v-icon>view
-                </v-btn>-->
-
-                <v-btn
-                  v-if="data.previousMission == null"
-                  color="primary"
-                  small
-                  router
-                  :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom' "
-                >
-                  <v-icon small left>search</v-icon>View Detail
-                </v-btn>
-                <template v-else>
-                  <!-- {{data.selectedParentJournal.id}} -->
+                <template v-if="data.previousMission == null">
+                  <!-- root button-->
                   <v-btn
+                    v-show="selectedJournalinMission[index] == null"
+                    color="primary"
+                    small
+                    router
+                    :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom' "
+                  >
+                    <v-icon small left>add</v-icon>View Detail
+                  </v-btn>
+                  <!-- {{selectedJournalinMission[index]}} -->
+                  <v-btn
+                    v-show="selectedJournalinMission[index] != null"
+                    color="primary"
+                    small
+                    router
+                    @click="openJournal(selectedJournalinMission[index])"
+                  >
+                    <v-icon small left>zoom_in</v-icon>View Detail
+                  </v-btn>
+                </template>
+                <template v-else>
+                  <!-- Branch {{data.selectedParentJournal.id}} -->
+                  <v-btn
+                    v-show="selectedJournalinMission[index] == null"
                     v-if="data.selectedParentJournal"
                     color="primary"
                     small
                     router
                     :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom/'+ data.selectedParentJournal.id "
                   >
-                    <v-icon small left>search</v-icon>View Detail
+                    <v-icon small left>add</v-icon>View Detail
+                  </v-btn>
+                  <v-btn
+                    v-show="selectedJournalinMission[index] != null"
+                    color="primary"
+                    small
+                    router
+                    @click="openJournal(selectedJournalinMission[index])"
+                  >
+                    <v-icon small left>zoom_in</v-icon>View Detail
                   </v-btn>
                 </template>
               </v-card-actions>
