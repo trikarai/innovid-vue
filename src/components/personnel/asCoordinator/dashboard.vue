@@ -4,7 +4,7 @@
       <v-col md2>
         <v-switch v-model="mode" label="table"></v-switch>
       </v-col>
-    </v-row> -->
+    </v-row>-->
     <template v-if="!mode">
       <v-row>
         <v-col>
@@ -79,27 +79,32 @@
             class="elevation-1"
           >
             <template v-slot:item.action="{item}">
-              <v-btn
-                class="mr-2"
-                color="primary"
-                :to="'/personnel/coordinator/program/' + item.program.id + '/participant'"
-              >
-                <v-icon left>group</v-icon>Participant
-              </v-btn>
-              <v-btn
-                class="mr-2"
-                color="primary"
-                :to="'/personnel/coordinator/program/' + item.program.id + '/applicant'"
-              >
-                <v-icon left>how_to_vote</v-icon>Applicant
-              </v-btn>
-              <v-btn
-                class="mr-2"
-                color="primary"
-                :to="'/personnel/coordinator/program/' + item.program.id + '/phase'"
-              >
-                <v-icon left>today</v-icon>Registration Phase
-              </v-btn>
+              <template v-if="item.program.removed">
+                <v-chip>Program Removed</v-chip>
+              </template>
+              <template v-else>
+                <v-btn
+                  class="mr-2"
+                  color="primary"
+                  :to="'/personnel/coordinator/program/' + item.program.id + '/participant'"
+                >
+                  <v-icon left>group</v-icon>Participant
+                </v-btn>
+                <v-btn
+                  class="mr-2"
+                  color="primary"
+                  :to="'/personnel/coordinator/program/' + item.program.id + '/applicant'"
+                >
+                  <v-icon left>how_to_vote</v-icon>Applicant
+                </v-btn>
+                <v-btn
+                  class="mr-2"
+                  color="primary"
+                  :to="'/personnel/coordinator/program/' + item.program.id + '/phase'"
+                >
+                  <v-icon left>today</v-icon>Registration Phase
+                </v-btn>
+              </template>
             </template>
           </v-data-table>
         </v-col>

@@ -60,7 +60,9 @@
             <v-row>
               <v-col v-for="item in props.items" :key="item.id" cols="12" sm="6" md="4" lg="4">
                 <v-card class="elevation-7">
-                  <v-img src="/img/part-program.png"></v-img>
+                  <v-img src="/img/part-program.png">
+                    <div v-if="item.program.removed" class="fill-height bottom-gradient"></div>
+                  </v-img>
                   <v-card-title class="subheading font-weight-bold">
                     <v-badge
                       left
@@ -71,31 +73,45 @@
                     >{{ item.program.name }}</v-badge>
                   </v-card-title>
                   <v-divider></v-divider>
-                  <v-list dense>
-                    <v-list-item>
-                      <v-list-item-content>
-                        <v-btn @click="gotoMission(teamId, item, 'mission')" color="primary">Mission</v-btn>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item>
-                      <v-list-item-content>
-                        <v-btn
-                          color="primary"
-                          @click="gotoMission(teamId, item, 'schedule')"
-                        >Mentoring</v-btn>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item>
-                      <v-list-item-content>
-                        <v-btn
-                          dark
-                          color="warning"
-                          router
-                          :to="'/incubatee/team/' + teamId + '/participation'"
-                        >Quit Program</v-btn>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-list>
+                  <template v-if="item.program.removed">
+                    <v-list dense>
+                      <v-list-item>
+                        <v-list-item-content>
+                          <v-chip color="error">Program Removed</v-chip>
+                        </v-list-item-content>
+                      </v-list-item>
+                    </v-list>
+                  </template>
+                  <template v-else>
+                    <v-list dense>
+                      <v-list-item>
+                        <v-list-item-content>
+                          <v-btn
+                            @click="gotoMission(teamId, item, 'mission')"
+                            color="primary"
+                          >Mission</v-btn>
+                        </v-list-item-content>
+                      </v-list-item>
+                      <v-list-item>
+                        <v-list-item-content>
+                          <v-btn
+                            color="primary"
+                            @click="gotoMission(teamId, item, 'schedule')"
+                          >Mentoring</v-btn>
+                        </v-list-item-content>
+                      </v-list-item>
+                      <v-list-item>
+                        <v-list-item-content>
+                          <v-btn
+                            dark
+                            color="warning"
+                            router
+                            :to="'/incubatee/team/' + teamId + '/participation'"
+                          >Quit Program</v-btn>
+                        </v-list-item-content>
+                      </v-list-item>
+                    </v-list>
+                  </template>
                 </v-card>
               </v-col>
             </v-row>
@@ -437,6 +453,9 @@ export default {
 };
 </script>
 <style scoped>
+.bottom-gradient {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%);
+}
 .minicard {
   position: relative;
   right: 30px;

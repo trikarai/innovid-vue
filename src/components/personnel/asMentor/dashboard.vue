@@ -54,6 +54,7 @@
     <template v-else>
       <v-row>
         <v-col>
+          <pre>{{dataList}}</pre>
           <v-data-table
             :loading="tableLoad"
             :headers="tableHeaders"
@@ -61,27 +62,32 @@
             class="elevation-1"
           >
             <template v-slot:item.action="{item}">
-              <v-btn
-                class="mr-2"
-                color="primary"
-                :to="'/personnel/mentor/'+ item.id + '/'+ item.program.id +'/participant'"
-              >
-                <v-icon left>group</v-icon>Participant
-              </v-btn>
-              <v-btn
-                class="mr-2"
-                color="primary"
-                :to="'/personnel/mentor/' + item.id +'/negotiate-schedule'"
-              >
-                <v-icon left>today</v-icon>Requested Mentoring
-              </v-btn>
-              <v-btn
-                class="mr-2"
-                color="primary"
-                :to="'/personnel/mentor/' + item.id + '/'+ item.program.id +'/schedule'"
-              >
-                <v-icon left>how_to_vote</v-icon>Scheduled Mentoring
-              </v-btn>
+              <template v-if="item.program.removed">
+                <v-chip>Program Removed</v-chip>
+              </template>
+              <template v-else>
+                <v-btn
+                  class="mr-2"
+                  color="primary"
+                  :to="'/personnel/mentor/'+ item.id + '/'+ item.program.id +'/participant'"
+                >
+                  <v-icon left>group</v-icon>Participant
+                </v-btn>
+                <v-btn
+                  class="mr-2"
+                  color="primary"
+                  :to="'/personnel/mentor/' + item.id +'/negotiate-schedule'"
+                >
+                  <v-icon left>today</v-icon>Requested Mentoring
+                </v-btn>
+                <v-btn
+                  class="mr-2"
+                  color="primary"
+                  :to="'/personnel/mentor/' + item.id + '/'+ item.program.id +'/schedule'"
+                >
+                  <v-icon left>how_to_vote</v-icon>Scheduled Mentoring
+                </v-btn>
+              </template>
             </template>
           </v-data-table>
         </v-col>
