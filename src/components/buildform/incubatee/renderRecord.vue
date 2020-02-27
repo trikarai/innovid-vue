@@ -4,25 +4,81 @@
     <!-- <v-switch label="label" v-model="jancux"></v-switch> -->
     <!-- start kiri kanan-->
     <template>
+      <!-- {{fields}} -->
       <template v-for="(data, index) in reOrderField(fields)">
         <v-row :key="index">
-          <v-col md="4" lg="4" xs="12"><span class="subtitle-2 font-weight-black">{{data.field.name}}</span></v-col>
-          <v-col md="8" lg="8" xs="12" class="mb-4 grey--text" :key="data.id" v-if="data.type == 'string'">{{data.value}}</v-col>
-          <v-col md="8" lg="8" xs="12" class="mb-4 grey--text" :key="data.id" v-if="data.type == 'integer'">{{data.value}}</v-col>
-          <v-col md="8" lg="8" xs="12" class="mb-4 grey--text" :key="data.id" v-if="data.type == 'textarea'">{{data.value}}</v-col>
-          <v-col md="8" lg="8" xs="12" class="mb-4 grey--text" :key="data.id" v-if="data.type == 'radio'">
+          <v-col md="4" lg="4" xs="12">
+            <span class="subtitle-2 font-weight-black">{{data.field.name}}</span>
+          </v-col>
+          <v-col
+            md="8"
+            lg="8"
+            xs="12"
+            class="mb-4 grey--text"
+            :key="data.id"
+            v-if="data.type == 'string'"
+          >{{data.value}}</v-col>
+          <v-col
+            md="8"
+            lg="8"
+            xs="12"
+            class="mb-4 grey--text"
+            :key="data.id"
+            v-if="data.type == 'integer'"
+          >{{data.value}}</v-col>
+          <v-col
+            md="8"
+            lg="8"
+            xs="12"
+            class="mb-4 grey--text"
+            :key="data.id"
+            v-if="data.type == 'textarea'"
+          >{{data.value}}</v-col>
+          <v-col
+            md="8"
+            lg="8"
+            xs="12"
+            class="mb-4 grey--text"
+            :key="data.id"
+            v-if="data.type == 'radio'"
+          >
             <template v-if="data.selectedOption != null">{{data.selectedOption.name}}</template>
             <template v-else>-</template>
           </v-col>
-          <v-col md="8" lg="8" xs="12" class="mb-4 grey--text" :key="data.id" v-if="data.type == 'select'">
+          <v-col
+            md="8"
+            lg="8"
+            xs="12"
+            class="mb-4 grey--text"
+            :key="data.id"
+            v-if="data.type == 'select'"
+          >
             <template v-if="data.selectedOptions.length == 0">-</template>
             <template v-for="opt in data.selectedOptions">{{opt.option.name}} ,</template>
           </v-col>
-          <v-col md="8" lg="8" xs="12" class="mb-4 grey--text" :key="data.id" v-if="data.type == 'attachment'">
+          <v-col
+            md="8"
+            lg="8"
+            xs="12"
+            class="mb-4 grey--text"
+            :key="data.id"
+            v-if="data.type == 'attachment'"
+          >
             <template v-if="data.attachedFiles.length == 0">-</template>
             <template v-else>
               <template v-for="file in data.attachedFiles">
-                <v-img :name="file.id" :src="base_uri+file.fileInfo.path" :key="file.id" />
+                <v-img
+                  :name="file.id"
+                  :src="base_uri+file.fileInfo.path"
+                  :key="file.id"
+                  @click="viewImage(file)"
+                >
+                  <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center">
+                      <v-progress-circular indeterminate color="primary lighten-5"></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
               </template>
             </template>
           </v-col>
@@ -68,8 +124,25 @@
           </template>
         </v-row>
       </template>
-    </template> -->
+    </template>-->
     <!-- end atas bawah-->
+    <v-dialog v-model="dialogZoom" scrollable :overlay="true" transition="dialog-transition">
+      <v-card>
+        <v-img
+          class="ZoomOutImg"
+          :name="fileDetail.id"
+          :src="base_uri+fileDetail.fileInfo.path"
+          :key="fileDetail.id"
+          @click="dialogZoom = false"
+        >
+          <template v-slot:placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular indeterminate color="primary lighten-5"></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -82,17 +155,32 @@ export default {
   data() {
     return {
       base_uri: "",
-      jancux: false
+      jancux: false,
+      dialogZoom: false,
+      fileDetail: { id: "", fileInfo: { path: "" } }
     };
   },
   created() {
     if (process.env.NODE_ENV === "production") {
       this.base_uri = "https://innov.id/bara-inovasi/storage/app";
     } else {
-      this.base_uri = "http://localhost:8001/bara-inovasi/storage/app";
+      // this.base_uri = "http://localhost:8001/bara-inovasi/storage/app";
+      this.base_uri = "http://localhost/bara-inovasi/storage/app";
+    }
+  },
+  methods: {
+    viewImage(file) {
+      this.fileDetail = file;
+      this.dialogZoom = true;
     }
   }
 };
 </script>
 <style scoped>
+.v-responsive, .v-image:hover {
+  cursor: zoom-in;
+}
+/* .v-responsive, .v-image, .ZoomOutImg {
+  cursor: zoom-out;
+} */
 </style>
