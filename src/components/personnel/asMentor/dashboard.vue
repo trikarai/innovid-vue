@@ -54,7 +54,7 @@
     <template v-else>
       <v-row>
         <v-col>
-          <pre>{{dataList}}</pre>
+          <!-- <pre>{{dataList}}</pre> -->
           <v-data-table
             :loading="tableLoad"
             :headers="tableHeaders"

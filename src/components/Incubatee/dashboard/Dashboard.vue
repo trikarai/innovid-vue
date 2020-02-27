@@ -60,8 +60,9 @@
             <v-row>
               <v-col v-for="item in props.items" :key="item.id" cols="12" sm="6" md="4" lg="4">
                 <v-card class="elevation-7">
-                  <v-img src="/img/part-program.png">
-                    <div v-if="item.program.removed" class="fill-height bottom-gradient"></div>
+                  <v-img v-if="item.program.removed" src="/img/part-program-off.png"></v-img>
+                  <v-img v-else src="/img/part-program.png">
+                    <!-- <div v-if="item.program.removed" class="fill-height bottom-gradient"></div> -->                   
                   </v-img>
                   <v-card-title class="subheading font-weight-bold">
                     <v-badge
@@ -72,12 +73,12 @@
                       :value="item.id == participationId"
                     >{{ item.program.name }}</v-badge>
                   </v-card-title>
-                  <v-divider></v-divider>
+                  <v-divider v-if="!item.program.removed"></v-divider>
                   <template v-if="item.program.removed">
                     <v-list dense>
                       <v-list-item>
                         <v-list-item-content>
-                          <v-chip color="error">Program Removed</v-chip>
+                          <v-alert class="mt-4" dense outlined type="warning" border="left">Program Removed</v-alert>
                         </v-list-item-content>
                       </v-list-item>
                     </v-list>
