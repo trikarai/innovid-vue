@@ -84,19 +84,19 @@
                   small
                   class="ma-2"
                   color="primary"
-                  :outlined="!mode"
-                  @click="createReloadWorksheet"
+                  :text="mode"
+                  @click="createNewWorksheet"
                 >
-                  <v-icon left v-if="mode" small>star</v-icon>Replace With Existing Worksheet
+                  <v-icon left v-if="!mode" small>star</v-icon>Create New Worksheet
                 </v-btn>
                 <v-btn
                   small
                   class="ma-2"
                   color="primary"
-                  :outlined="mode"
-                  @click="createNewWorksheet"
+                  :text="!mode"
+                  @click="createReloadWorksheet"
                 >
-                  <v-icon left v-if="!mode" small>star</v-icon>Create New Worksheet
+                  <v-icon left v-if="mode" small>star</v-icon>Replace With Existing Worksheet
                 </v-btn>
               </v-col>
               <v-col v-if="selectWorksheet">
