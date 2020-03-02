@@ -43,6 +43,7 @@ import TeamMemberMentor from "../components/Incubatee/asTeam/participation/sched
 //Journal
 import TeamMemberJournal from "../components/Incubatee/asTeam/participation/journal/Journal";
 import TeamMemberJournalDetail from "../components/Incubatee/asTeam/participation/journal/JournalDetail";
+import TeamMemberJournalDetail2 from "../components/Incubatee/asTeam/participation/journal/JournalDetail2";
 import AddAtomicJournal from "../components/Incubatee/asTeam/participation/atomic/AddAtomicJournal";
 
 
@@ -517,6 +518,7 @@ const routes = [
         component: MentorParticipantJournalDetail,
         name: "Program's Participant Journal Detail",
         meta: {
+          text: "Program's Participant Journal Detail",
           level: 4,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -778,6 +780,16 @@ const routes = [
         component: TeamMemberJournalDetail,
         name: "Journal Detail",
         meta: {
+          level: 4,
+          requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
+        }
+      },
+      {
+        path: "/incubatee/team/:teamId/participation/:cohortId/mission/:missionId/journal/:journalId/worksheet/:worksheetId/new/:parentJournalId?",
+        component: TeamMemberJournalDetail2,
+        name: "Journal Detail2",
+        meta: {
+          text: "Journal Detail",
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }

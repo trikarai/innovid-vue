@@ -58,11 +58,16 @@
                 <v-skeleton-loader v-if="data.journal.length == 0" max-width="350" type="list-item"></v-skeleton-loader>
               </v-card-text>
               <v-card-text v-if="data.journal.length != 0">
-                <!-- {{data.journal}} -->
+                <!-- {{data}} -->
+                <template
+                  v-if="data.selectedParentJournal"
+                ><b>{{data.worksheetForm.name}} under {{data.selectedParentJournal.worksheet.name}} :</b></template>
+
                 <v-select
+                class="mt-2"
                   :loading="journalCreateLoading"
                   dense
-                  label="Choose a journal"
+                  :label="'Submitted ' + data.worksheetForm.name "
                   :items="data.journal"
                   item-text="worksheet.name"
                   item-value="id"
@@ -78,9 +83,15 @@
               </v-card-text>
               <v-card-text class="grey--text text--lighten-1 caption" v-else>
                 <template v-if="!journalCreateLoading">
-                  <template
-                    v-if="data.previousMission != null"
-                  >No Journal Data Found for this mission in selected parent journal</template>
+                  <template v-if="data.previousMission != null">
+                    <template
+                      v-if="!data.selectedParentJournal"
+                    >No {{data.worksheetForm.name}} found, parent journal not selected</template>
+                    <template
+                      v-else
+                    >No {{data.worksheetForm.name}} found for this mission under {{data.selectedParentJournal.worksheet.name}}</template>
+                  </template>
+                  <!-- >No {{data.worksheetForm.name}} found for this mission under {{data.selectedParentJournal.worksheet.name}}</template> -->
                   <template v-else>
                     No Journal Data Found for this main mission
                     <v-btn color="success" icon @click="refreshRootJournal()">
@@ -101,7 +112,8 @@
                     router
                     :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom' "
                   >
-                    <v-icon small left>add</v-icon>View Detail
+                    <v-icon small left>add</v-icon>
+                    Learn & Add {{data.worksheetForm.name}}
                   </v-btn>
                   <!-- {{selectedJournalinMission[index]}} -->
                   <v-btn
@@ -109,13 +121,14 @@
                     color="primary"
                     small
                     router
-                    @click="openJournal(selectedJournalinMission[index])"
+                    @click="openJournal2(selectedJournalinMission[index], 'root', null)"
                   >
-                    <v-icon small left>zoom_in</v-icon>View Detail
+                    <v-icon small left>zoom_in</v-icon>
+                    View {{data.worksheetForm.name}}
                   </v-btn>
                 </template>
                 <template v-else>
-                  <!-- Branch {{data.selectedParentJournal.id}} -->
+                  <!-- Branch {{data.selectedParentJournal}} -->
                   <v-btn
                     v-show="selectedJournalinMission[index] == null"
                     v-if="data.selectedParentJournal"
@@ -124,18 +137,24 @@
                     router
                     :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom/'+ data.selectedParentJournal.id "
                   >
-                    <v-icon small left>add</v-icon>View Detail
+                    <v-icon small left>add</v-icon>
+                    Learn & Add {{data.worksheetForm.name}}
                   </v-btn>
                   <v-btn
                     v-show="selectedJournalinMission[index] != null"
                     color="primary"
                     small
                     router
-                    @click="openJournal(selectedJournalinMission[index])"
+                    @click="openJournal2(selectedJournalinMission[index], 'branch', data.selectedParentJournal.id)"
                   >
-                    <v-icon small left>zoom_in</v-icon>View Detail
+                    <v-icon small left>zoom_in</v-icon>
+                    View {{data.worksheetForm.name}}
                   </v-btn>
                 </template>
+                <!-- <v-btn
+                  color="accent"
+                  @click="openJournal2(selectedJournalinMission[index], 'branch', data.selectedParentJournal.id)"
+                >test</v-btn>-->
               </v-card-actions>
             </v-card>
           </v-timeline-item>
@@ -143,7 +162,7 @@
       </v-col>
     </v-row>
 
-    <v-dialog v-model="dialogDelete" width="300" :persisteFnt="true">
+    <v-dialog v-model="dialogDelete" width="300" :persistent="true">
       <v-card :loading="tableLoad">
         <v-card-title>
           <p class="text-capitalize">{{leftAction}}</p>
@@ -341,6 +360,31 @@ export default {
           journal.id +
           "/worksheet/" +
           journal.worksheet.id
+      });
+    },
+    // eslint-disable-next-line no-unused-vars
+    openJournal2(journal, type, parentId) {
+      // eslint-disable-next-line no-console
+      var parent_uri = "";
+
+      if (type == "branch") {
+        parent_uri = "/" + parentId;
+      }
+
+      this.$router.push({
+        path:
+          "/incubatee/team/" +
+          this.$route.params.teamId +
+          "/participation/" +
+          this.$route.params.cohortId +
+          "/mission/" +
+          journal.mission.id +
+          "/journal/" +
+          journal.id +
+          "/worksheet/" +
+          journal.worksheet.id +
+          "/new" +
+          parent_uri
       });
     },
     getBranchJournal(event, missionId) {
