@@ -169,6 +169,7 @@
                     <v-icon left v-if="mode" small>star</v-icon>Replace With Existing Worksheet
                   </v-btn>
                 </v-col>
+
                 <v-col md="3">
                   <template v-if="!editWS">
                     <v-btn
@@ -181,6 +182,11 @@
                       <v-icon small left>cancel</v-icon>Cancel Change
                     </v-btn>
                   </template>
+                </v-col>
+                <v-col md="3">
+                  <v-btn small fab color="success" @click="openComment()">
+                    <v-icon>forum</v-icon>
+                  </v-btn>
                 </v-col>
               </template>
             </v-row>
@@ -312,6 +318,30 @@
     <v-overlay :value="worksheetDataLoad">
       <v-progress-circular color="primary" indeterminate size="64"></v-progress-circular>
     </v-overlay>
+
+    <v-layout row justify-center>
+      <v-dialog
+        v-model="dialogComment"
+        persistent
+        :fullscreen="isCommentFullscreen"
+        scrollable
+        max-width="600px"
+      >
+        <v-card>
+          <v-card-text>
+            <comment-module></comment-module>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn text color="black" flat @click.native="isCommentFullscreen = !isCommentFullscreen">
+              <v-icon>fullscreen</v-icon>
+            </v-btn>
+            <v-btn text color="red" flat @click.native="dialogComment = false">
+              <v-icon>close</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
   </v-container>
 </template>
 <script>
@@ -322,7 +352,7 @@ import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 import RenderForm from "@/components/buildform/incubatee/renderForm";
 import RenderRecord from "@/components/buildform/incubatee/renderRecord";
-// import CommentModule from "@/components/buildform/comment/CommentModule";
+import CommentModule from "@/components/buildform/comment/CommentModule";
 
 export default {
   mixins: [formDynamicMixins],
@@ -376,10 +406,12 @@ export default {
       selectWorksheet: false,
       exworksheetId: "",
       branchUri: "",
-      root: true
+      root: true,
+      dialogComment: false,
+      isCommentFullscreen: false
     };
   },
-  components: { RenderRecord, RenderForm },
+  components: { RenderRecord, RenderForm, CommentModule },
   watch: {
     $route: "refreshData"
   },
@@ -412,7 +444,8 @@ export default {
           journalId +
           "/worksheet/" +
           worksheetId +
-          "/new"
+          "/new" +
+          this.branchUri
       });
     },
     getOtherJournal() {
@@ -767,6 +800,9 @@ export default {
       this.updateJ = false;
       this.getMissionDetail();
       this.getJournalDetail();
+    },
+    openComment() {
+      this.dialogComment = true;
     }
   }
 };
