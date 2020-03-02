@@ -46,7 +46,7 @@
             color="primary"
             :disabled="!valid"
             @click="sendtoParent"
-          >Save as New Worksheet</v-btn>
+          >Save as New Journal</v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
