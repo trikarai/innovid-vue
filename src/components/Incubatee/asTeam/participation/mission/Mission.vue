@@ -61,9 +61,10 @@
                 <!-- {{data}} -->
                 <template
                   v-if="data.selectedParentJournal"
-                >{{data.worksheetForm.name}} under {{data.selectedParentJournal.worksheet.name}}</template>
+                ><b>{{data.worksheetForm.name}} under {{data.selectedParentJournal.worksheet.name}} :</b></template>
 
                 <v-select
+                class="mt-2"
                   :loading="journalCreateLoading"
                   dense
                   :label="'Submitted ' + data.worksheetForm.name "
