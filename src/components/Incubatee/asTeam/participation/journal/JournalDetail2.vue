@@ -183,9 +183,9 @@
                     </v-btn>
                   </template>
                 </v-col>
-                <v-col md="3">
-                  <v-btn small fab color="success" @click="openComment()">
-                    <v-icon>forum</v-icon>
+                <v-col md="3" v-if="!updateJ">
+                  <v-btn x-small fab color="success" @click="openComment()">
+                    <v-icon small>forum</v-icon>
                   </v-btn>
                 </v-col>
               </template>
