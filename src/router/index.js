@@ -556,6 +556,7 @@ const routes = [
     name: 'incubateemain',
     component: IncubateeNav,
     meta: {
+      text: 'Founder Main Layout',
       level: 0,
       requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
     },
@@ -563,8 +564,9 @@ const routes = [
       {
         path: "/incubatee/dashboard",
         component: IncubateeDashboard,
-        name: "Dashboard",
+        name: "founder-dashboard",
         meta: {
+          text: "Dashboard",
           level: 0,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -572,8 +574,9 @@ const routes = [
       {
         path: "/incubatee/account",
         component: IncubateeAccount,
-        name: "My Account",
+        name: "fouder-account",
         meta: {
+          text: "My Account",
           level: 1,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -583,6 +586,7 @@ const routes = [
         component: IncubateeMembership,
         name: "Membership",
         meta: {
+          text: "Membership",
           level: 1,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -592,6 +596,7 @@ const routes = [
         component: IncubateeCandidateships,
         name: "Candidateship",
         meta: {
+          text: "Candidateship",
           level: 1,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -601,6 +606,7 @@ const routes = [
         component: IncubateeProfiles,
         name: "Profiles",
         meta: {
+          text: "Profiles",
           level: 1,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -608,8 +614,10 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/profile",
         component: IncubateeTeamProfiles,
-        name: "Team Profiles",
+        name: "team-profiles",
         meta: {
+          text: "Team Profiles",
+
           level: 2,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -617,8 +625,9 @@ const routes = [
       {
         path: "/incubatee/profile/:profileId",
         component: IncubateeProfilesData,
-        name: "Profile Detail",
+        name: "profile-detail",
         meta: {
+          text: "Profile Detail",
           level: 2,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -626,8 +635,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/profile/:profileId",
         component: IncubateeTeamProfilesData,
-        name: "Team Profile",
+        name: "team-profile",
         meta: {
+          text: "Team Profile",
           level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -635,8 +645,9 @@ const routes = [
       {
         path: "/incubatee/profile-form",
         component: IncubateeProfilesForm,
-        name: "Profile Form",
+        name: "profile-form",
         meta: {
+          text: "Profile Form",
           level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -644,8 +655,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/team-profile-form",
         component: IncubateeTeamProfilesForm,
-        name: "Team Profile Form",
+        name: "team-profile-form",
         meta: {
+          text: "Team Profile Form",
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -653,8 +665,9 @@ const routes = [
       {
         path: "/incubatee/profile-form/:formId/add",
         component: IncubateeProfilesAdd,
-        name: "Add/Edit Profile Form",
+        name: "profile-form-add",
         meta: {
+          text: "Add/Edit Profile Form",
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -662,8 +675,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/team-profile-form/:formId/add",
         component: IncubateeTeamProfilesAdd,
-        name: "Add Team Profile Form",
+        name: "team-profile-form-add",
         meta: {
+          text: "Add Team Profile Form",
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -671,8 +685,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/member",
         component: TeamMember,
-        name: "Members",
+        name: "team-members",
         meta: {
+          text: "Members",
           level: 1,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -680,8 +695,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/candidate",
         component: TeamMemberCandidate,
-        name: "Candidate",
+        name: "team-candidate",
         meta: {
+          text: "Candidate",
           level: 2,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -689,8 +705,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/invite",
         component: TeamMemberInvite,
-        name: "Invite new member",
+        name: "team-invite",
         meta: {
+          text: "Invite New Member",
           level: 2,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -698,8 +715,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/application",
         component: TeamMemberApplication,
-        name: "Program Application",
+        name: "team-program-application",
         meta: {
+          text: "Program Application",
           level: 2,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -707,8 +725,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/worksheet",
         component: TeamMemberWorksheet,
-        name: "Worksheet",
+        name: "team-qorksheet",
         meta: {
+          text: "Worksheet",
           level: 2,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -716,8 +735,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/worksheet/:worksheetId",
         component: TeamMemberWorksheetDetail,
-        name: "Worksheet Detail",
+        name: "team-worksheet-detail",
         meta: {
+          text: "Worksheet Detail",
           level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -725,8 +745,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation",
         component: TeamMemberParticipation,
-        name: "Participation",
+        name: "tean-participation",
         meta: {
+          text: "Participation",
           level: 2,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -734,8 +755,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/mission",
         component: TeamMemberMission,
-        name: "Mission",
+        name: "team-mission",
         meta: {
+          text: "Mission",
           level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -743,8 +765,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/mission/:missionId",
         component: TeamMemberMissionDetail,
-        name: "Mission Detail",
+        name: "team-misssion-detail",
         meta: {
+          text: "Mission",
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -752,7 +775,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/mission/:rootId/next/:missionId",
         component: TeamMemberMissionDetail,
+        name: "team-misssion-detail2",
         meta: {
+          text: "Mission",
           level: 5,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -760,8 +785,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/mission/:missionId/atom/:journalId?",
         component: AddAtomicJournal,
-        name: "Add Journal",
+        name: "add-journal-atom",
         meta: {
+          text: "New Journal",
           level: 5,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -769,8 +795,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/journal",
         component: TeamMemberJournal,
-        name: "Journal",
+        name: "team-journal",
         meta: {
+          text: "Journal",
           level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -778,8 +805,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/mission/:missionId/journal/:journalId/worksheet/:worksheetId",
         component: TeamMemberJournalDetail,
-        name: "Journal Detail",
+        name: "journal-detail-1",
         meta: {
+          text: "Journal Detail",
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -787,7 +815,7 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/mission/:missionId/journal/:journalId/worksheet/:worksheetId/new/:parentJournalId?",
         component: TeamMemberJournalDetail2,
-        name: "Journal Detail2",
+        name: "journal-detail-tab",
         meta: {
           text: "Journal Detail",
           level: 4,
@@ -797,8 +825,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/schedule",
         component: TeamMemberSchedules,
-        name: "Mentoring Schedule",
+        name: "team-mentoring-schedule",
         meta: {
+          text: "Mentoring Schedule",
           level: 3,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -806,8 +835,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/schedule/:scheduleId",
         component: TeamMemberSchedulesDetail,
-        name: "Mentoring Report",
+        name: "team-mentoring-report",
         meta: {
+          text: "Mentoring Report",
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -815,7 +845,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/schedule/:scheduleId/report",
         component: TeamMemberSchedulesReport,
+        name: "team-mentoring-report2",
         meta: {
+          text: "Mentoring Report",
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -823,8 +855,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/mentoring",
         component: TeamMemberMentoring,
-        name: "Mentoring",
+        name: "team-mentoring",
         meta: {
+          text: "Mentoring",
           level: 4,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }
@@ -832,8 +865,9 @@ const routes = [
       {
         path: "/incubatee/team/:teamId/participation/:cohortId/mentoring/:mentoringId/mentor",
         component: TeamMemberMentor,
-        name: "Mentor",
+        name: "team-mentor",
         meta: {
+          text: "Mentor",
           level: 5,
           requiredAuth: true, incubateeAuth: true, personnelAuth: false, sysadminAuth: false
         }

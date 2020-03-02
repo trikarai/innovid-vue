@@ -31,7 +31,7 @@
       <v-icon>arrow_back</v-icon>
     </v-btn>
     <div style="margin-left: 49px;" class="container extend mt-2">
-      <h2 class="mb-2">{{$route.name}}</h2>
+      <h2 class="mb-2">{{$route.meta.text}}</h2>
       <div class="garis"></div>
     </div>
 
