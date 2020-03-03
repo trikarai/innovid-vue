@@ -563,5 +563,15 @@ export default {
   margin: 0 auto;
   margin-top: 20px;
   margin-bottom: 20px;
+
+  filter: gray; /* IE6-9 */
+  -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+  filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+
+}
+/* Disable grayscale on hover */
+.logoinc:hover {
+  -webkit-filter: grayscale(0);
+  filter: none;
 }
 </style>
