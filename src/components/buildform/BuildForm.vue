@@ -446,9 +446,9 @@ export default {
         position: "",
         required: true,
         minValue: 1,
-        maxValue: 2,
-        minSize: 1000,
-        maxSize: 4000,
+        maxValue: 1,
+        minSize: 0,
+        maxSize: 10,
         type: "attachment"
       });
       field.position = this.getLastOrder();

@@ -13,12 +13,7 @@
           </div>
           <template v-for="(file, index) in field.attachedFiles">
             <template v-if="getFileExt(file.fileInfo.path) == 'pdf'">
-              <v-img
-                src="/img/pdf-icon.png"
-                @click="viewPdf(file)"
-                max-width="150"
-                :key="file.id"
-              />
+              <v-img src="/img/pdf-icon.png" @click="viewPdf(file)" max-width="150" :key="file.id" />
             </template>
             <template v-else>
               <v-img :key="file.id" :src="base_uri+file.fileInfo.path" max-width="350"></v-img>
@@ -40,7 +35,7 @@
             show-size
             counter
             :error="isError"
-            accept="image/*"
+            accept="image/png, image/jpeg, application/pdf"
             v-model="file"
             @change="onFilePicked"
           >
@@ -75,7 +70,7 @@
             show-size
             counter
             :error="isError"
-            accept="image/*"
+            accept="image/png, image/jpeg, application/pdf"
             v-model="file"
             @change="onFilePicked"
           >
@@ -90,6 +85,7 @@
 
     <!-- image new start -->
     <v-col md="8" v-if="!modeReload">
+      <!-- {{field.maxSize}} MB => {{field.maxSize * 1000000}} Byte : {{fileInfo.size}} Byte -->
       <v-file-input
         dense
         :hint="field.description"
@@ -102,13 +98,14 @@
         accept="image/png, image/jpeg, application/pdf"
         v-model="file"
         @change="onFilePicked"
+        :rules="rulesFileSize"
       >
         <!-- :rules="[rules.maxSize, rules.minSize, checkRequired]" -->
         <template v-slot:label>
           <div :class="{required : field.required}">{{field.name}}</div>
         </template>
       </v-file-input>
-      <span class="subtitle">Min: {{field.minSize}} - Max: {{field.maxSize}} Byte</span>
+      <!-- <span class="subtitle">Min: {{field.minSize}} - Max: {{field.maxSize}} MB</span> -->
     </v-col>
     <!-- image new end -->
     <!--image preview new start-->
@@ -175,7 +172,7 @@ export default {
       progressShow: false,
       uploaded: false,
       removeFileBtn: false,
-      fileInfo: { id: "", path: "", size: "" },
+      fileInfo: { id: "", path: "", size: 0 },
       ext: "",
       uploadUri: "",
       base_uri: "",
@@ -242,6 +239,7 @@ export default {
       var name = uuid.v4() + "_" + files.name;
       var str = name.replace(/(?:\.(?![^.]+$)|[^\w\d\n.])+/g, "");
       this.fileInfo.path = str;
+      this.fileInfo.size = files.size;
       this.headers["fileName"] = str;
 
       fr.readAsDataURL(files);
@@ -261,7 +259,7 @@ export default {
       this.ext = "";
       this.removeFileBtn = false;
       this.uploaded = false;
-      this.fileInfo = { id: "", path: "", size: "" };
+      this.fileInfo = { id: "", path: "", size: 0 };
       if (this.field.required) {
         this.isError = true;
       } else {

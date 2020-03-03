@@ -17,16 +17,16 @@
     </v-col>
   
     <v-col md="6">
-      <v-text-field label="Min File" v-model="field.minValue" type="number"></v-text-field>
+      <v-text-field label="Min File" v-model="field.minValue" type="number" disabled></v-text-field>
     </v-col>
     <v-col md="6">
-      <v-text-field label="Max File" v-model="field.maxValue" type="number"></v-text-field>
+      <v-text-field label="Max File" v-model="field.maxValue" type="number" disabled></v-text-field>
     </v-col>
     <v-col md="6">
-      <v-text-field label="Min File Size (byte)" v-model="field.minSize" type="number"></v-text-field>
+      <v-text-field label="Min File Size (MB)" v-model="field.minSize" max="0" type="number"></v-text-field>
     </v-col>
     <v-col md="6">
-      <v-text-field label="Max File Size (byte)" v-model="field.maxSize" type="number"></v-text-field>
+      <v-text-field label="Max File Size (MB)" v-model="field.maxSize" max="10" type="number"></v-text-field>
     </v-col>
     <v-col md="12">
        <v-checkbox
