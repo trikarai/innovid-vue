@@ -112,10 +112,10 @@
           <v-card-text>
             <v-row>
               <v-col md="12">
-                <v-text-field label="name" v-model="params.name" filled></v-text-field>
+                <v-text-field counter="25" maxlength="25" label="name" v-model="params.name" filled></v-text-field>
               </v-col>
               <v-col md="12">
-                <v-textarea rows="3" label="Description" v-model="params.description" filled></v-textarea>
+                <v-textarea counter="500" maxlength="500" rows="3" label="Description" v-model="params.description" filled></v-textarea>
               </v-col>
             </v-row>
           </v-card-text>
