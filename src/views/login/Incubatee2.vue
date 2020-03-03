@@ -7,6 +7,12 @@
             <v-toolbar-title class="white--text ml-2">
               <h4>
                 login
+                ----
+                {{upperleveldomain}}
+                ----
+                {{subdomain}}
+                ----
+                {{parts}}
                 <!-- <v-chip style="width:45px;" color="#e4e4e4"><span style="color:#777777;">id</span></v-chip> -->
               </h4>
             </v-toolbar-title>
@@ -133,16 +139,19 @@ export default {
       },
       capsText: "",
       activate: false,
-      identifierDomain: ""
+      identifierDomain: "",
+      parts:"",
+      subdomain:"",
+      upperleveldomain:""
     };
   },
   watch: {},
   created: function() {
-    var parts = location.hostname.split(".");
-    var subdomain = parts.shift();
-    // var upperleveldomain = parts.join(".");
-    this.identifierDomain = subdomain;
-    this.params.incubatorIdentifier = subdomain;
+    this.parts = location.hostname.split(".");
+    this.subdomain = this.parts.shift();
+    this.upperleveldomain = this.parts.join(".");
+    // this.identifierDomain = subdomain;
+    // this.params.incubatorIdentifier = subdomain;
   },
   mounted: function() {
     this.isEdge = this.$browserDetect.isEdge;

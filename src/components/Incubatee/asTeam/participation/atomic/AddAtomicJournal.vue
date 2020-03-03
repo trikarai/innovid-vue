@@ -10,9 +10,6 @@
             <span class="dot2"></span>
             <span class="dot1 ml-1"></span>
           </v-card-title>
-          <v-card-text>
-            <div class="subtitle">{{dataList.description}}</div>
-          </v-card-text>
           <v-card-text v-if="dataList.previousMission != null">
             <v-chip small>
               <v-avatar left>
@@ -28,6 +25,9 @@
               </v-avatar>
               <span style="color:#999">Main Mission</span>
             </v-chip>
+          </v-card-text>
+          <v-card-text>
+            <div class="subtitle">{{dataList.description}}</div>
           </v-card-text>
           <!-- <v-card-actions>
             <v-btn
@@ -83,7 +83,7 @@
             <v-btn
               small
               class="ma-2 mt-4 ml-0"
-              color="primary"
+              :color="setColor(!mode)"
               @click="createNewWorksheet"
               :text="mode"
             >
@@ -92,9 +92,9 @@
             <v-btn
               small
               class="mt-2"
-              color="primary"
               @click="createReloadWorksheet"
               :text="!mode"
+              :color="setColor(mode)"
             >
               <v-icon left v-if="mode" small>star</v-icon>Reload Existing Worksheet
             </v-btn>
@@ -240,6 +240,12 @@ export default {
     this.getLearningMaterialList();
   },
   methods: {
+    setColor(mode) {
+      if (mode) {
+        return 'primary'
+      } else
+      {'grey'}
+    }, 
     getDataList() {
       this.tableLoad = true;
       this.axios
@@ -426,3 +432,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.notActive  {
+  color: var(--v-grey-base) !important;
+}
+</style>

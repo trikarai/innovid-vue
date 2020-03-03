@@ -29,13 +29,38 @@
               </v-avatar>
             </template>
             <v-card class="pa-3 elevation-5">
-              <v-card-title class="headline">
-                {{data.name}}
-                <v-spacer></v-spacer>
+              <div style="float: right !important">
                 <span class="dot2"></span>
                 <span class="dot1 ml-1"></span>
+              </div>
+              <v-card-title class="headline">
+                <v-row>
+                  <v-col md="7">
+                     {{data.name}}
+                  </v-col>
+                  <v-col md="5" v-if="data.previousMission != null">
+                     <v-spacer></v-spacer>
+                     <v-chip small>
+                      <v-avatar left>
+                        <v-icon small color="primary">account_tree</v-icon>
+                      </v-avatar>
+                      <span style="color:#999">{{data.previousMission.name}}</span>
+                    </v-chip>
+                  </v-col>
+                  <v-col md="5" v-else>
+                    <v-spacer></v-spacer>
+                    <v-chip small>
+                      <v-avatar left>
+                        <v-icon small color="primary">assignment_turned_in</v-icon>
+                      </v-avatar>
+                      <span style="color:#999">Main Mission</span>
+                    </v-chip>
+                  </v-col>
+                  
+                </v-row>
+                
               </v-card-title>
-              <v-card-text v-if="data.previousMission != null">
+              <!-- <v-card-text v-if="data.previousMission != null">
                 <v-chip small>
                   <v-avatar left>
                     <v-icon small color="primary">account_tree</v-icon>
@@ -50,9 +75,9 @@
                   </v-avatar>
                   <span style="color:#999">Main Mission</span>
                 </v-chip>
-              </v-card-text>
+              </v-card-text> -->
               <v-card-text class="subtitle">
-                <span class="textlimit">{{data.description}}</span>
+                <span class="textlimit2">{{data.description}}</span>
               </v-card-text>
               <v-card-text v-if="journalCreateLoading">
                 <v-skeleton-loader v-if="data.journal.length == 0" max-width="350" type="list-item"></v-skeleton-loader>
@@ -458,8 +483,8 @@ export default {
   border-radius: 50%;
   display: inline-block;
   position: relative;
-  bottom: 23px;
-  left: 13px;
+  bottom: 7px;
+  left: 1px;
 }
 .dot2 {
   height: 7px;
@@ -468,17 +493,26 @@ export default {
   border-radius: 50%;
   display: inline-block;
   position: relative;
-  bottom: 23px;
-  left: 13px;
+  bottom: 7px;
+  left: 1px;
 }
 </style>
 
 <style scoped>
 .textlimit {
-  display: block;
-  max-width: 480px;
-  overflow: hidden;
-  white-space: nowrap;
+  display: block;/* or inline-block */
   text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 3.6em;
+  line-height: 1.8em;
+}
+.textlimit2 {
+  display: block;/* or inline-block */
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 5.6em;
+  line-height: 1.8em;
 }
 </style>
