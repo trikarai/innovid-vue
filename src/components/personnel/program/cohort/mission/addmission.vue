@@ -46,7 +46,7 @@
                     :disabled="view"
                     label="Description"
                     v-model="params.description"
-                    :counter="100"
+                    :counter="500"
                     maxlength="500"
                     height="100"
                     required
