@@ -12,7 +12,17 @@
             <b>{{field.name}}</b>
           </div>
           <template v-for="(file, index) in field.attachedFiles">
-            <v-img :key="file.id" :src="base_uri+file.fileInfo.path" max-width="350"></v-img>
+            <template v-if="getFileExt(file.fileInfo.path) == 'pdf'">
+              <v-img
+                src="/img/pdf-icon.png"
+                @click="viewPdf(file)"
+                max-width="150"
+                :key="file.id"
+              />
+            </template>
+            <template v-else>
+              <v-img :key="file.id" :src="base_uri+file.fileInfo.path" max-width="350"></v-img>
+            </template>
             <template v-if="field.required">
               <v-btn x-small :key="index" color="error" @click="replaceAttached(index)">
                 <v-icon small left>autorenew</v-icon>Replace
@@ -89,7 +99,7 @@
         show-size
         counter
         :error="isError"
-        accept="image/*"
+        accept="image/png, image/jpeg, application/pdf"
         v-model="file"
         @change="onFilePicked"
       >
@@ -116,7 +126,12 @@
     </v-col>
     <v-col md="4">
       <v-expand-transition>
-        <v-img class="ml-5" :src="imageUrl" contain max-width="250" v-if="imageUrl" />
+        <template v-if="ext == 'pdf'">
+          <v-img src="/img/pdf-icon.png" contain max-height="150" />
+        </template>
+        <template v-else>
+          <v-img class="ml-5" :src="imageUrl" contain max-width="250" v-if="imageUrl" />
+        </template>
       </v-expand-transition>
     </v-col>
     <v-col md="5">
@@ -164,8 +179,7 @@ export default {
       ext: "",
       uploadUri: "",
       base_uri: "",
-      isError: true,
-      jancux: ""
+      isError: true
     };
   },
   watch: {
@@ -304,6 +318,9 @@ export default {
     cancelReplaceAttached() {
       this.isReplace = false;
       this.removeFile();
+    },
+    getFileExt(path) {
+      return path.split(".").pop();
     }
   }
 };
