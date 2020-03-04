@@ -1,10 +1,10 @@
 <template>
   <v-container extend grid-list-xs>
-    <!-- <v-row>
-      <v-col md2>
+    <v-row>
+      <v-col md="2">
         <v-switch v-model="mode" label="table"></v-switch>
       </v-col>
-    </v-row>-->
+    </v-row>
     <template v-if="!mode">
       <v-row>
         <v-col>
@@ -14,6 +14,7 @@
             :items="dataList.list"
             item-text="program.name"
             return-object
+            @change="getParticipant"
           ></v-select>
         </v-col>
       </v-row>
@@ -48,6 +49,20 @@
               </v-btn>
             </v-card-actions>
           </v-card>
+        </v-col>
+        <v-col md="12">
+          <v-data-table
+            :loading="tableLoad"
+            :headers="tableHeaders2"
+            :items="participantList.list"
+            class="elevation-1"
+          >
+            <template v-slot:item.action="{item}">
+              <v-btn class="ml-2" small color="primary" @click="gotoJournal(item.id)">
+                <v-icon small left>assignment</v-icon>Journal
+              </v-btn>
+            </template>
+          </v-data-table>
         </v-col>
       </v-row>
     </template>
@@ -96,12 +111,13 @@
   </v-container>
 </template>
 <script>
+import bus from "@/config/bus";
 import * as config from "@/config/config";
 import auth from "@/config/auth";
 export default {
   data() {
     return {
-      mode: true,
+      mode: false,
       search: "",
       selectedCohort: {
         id: "",
@@ -117,7 +133,12 @@ export default {
       ],
       dataSingle: { name: "", email: "" },
       tableLoad: false,
-      loader: false
+      loader: false,
+      participantList: { total: 0, list: [] },
+      tableHeaders2: [
+        { text: "Team", value: "team.name", sortable: false },
+        { text: "", value: "action", sortable: false, align: "right" }
+      ]
     };
   },
   mounted() {
@@ -131,16 +152,52 @@ export default {
           headers: auth.getAuthHeader()
         })
         .then(res => {
-          if (res.data.data) {
-            this.dataList = res.data.data;
-          } else {
-            this.dataList = { total: 0, list: [] };
-          }
+          this.dataList = res.data.data;
+          this.selectedCohort = res.data.data.list[0];
+          this.getParticipant();
         })
         .catch(() => {})
         .finally(() => {
           this.tableLoad = false;
         });
+    },
+    getParticipant() {
+      this.tableLoad = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/personnel/as-mentor/" +
+            this.selectedCohort.program.id +
+            "/participants",
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          if (res.data.data) {
+            this.participantList = res.data.data;
+          } else {
+            this.participantList = { total: 0, list: [] };
+          }
+        })
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
+        .finally(() => {
+          this.tableLoad = false;
+        });
+    },
+    gotoJournal(id) {
+      this.$router.push({
+        path:
+          "/personnel/mentor/" +
+          this.selectedCohort.id +
+          "/" +
+          this.selectedCohort.program.id +
+          "/participant/" +
+          id +
+          "/journal"
+      });
     }
   }
 };
