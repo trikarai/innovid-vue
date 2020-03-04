@@ -48,7 +48,7 @@
             </template>
           </v-card-actions>
           <template v-if="!updateJ">
-            <v-card-text class="pt-0 mt-2 ml-3" v-if="!editWS">
+            <v-card-text class="pt-0 mt-2" v-if="!editWS">
               <render-record :fields="fields" />
             </v-card-text>
           </template>
@@ -489,5 +489,11 @@ export default {
 /* .slide-fade-leave-active for <2.1.8 */ {
   /* transform: translateX(10px); */
   opacity: 0;
+}
+.tabel {
+  border: solid 1px;
+  border-width: 1px;
+  border-top: none;
+  border-color: #d2d2d2;
 }
 </style>
