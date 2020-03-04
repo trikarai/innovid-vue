@@ -5,40 +5,42 @@
     <!-- start kiri kanan-->
     <template>
       <!-- {{fields}} -->
+      <v-row class="tabel-row"></v-row>
       <template v-for="(data, index) in reOrderField(fields)">
+
         <v-row :key="index">
-          <v-col md="4" lg="4" xs="12">
-            <span class="subtitle-2 font-weight-black">{{data.field.name}}</span>
+          <v-col class=" tabel-left" md="4" lg="4" xs="12">
+            <span class="subtitle-2 font-weight-black"><span class="left-accent"></span>{{data.field.name}}</span>
           </v-col>
           <v-col
+            class="tabel-right"
             md="8"
             lg="8"
             xs="12"
-            class="mb-4 grey--text"
             :key="data.id"
             v-if="data.type == 'string'"
           >{{data.value}}</v-col>
           <v-col
+            class="tabel-right"
             md="8"
             lg="8"
             xs="12"
-            class="mb-4 grey--text"
             :key="data.id"
             v-if="data.type == 'integer'"
           >{{data.value}}</v-col>
           <v-col
+            class="tabel-right"
             md="8"
             lg="8"
             xs="12"
-            class="mb-4 grey--text"
             :key="data.id"
             v-if="data.type == 'textarea'"
           >{{data.value}}</v-col>
           <v-col
+            class="tabel-right"
             md="8"
             lg="8"
             xs="12"
-            class="mb-4 grey--text"
             :key="data.id"
             v-if="data.type == 'radio'"
           >
@@ -46,10 +48,10 @@
             <template v-else>-</template>
           </v-col>
           <v-col
+            class="tabel-right"
             md="8"
             lg="8"
             xs="12"
-            class="mb-4 grey--text"
             :key="data.id"
             v-if="data.type == 'select'"
           >
@@ -57,10 +59,10 @@
             <template v-for="opt in data.selectedOptions">{{opt.option.name}} ,</template>
           </v-col>
           <v-col
+            class="tabel-right"
             md="8"
             lg="8"
             xs="12"
-            class="mb-4 grey--text"
             :key="data.id"
             v-if="data.type == 'attachment'"
           >
@@ -229,4 +231,26 @@ export default {
 /* .v-responsive, .v-image, .ZoomOutImg {
   cursor: zoom-out;
 } */
+
+.tabel-right {
+  border: solid 2px #d2d2d2;
+  border-top: none;
+}
+.tabel-left {
+  border: solid 2px #d2d2d2;
+  border-top: none;
+  border-right: none;
+}
+.tabel-row {
+  border-top: solid 2px #d2d2d2;
+}
+.left-accent {
+  background: #249c90;
+  width: 4px;
+  height: 16px;
+  display: inline-block;
+  margin-right: 6px;
+  top: 2px;
+  position: relative;
+}
 </style>
