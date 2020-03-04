@@ -52,6 +52,11 @@ export const validationMixins = {
                 () =>
                     this.cpassword === this.password.newPassword || "Password does not match"
             ],
+            rulesFileSize: [
+                value =>
+                    value.size <= (this.field.maxSize * 1000000) ||
+                    "Avatar size should be less than " + this.field.maxSize + " MB!"
+            ],
             rules: {
                 max: value =>
                     value.length <= this.field.maxValue ||
@@ -67,10 +72,10 @@ export const validationMixins = {
                     "Min Value is " + this.field.minValue,
                 maxSize: value =>
                     value.size <= this.field.maxSize ||
-                    "Max size is " + this.field.maxSize + " Byte",
+                    "File size should be less than " + this.field.maxSize + " MB!",
                 minSize: value =>
                     value.size >= this.field.minSize ||
-                    "Min Size is " + this.field.minSize + " Byte"
+                    "Min Size is " + this.field.minSize + " MB"
             }
         };
     },
