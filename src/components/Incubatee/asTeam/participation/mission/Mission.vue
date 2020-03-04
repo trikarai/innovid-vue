@@ -38,8 +38,7 @@
                   <v-col md="7">
                      {{data.name}}
                   </v-col>
-                  <v-col md="5" v-if="data.previousMission != null">
-                     <v-spacer></v-spacer>
+                  <v-col style="text-align:end;" md="5" v-if="data.previousMission != null">
                      <v-chip small>
                       <v-avatar left>
                         <v-icon small color="primary">account_tree</v-icon>
@@ -47,8 +46,7 @@
                       <span style="color:#999">{{data.previousMission.name}}</span>
                     </v-chip>
                   </v-col>
-                  <v-col md="5" v-else>
-                    <v-spacer></v-spacer>
+                  <v-col style="text-align:end;" md="5" v-else>
                     <v-chip small>
                       <v-avatar left>
                         <v-icon small color="primary">assignment_turned_in</v-icon>
