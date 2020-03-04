@@ -9,8 +9,11 @@
       <template v-for="(data, index) in reOrderField(fields)">
 
         <v-row :key="index">
-          <v-col class=" tabel-left" md="4" lg="4" xs="12">
-            <span class="subtitle-2 font-weight-black"><span class="left-accent"></span>{{data.field.name}}</span>
+          <v-col style="word-break: break-all" class="tabel-left" md="4" lg="4" xs="12">
+            <span class="subtitle-2 font-weight-black">
+              <span class="left-accent"></span>
+              {{data.field.name}}
+            </span>
           </v-col>
           <v-col
             class="tabel-right"
@@ -242,7 +245,7 @@ export default {
   border-right: none;
 }
 .tabel-row {
-  border-top: solid 2px #d2d2d2;
+  border-bottom: solid 2px #d2d2d2;
 }
 .left-accent {
   background: #249c90;
