@@ -57,7 +57,8 @@
         </v-expansion-panels>
       </v-col>
       <v-col cols="12" md="12" lg="12" xs="12">
-        <v-tabs v-model="tab" class="elevation-2" background-color="primary" centered grow>
+      <v-card class="pa-5">
+        <v-tabs v-model="tab" class="elevation-2" background-color="grey" dark center-active grow>
           <v-tabs-slider></v-tabs-slider>
 
           <v-tab href="#tab-1">New Journal</v-tab>
@@ -200,8 +201,8 @@
                   </template>
                 </v-col>
                 <v-col md="3" v-if="!updateJ">
-                  <v-btn x-small fab color="success" @click="openComment()">
-                    <v-icon small>forum</v-icon>
+                  <v-btn small color="success" @click="openComment()">
+                    <v-icon left small>forum</v-icon> Comment
                   </v-btn>
                 </v-col>
               </template>
@@ -258,7 +259,7 @@
             <v-row v-if="!editWS">
               <v-col>
                 <template v-if="!updateJ">
-                  <v-card v-if="!journalLoad">
+                  <v-card class="pa-5" v-if="!journalLoad">
                     <v-card-title primary-title>
                       <b>{{dataSingle.name}}</b>
                     </v-card-title>
@@ -267,7 +268,7 @@
                       <br />
                       {{dataListTemp.worksheetForm.name}}
                     </v-card-text>
-                    <v-card-text class="pt-0 mt-2 ml-3">
+                    <v-card-text>
                       <render-record :fields="fields" />
                     </v-card-text>
                   </v-card>
@@ -302,8 +303,8 @@
             </v-card>
             <v-row v-else>
               <v-col md="12" lg="12" xs="12">
-                <v-btn icon color="primary" @click="getOtherJournal">
-                  <v-icon>autorenew</v-icon>
+                <v-btn small color="primary" @click="getOtherJournal">
+                  <v-icon left small>autorenew</v-icon> reload data
                 </v-btn>
               </v-col>
               <v-col md="6" lg="6" xs="12">
@@ -329,6 +330,7 @@
             </v-row>
           </v-tab-item>
         </v-tabs-items>
+      </v-card>
       </v-col>
     </v-row>
     <v-overlay :value="worksheetDataLoad">
@@ -351,8 +353,9 @@
             <v-btn text color="black" flat @click.native="isCommentFullscreen = !isCommentFullscreen">
               <v-icon>fullscreen</v-icon>
             </v-btn>
+            <v-spacer></v-spacer>
             <v-btn text color="red" flat @click.native="dialogComment = false">
-              <v-icon>close</v-icon>
+              close
             </v-btn>
           </v-card-actions>
         </v-card>
