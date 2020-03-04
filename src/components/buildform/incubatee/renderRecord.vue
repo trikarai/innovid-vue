@@ -9,7 +9,7 @@
       <template v-for="(data, index) in reOrderField(fields)">
 
         <v-row :key="index">
-          <v-col style="word-break: break-all" class="tabel-left" md="4" lg="4" xs="12">
+          <v-col style="word-break: break-word" class="tabel-left" md="4" lg="4" xs="12">
             <span class="subtitle-2 font-weight-black">
               <span class="left-accent"></span>
               {{data.field.name}}
