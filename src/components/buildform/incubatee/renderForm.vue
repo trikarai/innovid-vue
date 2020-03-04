@@ -16,7 +16,7 @@
         <v-card-text class="subtitle grey--text">{{formDesc}}</v-card-text>
         <v-card-text>
           <v-form ref="form" v-model="valid">
-          <template v-for="(field, index) in reOrderField(fields)">
+            <template v-for="(field, index) in reOrderField(fields)">
               <v-row :key="index">
                 <field-module :field="field" :index="index" :modeReload="modeReload" />
               </v-row>
@@ -35,12 +35,18 @@
           <v-spacer></v-spacer>
           <v-btn v-if="!modeAtom" color="primary" :disabled="!valid" @click="sendtoParent">Submit</v-btn>
           <!--atomic journal button-->
-          <v-btn
-            v-if="modeAtom"
-            color="primary"
-            :disabled="!valid"
-            @click="sendtoParent2"
-          >Assign Worksheet</v-btn>
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                v-if="modeAtom"
+                v-on="on"
+                color="primary"
+                :disabled="!valid"
+                @click="sendtoParent2"
+              >Assign Worksheet</v-btn>
+            </template>
+            <span>Edited Worksheet record won't be saved</span>
+          </v-tooltip>
           <v-btn
             v-if="modeAtom"
             color="primary"
