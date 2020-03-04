@@ -35,12 +35,10 @@
               </div>
               <v-card-title class="headline">
                 <v-row>
-                  <v-col md="7">
-                     {{data.name}}
-                  </v-col>
+                  <v-col md="7">{{data.name}}</v-col>
                   <v-col md="5" v-if="data.previousMission != null">
-                     <v-spacer></v-spacer>
-                     <v-chip small>
+                    <v-spacer></v-spacer>
+                    <v-chip small>
                       <v-avatar left>
                         <v-icon small color="primary">account_tree</v-icon>
                       </v-avatar>
@@ -56,9 +54,7 @@
                       <span style="color:#999">Main Mission</span>
                     </v-chip>
                   </v-col>
-                  
                 </v-row>
-                
               </v-card-title>
               <!-- <v-card-text v-if="data.previousMission != null">
                 <v-chip small>
@@ -75,7 +71,7 @@
                   </v-avatar>
                   <span style="color:#999">Main Mission</span>
                 </v-chip>
-              </v-card-text> -->
+              </v-card-text>-->
               <v-card-text class="subtitle">
                 <span class="textlimit2">{{data.description}}</span>
               </v-card-text>
@@ -84,12 +80,12 @@
               </v-card-text>
               <v-card-text v-if="data.journal.length != 0">
                 <!-- {{data}} -->
-                <template
-                  v-if="data.selectedParentJournal"
-                ><b>{{data.worksheetForm.name}} under {{data.selectedParentJournal.worksheet.name}} :</b></template>
+                <template v-if="data.selectedParentJournal">
+                  <b>{{data.worksheetForm.name}} under {{data.selectedParentJournal.worksheet.name}} :</b>
+                </template>
 
                 <v-select
-                class="mt-2"
+                  class="mt-2"
                   :loading="journalCreateLoading"
                   dense
                   :label="'Submitted ' + data.worksheetForm.name "
@@ -421,6 +417,8 @@ export default {
           element.previousMission.id == missionId
         ) {
           element["selectedParentJournal"] = event;
+        } else {
+          delete element.selectedParentJournal;
         }
       });
       this.axios
@@ -500,7 +498,7 @@ export default {
 
 <style scoped>
 .textlimit {
-  display: block;/* or inline-block */
+  display: block; /* or inline-block */
   text-overflow: ellipsis;
   word-wrap: break-word;
   overflow: hidden;
@@ -508,7 +506,7 @@ export default {
   line-height: 1.8em;
 }
 .textlimit2 {
-  display: block;/* or inline-block */
+  display: block; /* or inline-block */
   text-overflow: ellipsis;
   word-wrap: break-word;
   overflow: hidden;
