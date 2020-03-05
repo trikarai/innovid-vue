@@ -21,7 +21,7 @@
               :to="'/incubatee/profile-form/'+ dataSingle.profileForm.id +'/add'"
             >Edit</v-btn>
           </v-card-title>
-          <v-card-text>
+          <v-card-text class="pa-7 pt-0">
             <render-record :fields="fields" />
           </v-card-text>
         </v-card>
