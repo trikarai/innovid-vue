@@ -58,7 +58,7 @@
       </v-col>
       <v-col cols="12" md="12" lg="12" xs="12">
       <v-card class="pa-5">
-        <v-tabs v-model="tab" class="elevation-2" background-color="grey" dark center-active grow>
+        <v-tabs v-model="tab" class="elevation-0" background-color="primary" dark>
           <v-tabs-slider></v-tabs-slider>
 
           <v-tab href="#tab-1">New Journal</v-tab>
@@ -156,9 +156,9 @@
           <!-- new journal end-->
 
           <v-tab-item value="tab-2">
-            <v-row>
+            <v-row class="mt-5">
               <template v-show="!journalLoad">
-                <v-col md="6" v-if="!updateJ">
+                <v-col md="2" v-if="!updateJ">
                   <v-btn small v-if="!editWS" color="primary" @click="editWorksheet">Edit worksheet</v-btn>
                   <v-btn color="warning" small @click="editWS = !editWS" v-else>
                     <v-icon small left>cancel</v-icon>Cancel Edit
@@ -200,7 +200,7 @@
                     </v-btn>
                   </template>
                 </v-col>
-                <v-col md="3" v-if="!updateJ">
+                <v-col style="text-align:end;" md="7" v-if="!updateJ">
                   <v-btn small color="success" @click="openComment()">
                     <v-icon left small>forum</v-icon> Comment
                   </v-btn>
@@ -296,13 +296,13 @@
             </v-row>
           </v-tab-item>
           <v-tab-item value="tab-3">
-            <v-card flat v-if="otherLoad">
+            <v-card class="mt-5" flat v-if="otherLoad">
               <v-card-text>
                 <v-skeleton-loader max-width="500" type="list-item-avatar@5"></v-skeleton-loader>
               </v-card-text>
             </v-card>
             <v-row v-else>
-              <v-col md="12" lg="12" xs="12">
+              <v-col class="mt-5" md="12" lg="12" xs="12">
                 <v-btn small color="primary" @click="getOtherJournal">
                   <v-icon left small>autorenew</v-icon> reload data
                 </v-btn>
@@ -826,3 +826,21 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+a.v-tab.v-tab--active {
+  background: #fff;
+  color: #249c90 !important;
+  -webkit-box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.39);
+  -moz-box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.39);
+  box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.39);
+  border-top: solid 5px;
+}
+
+</style>
+
+<style>
+.v-slide-group__content.v-tabs-bar__content {
+  padding-left: 5px !important;
+}
+</style>
