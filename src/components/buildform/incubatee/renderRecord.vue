@@ -5,7 +5,7 @@
     <!-- start kiri kanan-->
     <template>
       <!-- {{fields}} -->
-      <v-row v-if="fields" class="tabel-row"></v-row>
+      <v-row v-if="fields.length != 0" class="tabel-row"></v-row>
       <template v-for="(data, index) in reOrderField(fields)">
 
         <v-row :key="index">
