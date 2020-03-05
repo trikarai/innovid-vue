@@ -35,11 +35,9 @@
               </div>
               <v-card-title class="headline">
                 <v-row>
-                  <v-col md="7">
-                     {{data.name}}
-                  </v-col>
+                  <v-col md="7">{{data.name}}</v-col>
                   <v-col style="text-align:end;" md="5" v-if="data.previousMission != null">
-                     <v-chip small>
+                    <v-chip small>
                       <v-avatar left>
                         <v-icon small color="primary">account_tree</v-icon>
                       </v-avatar>
@@ -112,7 +110,6 @@
                       v-else
                     >No {{data.worksheetForm.name}} found for this mission under {{data.selectedParentJournal.worksheet.name}}</template>
                   </template>
-                  <!-- >No {{data.worksheetForm.name}} found for this mission under {{data.selectedParentJournal.worksheet.name}}</template> -->
                   <template v-else>
                     No Journal Data Found for this main mission
                     <v-btn color="success" icon @click="refreshRootJournal()">
@@ -149,7 +146,6 @@
                   </v-btn>
                 </template>
                 <template v-else>
-                  <!-- Branch {{data.selectedParentJournal}} -->
                   <v-btn
                     v-show="selectedJournalinMission[index] == null"
                     v-if="data.selectedParentJournal"
@@ -166,7 +162,7 @@
                     color="primary"
                     small
                     router
-                    @click="openJournal2(selectedJournalinMission[index], 'branch', data.selectedParentJournal.id)"
+                    @click="openJournal2(selectedJournalinMission[index], 'branch', selectedJournalinMission[index].parent.id)"
                   >
                     <v-icon small left>zoom_in</v-icon>
                     View {{data.worksheetForm.name}}
