@@ -18,8 +18,8 @@
             outlined
           ></v-select>
         </v-col>
-      </v-row>
-      <v-row>
+      <!-- </v-row>
+      <v-row> -->
         <v-col md="3" sm="12">
           <v-card :disabled="selectedCohort.program.id == ''">
             <v-card-title primary-title>Requested Mentoring</v-card-title>
@@ -50,6 +50,9 @@
               </v-btn>
             </v-card-actions>
           </v-card>
+        </v-col>
+        <v-col md="12">
+          <span class="title" >Participant</span>
         </v-col>
         <v-col md="12">
           <v-data-table
