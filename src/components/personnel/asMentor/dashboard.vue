@@ -7,7 +7,7 @@
     </v-row>
     <template v-if="!mode">
       <v-row>
-        <v-col>
+        <v-col md="6">
           <v-select
             v-model="selectedCohort"
             label="Program"
@@ -15,11 +15,12 @@
             item-text="program.name"
             return-object
             @change="getParticipant"
+            outlined
           ></v-select>
         </v-col>
       </v-row>
       <v-row>
-        <v-col md="6" sm="12">
+        <v-col md="3" sm="12">
           <v-card :disabled="selectedCohort.program.id == ''">
             <v-card-title primary-title>Requested Mentoring</v-card-title>
             <v-card-actions>
@@ -35,7 +36,7 @@
             </v-card-actions>
           </v-card>
         </v-col>
-        <v-col md="6" sm="12">
+        <v-col md="3" sm="12">
           <v-card :disabled="selectedCohort.program.id == ''">
             <v-card-title primary-title>Scheduled Mentoring</v-card-title>
             <v-card-actions>
@@ -43,7 +44,7 @@
                 depressed
                 block
                 color="primary"
-                :to="'/personnel/mentor/' + selectedCohort.program.id +'/schedule'"
+                :to="'/personnel/mentor/' + selectedCohort.id + '/' + selectedCohort.program.id +'/schedule'"
               >
                 <v-icon>event_available</v-icon>
               </v-btn>
