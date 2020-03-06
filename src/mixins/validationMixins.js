@@ -55,7 +55,7 @@ export const validationMixins = {
             rulesFileSize: [
                 value =>
                     value.size <= (this.field.maxSize * 1000000) ||
-                    "Avatar size should be less than " + this.field.maxSize + " MB!"
+                    "File size should be less than " + this.field.maxSize + " MB!"
             ],
             rules: {
                 max: value =>
