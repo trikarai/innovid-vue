@@ -6,7 +6,7 @@
     <template>
       <!-- {{fields}} -->
       <v-row v-if="fields.length != 0" class="tabel-row"></v-row>
-      <template v-for="(data, index) in reOrderField(fields)">
+      <template v-for="(data, index) in reOrderRecord(fields)">
 
         <v-row :key="index">
           <v-col style="word-break: break-word" class="tabel-left" md="4" lg="4" xs="12">

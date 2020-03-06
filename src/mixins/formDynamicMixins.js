@@ -38,6 +38,9 @@ export const formDynamicMixins = {
         reOrderField: function (params) {
             return Vue._.orderBy(params, function (o) { return new Number(o.position); }, ["asc"]);
         },
+        reOrderRecord: function (params) {
+            return Vue._.orderBy(params, function (o) { return new Number(o.field.position); }, ["asc"]);
+        },
         refactorJSON(data) {
             data.stringFields.forEach(element => {
                 element.type = "string";

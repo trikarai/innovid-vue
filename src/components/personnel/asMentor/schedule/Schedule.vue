@@ -50,7 +50,7 @@
           </template>
           <template v-slot:item.action="{item}">
             <v-btn
-              v-if="item.mentorMentoringReport == null"
+              v-if="!item.containMentorMentoringReport"
               class="ml-2"
               small
               color="primary"
