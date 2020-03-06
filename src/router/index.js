@@ -89,6 +89,7 @@ import CoordinatorDashboard from '../components/personnel/asCoordinator/dashboar
 import CoordinatorPhase from '../components/personnel/asCoordinator/phase/Phase';
 import CoordinatorParticipant from '../components/personnel/asCoordinator/participant/Participant';
 import CoordinatorApplicant from '../components/personnel/asCoordinator/applicant/Applicant';
+import CoordinatorMentoring from '../components/personnel/asCoordinator/mentoring/Mentoring';
 
 import MentorDashboard from '../components/personnel/asMentor/dashboard';
 import MentorParticipant from '../components/personnel/asMentor/participant/participant';
@@ -472,6 +473,16 @@ const routes = [
         component: CoordinatorApplicant,
         name: "Applicant",
         meta: {
+          level: 2,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/coordinator/program/:programId/mentoring",
+        component: CoordinatorMentoring,
+        name: "Mentoring",
+        meta: {
+          text: "Mentoring Report",
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }

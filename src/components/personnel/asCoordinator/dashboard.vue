@@ -104,6 +104,13 @@
                 >
                   <v-icon left>today</v-icon>Registration Phase
                 </v-btn>
+                <v-btn
+                  class="mr-2"
+                  color="primary"
+                  :to="'/personnel/coordinator/program/' + item.program.id + '/mentoring'"
+                >
+                  <v-icon left>assignment</v-icon>Mentoring
+                </v-btn>
               </template>
             </template>
           </v-data-table>
