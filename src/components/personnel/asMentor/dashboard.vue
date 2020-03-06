@@ -9,6 +9,7 @@
       <v-row>
         <v-col md="6">
           <v-select
+            :loading="tableLoad"
             v-model="selectedCohort"
             label="Program"
             :items="dataList.list"
@@ -18,8 +19,8 @@
             outlined
           ></v-select>
         </v-col>
-      <!-- </v-row>
-      <v-row> -->
+        <!-- </v-row>
+        <v-row>-->
         <v-col md="3" sm="12">
           <v-card :disabled="selectedCohort.program.id == ''">
             <v-card-title primary-title>Requested Mentoring</v-card-title>
@@ -52,19 +53,50 @@
           </v-card>
         </v-col>
         <v-col md="12">
-          <span class="title" >Participant</span>
+          <span class="title">Participant</span>
         </v-col>
+        <v-col md="2">
+          <v-switch v-model="modeJournal" label="Group by Mission"></v-switch>
+        </v-col>
+        <!-- <v-col md="12">
+          <pre> {{participantJournalList}} </pre>
+        </v-col>-->
         <v-col md="12">
           <v-data-table
-            :loading="tableLoad"
             :headers="tableHeaders2"
-            :items="participantList.list"
+            :items="participantJournalList.list"
+            hide-actions
             class="elevation-1"
+            :loading="tableLoad"
           >
-            <template v-slot:item.action="{item}">
-              <v-btn class="ml-2" small color="primary" @click="gotoJournal(item.id)">
-                <v-icon small left>assignment</v-icon>Journal
-              </v-btn>
+            <template v-if="!modeJournal" v-slot:item.journal="{item}">
+              <template v-for="journal in item.journals">
+                <v-row :key="journal.id">
+                  <v-chip class="ma-1">{{journal.mission.name}} - {{journal.worksheet.name}}</v-chip>
+                  <v-btn icon color="success" @click="gotoJournalDetail(item.id, journal.id)">
+                    <v-icon>zoom_in</v-icon>
+                  </v-btn>
+                </v-row>
+              </template>
+            </template>
+
+            <template v-if="modeJournal" v-slot:item.group="{item}">
+              <template v-for="(group, index) in item.grouped">
+                <v-row :key="index">
+                  <template>
+                    <v-col md="12" class="title">{{group[0]}}</v-col>
+                  </template>
+                  <template v-for="data in group[1]">
+                    <v-col :key="data.id">
+                      <v-chip
+                        close
+                        close-icon="zoom_in"
+                        @click:close="gotoJournalDetail(item.id, data.id)"
+                      >{{data.worksheet.name}}</v-chip>
+                    </v-col>
+                  </template>
+                </v-row>
+              </template>
             </template>
           </v-data-table>
         </v-col>
@@ -73,7 +105,6 @@
     <template v-else>
       <v-row>
         <v-col>
-          <!-- <pre>{{dataList}}</pre> -->
           <v-data-table
             :loading="tableLoad"
             :headers="tableHeaders"
@@ -118,10 +149,17 @@
 import bus from "@/config/bus";
 import * as config from "@/config/config";
 import auth from "@/config/auth";
+
+import Vue from "vue";
+import VueLodash from "vue-lodash";
+const options = { name: "lodash" }; // customize the way you want to call it
+Vue.use(VueLodash, options); // options is optional
+
 export default {
   data() {
     return {
       mode: false,
+      modeJournal: false,
       search: "",
       selectedCohort: {
         id: "",
@@ -139,8 +177,11 @@ export default {
       tableLoad: false,
       loader: false,
       participantList: { total: 0, list: [] },
+      participantJournalList: { total: 0, list: [] },
       tableHeaders2: [
         { text: "Team", value: "team.name", sortable: false },
+        { text: "", value: "journal", sortable: false },
+        { text: "", value: "group", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" }
       ]
     };
@@ -158,7 +199,8 @@ export default {
         .then(res => {
           this.dataList = res.data.data;
           this.selectedCohort = res.data.data.list[0];
-          this.getParticipant();
+          // this.getParticipant();
+          this.getParticipantJournal();
         })
         .catch(() => {})
         .finally(() => {
@@ -172,7 +214,7 @@ export default {
           config.baseUri +
             "/personnel/as-mentor/" +
             this.selectedCohort.program.id +
-            "/participants",
+            "/participants/",
           {
             headers: auth.getAuthHeader()
           }
@@ -191,6 +233,40 @@ export default {
           this.tableLoad = false;
         });
     },
+    getParticipantJournal() {
+      this.tableLoad = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/personnel/as-mentor/" +
+            this.selectedCohort.program.id +
+            "/participants/include-journals",
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          this.participantJournalList = res.data.data;
+          this.groupByMission(res.data.data);
+        })
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
+        .finally(() => {
+          this.tableLoad = false;
+        });
+    },
+    // eslint-disable-next-line no-unused-vars
+    groupByMission(participantJournalList) {
+      for (let index = 0; index < participantJournalList.list.length; index++) {
+        // eslint-disable-next-line no-unused-vars
+        let grouped = Vue._.groupBy(
+          participantJournalList.list[index].journals,
+          currrent => currrent.mission.name
+        );
+        participantJournalList.list[index].grouped = Object.entries(grouped);
+      }
+    },
     gotoJournal(id) {
       this.$router.push({
         path:
@@ -201,6 +277,19 @@ export default {
           "/participant/" +
           id +
           "/journal"
+      });
+    },
+    gotoJournalDetail(participantId, journalId) {
+      this.$router.push({
+        path:
+          "/personnel/mentor/" +
+          this.selectedCohort.id +
+          "/" +
+          this.selectedCohort.program.id +
+          "/participant/" +
+          participantId +
+          "/journal/" +
+          journalId
       });
     }
   }
