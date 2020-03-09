@@ -121,6 +121,15 @@
             {{item.startTime | moment("dddd, D MMM YYYY") }} -
             {{item.endTime | moment("dddd, D MMM YYYY") }}
           </template>
+          <template v-slot:item.action="{item}">
+            <v-btn
+              color="primary"
+              router
+              :to="'/personnel/coordinator/program/'+ $route.params.programId +'/mentoring/' + item.id"
+            >
+              <v-icon left>assignment</v-icon>Report
+            </v-btn>
+          </template>
         </v-data-table>
       </v-col>
     </v-row>
