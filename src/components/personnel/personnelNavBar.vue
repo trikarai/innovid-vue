@@ -25,7 +25,7 @@
       <v-icon></v-icon>
     </v-btn>-->
     <div class="container extend mt-4">
-      <h2 class="mb-2">{{$route.name}}</h2>
+      <h2 class="mb-2">{{$route.meta.text}}</h2>
       <div class="garis"></div>
     </div>
     <!-- <p class="ml-3 mb-2">{{$route.name}}</p> -->

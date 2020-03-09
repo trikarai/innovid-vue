@@ -209,9 +209,9 @@ const routes = [
       {
         path: "/personnel/account",
         component: PersonnelAccount,
-        name: " My Account Personnel",
+        name: "personnel-account",
         meta: {
-          text: " My Account",
+          text: "My Account",
           level: 0,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -219,8 +219,9 @@ const routes = [
       {
         path: "/personnel/personnel",
         component: PersonnelPersonnels,
-        name: "Personnel",
+        name: "personnel-list",
         meta: {
+          text: "Personnel",
           level: 0,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -228,8 +229,9 @@ const routes = [
       {
         path: "/personnel/founder",
         component: PersonnelFounders,
-        name: "Registrant",
+        name: "registrant-list",
         meta: {
+          text: "Registrant List",
           level: 0,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -237,8 +239,9 @@ const routes = [
       {
         path: "/personnel/program",
         component: PersonnelProgramCohort,
-        name: "Program",
+        name: "program",
         meta: {
+          text: "Program",
           level: 0,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -246,8 +249,9 @@ const routes = [
       {
         path: "/personnel/worksheet-forms",
         component: PersonnelWorksheet,
-        name: "Worksheet Form",
+        name: "worksheet-form",
         meta: {
+          text: "Worksheet Form",
           level: 0,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -255,8 +259,9 @@ const routes = [
       {
         path: "/personnel/preview/:formType/:formId",
         component: PersonnelFormDetail,
-        name: "Form Preview",
+        name: "worksheet-form-preview",
         meta: {
+          text: "Worksheet Form Preview",
           level: 1,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -264,8 +269,9 @@ const routes = [
       {
         path: "/personnel/worksheet-forms/build",
         component: PersonnelWorksheetBuild,
-        name: "Create Worksheet Form",
+        name: "worksheet-form-create",
         meta: {
+          text: "Create Worksheet Form",
           level: 1,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -273,8 +279,9 @@ const routes = [
       {
         path: "/personnel/worksheet-forms/:formId/edit",
         component: PersonnelWorksheetBuild,
-        name: "Edit Worksheet Form",
+        name: "worksheet-form-edit",
         meta: {
+          text: "Edit Worksheet Form",
           level: 1,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -282,8 +289,9 @@ const routes = [
       {
         path: "/personnel/profile-forms",
         component: PersonnelProfileForm,
-        name: "Profile Forms",
+        name: "profile-forms",
         meta: {
+          text: "Profile Form",
           level: 0,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -291,8 +299,9 @@ const routes = [
       {
         path: "/personnel/profile-forms/build",
         component: PersonnelProfileFormBuild,
-        name: "Create Profile Form",
+        name: "profile-form-create",
         meta: {
+          text: "Create Profile Form",
           level: 1,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -300,8 +309,9 @@ const routes = [
       {
         path: "/personnel/profile-forms/:formId/edit",
         component: PersonnelProfileFormBuild,
-        name: "Edit Profile Form",
+        name: "profile-form-edit",
         meta: {
+          text: "Edit Profile Form",
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -309,8 +319,9 @@ const routes = [
       {
         path: "/personnel/team-profile-forms",
         component: PersonnelTeamProfileForm,
-        name: "Team Profile Forms",
+        name: "team-profile-forms",
         meta: {
+          text: "Team Profile Form",
           level: 0,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -318,8 +329,9 @@ const routes = [
       {
         path: "/personnel/team-profile-forms/build",
         component: PersonnelTeamProfileFormBuild,
-        name: "Create Team Profile Forms",
+        name: "team-profile-form-create",
         meta: {
+          text: "Create Team Profile Form",
           level: 1,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -327,8 +339,9 @@ const routes = [
       {
         path: "/personnel/team-profile-forms/:formId/edit",
         component: PersonnelTeamProfileFormBuild,
-        name: "Edit Team Profile Forms",
+        name: "team-profile-form-edit",
         meta: {
+          text: "Edit Team Profile Form",
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -336,8 +349,9 @@ const routes = [
       {
         path: "/personnel/mentoring-feedback-forms",
         component: PersonnelMentoringForm,
-        name: "Mentoring Form",
+        name: "mentoring-forms",
         meta: {
+          text: "Mentoring Feedback Form",
           level: 0,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -345,8 +359,9 @@ const routes = [
       {
         path: "/personnel/mentoring-feedback-forms/build",
         component: PersonnelMentoringFormBuild,
-        name: "Create Mentoring Feedback Form",
+        name: "mentoring-feedback-form-create",
         meta: {
+          text: "Create Mentoring Feedback Form",
           level: 1,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -354,8 +369,9 @@ const routes = [
       {
         path: "/personnel/mentoring-feedback-forms/:formId/edit",
         component: PersonnelMentoringFormBuild,
-        name: "Edit Mentoring Feedback Form",
+        name: "mentoring-feedback-form-edit",
         meta: {
+          text: "Edit Mentoring Feedback Form",
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -363,8 +379,9 @@ const routes = [
       {
         path: "/personnel/program/:programId/coordinator",
         component: CohortCoordinator,
-        name: "Coordinator",
+        name: "program-coordinator",
         meta: {
+          text: "Coordinator",
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -372,8 +389,9 @@ const routes = [
       {
         path: "/personnel/program/:programId/mentor",
         component: CohortMentor,
-        name: "Mentors",
+        name: "program-mentors",
         meta: {
+          text: "Mentors",
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -381,8 +399,9 @@ const routes = [
       {
         path: "/personnel/program/:programId/assign",
         component: PersonnelList,
-        name: "Personnel List",
+        name: "program-personnel-list",
         meta: {
+          text: "Personnel List",
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -390,8 +409,9 @@ const routes = [
       {
         path: "/personnel/program/:programId/mission",
         component: CohortMission,
-        name: "Mission",
+        name: "program-mission-list",
         meta: {
+          text: "Program Mission",
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -399,8 +419,9 @@ const routes = [
       {
         path: "/personnel/program/:programId/mission/:missionId/learning-material",
         component: CohortMissionLearning,
-        name: "Learning Material",
+        name: "mission-learning-material",
         meta: {
+          text: "Mission Learning Material",
           level: 3,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -408,8 +429,9 @@ const routes = [
       {
         path: "/personnel/program/:programId/mission/:missionId/learning-material/:learningId",
         component: CohortMissionLearningPreview,
-        name: "Learning Material Preview",
+        name: "mission-learning-material-preview",
         meta: {
+          text: "Mission Learning Material Preview",
           level: 4,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -417,8 +439,9 @@ const routes = [
       {
         path: "/personnel/program/:programId/mission/:missionId/learning-material-add",
         component: CohortMissionLearningForm,
-        name: "Add Learning Material",
+        name: "mission-learning-material-add",
         meta: {
+          text: "Add Learning Material",
           level: 3,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -426,8 +449,9 @@ const routes = [
       {
         path: "/personnel/program/:programId/mission/:missionId/learning-material/:learningId/edit",
         component: CohortMissionLearningForm,
-        name: "Edit Learning Material",
+        name: "mission-learning-material-edit",
         meta: {
+          text: "Edit Learning Material",
           level: 3,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -435,8 +459,9 @@ const routes = [
       {
         path: "/personnel/program/:programId/mentoring",
         component: CohortMentoring,
-        name: "Mentoring",
+        name: "program-mentoring",
         meta: {
+          text: "Mentoring",
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -445,8 +470,9 @@ const routes = [
       {
         path: "/personnel/coordinator/dashboard",
         component: CoordinatorDashboard,
-        name: "Coordinator Dashboard",
+        name: "coordinator-dashboard",
         meta: {
+          text: "Coordinator Dashboard",
           level: 1,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -505,8 +531,9 @@ const routes = [
       {
         path: "/personnel/mentor/dashboard",
         component: MentorDashboard,
-        name: "Mentor Dashboard",
+        name: "mentor-dashboard",
         meta: {
+          text: "Mentor Dashboard",
           level: 1,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -514,8 +541,9 @@ const routes = [
       {
         path: "/personnel/mentor/:mentorshipId/:programId/schedule",
         component: MentorSchedule,
-        name: "Mentor Schedule",
+        name: "mentor-schedule",
         meta: {
+          text: "Mentor Schedule",
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -523,8 +551,9 @@ const routes = [
       {
         path: "/personnel/mentor/:mentorId/:programId/participant",
         component: MentorParticipant,
-        name: "Program's Participant",
+        name: "mentor-program-participant",
         meta: {
+          text: "Program's Participant",
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -532,8 +561,9 @@ const routes = [
       {
         path: "/personnel/mentor/:mentorId/:programId/participant/:participantId/journal",
         component: MentorParticipantJournal,
-        name: "Program's Participant Journal",
+        name: "mentor-program-participant-journal",
         meta: {
+          text: "Program's Participant Journal",
           level: 3,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -541,7 +571,7 @@ const routes = [
       {
         path: "/personnel/mentor/:mentorId/:programId/participant/:cohortId/journal/:journalId",
         component: MentorParticipantJournalDetail,
-        name: "Program's Participant Journal Detail",
+        name: "mentor-program-participant-journal-detail",
         meta: {
           text: "Program's Participant Journal Detail",
           level: 4,
@@ -551,8 +581,9 @@ const routes = [
       {
         path: "/personnel/mentor/:mentorshipId/schedule/:scheduleId",
         component: MentorScheduleDetail,
-        name: "Mentor Schedule Detail",
+        name: "mentor-schedule-detail",
         meta: {
+          text: "Mentor Schedule Detail",
           level: 3,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -560,7 +591,9 @@ const routes = [
       {
         path: "/personnel/mentor/:mentorshipId/schedule/:scheduleId/report",
         component: MentorScheduleReport,
+        name: "mentor-schedule-report",
         meta: {
+          text: "Mentor Schedule Report",
           level: 3,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -568,8 +601,9 @@ const routes = [
       {
         path: "/personnel/mentor/:mentorshipId/negotiate-schedule",
         component: MentorScheduleNegotiate,
-        name: "Negotiate Schedule",
+        name: "mentor-negotiate-schedule",
         meta: {
+          text: "Negotiate Schedule",
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }

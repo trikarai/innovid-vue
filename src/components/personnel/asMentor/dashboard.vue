@@ -65,7 +65,7 @@
           <v-data-table
             :headers="tableHeaders2"
             :items="participantJournalList.list"
-            hide-actions
+            hide-default-footer
             class="elevation-1"
             :loading="tableLoad"
           >
