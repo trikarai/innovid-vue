@@ -90,6 +90,7 @@ import CoordinatorPhase from '../components/personnel/asCoordinator/phase/Phase'
 import CoordinatorParticipant from '../components/personnel/asCoordinator/participant/Participant';
 import CoordinatorApplicant from '../components/personnel/asCoordinator/applicant/Applicant';
 import CoordinatorMentoring from '../components/personnel/asCoordinator/mentoring/Mentoring';
+import CoordinatorMentoringDetail from '../components/personnel/asCoordinator/mentoring/MentoringDetail';
 
 import MentorDashboard from '../components/personnel/asMentor/dashboard';
 import MentorParticipant from '../components/personnel/asMentor/participant/participant';
@@ -455,6 +456,7 @@ const routes = [
         component: CoordinatorParticipant,
         name: "Team List",
         meta: {
+          text: "Team Participant List",
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -464,6 +466,7 @@ const routes = [
         component: CoordinatorPhase,
         name: "Registration Phase",
         meta: {
+          text: "Registration Phase",
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -473,6 +476,7 @@ const routes = [
         component: CoordinatorApplicant,
         name: "Applicant",
         meta: {
+          text: "Applicant",
           level: 2,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
@@ -484,6 +488,16 @@ const routes = [
         meta: {
           text: "Mentoring Report",
           level: 2,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/coordinator/program/:programId/mentoring/:mentoringId",
+        component: CoordinatorMentoringDetail,
+        name: "Mentoring Report",
+        meta: {
+          text: "Mentoring Report Detail",
+          level: 3,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
       },

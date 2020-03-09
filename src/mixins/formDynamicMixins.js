@@ -106,6 +106,46 @@ export const formDynamicMixins = {
                 this.fields.push(element);
             });
         },
+        refactorRecordJSON2(data) {
+            let fields = []
+            data.stringFieldRecords.forEach(element => {
+                element.type = "string";
+                element.field = element.stringField;
+                delete element.stringField;
+                fields.push(element);
+            });
+            data.integerFieldRecords.forEach(element => {
+                element.type = "integer";
+                element.field = element.integerField;
+                delete element.integerField;
+                fields.push(element);
+            });
+            data.textAreaFieldRecords.forEach(element => {
+                element.type = "textarea";
+                element.field = element.textAreaField;
+                delete element.textAreaField;
+                fields.push(element);
+            });
+            data.singleSelectFieldRecords.forEach(element => {
+                element.type = "radio";
+                element.field = element.singleSelectField;
+                delete element.singleSelectField;
+                fields.push(element);
+            });
+            data.multiSelectFieldRecords.forEach(element => {
+                element.type = "select";
+                element.field = element.multiSelectField;
+                delete element.multiSelectField;
+                fields.push(element);
+            });
+            data.attachmentFieldRecords.forEach(element => {
+                element.type = "attachment";
+                element.field = element.attachmentField;
+                delete element.attachmentField;
+                fields.push(element);
+            });
+            return fields;
+        },
         refactorParams(data) {
             var params = new Object();
             var stringFieldRecords = new Array();
