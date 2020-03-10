@@ -57,160 +57,39 @@
         </v-expansion-panels>
       </v-col>
       <v-col cols="12" md="12" lg="12" xs="12">
-      <v-card class="pa-5">
-        <v-tabs v-model="tab" class="elevation-0" background-color="primary" dark>
-          <v-tabs-slider></v-tabs-slider>
+        <v-card class="pa-5">
+          <v-tabs v-model="tab" class="elevation-0" background-color="primary" dark>
+            <v-tabs-slider></v-tabs-slider>
 
-          <v-tab href="#tab-1">New Journal</v-tab>
-          <v-tab href="#tab-2">Selected Journal</v-tab>
-          <v-tab href="#tab-3">Other Journals in this Mission</v-tab>
-        </v-tabs>
-        <v-tabs-items v-model="tab">
-          <!-- new journal start-->
-          <v-tab-item value="tab-1">
-            <v-row>
-              <v-col>
-                <v-btn
-                  small
-                  class="ma-2 mt-4 ml-0"
-                  color="primary"
-                  :text="mode"
-                  @click="createNewWorksheet"
-                >
-                  <v-icon left v-if="!mode" small>star</v-icon>Create New Journal
-                </v-btn>
-                <v-btn
-                  small
-                  class="mt-2"
-                  color="primary"
-                  @click="createReloadWorksheet"
-                  :text="!mode"
-                >
-                  <v-icon left v-if="mode" small>star</v-icon>New Journal From Existing Worksheet
-                </v-btn>
-              </v-col>
-              <v-col class="px-5" md="12" v-if="selectWorksheet">
-                <v-select
-                  class="ml-0"
-                  v-model="exworksheetId"
-                  :items="worksheetList.list"
-                  item-value="id"
-                  item-text="name"
-                  label="Existing Worksheet"
-                  :loading="worksheetListLoad"
-                  no-data-text="No worksheet available"
-                  @change="getWorksheetDataReload"
-                  solo
-                ></v-select>
-              </v-col>
-            </v-row>
-            <v-row class="my-0 py-0" v-if="is_newWorksheet">
-              <v-col class="my-0 py-0" md="12">
-                <v-row>
-                  <v-col md="6" lg="6" xs="12">
-                    <v-text-field
-                      class="mx-5"
-                      label="Worksheet Name"
-                      v-model="worksheetName"
-                      outlined
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-                <render-form
-                  :modeAtom="false"
-                  :modeReload="reloadFalse"
-                  v-if="!tableLoad"
-                  :formTemplate="dataList.worksheetForm"
-                  @submit-form="submitFormJournalNew"
-                />
-              </v-col>
-            </v-row>
-            <v-row v-if="!is_newWorksheet">
-              <v-col class="my-0 py-0" md="12" v-if="is_reloadWorksheet">
-                <v-row>
-                  <v-col md="6" lg="6" xs="12">
-                    <v-text-field
-                      class="mx-5"
-                      label="Worksheet Name"
-                      v-model="worksheetName"
-                      outlined
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-                <render-form
-                  :modeReload="reloadTrue"
-                  :modeAtom="true"
-                  v-if="!tableLoad"
-                  :formTemplate="dataList.worksheetForm"
-                  @submit-form="submitFormJournalNew"
-                  @assignworksheet="assignWorksheet"
-                />
-              </v-col>
-            </v-row>
-            <!-- <v-row>
-              <v-col md="12">
-                <v-skeleton-loader type="article@2" :boilerplate="true"></v-skeleton-loader>
-              </v-col>
-            </v-row>-->
-          </v-tab-item>
-          <!-- new journal end-->
-
-          <v-tab-item value="tab-2">
-            <v-row class="mt-5">
-              <template v-show="!journalLoad">
-                <v-col md="2" v-if="!updateJ">
-                  <v-btn small v-if="!editWS" color="primary" @click="editWorksheet">Edit worksheet</v-btn>
-                  <v-btn color="warning" small @click="editWS = !editWS" v-else>
-                    <v-icon small left>cancel</v-icon>Cancel Edit
-                  </v-btn>
-                </v-col>
-                <v-col md="3" v-if="updateJ">
+            <v-tab href="#tab-1">New Journal</v-tab>
+            <v-tab href="#tab-2">Selected Journal</v-tab>
+            <v-tab href="#tab-3">Other Journals in this Mission</v-tab>
+          </v-tabs>
+          <v-tabs-items v-model="tab">
+            <!-- new journal start-->
+            <v-tab-item value="tab-1">
+              <v-row>
+                <v-col>
                   <v-btn
                     small
-                    class="ma-2"
+                    class="ma-2 mt-4 ml-0"
                     color="primary"
                     :text="mode"
                     @click="createNewWorksheet"
                   >
-                    <v-icon left v-if="!mode" small>star</v-icon>Create New Worksheet
+                    <v-icon left v-if="!mode" small>star</v-icon>Create New Journal
                   </v-btn>
-                </v-col>
-                <v-col md="4" v-if="updateJ">
                   <v-btn
                     small
-                    class="ma-2"
+                    class="mt-2"
                     color="primary"
-                    :text="!mode"
                     @click="createReloadWorksheet"
+                    :text="!mode"
                   >
-                    <v-icon left v-if="mode" small>star</v-icon>Replace With Existing Worksheet
+                    <v-icon left v-if="mode" small>star</v-icon>New Journal From Existing Worksheet
                   </v-btn>
                 </v-col>
-
-                <v-col md="3">
-                  <template v-if="!editWS">
-                    <v-btn
-                      small
-                      v-if="!updateJ"
-                      color="primary"
-                      @click="updateJournal"
-                    >Change Journal</v-btn>
-                    <v-btn class="ma-2" color="warning" small @click="updateJ = !updateJ" v-else>
-                      <v-icon small left>cancel</v-icon>Cancel Change
-                    </v-btn>
-                  </template>
-                </v-col>
-                <v-col style="text-align:end;" md="7" v-if="!updateJ">
-                  <v-btn small color="success" @click="openComment()">
-                    <v-icon left small>forum</v-icon> Comment
-                  </v-btn>
-                </v-col>
-              </template>
-            </v-row>
-            <!--update jurnal start-->
-            <template v-if="updateJ">
-              <v-row>
-                <v-col md="6" v-if="selectWorksheet">
+                <v-col class="px-5" md="12" v-if="selectWorksheet">
                   <v-select
                     class="ml-0"
                     v-model="exworksheetId"
@@ -218,119 +97,245 @@
                     item-value="id"
                     item-text="name"
                     label="Existing Worksheet"
-                    :loading="tableLoad"
+                    :loading="worksheetListLoad"
                     no-data-text="No worksheet available"
-                    @change="getWorksheetData"
+                    @change="getWorksheetDataReload"
                     solo
                   ></v-select>
                 </v-col>
               </v-row>
-              <v-row v-if="is_newWorksheet">
-                <v-col>
-                  <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
-                </v-col>
-                <v-col md="12">
+              <v-row class="my-0 py-0" v-if="is_newWorksheet">
+                <v-col class="my-0 py-0" md="12">
+                  <v-row>
+                    <v-col md="6" lg="6" xs="12">
+                      <v-text-field
+                        class="mx-5"
+                        label="Worksheet Name"
+                        v-model="worksheetName"
+                        outlined
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
                   <render-form
+                    :modeAtom="false"
                     :modeReload="reloadFalse"
                     v-if="!tableLoad"
-                    :formTemplate="dataListTemp.worksheetForm"
-                    @submit-form="submitForm"
+                    :formTemplate="dataList.worksheetForm"
+                    @submit-form="submitFormJournalNew"
                   />
                 </v-col>
               </v-row>
               <v-row v-if="!is_newWorksheet">
-                <v-col v-if="is_reloadWorksheet">
-                  <!-- <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field> -->
-                </v-col>
-                <v-col md="12" v-if="is_reloadWorksheet">
+                <v-col class="my-0 py-0" md="12" v-if="is_reloadWorksheet">
+                  <v-row>
+                    <v-col md="6" lg="6" xs="12">
+                      <v-text-field
+                        class="mx-5"
+                        label="Worksheet Name"
+                        v-model="worksheetName"
+                        outlined
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
                   <render-form
                     :modeReload="reloadTrue"
+                    :modeAtom="true"
                     v-if="!tableLoad"
+                    :formTemplate="dataList.worksheetForm"
+                    @submit-form="submitFormJournalNew"
+                    @assignworksheet="assignWorksheet"
+                  />
+                </v-col>
+              </v-row>
+              <!-- <v-row>
+              <v-col md="12">
+                <v-skeleton-loader type="article@2" :boilerplate="true"></v-skeleton-loader>
+              </v-col>
+              </v-row>-->
+            </v-tab-item>
+            <!-- new journal end-->
+
+            <v-tab-item value="tab-2">
+              <v-row class="mt-5">
+                <template v-show="!journalLoad">
+                  <v-col md="2" v-if="!updateJ">
+                    <v-btn
+                      small
+                      v-if="!editWS"
+                      color="primary"
+                      @click="editWorksheet"
+                    >Edit worksheet</v-btn>
+                    <v-btn color="warning" small @click="editWS = !editWS" v-else>
+                      <v-icon small left>cancel</v-icon>Cancel Edit
+                    </v-btn>
+                  </v-col>
+                  <v-col md="3" v-if="updateJ">
+                    <v-btn
+                      small
+                      class="ma-2"
+                      color="primary"
+                      :text="mode"
+                      @click="createNewWorksheet"
+                    >
+                      <v-icon left v-if="!mode" small>star</v-icon>Create New Worksheet
+                    </v-btn>
+                  </v-col>
+                  <v-col md="4" v-if="updateJ">
+                    <v-btn
+                      small
+                      class="ma-2"
+                      color="primary"
+                      :text="!mode"
+                      @click="createReloadWorksheet"
+                    >
+                      <v-icon left v-if="mode" small>star</v-icon>Replace With Existing Worksheet
+                    </v-btn>
+                  </v-col>
+
+                  <v-col md="3">
+                    <template v-if="!editWS">
+                      <v-btn
+                        small
+                        v-if="!updateJ"
+                        color="primary"
+                        @click="updateJournal"
+                      >Change Journal</v-btn>
+                      <v-btn class="ma-2" color="warning" small @click="updateJ = !updateJ" v-else>
+                        <v-icon small left>cancel</v-icon>Cancel Change
+                      </v-btn>
+                    </template>
+                  </v-col>
+                  <v-col style="text-align:end;" md="7" v-if="!updateJ">
+                    <v-btn small color="success" @click="openComment()">
+                      <v-icon left small>forum</v-icon>Comment
+                    </v-btn>
+                  </v-col>
+                </template>
+              </v-row>
+              <!--update jurnal start-->
+              <template v-if="updateJ">
+                <v-row>
+                  <v-col md="6" v-if="selectWorksheet">
+                    <v-select
+                      class="ml-0"
+                      v-model="exworksheetId"
+                      :items="worksheetList.list"
+                      item-value="id"
+                      item-text="name"
+                      label="Existing Worksheet"
+                      :loading="tableLoad"
+                      no-data-text="No worksheet available"
+                      @change="getWorksheetData"
+                      solo
+                    ></v-select>
+                  </v-col>
+                </v-row>
+                <v-row v-if="is_newWorksheet">
+                  <v-col>
+                    <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
+                  </v-col>
+                  <v-col md="12">
+                    <render-form
+                      :modeReload="reloadFalse"
+                      v-if="!tableLoad"
+                      :formTemplate="dataListTemp.worksheetForm"
+                      @submit-form="submitForm"
+                    />
+                  </v-col>
+                </v-row>
+                <v-row v-if="!is_newWorksheet">
+                  <v-col v-if="is_reloadWorksheet">
+                    <!-- <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field> -->
+                  </v-col>
+                  <v-col md="12" v-if="is_reloadWorksheet">
+                    <render-form
+                      :modeReload="reloadTrue"
+                      v-if="!tableLoad"
+                      :formTemplate="dataList.worksheetForm"
+                      @submit-form="submitForm"
+                    />
+                  </v-col>
+                  <v-col v-else>
+                    <v-skeleton-loader type="card" :boilerplate="true"></v-skeleton-loader>
+                  </v-col>
+                </v-row>
+              </template>
+              <!--update journal end -->
+              <v-row v-if="!editWS">
+                <v-col>
+                  <template v-if="!updateJ">
+                    <v-card class="pa-5" v-if="!journalLoad">
+                      <v-card-title primary-title>
+                        <b>{{dataSingle.name}}</b>
+                      </v-card-title>
+                      <v-card-text class="subtitle-1">
+                        <b>Worksheet Form</b>
+                        <br />
+                        {{dataListTemp.worksheetForm.name}}
+                      </v-card-text>
+                      <v-card-text>
+                        <render-record :fields="fields" />
+                      </v-card-text>
+                    </v-card>
+                    <v-skeleton-loader type="article" v-else></v-skeleton-loader>
+                  </template>
+                </v-col>
+              </v-row>
+              <v-row v-else>
+                <!--edit worksheet jurnal start-->
+                <v-col>
+                  <v-text-field label="Worksheet Name" outlined v-model="newWsName"></v-text-field>
+                </v-col>
+                <v-col md="12" lg="12" xs="12">
+                  <render-form
+                    v-if="!worksheetDataLoad"
+                    :modeReload="reloadTrue"
                     :formTemplate="dataList.worksheetForm"
                     @submit-form="submitForm"
                   />
+                  <template v-else>
+                    <v-skeleton-loader type="article"></v-skeleton-loader>
+                  </template>
                 </v-col>
-                <v-col v-else>
-                  <v-skeleton-loader type="card" :boilerplate="true"></v-skeleton-loader>
+                <!--edit worksheet jurnal end-->
+              </v-row>
+            </v-tab-item>
+            <v-tab-item value="tab-3">
+              <v-card class="mt-5" flat v-if="otherLoad">
+                <v-card-text>
+                  <v-skeleton-loader max-width="500" type="list-item-avatar@5"></v-skeleton-loader>
+                </v-card-text>
+              </v-card>
+              <v-row v-else>
+                <v-col class="mt-5" md="12" lg="12" xs="12">
+                  <v-btn small color="primary" @click="getOtherJournal">
+                    <v-icon left small>autorenew</v-icon>reload data
+                  </v-btn>
+                </v-col>
+                <v-col md="6" lg="6" xs="12">
+                  <v-data-table
+                    :loading="otherLoad"
+                    :headers="tableHeaders"
+                    :items="otherJournals.list"
+                    class="elevation-1"
+                  >
+                    <template v-slot:item.worksheet="{item}">{{item.worksheet.name}}</template>
+                    <template v-slot:item.action="{item}">
+                      <v-btn
+                        class="elevation-0 mr-2"
+                        color="primary"
+                        small
+                        @click="openDetail(item.mission.id, item.id, item.worksheet.id)"
+                      >
+                        <v-icon>zoom_in</v-icon>
+                      </v-btn>
+                    </template>
+                  </v-data-table>
                 </v-col>
               </v-row>
-            </template>
-            <!--update journal end -->
-            <v-row v-if="!editWS">
-              <v-col>
-                <template v-if="!updateJ">
-                  <v-card class="pa-5" v-if="!journalLoad">
-                    <v-card-title primary-title>
-                      <b>{{dataSingle.name}}</b>
-                    </v-card-title>
-                    <v-card-text class="subtitle-1">
-                      <b>Worksheet Form</b>
-                      <br />
-                      {{dataListTemp.worksheetForm.name}}
-                    </v-card-text>
-                    <v-card-text>
-                      <render-record :fields="fields" />
-                    </v-card-text>
-                  </v-card>
-                  <v-skeleton-loader type="article" v-else></v-skeleton-loader>
-                </template>
-              </v-col>
-            </v-row>
-            <v-row v-else>
-              <!--edit worksheet jurnal start-->
-              <v-col>
-                <v-text-field label="Worksheet Name" outlined v-model="newWsName"></v-text-field>
-              </v-col>
-              <v-col md="12" lg="12" xs="12">
-                <render-form
-                  v-if="!worksheetDataLoad"
-                  :modeReload="reloadTrue"
-                  :formTemplate="dataList.worksheetForm"
-                  @submit-form="submitForm"
-                />
-                <template v-else>
-                  <v-skeleton-loader type="article"></v-skeleton-loader>
-                </template>
-              </v-col>
-              <!--edit worksheet jurnal end-->
-            </v-row>
-          </v-tab-item>
-          <v-tab-item value="tab-3">
-            <v-card class="mt-5" flat v-if="otherLoad">
-              <v-card-text>
-                <v-skeleton-loader max-width="500" type="list-item-avatar@5"></v-skeleton-loader>
-              </v-card-text>
-            </v-card>
-            <v-row v-else>
-              <v-col class="mt-5" md="12" lg="12" xs="12">
-                <v-btn small color="primary" @click="getOtherJournal">
-                  <v-icon left small>autorenew</v-icon> reload data
-                </v-btn>
-              </v-col>
-              <v-col md="6" lg="6" xs="12">
-                <v-data-table
-                  :loading="otherLoad"
-                  :headers="tableHeaders"
-                  :items="otherJournals.list"
-                  class="elevation-1"
-                >
-                  <template v-slot:item.worksheet="{item}">{{item.worksheet.name}}</template>
-                  <template v-slot:item.action="{item}">
-                    <v-btn
-                      class="elevation-0 mr-2"
-                      color="primary"
-                      small
-                      @click="openDetail(item.mission.id, item.id, item.worksheet.id)"
-                    >
-                      <v-icon>zoom_in</v-icon>
-                    </v-btn>
-                  </template>
-                </v-data-table>
-              </v-col>
-            </v-row>
-          </v-tab-item>
-        </v-tabs-items>
-      </v-card>
+            </v-tab-item>
+          </v-tabs-items>
+        </v-card>
       </v-col>
     </v-row>
     <v-overlay :value="worksheetDataLoad">
@@ -350,13 +355,16 @@
             <comment-module></comment-module>
           </v-card-text>
           <v-card-actions>
-            <v-btn text color="black" flat @click.native="isCommentFullscreen = !isCommentFullscreen">
+            <v-btn
+              text
+              color="black"
+              flat
+              @click.native="isCommentFullscreen = !isCommentFullscreen"
+            >
               <v-icon>fullscreen</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn text color="red" flat @click.native="dialogComment = false">
-              close
-            </v-btn>
+            <v-btn text color="red" flat @click.native="dialogComment = false">close</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -448,6 +456,7 @@ export default {
   mounted() {
     this.getJournalDetail();
     this.getOtherJournal();
+    this.getLearningMaterialList();
   },
   methods: {
     openDetail(missionId, journalId, worksheetId) {
@@ -822,6 +831,30 @@ export default {
     },
     openComment() {
       this.dialogComment = true;
+    },
+    getLearningMaterialList() {
+      this.learningLoad = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/missions/" +
+            this.$route.params.missionId +
+            "/learning-materials",
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          this.learningList = res.data.data;
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.learningLoad = false;
+        });
     }
   }
 };
@@ -831,12 +864,11 @@ export default {
 a.v-tab.v-tab--active {
   background: #fff;
   color: #249c90 !important;
-  -webkit-box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.39);
-  -moz-box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.39);
-  box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.39);
+  -webkit-box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.39);
+  -moz-box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.39);
+  box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.39);
   border-top: solid 5px;
 }
-
 </style>
 
 <style>
