@@ -102,8 +102,8 @@
         </v-list-item>
       </v-list>
       <v-divider></v-divider>
-      <v-list>
-        <!--mentor menu-->
+      <!--mentor menu-->
+      <!-- <v-list>
         <v-list-item
           v-for="link in mentors"
           :key="link.text"
@@ -118,7 +118,36 @@
             <v-list-item-title class="grey--text">{{link.text}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-      </v-list>
+      </v-list>-->
+      <v-list-group :value="true" no-action>
+        <template v-slot:activator>
+          <v-list-item-action>
+            <v-icon color="#676767">dashboard</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="grey--text">as Mentor</v-list-item-title>
+          </v-list-item-content>
+        </template>
+
+        <!-- <v-list-item class="ml-5" router :to="'/personnel/mentor/dashboard' ">
+          <v-list-item-title class="grey--text">Dashboard</v-list-item-title>
+          <v-list-item-icon>
+             <v-icon>group_work</v-icon> 
+          </v-list-item-icon>
+        </v-list-item>-->
+        <v-list-item class="ml-5" router :to="'/personnel/mentor/participant-journal' ">
+          <v-list-item-title class="grey--text">Journal</v-list-item-title>
+          <v-list-item-icon>
+            <!-- <v-icon>group_work</v-icon> -->
+          </v-list-item-icon>
+        </v-list-item>
+        <v-list-item class="ml-5" router :to="'/personnel/mentor/mentoring-schedule' ">
+          <v-list-item-title class="grey--text">Schedule</v-list-item-title>
+          <v-list-item-icon>
+            <!-- <v-icon>group_work</v-icon> -->
+          </v-list-item-icon>
+        </v-list-item>
+      </v-list-group>
     </v-navigation-drawer>
     <v-navigation-drawer temporary right v-model="rightDrawer" fixed>
       <v-list>
@@ -275,7 +304,7 @@ export default {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
     logout: function() {
-      localStorage.removeItem("lbUser");
+      localStorage.clear();
       this.$router.replace({ path: "/" });
     }
   }

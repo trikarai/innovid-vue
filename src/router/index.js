@@ -101,6 +101,9 @@ import MentorScheduleDetail from '../components/personnel/asMentor/schedule/Sche
 import MentorScheduleReport from '../components/personnel/asMentor/schedule/Report';
 import MentorScheduleNegotiate from '../components/personnel/asMentor/schedule/NegotiateSchedule';
 
+import MentorDashboardParticipantJournal from '../components/personnel/asMentor/participantjournal/ParticipantJournal'
+import MentorDashboardMentoringSchedule from '../components/personnel/asMentor/mentoringschedule/MentoringSchedule'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -534,6 +537,26 @@ const routes = [
         name: "mentor-dashboard",
         meta: {
           text: "Mentor Dashboard",
+          level: 1,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/mentor/participant-journal",
+        component: MentorDashboardParticipantJournal,
+        name: "mentor-dashboard-participant-journal",
+        meta: {
+          text: "Participant Journal",
+          level: 1,
+          requiredAuth: true, personnelAuth: true, sysadminAuth: false
+        }
+      },
+      {
+        path: "/personnel/mentor/mentoring-schedule",
+        component: MentorDashboardMentoringSchedule,
+        name: "mentor-dashboard-mentoring-schedule",
+        meta: {
+          text: "Mentoring Schedule",
           level: 1,
           requiredAuth: true, personnelAuth: true, sysadminAuth: false
         }
