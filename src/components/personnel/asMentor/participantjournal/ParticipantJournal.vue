@@ -97,6 +97,11 @@ export default {
       ]
     };
   },
+  watch: {
+    selectedCohort() {
+      this.getParticipantJournal();
+    }
+  },
   mounted() {
     this.getMentorship();
   },
