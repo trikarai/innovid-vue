@@ -187,6 +187,7 @@ export default {
   mounted() {
     this.getDataList();
     this.getLearningMaterialList();
+    
   },
   methods: {
     setColor(mode) {
@@ -213,6 +214,7 @@ export default {
         )
         .then(res => {
           this.dataList = res.data.data;
+          this.$route.meta.text = this.dataList.worksheetForm.name ;
           Object.assign(this.dataListTemp, this.dataList);
         })
         .catch(() => {})
