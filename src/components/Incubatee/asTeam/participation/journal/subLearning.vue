@@ -12,16 +12,16 @@
         <v-expansion-panel v-for="(learning,i) in learningList.list" :key="i">
           <v-expansion-panel-header v-slot="{ open }">
             <v-row no-gutters>
-              <v-col cols="10">{{learning.name}}</v-col>
+              <v-col cols="10"><span style="line-height: 32px;">{{learning.name}}</span></v-col>
 
-              <v-col cols="2" class="text--secondary">
+              <v-col cols="2" style="text-align: end;" class="text--secondary">
                 <v-spacer></v-spacer>
                 <v-fade-transition leave-absolute>
                   <span v-if="open">
-                    <v-chip color="#505050" dark>Collapse</v-chip>
+                    <v-chip class="mr-2" color="#505050" dark>Collapse</v-chip>
                   </span>
                   <span v-else>
-                    <v-chip color="#505050" dark>Expand</v-chip>
+                    <v-chip class="mr-2" color="#505050" dark>Expand</v-chip>
                   </span>
                 </v-fade-transition>
               </v-col>
