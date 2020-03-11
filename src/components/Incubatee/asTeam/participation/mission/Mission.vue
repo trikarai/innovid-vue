@@ -21,7 +21,7 @@
         </div>
       </v-col>
       <v-col md="12" v-else>
-        <v-timeline :reverse="true" align-top>
+        <v-timeline :reverse="true" align-top :dense="false">
           <v-timeline-item v-for="(data, index) in reOrderMission(dataList.list)" :key="data.id">
             <template v-slot:icon>
               <v-avatar>
