@@ -175,7 +175,7 @@
             <v-icon v-else>fullscreen_exit</v-icon>
           </v-btn>
           <v-btn
-            flat
+            text
             icon
             small
             color="accent"
@@ -184,7 +184,7 @@
           >
             <v-icon>pageview</v-icon>
           </v-btn>
-          <v-btn flat icon small @click="$refs.pdf.print()">
+          <v-btn text icon small @click="$refs.pdf.print()">
             <v-icon>print</v-icon>
           </v-btn>
         </v-card-actions>
@@ -213,9 +213,7 @@
                 style="border: 1px solid red"
                 :src="base_uri+fileDetail.fileInfo.path"
                 :page="page"
-                @password="password"
                 @progress="loadedRatio = $event"
-                @error="error"
                 @num-pages="numPages = $event"
                 @link-clicked="page = $event"
               ></pdf>
@@ -254,13 +252,20 @@ export default {
       dialogZoom: false,
       dialogPdf: false,
       fileDetail: { id: "", fileInfo: { path: "" } },
-      isFullscreen: false
+      isFullscreen: false,
+      keyState: null
     };
   },
   components: {
     pdf
   },
+
+  mounted() {},
+  destroyed() {
+    window.removeEventListener("keypress", this.doCommand);
+  },
   created() {
+    window.addEventListener("keypress", this.doCommand);
     if (process.env.NODE_ENV === "production") {
       this.base_uri = "https://innov.id/bara-inovasi/storage/app";
     } else {
@@ -279,6 +284,23 @@ export default {
     viewPdf(file) {
       this.fileDetail = file;
       this.dialogPdf = true;
+    },
+    doCommand(e) {
+      // eslint-disable-next-line no-unused-vars
+      let cmd = e.keyCode;
+      if (cmd == 46 || cmd == 34 || cmd == 40 || cmd == 39) {
+        this.page = this.page + 1;
+        this.keyState = cmd;
+      } else if (cmd == 44 || cmd == 33 || cmd == 38 || cmd == 37) {
+        this.page = this.page - 1;
+        this.keyState = cmd;
+      } else {
+        this.keyState = null;
+      }
+      /*
+			How we respond depends on our state. If keyState is null, 
+			it meand we aren't doing anything, so BSM are valid.
+			*/
     }
   }
 };
