@@ -7,7 +7,6 @@
       <!-- {{fields}} -->
       <v-row v-if="fields.length != 0" class="tabel-row"></v-row>
       <template v-for="(data, index) in reOrderRecord(fields)">
-
         <v-row :key="index">
           <v-col style="word-break: break-word" class="tabel-left" md="4" lg="4" xs="12">
             <span class="subtitle-2 font-weight-black">
@@ -159,11 +158,21 @@
         </v-img>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="dialogPdf" scrollable :overlay="true" transition="dialog-transition">
+    <v-dialog
+      v-model="dialogPdf"
+      :fullscreen="isFullscreen"
+      scrollable
+      :overlay="true"
+      transition="dialog-transition"
+    >
       <v-card>
         <v-card-actions>
-          <v-btn flat icon color="red" @click="dialogPdf = false">
+          <v-btn icon color="red" @click="dialogPdf = false">
             <v-icon>close</v-icon>
+          </v-btn>
+          <v-btn icon @click="isFullscreen = !isFullscreen">
+            <v-icon v-if="!isFullscreen">fullscreen</v-icon>
+            <v-icon v-else>fullscreen_exit</v-icon>
           </v-btn>
           <v-btn
             flat
@@ -175,9 +184,52 @@
           >
             <v-icon>pageview</v-icon>
           </v-btn>
+          <v-btn flat icon small @click="$refs.pdf.print()">
+            <v-icon>print</v-icon>
+          </v-btn>
         </v-card-actions>
         <v-card-text>
-          <pdf :src="base_uri+fileDetail.fileInfo.path"></pdf>
+          <v-row>
+            <v-col md="12" v-if="loadedRatio > 0 && loadedRatio < 1">
+              <div
+                style="background-color: green; color: white; text-align: center"
+                :style="{ width: loadedRatio * 100 + '%' }"
+              >{{ Math.floor(loadedRatio * 100) }}%</div>
+            </v-col>
+            <v-col md="12">
+              <v-btn color="primary" :disabled="page == 1" icon @click="page = page -  1">
+                <v-icon>chevron_left</v-icon>
+              </v-btn>
+              {{page}} / {{numPages}}
+              <v-btn color="primary" :disabled="page == numPages" icon @click="page = page +  1">
+                <v-icon>chevron_right</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col md="12">
+              <pdf
+                ref="pdf"
+                style="border: 1px solid red"
+                :src="base_uri+fileDetail.fileInfo.path"
+                :page="page"
+                @password="password"
+                @progress="loadedRatio = $event"
+                @error="error"
+                @num-pages="numPages = $event"
+                @link-clicked="page = $event"
+              ></pdf>
+            </v-col>
+            <v-col md="12">
+              <v-btn color="primary" :disabled="page == 1" icon @click="page = page -  1">
+                <v-icon>chevron_left</v-icon>
+              </v-btn>
+              {{page}} / {{numPages}}
+              <v-btn color="primary" :disabled="page == numPages" icon @click="page = page +  1">
+                <v-icon>chevron_right</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -193,11 +245,16 @@ export default {
   props: ["fields"],
   data() {
     return {
+      loadedRatio: 0,
+      page: 1,
+      numPages: 0,
+      rotate: 0,
       base_uri: "",
       jancux: false,
       dialogZoom: false,
       dialogPdf: false,
-      fileDetail: { id: "", fileInfo: { path: "" } }
+      fileDetail: { id: "", fileInfo: { path: "" } },
+      isFullscreen: false
     };
   },
   components: {
