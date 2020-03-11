@@ -10,14 +10,28 @@
     <v-col cols="12" md="12" lg="12" xs="12" v-else>
       <v-expansion-panels focusable>
         <v-expansion-panel v-for="(learning,i) in learningList.list" :key="i">
-          <v-expansion-panel-header>
-            <template v-slot:actions>
+          <v-expansion-panel-header v-slot="{ open }">
+            <v-row no-gutters>
+              <v-col cols="10">{{learning.name}}</v-col>
+
+              <v-col cols="2" class="text--secondary">
+                <v-spacer></v-spacer>
+                <v-fade-transition leave-absolute>
+                  <span v-if="open">
+                    <v-chip color="#505050" dark>Collapse</v-chip>
+                  </span>
+                  <span v-else>
+                    <v-chip color="#505050" dark>Expand</v-chip>
+                  </span>
+                </v-fade-transition>
+              </v-col>
+            </v-row>
+            <!-- <template v-slot:actions>
               <v-chip color="#505050" dark>
                 Expand
                 <v-icon class="ml-3" color="white">keyboard_arrow_down</v-icon>
               </v-chip>
-            </template>
-            {{learning.name}}
+            </template>-->
           </v-expansion-panel-header>
           <v-expansion-panel-content class="mt-10 ml-4">
             <span v-html="$sanitize(learning.content)" />
