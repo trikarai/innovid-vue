@@ -289,10 +289,14 @@ export default {
       // eslint-disable-next-line no-unused-vars
       let cmd = e.keyCode;
       if (cmd == 46 || cmd == 34 || cmd == 40 || cmd == 39) {
-        this.page = this.page + 1;
-        this.keyState = cmd;
+        if (this.page < this.numPages) {
+          this.page = this.page + 1;
+          this.keyState = cmd;
+        }
       } else if (cmd == 44 || cmd == 33 || cmd == 38 || cmd == 37) {
-        this.page = this.page - 1;
+        if (this.page > 1) {
+          this.page = this.page - 1;
+        }
         this.keyState = cmd;
       } else {
         this.keyState = null;
