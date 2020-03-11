@@ -60,18 +60,18 @@
                     <!-- {{item.message}} -->
                   </v-list-item-subtitle>
                 </v-list-item-content>
-                <v-list-item-icon>
+                <v-list-item-icon style="display:inline-grid;">
                   <v-btn
                     v-if="!switchMode"
                     color="primary"
                     small
                     icon
-                    class="mr-2"
+                    class="mr-2 mb-2"
                     @click="openDialogReply(item.id)"
                   >
                     <v-icon>reply</v-icon>
                   </v-btn>
-                  <v-btn disabled color="primary" small icon class="mr-2" v-else>
+                  <v-btn disabled color="primary" small icon class="mr-2 mb-2" v-else>
                     <v-icon>reply</v-icon>
                   </v-btn>
                   <template v-if="item.mentor !== null">
@@ -129,8 +129,7 @@
             <v-spacer></v-spacer>
             <v-btn
               :disabled="isEmpty"
-              color="green"
-              text
+              color="primary"
               @click="replyComment()"
               v-if="isReply"
             >Reply</v-btn>
@@ -460,7 +459,7 @@ export default {
 
 .panel {
   position: relative;
-  background: #a6d731;
+  background: #aaa;
   color: #fff;
   padding: 13px;
   border-radius: 6px;
@@ -482,7 +481,7 @@ export default {
 }
 .panel > .panel-heading:after {
   border-width: 7px;
-  border-right-color: rgb(166, 215, 49);
+  border-right-color:#aaa;
   margin-top: 1px;
   margin-left: 2px;
 }
