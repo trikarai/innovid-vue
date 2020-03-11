@@ -6,13 +6,16 @@
         <v-skeleton-loader type="card-heading, card-heading, list-item-avatar-two-line@3"></v-skeleton-loader>
       </v-col>
       <v-col cols="12" md="6" lg="6" xs="12" v-if="!dataLoad">
-        <v-card class="pa-3">
+        <v-card class="pa-3 pb-0">
           <v-card-title primary-title>
             <b>{{journalDetail.mission.name}}</b>
           </v-card-title>
-          <v-card-text class="subtitle-1">{{journalDetail.worksheet.worksheetForm.name}}</v-card-text>
-          <v-divider></v-divider>
-          <v-card-text class="pt-0 mt-2 ml-3">
+          <v-card-text class="subtitle-1">
+            <b>Worksheet Form</b><br>
+            {{journalDetail.worksheet.worksheetForm.name}}
+          </v-card-text>
+          <!-- <v-divider></v-divider> -->
+          <v-card-text class="pt-7 pt-0">
             <render-record :fields="fields" />
           </v-card-text>
         </v-card>
