@@ -12,7 +12,7 @@
         <v-expansion-panel v-for="(learning,i) in learningList.list" :key="i">
           <v-expansion-panel-header v-slot="{ open }">
             <v-row no-gutters>
-              <v-col cols="10"><span style="line-height: 32px;">{{learning.name}}</span></v-col>
+              <v-col cols="10"><span style="line-height: 32px;"><b>{{learning.name}}</b></span></v-col>
 
               <v-col cols="2" style="text-align: end;" class="text--secondary">
                 <v-spacer></v-spacer>
