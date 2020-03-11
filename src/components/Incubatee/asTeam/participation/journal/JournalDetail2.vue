@@ -1,66 +1,13 @@
 <template>
   <v-container extend grid-list-xs>
+    <mission-comp :tableLoad.sync="tableLoad" :dataList.sync="dataList" />
+    <learning-comp :learningLoad.sync="learningLoad" :learningList.sync="learningList" />
+
     <v-row>
-      <v-col md="12">
-        <v-skeleton-loader class="mx-auto" type="card" v-if="tableLoad"></v-skeleton-loader>
-        <v-card class="pa-3" v-else>
-          <v-card-title primary-title>
-            {{dataList.name}}
-            <v-spacer></v-spacer>
-            <span class="dot2"></span>
-            <span class="dot1 ml-1"></span>
-          </v-card-title>
-          <v-card-text v-if="dataList.previousMission != null">
-            <v-chip small>
-              <v-avatar left>
-                <v-icon small color="primary">account_tree</v-icon>
-              </v-avatar>
-              <span style="color:#999">Branch Mission</span>
-            </v-chip>
-          </v-card-text>
-          <v-card-text v-else>
-            <v-chip small>
-              <v-avatar left>
-                <v-icon small color="primary">assignment_turned_in</v-icon>
-              </v-avatar>
-              <span style="color:#999">Main Mission</span>
-            </v-chip>
-          </v-card-text>
-          <v-card-text>
-            <div class="subtitle">{{dataList.description}}</div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col md="12 mt-5" class="title">Learning Material</v-col>
-      <v-col cols="12" md="12" lg="12" xs="12" v-if="learningLoad">
-        <v-skeleton-loader :loading="true" class="mx-auto" type="list-item-two-line@2" v-></v-skeleton-loader>
-      </v-col>
-      <v-col cols="12" md="6" lg="6" xs="12" v-if="learningList.total == 0">
-        <v-alert dense type="info" :value="true">No Learning Material Added</v-alert>
-      </v-col>
-      <v-col cols="12" md="12" lg="12" xs="12" v-else>
-        <v-expansion-panels focusable>
-          <v-expansion-panel v-for="(learning,i) in learningList.list" :key="i">
-            <v-expansion-panel-header>
-              <template v-slot:actions>
-                <v-chip color="#505050" dark>
-                  Expand
-                  <v-icon class="ml-3" color="white">keyboard_arrow_down</v-icon>
-                </v-chip>
-              </template>
-              {{learning.name}}
-            </v-expansion-panel-header>
-            <v-expansion-panel-content class="mt-10 ml-4">
-              <span v-html="$sanitize(learning.content)" />
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
-      </v-col>
       <v-col cols="12" md="12" lg="12" xs="12">
         <v-card class="pa-5">
           <v-tabs v-model="tab" class="elevation-0" background-color="primary" dark>
             <v-tabs-slider></v-tabs-slider>
-
             <v-tab href="#tab-1">New Journal</v-tab>
             <v-tab href="#tab-2">Selected Journal</v-tab>
             <v-tab href="#tab-3">Other Journals in this Mission</v-tab>
@@ -301,38 +248,7 @@
               </v-row>
             </v-tab-item>
             <v-tab-item value="tab-3">
-              <v-card class="mt-5" flat v-if="otherLoad">
-                <v-card-text>
-                  <v-skeleton-loader max-width="500" type="list-item-avatar@5"></v-skeleton-loader>
-                </v-card-text>
-              </v-card>
-              <v-row v-else>
-                <v-col class="mt-5" md="12" lg="12" xs="12">
-                  <v-btn small color="primary" @click="getOtherJournal">
-                    <v-icon left small>autorenew</v-icon>reload data
-                  </v-btn>
-                </v-col>
-                <v-col md="6" lg="6" xs="12">
-                  <v-data-table
-                    :loading="otherLoad"
-                    :headers="tableHeaders"
-                    :items="otherJournals.list"
-                    class="elevation-1"
-                  >
-                    <template v-slot:item.worksheet="{item}">{{item.worksheet.name}}</template>
-                    <template v-slot:item.action="{item}">
-                      <v-btn
-                        class="elevation-0 mr-2"
-                        color="primary"
-                        small
-                        @click="openDetail(item.mission.id, item.id, item.worksheet.id)"
-                      >
-                        <v-icon>zoom_in</v-icon>
-                      </v-btn>
-                    </template>
-                  </v-data-table>
-                </v-col>
-              </v-row>
+              <other-comp />
             </v-tab-item>
           </v-tabs-items>
         </v-card>
@@ -377,6 +293,10 @@ import * as config from "@/config/config";
 import auth from "@/config/auth";
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
+import MissionComp from "./subMissionCard";
+import LearningComp from "./subLearning";
+import OtherComp from "./subOtherJournal";
+
 import RenderForm from "@/components/buildform/incubatee/renderForm";
 import RenderRecord from "@/components/buildform/incubatee/renderRecord";
 import CommentModule from "@/components/buildform/comment/CommentModule";
@@ -416,12 +336,6 @@ export default {
       fields: [],
       otherJournals: { total: 0, list: [] },
       otherLoad: false,
-      tableHeaders: [
-        { text: "Mission", value: "mission.name", sortable: false },
-        { text: "Worksheet", value: "worksheet", sortable: false },
-        { text: "", value: "sub", sortable: false, align: "left" },
-        { text: "", value: "action", sortable: false, align: "right" }
-      ],
       learningList: { total: 0, list: [] },
       learningLoad: false,
       worksheetList: { total: 0, list: [] },
@@ -438,7 +352,14 @@ export default {
       isCommentFullscreen: false
     };
   },
-  components: { RenderRecord, RenderForm, CommentModule },
+  components: {
+    RenderRecord,
+    RenderForm,
+    CommentModule,
+    MissionComp,
+    LearningComp,
+    OtherComp
+  },
   watch: {
     $route: "refreshData"
   },
@@ -455,7 +376,6 @@ export default {
   },
   mounted() {
     this.getJournalDetail();
-    this.getOtherJournal();
     this.getLearningMaterialList();
   },
   methods: {
@@ -475,29 +395,6 @@ export default {
           "/new" +
           this.branchUri
       });
-    },
-    getOtherJournal() {
-      this.otherLoad = true;
-      this.axios
-        .get(
-          config.baseUri +
-            "/founder/as-team-member/" +
-            this.$route.params.teamId +
-            "/program-participations/" +
-            this.$route.params.cohortId +
-            "/journals?missionId=" +
-            this.$route.params.missionId,
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
-        .then(res => {
-          this.otherJournals = res.data.data;
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.otherLoad = false;
-        });
     },
     getMissionDetail() {
       this.tableLoad = true;
