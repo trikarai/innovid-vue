@@ -61,7 +61,7 @@
               <v-card-text v-if="journalCreateLoading">
                 <v-skeleton-loader v-if="data.journal.length == 0" max-width="350" type="list-item"></v-skeleton-loader>
               </v-card-text>
-              <v-card-text v-if="data.journal.length != 0">
+              <v-card-text class="pb-0" v-if="data.journal.length != 0">
                 <template v-if="data.selectedParentJournal">
                   <b>{{data.worksheetForm.name}} under {{data.selectedParentJournal.worksheet.name}} :</b>
                 </template>
@@ -82,7 +82,7 @@
                   @click:append-outer="refreshRootJournal"
                 ></v-select>
               </v-card-text>
-              <v-card-text class="grey--text text--lighten-1 caption" v-else>
+              <v-card-text class="pb-0 grey--text text--lighten-1 caption" v-else>
                 <template v-if="!journalCreateLoading">
                   <template v-if="data.previousMission != null">
                     <template
@@ -101,12 +101,13 @@
                 </template>
               </v-card-text>
 
-              <v-card-actions>
+              <v-card-actions class="pt-0">
                 <template v-if="data.previousMission == null">
                   <!-- root button-->
                   <v-row>
                     <v-col md="12">
                       <v-btn
+                        class="ml-2"
                         color="primary"
                         small
                         router
@@ -118,6 +119,7 @@
                     </v-col>
                     <v-col md="12">
                       <v-btn
+                        class="ml-2"
                         v-show="selectedJournalinMission[index] != null"
                         color="primary"
                         small
