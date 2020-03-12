@@ -15,90 +15,19 @@
           <v-tabs-items v-model="tab">
             <!-- new journal start-->
             <v-tab-item value="tab-1">
-              <v-row>
+              <template v-if="!tableLoad">
+                <new-journal
+                  :dataListTemp.sync="dataListTemp"
+                  :tableLoad2="tableLoad"
+                  :loader.sync="loader"
+                  :branchUri.sync="branchUri"
+                />
+              </template>
+              <template v-else>
                 <v-col>
-                  <v-btn
-                    small
-                    class="ma-2 mt-4 ml-0"
-                    color="primary"
-                    :text="mode"
-                    @click="createNewWorksheet"
-                  >
-                    <v-icon left v-if="!mode" small>star</v-icon>Create New Journal
-                  </v-btn>
-                  <v-btn
-                    small
-                    class="mt-2"
-                    color="primary"
-                    @click="createReloadWorksheet"
-                    :text="!mode"
-                  >
-                    <v-icon left v-if="mode" small>star</v-icon>New Journal From Existing Worksheet
-                  </v-btn>
+                  <v-skeleton-loader type="card"></v-skeleton-loader>
                 </v-col>
-                <v-col class="px-5" md="12" v-if="selectWorksheet">
-                  <v-select
-                    class="ml-0"
-                    v-model="exworksheetId"
-                    :items="worksheetList.list"
-                    item-value="id"
-                    item-text="name"
-                    label="Existing Worksheet"
-                    :loading="worksheetListLoad"
-                    no-data-text="No worksheet available"
-                    @change="getWorksheetDataReload"
-                    solo
-                  ></v-select>
-                </v-col>
-              </v-row>
-              <v-row class="my-0 py-0" v-if="is_newWorksheet">
-                <v-col class="my-0 py-0" md="12">
-                  <v-row>
-                    <v-col md="6" lg="6" xs="12">
-                      <v-text-field
-                        class="mx-5"
-                        label="Worksheet Name"
-                        v-model="worksheetName"
-                        outlined
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <render-form
-                    :modeAtom="false"
-                    :modeReload="reloadFalse"
-                    v-if="!tableLoad"
-                    :formTemplate="dataList.worksheetForm"
-                    @submit-form="submitFormJournalNew"
-                  />
-                </v-col>
-              </v-row>
-              <v-row v-if="!is_newWorksheet">
-                <v-col class="my-0 py-0" md="12" v-if="is_reloadWorksheet">
-                  <v-row>
-                    <v-col md="6" lg="6" xs="12">
-                      <v-text-field
-                        class="mx-5"
-                        label="Worksheet Name"
-                        v-model="worksheetName"
-                        outlined
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <render-form
-                    :modeReload="reloadTrue"
-                    :modeAtom="true"
-                    v-if="!tableLoad"
-                    :formTemplate="dataList.worksheetForm"
-                    @submit-form="submitFormJournalNew"
-                    @assignworksheet="assignWorksheet"
-                  />
-                </v-col>
-              </v-row>
-              <!-- <v-row>
-              <v-col md="12">
-                <v-skeleton-loader type="article@2" :boilerplate="true"></v-skeleton-loader>
-              </v-col>
-              </v-row>-->
+              </template>
             </v-tab-item>
             <!-- new journal end-->
 
@@ -257,6 +186,9 @@
     <v-overlay :value="worksheetDataLoad">
       <v-progress-circular color="primary" indeterminate size="64"></v-progress-circular>
     </v-overlay>
+    <v-overlay :value="loader">
+      <v-progress-circular color="primary" indeterminate size="64"></v-progress-circular>
+    </v-overlay>
 
     <v-layout row justify-center>
       <v-dialog
@@ -296,6 +228,7 @@ import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 import MissionComp from "./subMissionCard";
 import LearningComp from "./subLearning";
 import OtherComp from "./subOtherJournal";
+import NewJournal from "./component/newJournal";
 
 import RenderForm from "@/components/buildform/incubatee/renderForm";
 import RenderRecord from "@/components/buildform/incubatee/renderRecord";
@@ -305,6 +238,7 @@ export default {
   mixins: [formDynamicMixins],
   data() {
     return {
+      loader: false,
       mode: false,
       tab: "tab-2",
       tableLoad: false,
@@ -358,7 +292,8 @@ export default {
     CommentModule,
     MissionComp,
     LearningComp,
-    OtherComp
+    OtherComp,
+    NewJournal
   },
   watch: {
     $route: "refreshData"
@@ -656,66 +591,6 @@ export default {
         .catch(() => {})
         .finally(() => {
           this.worksheetDataLoad = false;
-        });
-    },
-    submitFormJournalNew(params) {
-      params["missionId"] = this.dataList.id;
-      params["worksheetFormId"] = this.dataList.worksheetForm.id;
-      params["name"] = this.worksheetName;
-      this.worksheetDataLoad = true;
-      this.axios
-        .post(
-          config.baseUri +
-            "/founder/as-team-member/" +
-            this.$route.params.teamId +
-            "/program-participations/" +
-            this.$route.params.cohortId +
-            "/journals_atomic-worksheet" +
-            this.branchUri,
-          params,
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
-        .then(() => {
-          bus.$emit("callNotif", "success", "Worksheet Data Uploaded");
-          this.$router.go(-1);
-        })
-        .catch(res => {
-          bus.$emit("callNotif", "error", res);
-        })
-        .finally(() => {
-          this.worksheetDataLoad = false;
-        });
-    },
-    assignWorksheet(params) {
-      params["missionId"] = this.dataList.id;
-      params["worksheetId"] = this.exworksheetId;
-      params["name"] = this.worksheetName;
-      this.loader = true;
-      this.axios
-        .post(
-          config.baseUri +
-            "/founder/as-team-member/" +
-            this.$route.params.teamId +
-            "/program-participations/" +
-            this.$route.params.cohortId +
-            "/journals" +
-            this.branchUri,
-          params,
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
-        .then(() => {
-          bus.$emit("callNotif", "success", "Worksheet Assigned");
-          this.$router.go(-1);
-        })
-        .catch(res => {
-          bus.$emit("callNotif", "error", res);
-        })
-        .finally(() => {
-          this.loader = false;
         });
     },
     refreshData() {
