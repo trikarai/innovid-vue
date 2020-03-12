@@ -18,10 +18,10 @@
                 <v-spacer></v-spacer>
                 <v-fade-transition leave-absolute>
                   <span v-if="open">
-                    <v-chip class="mr-2" color="#505050" dark>Collapse</v-chip>
+                    <v-chip small class="mr-2 mt-1" color="#505050" dark>Collapse</v-chip>
                   </span>
                   <span v-else>
-                    <v-chip class="mr-2" color="#505050" dark>Expand</v-chip>
+                    <v-chip small class="mr-2 mt-1" color="#505050" dark>Expand</v-chip>
                   </span>
                 </v-fade-transition>
               </v-col>
