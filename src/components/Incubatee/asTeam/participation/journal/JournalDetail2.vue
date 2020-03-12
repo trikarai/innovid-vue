@@ -92,6 +92,17 @@
               <template v-if="updateJ">
                 <v-row>
                   <v-col md="6" v-if="selectWorksheet">
+                    <v-radio-group v-model="exworksheetId">
+                      <v-radio
+                        v-for="data in worksheetList.list"
+                        :key="data.id"
+                        :label="data.name"
+                        :value="data.id"
+                        @change="getWorksheetData"
+                      ></v-radio>
+                    </v-radio-group>
+                  </v-col>
+                  <!-- <v-col md="6" v-if="selectWorksheet">
                     <v-select
                       class="ml-0"
                       v-model="exworksheetId"
@@ -104,7 +115,7 @@
                       @change="getWorksheetData"
                       solo
                     ></v-select>
-                  </v-col>
+                  </v-col> -->
                 </v-row>
                 <v-row v-if="is_newWorksheet">
                   <v-col>
