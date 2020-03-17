@@ -1,4 +1,4 @@
-# inovasi-web-v3
+# InnovId Web Vue
 
 ## Project setup
 ```
