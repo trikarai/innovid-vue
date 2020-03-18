@@ -1,12 +1,12 @@
 <template>
   <div>
     <!-- {{field}} -->
-    <string-field v-bind:index="index" v-bind:field="field" v-if="field.type === 'string'"></string-field>
-    <string-field v-bind:index="index" v-bind:field="field" v-if="field.type === 'textarea'"></string-field>
+    <string-field :canvasMode="canvasMode" v-bind:index="index" v-bind:field="field" v-if="field.type === 'string'"></string-field>
+    <string-field :canvasMode="canvasMode" v-bind:index="index" v-bind:field="field" v-if="field.type === 'textarea'"></string-field>
     <integer-field v-bind:index="index" v-bind:field="field" v-if="field.type === 'integer'"></integer-field>
     <selection-field v-bind:index="index" v-bind:field="field" v-if="field.type === 'radio'"></selection-field>
     <selection-field v-bind:index="index" v-bind:field="field" v-if="field.type === 'select'"></selection-field>
-    <attachment-field v-bind:index="index" v-bind:field="field" v-if="field.type === 'attachment'"></attachment-field>
+    <attachment-field :canvasMode="canvasMode" v-bind:index="index" v-bind:field="field" v-if="field.type === 'attachment'"></attachment-field>
   </div>
 </template>
 
@@ -23,7 +23,7 @@ export default {
     "selection-field": selection,
     "attachment-field": attachment
   },
-  props: ["field", "index"],
+  props: ["field", "index", "canvasMode"],
   data: function() {
     return {
       show: false,

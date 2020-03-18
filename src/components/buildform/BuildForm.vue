@@ -22,8 +22,15 @@
               <v-col class="my-0 py-0" md="9">
                 <v-text-field disabled dense label="String" outlined clearable></v-text-field>
               </v-col>
-              <v-col class="my-0 py-0" md="3">
-                <v-btn class="mt-1" x-small fab color="primary" @click="addString">
+              <v-col class="my-0 py-0" md="3" v-if="field">
+                <v-btn
+                  class="mt-1"
+                  x-small
+                  fab
+                  color="primary"
+                  @click="addString"
+                  :disabled="desc.renderAs"
+                >
                   <v-icon small>add</v-icon>
                 </v-btn>
               </v-col>
@@ -49,7 +56,14 @@
                 <v-text-field disabled dense label="Integer" type="number" outlined clearable></v-text-field>
               </v-col>
               <v-col class="my-0 py-0" md="3">
-                <v-btn class="mt-1" x-small fab color="primary" @click="addInteger">
+                <v-btn
+                  class="mt-1"
+                  x-small
+                  fab
+                  color="primary"
+                  @click="addInteger"
+                  :disabled="desc.renderAs"
+                >
                   <v-icon small>add</v-icon>
                 </v-btn>
               </v-col>
@@ -59,7 +73,14 @@
                 </v-radio-group>
               </v-col>
               <v-col class="my-0 py-0" md="3">
-                <v-btn class="mt-5" x-small fab color="primary" @click="addRadio">
+                <v-btn
+                  class="mt-5"
+                  x-small
+                  fab
+                  color="primary"
+                  @click="addRadio"
+                  :disabled="desc.renderAs"
+                >
                   <v-icon small>add</v-icon>
                 </v-btn>
               </v-col>
@@ -75,7 +96,14 @@
                 ></v-select>
               </v-col>
               <v-col class="my-0 py-0" md="3">
-                <v-btn class="mt-1" x-small fab color="primary" @click="addSelectMulti">
+                <v-btn
+                  class="mt-1"
+                  x-small
+                  fab
+                  color="primary"
+                  @click="addSelectMulti"
+                  :disabled="desc.renderAs"
+                >
                   <v-icon small>add</v-icon>
                 </v-btn>
               </v-col>
@@ -115,7 +143,30 @@
                 <v-text-field counter="25" maxlength="25" label="name" v-model="params.name" filled></v-text-field>
               </v-col>
               <v-col md="12">
-                <v-textarea counter="500" maxlength="500" rows="3" label="Description" v-model="params.description" filled></v-textarea>
+                <v-textarea
+                  counter="500"
+                  maxlength="500"
+                  rows="3"
+                  label="Description"
+                  v-model="desc.description"
+                  filled
+                ></v-textarea>
+              </v-col>
+              <v-col v-if="canvasMode">
+                <template v-if="fields.length == 0">
+                  <v-switch
+                    :label="desc.renderAs ? 'Render as Canvas' : 'Render as Form' "
+                    v-model="desc.renderAs"
+                    :disabled="desc.renderAs"
+                  ></v-switch>
+                </template>
+                <template v-else>
+                  <v-switch
+                    :label="desc.renderAs ? 'Render as Canvas' : 'Render as Form' "
+                    v-model="desc.renderAs"
+                    disabled
+                  ></v-switch>
+                </template>
               </v-col>
             </v-row>
           </v-card-text>
@@ -151,28 +202,30 @@
                     </v-row>
                   </v-col>
                   <v-col md="4">
-                    <v-btn
-                      class="mt-3"
-                      :disabled="index === 0"
-                      icon
-                      small
-                      fab
-                      color="primary"
-                      @click="swapUp(fields, index)"
-                    >
-                      <v-icon>keyboard_arrow_up</v-icon>
-                    </v-btn>
-                    <v-btn
-                      class="mt-3"
-                      :disabled="index === fields.length - 1"
-                      icon
-                      small
-                      fab
-                      color="primary"
-                      @click="swapDown(fields, index)"
-                    >
-                      <v-icon>keyboard_arrow_down</v-icon>
-                    </v-btn>
+                    <template v-if="!desc.renderAs">
+                      <v-btn
+                        class="mt-3"
+                        :disabled="index === 0"
+                        icon
+                        small
+                        fab
+                        color="primary"
+                        @click="swapUp(fields, index)"
+                      >
+                        <v-icon>keyboard_arrow_up</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="mt-3"
+                        :disabled="index === fields.length - 1"
+                        icon
+                        small
+                        fab
+                        color="primary"
+                        @click="swapDown(fields, index)"
+                      >
+                        <v-icon>keyboard_arrow_down</v-icon>
+                      </v-btn>
+                    </template>
                     <v-btn
                       class="ml-2 mt-4"
                       x-small
@@ -248,7 +301,7 @@
       <v-dialog v-model="dialogPropesties" width="500px">
         <v-card>
           <v-card-text>
-            <props-module :field="field" />
+            <props-module :field="field" :canvasMode="desc.renderAs" />
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -274,7 +327,7 @@ import PropsModule from "@/components/fields/props";
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 export default {
-  props: ["edit", "formtype"],
+  props: ["edit", "formtype", "canvasMode"],
   mixins: [formDynamicMixins],
   data() {
     return {
@@ -304,12 +357,24 @@ export default {
       loader: false,
       loadBuild: false,
       dataSingle: "",
-      position: { scrollTop: 0, scrollLeft: 0 }
+      position: { scrollTop: 0, scrollLeft: 0 },
+      desc: { renderAs: false, description: "" }
     };
   },
   components: {
     FieldModule,
     PropsModule
+  },
+
+  watch: {
+    desc: {
+      immediate: true,
+      deep: true,
+      // eslint-disable-next-line no-unused-vars
+      handler(newValue, oldValue) {
+        this.params.description = JSON.stringify(this.desc);
+      }
+    }
   },
   created() {
     bus.$on("resetField", () => {
@@ -321,6 +386,9 @@ export default {
     }
   },
   methods: {
+    setDesc() {
+      this.params.description = JSON.stringify(this.desc);
+    },
     postformtoParent() {
       this.$emit("postform", this.params);
     },
@@ -362,7 +430,10 @@ export default {
         placeholder: "",
         type: "textarea"
       });
-      field.position = this.getLastOrder();
+
+      this.desc.renderAs
+        ? (field.position = "")
+        : (field.position = this.getLastOrder());
       this.fields.push(field);
       this.snackbar = true;
       this.text = "textarea Field Added";
@@ -451,7 +522,9 @@ export default {
         maxSize: 10,
         type: "attachment"
       });
-      field.position = this.getLastOrder();
+      this.desc.renderAs
+        ? (field.position = "")
+        : (field.position = this.getLastOrder());
       this.fields.push(field);
       this.snackbar = true;
 

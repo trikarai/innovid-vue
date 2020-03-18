@@ -1,7 +1,7 @@
 <template>
   <v-container extend grid-list-xs>
     <!-- build form module-->
-    <buildform-module @postform="postform" :edit="edit" :formtype="formtype" />
+    <buildform-module @postform="postform" :edit="edit" :formtype="formtype" :canvasMode="true" />
     <!-- -->
     <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
