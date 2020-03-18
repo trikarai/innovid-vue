@@ -1,6 +1,6 @@
 <template>
   <v-container extend grid-list-xs>
-    <v-col cols="12" md="6" lg="6" xs="12">
+    <v-col cols="12" md="12" lg="12" xs="12">
       <v-card class="pa-10">
         <v-card-title v-if="!loader">
           <span class="headline">{{dataSingle.name}}</span>
@@ -9,13 +9,28 @@
           <v-skeleton-loader ref="skeleton1" type="card-heading"></v-skeleton-loader>
         </v-card-text>
         <v-card-text>
-          <span class="sub-title" v-if="!loader">{{dataSingle.description}}</span>
+          <span class="sub-title" v-if="obj.renderAs">{{obj.description}}</span>
+          <span class="sub-title" v-else>{{dataSingle.description}}</span>
         </v-card-text>
         <v-card-text v-if="!loader">
-          <template v-for="(field, index) in reOrderField(fields)">
-            <v-row :key="index">
-              <field-module :field="field" :index="index" />
-            </v-row>
+          <template v-if="!obj.renderAs">
+            <template v-for="(field, index) in reOrderField(fields)">
+              <v-row :key="index">
+                <field-module :field="field" :index="index" />
+              </v-row>
+            </template>
+          </template>
+          <template v-else>
+            <!-- <pre> {{fields}} </pre> -->
+            <div class="grid-container">
+              <template v-for="field in fields">
+                <v-card class="ma-1" :style="'grid-area:' + field.position" :key="field.id" elevation="2" shaped outlined>
+                  <v-card-text>
+                    <field-module :field="field" />
+                  </v-card-text>
+                </v-card>
+              </template>
+            </div>
           </template>
         </v-card-text>
         <v-card-actions>
@@ -49,6 +64,7 @@ export default {
         singleSelectFields: [],
         multiSelectFields: []
       },
+      obj: { description: "", renderAs: false },
       fields: [],
       loader: false
     };
@@ -60,6 +76,12 @@ export default {
     this.getDataSingle();
   },
   methods: {
+    checkRenderMode() {
+      let tempObj = JSON.parse(this.dataSingle.description);
+      if (tempObj.hasOwnProperty("renderAs")) {
+        this.obj = JSON.parse(this.dataSingle.description);
+      }
+    },
     getDataSingle() {
       this.dataSingle = "";
       this.loader = true;
@@ -77,6 +99,7 @@ export default {
         .then(res => {
           this.dataSingle = res.data.data;
           this.refactorJSON(res.data.data);
+          this.checkRenderMode();
         })
         .catch(() => {})
         .finally(() => {
@@ -87,4 +110,7 @@ export default {
 };
 </script>
 <style scoped>
+.grid-container {
+  display: grid;
+}
 </style>
