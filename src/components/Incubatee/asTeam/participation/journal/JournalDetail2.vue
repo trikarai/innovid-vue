@@ -115,7 +115,7 @@
                       @change="getWorksheetData"
                       solo
                     ></v-select>
-                  </v-col> -->
+                  </v-col>-->
                 </v-row>
                 <v-row v-if="is_newWorksheet">
                   <v-col>
@@ -159,9 +159,10 @@
                         <b>Worksheet Form</b>
                         <br />
                         {{dataListTemp.worksheetForm.name}}
+                        <!-- | Canvas : {{desc.renderAs}} -->
                       </v-card-text>
                       <v-card-text>
-                        <render-record :fields="fields" />
+                        <render-record :fields="fields" :canvasMode="desc.renderAs" />
                       </v-card-text>
                     </v-card>
                     <v-skeleton-loader type="article" v-else></v-skeleton-loader>
@@ -257,13 +258,19 @@ export default {
       reloadTrue: true,
       dataListTemp: {
         worksheetForm: {
-          name: ""
+          name: "",
+          description: ""
         }
+      },
+      desc: {
+        renderAs: false,
+        description: ""
       },
       dataList: {
         id: "",
         worksheetForm: {
-          name: ""
+          name: "",
+          description: ""
         },
         name: "Mission Name",
         description: "Mission Description",
@@ -360,6 +367,16 @@ export default {
         .then(res => {
           this.dataList = res.data.data;
           this.dataListTemp = JSON.parse(JSON.stringify(res.data.data));
+
+          let tempObj = JSON.parse(this.dataListTemp.worksheetForm.description);
+          if (tempObj.hasOwnProperty("renderAs")) {
+            this.desc.renderAs = JSON.parse(
+              this.dataListTemp.worksheetForm.description
+            ).renderAs;
+            this.desc.description = JSON.parse(
+              this.dataListTemp.worksheetForm.description
+            ).description;
+          }
         })
         .catch(() => {})
         .finally(() => {

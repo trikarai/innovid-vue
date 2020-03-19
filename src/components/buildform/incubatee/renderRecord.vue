@@ -1,9 +1,8 @@
 <template>
   <div>
-    <!-- {{fields}} -->
     <!-- <v-switch label="label" v-model="jancux"></v-switch> -->
     <!-- start kiri kanan-->
-    <template>
+    <template v-if="!canvasMode">
       <!-- {{fields}} -->
       <v-row v-if="fields.length != 0" class="tabel-row"></v-row>
       <template v-for="(data, index) in reOrderRecord(fields)">
@@ -101,6 +100,23 @@
       </template>
     </template>
     <!-- end kiri kanan-->
+
+    <template v-if="canvasMode">
+      <div class="grid-container">
+        <template v-for="field in fields">
+          <v-card
+            class="ma-1"
+            :style="'grid-area:' + field.field.position"
+            :key="field.id"
+            elevation="2"
+            outlined
+          >
+            <v-card-title>{{field.field.name}}</v-card-title>
+            <v-card-text>{{field.value}}</v-card-text>
+          </v-card>
+        </template>
+      </div>
+    </template>
 
     <!-- start atas bawah-->
     <!-- <template v-if="!jancux">
@@ -240,7 +256,7 @@ import pdf from "vue-pdf";
 
 export default {
   mixins: [formDynamicMixins],
-  props: ["fields"],
+  props: ["fields", "canvasMode"],
   data() {
     return {
       loadedRatio: 0,
@@ -310,6 +326,9 @@ export default {
 };
 </script>
 <style scoped>
+.grid-container {
+  display: grid;
+}
 .v-responsive,
 .v-image:hover {
   cursor: zoom-in;
