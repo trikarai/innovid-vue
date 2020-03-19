@@ -129,12 +129,22 @@
             Form Builder
             <v-spacer></v-spacer>
             <v-btn
+              v-if="desc.renderAs"
               class="ml-5"
               color="primary"
               @click="dialogPreview = true"
               :disabled="fields.length == 0"
             >
-              <v-icon>zoom_in</v-icon>Form Preview
+              <v-icon left>view_quilt</v-icon>Canvas Preview
+            </v-btn>
+            <v-btn
+              v-else
+              class="ml-5"
+              color="primary"
+              @click="dialogPreview = true"
+              :disabled="fields.length == 0"
+            >
+              <v-icon left>zoom_in</v-icon>Form Preview
             </v-btn>
           </v-card-title>
           <v-card-text>
@@ -154,19 +164,54 @@
               </v-col>
               <v-col v-if="canvasMode">
                 <template v-if="fields.length == 0">
-                  <v-switch
-                    :label="desc.renderAs ? 'Render as Canvas' : 'Render as Form' "
-                    v-model="desc.renderAs"
-                    :disabled="desc.renderAs"
-                  ></v-switch>
+                  <v-radio-group v-model="desc.renderAs" row :disabled="desc.renderAs">
+                    <v-radio color="primary" :value="false">
+                      <template v-slot:label>
+                        <div>
+                          Render as
+                          <strong class="primary--text">Form</strong>
+                        </div>
+                      </template>
+                    </v-radio>
+                    <v-radio color="primary" :value="true">
+                      <template v-slot:label>
+                        <div>
+                          Render as
+                          <strong class="accent--text">Canvas</strong>
+                        </div>
+                      </template>
+                    </v-radio>
+                  </v-radio-group>
                 </template>
                 <template v-else>
-                  <v-switch
-                    :label="desc.renderAs ? 'Render as Canvas' : 'Render as Form' "
-                    v-model="desc.renderAs"
-                    disabled
-                  ></v-switch>
+                  <v-radio-group v-model="desc.renderAs" row disabled>
+                    <v-radio color="primary" :value="false">
+                      <template v-slot:label>
+                        <div>
+                          Render as
+                          <strong class="primary--text">Form</strong>
+                        </div>
+                      </template>
+                    </v-radio>
+                    <v-radio color="primary" :value="true">
+                      <template v-slot:label>
+                        <div>
+                          Render as
+                          <strong class="accent--text">Canvas</strong>
+                        </div>
+                      </template>
+                    </v-radio>
+                  </v-radio-group>
                 </template>
+              </v-col>
+              <v-col md="12" v-if="desc.renderAs">
+                <v-alert
+                  text
+                  prominent
+                  type="error"
+                  icon="warning"
+                  dismissible
+                >Canvas is Experimental Feature, please use with cautious</v-alert>
               </v-col>
             </v-row>
           </v-card-text>
@@ -251,6 +296,14 @@
           </v-card-text>
           <v-card-actions v-show="fields.length !== 0">
             <v-spacer></v-spacer>
+            <v-btn
+              v-if="desc.renderAs"
+              color="accent"
+              @click="dialogPreview = true"
+              :disabled="fields.length == 0"
+            >
+              <v-icon left>view_quilt</v-icon>Canvas Preview
+            </v-btn>
             <v-btn color="primary" @click="buildFormJSON()" :loading="loadBuild">
               <v-icon left>save</v-icon>Save
             </v-btn>
@@ -273,19 +326,85 @@
       </v-col>
       <!-- <v-vol cols="1"></v-vol> -->
     </v-row>
+    <v-divider></v-divider>
+    <v-row v-if="desc.renderAs">
+      <v-col md="6" lg="6">Instant Preview</v-col>
+      <v-col md="12" lg="12">
+        <v-icon color="red" small>help</v-icon>
+        <b>grid-area :</b>
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <span v-on="on">grid-row-start</span>
+          </template>
+          <span>Specifies on which row to start displaying the item.</span>
+        </v-tooltip>/
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <span v-on="on">grid-column-start</span>
+          </template>
+          <span>Specifies on which column to start displaying the item.</span>
+        </v-tooltip>/
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <span v-on="on">grid-row-end</span>
+          </template>
+          <span>Specifies on which row-line to stop displaying the item, or how many rows to span.</span>
+        </v-tooltip>/
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <span v-on="on">grid-column-end</span>
+          </template>
+          <span>Specifies on which column-line to stop displaying the item, or how many columns to span.</span>
+        </v-tooltip>
+      </v-col>
+      <v-col md="12" lg="12">
+        <div class="grid-container">
+          <template v-for="field in fields">
+            <v-card
+              class="ma-1"
+              :style="'grid-area:' + field.position"
+              :key="field.id"
+              elevation="2"
+              outlined
+            >
+              <v-card-title>{{field.name}}</v-card-title>
+              <v-card-text>{{field.position}}</v-card-text>
+            </v-card>
+          </template>
+        </div>
+      </v-col>
+    </v-row>
 
     <v-layout row justify-center>
-      <v-dialog v-model="dialogPreview" width="500px">
+      <v-dialog v-model="dialogPreview" :width="desc.renderAs ? '1000' : '500'">
         <v-card class="pa-5">
           <v-card-title>
-            <span class="headline">{{params.name}} Form Preview</span>
+            <span class="headline">{{params.name}} {{desc.renderAs ? 'Canvas' : 'From'}} Preview</span>
           </v-card-title>
-          <v-card-text>
+          <v-card-text v-if="!desc.renderAs">
             <template v-for="(field, index) in reOrderField(fields)">
               <v-row :key="index">
                 <field-module :field="field" :index="index" :build="buildmode" />
               </v-row>
             </template>
+          </v-card-text>
+          <v-card-text v-else>
+            <div class="grid-container">
+              <template v-for="field in fields">
+                <v-card
+                  class="ma-1"
+                  :style="'grid-area:' + field.position"
+                  :key="field.id"
+                  elevation="2"
+                  shaped
+                  outlined
+                >
+                  <v-card-text>
+                    <field-module :field="field" />
+                  </v-card-text>
+                </v-card>
+              </template>
+            </div>
           </v-card-text>
           <!-- <v-card-actions>
             <v-spacer></v-spacer>
@@ -616,8 +735,19 @@ export default {
         .then(res => {
           this.dataSingle = res.data.data;
           this.params.name = this.dataSingle.name;
-          this.params.description = this.dataSingle.description;
+          this.desc.renderAs = false;
+          this.desc.description = this.dataSingle.description;
           this.refactorJSON(res.data.data);
+
+          let tempObj = JSON.parse(this.dataSingle.description);
+          if (tempObj.hasOwnProperty("renderAs")) {
+            this.desc.renderAs = JSON.parse(
+              this.dataSingle.description
+            ).renderAs;
+            this.desc.description = JSON.parse(
+              this.dataSingle.description
+            ).description;
+          }
         })
         .catch(() => {})
         .finally(() => {
@@ -638,6 +768,9 @@ export default {
 };
 </script>
 <style scoped>
+.grid-container {
+  display: grid;
+}
 .elementextend {
   position: fixed;
   width: 371px;
