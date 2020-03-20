@@ -2,7 +2,7 @@ export const checkDomainMixins = {
   data() {
     return {
       mainDomain: "",
-      isMain: true
+      isMain: false
     };
   },
   created() {
@@ -29,10 +29,10 @@ export const checkDomainMixins = {
       console.log("Domain parts", parts);
       if (parts.length >= 3) {
         this.mainDomain = parts[1];
+        this.params.incubatorIdentifier = parts[1];
         this.isMain = false;
       } else {
         this.mainDomain = parts[0];
-        this.params.incubatorIdentifier = parts[0];
         this.isMain = true;
       }
       //   return parts.join(".");

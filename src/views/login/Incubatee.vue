@@ -20,9 +20,8 @@
             <v-card-text class="pa-8">
               <div>
                 <v-form v-model="valid" ref="form">
-                  <v-row>
+                  <v-row v-if="isMain">
                     <v-text-field
-                      v-show="isMain"
                       outlined
                       label="Incubator Identifier"
                       v-model="params.incubatorIdentifier"
