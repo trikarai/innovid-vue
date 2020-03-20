@@ -27,6 +27,7 @@
                         prepend-icon="vpn_key"
                         v-model="params.incubatorIdentifier"
                         :rules="rulesName"
+                        :disabled="!isMain"
                         required
                       ></v-text-field>
                     </v-col>
@@ -87,9 +88,10 @@ import bus from "@/config/bus";
 
 import * as config from "@/config/config";
 import { validationMixins } from "@/mixins/validationMixins";
+import { checkDomainMixins } from "./checkDomainMixins";
 
 export default {
-  mixins: [validationMixins],
+  mixins: [validationMixins,checkDomainMixins],
   name: "Login-Personnel",
   data: function() {
     return {
