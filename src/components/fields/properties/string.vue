@@ -40,7 +40,7 @@
       </v-col>
       <v-col md="12">
         <v-checkbox v-model="field.required" :label="`Required : ${field.required.toString()}`"></v-checkbox>
-        {{pos}}
+        <!-- {{pos}} -->
       </v-col>
     </v-row>
   </div>
@@ -65,7 +65,7 @@ export default {
     };
   },
   mounted() {
-    this.pos.order = this.field.position;
+    // this.pos.order = this.field.position;
   },
   watch: {
     "field.required"() {

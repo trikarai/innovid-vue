@@ -236,7 +236,7 @@
                   <v-col class="my-0 py-0" md="8">
                     <v-row>
                       <v-col class="mt-4" md="2">
-                        <v-btn fab x-small color="primary" @click="openProperties(field)">
+                        <v-btn fab x-small color="primary" @click="openProperties(index, field)">
                           <v-icon small>build</v-icon>
                         </v-btn>
                       </v-col>
@@ -420,7 +420,7 @@
       <v-dialog v-model="dialogPropesties" width="500px">
         <v-card>
           <v-card-text>
-            <props-module :field="field" :canvasMode="desc.renderAs" />
+            <props-module :index="indexPropesties" :field="field" :canvasMode="desc.renderAs" />
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -459,6 +459,7 @@ export default {
       leftmenu: false,
       dialogPreview: false,
       dialogPropesties: false,
+      indexPropesties: false,
       params: {
         name: "",
         description: "",
@@ -520,6 +521,16 @@ export default {
       }
       return lastPost;
     },
+    getLastOrderGrid() {
+      var lastPost;
+      if (this.fields.length == 0) {
+        lastPost = '{"order": 1, "grid": ""}';
+      } else {
+        // lastPost = this.fields.slice(-1)[0].position + 1;
+        lastPost = '{"order": 2, "grid": ""}';
+      }
+      return lastPost;
+    },
     addString() {
       var field = new Object({
         name: "String",
@@ -553,6 +564,8 @@ export default {
       this.desc.renderAs
         ? (field.position = "")
         : (field.position = this.getLastOrder());
+      // field.position = this.getLastOrderGrid();
+
       this.fields.push(field);
       this.snackbar = true;
       this.text = "textarea Field Added";
@@ -679,8 +692,9 @@ export default {
       arr.splice(index, 2, temp2, temp);
       this.fields = arr;
     },
-    openProperties(field) {
+    openProperties(index, field) {
       this.field = field;
+      this.indexPropesties = index;
       this.dialogPropesties = true;
     },
     resetField() {

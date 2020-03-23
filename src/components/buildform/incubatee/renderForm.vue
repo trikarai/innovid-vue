@@ -13,23 +13,31 @@
         <v-card-text class="subtitle pb-0" v-if="formDesc !==''">
           <b>Description</b>
         </v-card-text>
-        <v-card-text class="subtitle grey--text">{{formDesc}}</v-card-text>
+        <v-card-text class="subtitle grey--text">{{desc.description}}</v-card-text>
         <v-card-text>
-          <v-form ref="form" v-model="valid">
+          <v-form ref="form" v-model="valid" v-if="!desc.renderAs">
             <template v-for="(field, index) in reOrderField(fields)">
               <v-row :key="index">
                 <field-module :field="field" :index="index" :modeReload="modeReload" />
               </v-row>
             </template>
           </v-form>
+          <v-form ref="form" v-model="valid" v-else>
+            <div class="grid-container">
+              <template v-for="(field, index) in fields">
+                <v-card
+                  class="ma-1 pa-2"
+                  :style="'grid-area:' + field.position"
+                  :key="field.id"
+                  elevation="2"
+                  outlined
+                >
+                  <field-module :field="field" :index="index" :modeReload="modeReload" />
+                </v-card>
+              </template>
+            </div>
+          </v-form>
         </v-card-text>
-        <!-- <v-card-text>
-        <pre>{{params}}</pre>
-        </v-card-text>-->
-        <!-- <v-card-text>
-        <pre>{{test}}</pre>
-        </v-card-text>-->
-
         <v-card-actions>
           <!--generic button-->
           <v-spacer></v-spacer>
@@ -77,7 +85,11 @@ export default {
       fields: [],
       formName: "",
       formDesc: "",
-      test: {}
+      test: {},
+      desc: {
+        renderAs: false,
+        description: ""
+      }
     };
   },
   components: {
@@ -94,6 +106,14 @@ export default {
   updated() {
     this.formName = this.formTemplate.name;
     this.formDesc = this.formTemplate.description;
+
+    let tempObj = JSON.parse(this.formTemplate.description);
+    if (tempObj.hasOwnProperty("renderAs")) {
+      this.desc.renderAs = JSON.parse(this.formTemplate.description).renderAs;
+      this.desc.description = JSON.parse(
+        this.formTemplate.description
+      ).description;
+    }
     // this.refactorJSON(this.formTemplate);
   },
   methods: {
@@ -110,6 +130,9 @@ export default {
 </script>
 
 <style scoped>
+.grid-container {
+  display: grid;
+}
 .topaccentform {
   background: #249c90;
   color: #fff;
