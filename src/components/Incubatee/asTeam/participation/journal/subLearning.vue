@@ -9,7 +9,7 @@
     </v-col>
     <v-col cols="12" md="12" lg="12" xs="12" v-else>
       <v-expansion-panels focusable>
-        <v-expansion-panel v-for="(learning,i) in learningList.list" :key="i">
+        <v-expansion-panel v-for="learning in learningList.list" :key="learning.id">
           <v-expansion-panel-header v-slot="{ open }">
             <v-row no-gutters>
               <v-col cols="10">
