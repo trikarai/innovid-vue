@@ -7,7 +7,7 @@
             <v-toolbar-title class="white--text ml-2">
               <h4>
                 login
-                <!-- <v-chip style="width:45px;" color="#e4e4e4"><span style="color:#777777;">id</span></v-chip> -->
+                <v-chip v-if="!isMain" color="#fafafa"><span style="color:#777777;">{{params.incubatorIdentifier}}</span></v-chip>
               </h4>
             </v-toolbar-title>
             <v-toolbar-title class="ml-auto">
@@ -20,7 +20,7 @@
             <v-card-text class="pa-8">
               <div>
                 <v-form v-model="valid" ref="form">
-                  <v-row>
+                  <v-row v-if="isMain">
                     <v-text-field
                       outlined
                       label="Incubator Identifier"
@@ -110,12 +110,12 @@ import Vue from "vue";
 
 import * as config from "@/config/config";
 import { validationMixins } from "@/mixins/validationMixins";
-
+import { checkDomainMixins } from "./checkDomainMixins";
 import browserDetect from "vue-browser-detect-plugin";
 Vue.use(browserDetect);
 
 export default {
-  mixins: [validationMixins],
+  mixins: [validationMixins, checkDomainMixins],
   name: "Login-Founder",
   data: function() {
     return {
