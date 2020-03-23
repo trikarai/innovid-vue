@@ -103,16 +103,46 @@
 
     <template v-if="canvasMode">
       <div class="grid-container">
-        <template v-for="field in fields">
+        <template v-for="data in fields">
           <v-card
             class="ma-1"
-            :style="'grid-area:' + field.field.position"
-            :key="field.id"
+            :style="'grid-area:' + data.field.position"
+            :key="data.id"
             elevation="2"
             outlined
           >
-            <v-card-title>{{field.field.name}}</v-card-title>
-            <v-card-text>{{field.value}}</v-card-text>
+            <v-card-title>{{data.field.name}}</v-card-title>
+            <v-card-text v-if="data.type == 'textarea'">{{data.value}}</v-card-text>
+            <v-card-text v-if="data.type == 'attachment'">
+              <template v-if="data.attachedFiles.length == 0">-</template>
+              <template v-else>
+                <template v-for="file in data.attachedFiles">
+                  <template v-if="getFileExt(file.fileInfo.path) == 'pdf'">
+                    <v-img
+                      src="/img/pdf-icon.png"
+                      @click="viewPdf(file)"
+                      contain
+                      max-height="150"
+                      :key="file.id"
+                    />
+                  </template>
+                  <template v-else>
+                    <v-img
+                      :name="file.id"
+                      :src="base_uri+file.fileInfo.path"
+                      :key="file.id"
+                      @click="viewImage(file)"
+                    >
+                      <template v-slot:placeholder>
+                        <v-row class="fill-height ma-0" align="center" justify="center">
+                          <v-progress-circular indeterminate color="primary lighten-5"></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
+                  </template>
+                </template>
+              </template>
+            </v-card-text>
           </v-card>
         </template>
       </div>
@@ -269,7 +299,8 @@ export default {
       dialogPdf: false,
       fileDetail: { id: "", fileInfo: { path: "" } },
       isFullscreen: false,
-      keyState: null
+      keyState: null,
+      basedomain: ""
     };
   },
   components: {
@@ -282,11 +313,12 @@ export default {
   },
   created() {
     window.addEventListener("keypress", this.doCommand);
+    this.basedomain = location.protocol + "//" + location.hostname;
     if (process.env.NODE_ENV === "production") {
-      this.base_uri = "https://innov.id/bara-inovasi/storage/app";
+      this.base_uri = this.basedomain + "/bara-inovasi/storage/app";
     } else {
       // this.base_uri = "http://localhost:8001/bara-inovasi/storage/app";
-      this.base_uri = "http://localhost/bara-inovasi/storage/app";
+      this.base_uri = this.basedomain + "/bara-inovasi/storage/app";
     }
   },
   methods: {
