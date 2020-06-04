@@ -217,4 +217,20 @@ export default {
   overflow: hidden;
   height: 100%;
 }
+<<<<<<< Updated upstream
+=======
+#accentlg {
+  position: relative;
+}
+
+#accentlg:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top: 20px solid #00667f ;
+  border-left: 20px solid #fff;
+  width: 50%;
+}
+>>>>>>> Stashed changes
 </style>

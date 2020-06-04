@@ -46,4 +46,63 @@ export default {
 .required::after {
   content: "*";
 }
+<<<<<<< Updated upstream
+=======
+
+.imgkastem .v-image__image {
+  background-attachment: fixed !important;
+}
+.backcu {
+  background-image: url(/img/slider-bg.png);
+  background-size: cover;
+}
+.garis {
+  background: #00667f;
+  width: 75px;
+  height: 9px;
+  border-radius: 100px;
+  margin-top: 9px;
+}
+.v-input__slot {
+  /* background: #fff !important; */
+}
+.topaccent {
+  background: #00667f;
+  color: #fff;
+  margin-bottom: 18px;
+  width: 93%;
+  margin: 0 auto;
+  border-radius: 5px;
+  position: relative;
+  bottom: 28px;
+}
+.v-dialog.vmember.v-dialog--active.v-dialog--persistent {
+  overflow-y: inherit !important;
+}
+.v-dialog.vmember.v-dialog--active {
+  overflow-y: inherit;
+}
+
+.v-avatar.v-list-item__avatar {
+  position: relative;
+  right: 11px;
+}
+
+@media (min-width: 1264px) {
+  .container.extend {
+    max-width: 1029px !important;
+  }
+}
+@media (min-width: 1500px) {
+  .container.extend {
+    max-width: 1185px !important;
+  }
+}
+</style>
+<style scoped>
+/* Provide better right-edge spacing when using an icon button there. */
+.snack >>> .v-snack__content {
+  padding-right: 16px;
+}
+>>>>>>> Stashed changes
 </style>

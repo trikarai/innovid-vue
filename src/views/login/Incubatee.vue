@@ -161,4 +161,33 @@ export default {
   overflow: hidden;
   height: 100%;
 }
+<<<<<<< Updated upstream
+=======
+#accentlg {
+  position: relative;
+}
+
+#accentlg:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top: 20px solid #00667f;
+  border-left: 20px solid #fff;
+  width: 50%;
+}
+</style>
+
+<style>
+span.v-chip__content {
+  margin: 0 auto;
+}
+.pertikal {
+  /* position: absolute;
+  top: 47%;
+  left: 50%;
+  transform: translate(-50%, -50%) */
+  margin-top: calc(3% + 5px) !important;
+}
+>>>>>>> Stashed changes
 </style>
