@@ -1,7 +1,7 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
-      <v-col>
+      <v-col md="6" lg="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -9,23 +9,31 @@
           :items="dataList.list"
           class="elevation-1"
         >
-          <template v-slot:item.name="{item}">
+          <template v-slot:item.worksheet="{item}">
             <!-- <v-btn
               class="elevation-0 mr-2"
               fab
               x-small
               color="primary"
-              @click="openDetail(item.id)"
+              @click="openDetail(item.mission.id, item.id, item.worksheet.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn> -->
-            {{item.mission.name}}
+            </v-btn>-->
+            {{item.worksheet.name}}
           </template>
 
           <template v-slot:item.action="{item}">
-            <v-btn small color="warning" @click="leftAct(item, 'Remove')">
-              <v-icon left>delete</v-icon>Remove
+            <v-btn
+              class="elevation-0 mr-2"
+              color="primary"
+              small
+              @click="openDetail(item.mission.id, item.id, item.worksheet.id)"
+            >
+              <v-icon>zoom_in</v-icon>
             </v-btn>
+            <!-- <v-btn small color="warning" @click="leftAct(item, 'Remove')">
+              <v-icon left>delete</v-icon>Remove
+            </v-btn>-->
           </template>
         </v-data-table>
       </v-col>
@@ -39,8 +47,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -50,8 +58,10 @@
 import bus from "@/config/bus";
 import auth from "@/config/auth";
 import * as config from "@/config/config";
+import { participationWatcherMixins } from "@/mixins/participationWatcherMixins";
 
 export default {
+  mixins: [participationWatcherMixins],
   data() {
     return {
       search: "",
@@ -60,8 +70,8 @@ export default {
       tableLoad: false,
       loader: false,
       tableHeaders: [
-        { text: "Mission", value: "name", sortable: false },
-        { text: "Worksheet", value: "worksheet.name", sortable: false },
+        { text: "Mission", value: "mission.name", sortable: false },
+        { text: "Worksheet", value: "worksheet", sortable: false },
         { text: "", value: "sub", sortable: false, align: "left" },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
@@ -76,6 +86,21 @@ export default {
       leftAction: ""
     };
   },
+  watch: {
+    $route() {
+      this.getDataList();
+    },
+    participationId() {
+      this.$router.replace({
+        path:
+          "/incubatee/team/" +
+          this.$route.params.teamId +
+          "/participation/" +
+          this.participationId +
+          "/journal"
+      });
+    }
+  },
   mounted() {
     this.getDataList();
   },
@@ -84,11 +109,10 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
             "/journals",
           {
@@ -110,7 +134,7 @@ export default {
     leftAct(item, action) {
       this.dialogDelete = true;
       this.leftId = item.id;
-    //   this.leftName = item.mentoring.name;
+      //   this.leftName = item.mentoring.name;
       this.leftAction = action;
     },
     deleteAccount(id) {
@@ -118,9 +142,9 @@ export default {
       this.axios
         .delete(
           config.baseUri +
-            "/incubatee/as-team-member/" +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
             "/journals/" +
             id,
@@ -132,7 +156,7 @@ export default {
           bus.$emit(
             "callNotif",
             "info",
-            "Successfully " + this.leftAction + " Mentoring Schedule"
+            "Successfully " + this.leftAction + " Journal"
           );
           this.refresh();
         })
@@ -142,6 +166,21 @@ export default {
         .finally(() => {
           this.tableLoad = false;
         });
+    },
+    openDetail(missionId, journalId, worksheetId) {
+      this.$router.push({
+        path:
+          "/incubatee/team/" +
+          this.$route.params.teamId +
+          "/participation/" +
+          this.$route.params.cohortId +
+          "/mission/" +
+          missionId +
+          "/journal/" +
+          journalId +
+          "/worksheet/" +
+          worksheetId
+      });
     }
   }
 };

@@ -7,72 +7,99 @@
             <v-card-text class="pt-4">
               <div>
                 <v-form v-model="valid" ref="form">
-                  <v-text-field
-                    :disabled="view"
-                    label="Name"
-                    v-model="params.name"
-                    :rules="rulesName"
-                    :counter="25"
-                    maxlength="25"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    :disabled="view"
-                    label="Identifier"
-                    v-model="params.identifier"
-                    :rules="rulesName"
-                    :counter="25"
-                    maxlength="25"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    :disabled="view"
-                    label="Personnel Name"
-                    v-model="params.personnelName"
-                    :rules="rulesName"
-                    :counter="25"
-                    maxlength="25"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    :disabled="view"
-                    label="Personnel Email"
-                    v-model="params.personnelEmail"
-                    :rules="rulesEmail"
-                    maxlength="100"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    :disabled="view"
-                    label="Personnel Phone"
-                    v-model="params.personnelPhone"
-                    :rules="rulesPhone"
-                    maxlength="100"
-                    required
-                  ></v-text-field>
-                  <template v-if="!edit">
-                    <v-text-field
-                      v-if="!view"
-                      v-model="params.personnelPassword"
-                      :append-icon="show1 ? 'visibility' : 'visibility_off'"
-                      :rules="rulesPassword"
-                      :type="show1 ? 'text' : 'password'"
-                      name="Password"
-                      label="Password"
-                      hint="At least 8 characters"
-                      counter
-                      @click:append="show1 = !show1"
-                    ></v-text-field>
-                  </template>
-                  <v-layout justify-space-between v-if="!view">
-                    <v-btn
-                      :loading="loader"
-                      v-if="edit == false"
-                      @click.once="submit"
-                      color="primary"
-                      :disabled="!valid"
-                    >{{$vuetify.lang.t('$vuetify.action.add')}}</v-btn>
-                  </v-layout>
+                  <v-row>
+                    <v-col md="12">
+                      <v-text-field
+                        :disabled="view"
+                        label="Name"
+                        v-model="params.name"
+                        :rules="rulesName"
+                        :counter="25"
+                        maxlength="25"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col md="12">
+                      <v-text-field
+                        :disabled="view"
+                        label="Identifier"
+                        v-model="params.identifier"
+                        :rules="rulesIncubatorIdentifier"
+                        :counter="25"
+                        maxlength="25"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col md="12">
+                      <v-text-field
+                        :disabled="view"
+                        label="Personnel Name"
+                        v-model="params.personnelName"
+                        :rules="rulesName"
+                        :counter="25"
+                        maxlength="25"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col md="12">
+                      <v-text-field
+                        :disabled="view"
+                        label="Personnel Email"
+                        v-model="params.personnelEmail"
+                        :rules="rulesEmail"
+                        maxlength="100"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col md="12">
+                      <v-text-field
+                        :disabled="view"
+                        label="Personnel Phone"
+                        v-model="params.personnelPhone"
+                        :rules="rulesPhone"
+                        maxlength="100"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col md="12">
+                      <template v-if="!edit">
+                        <v-text-field
+                          v-if="!view"
+                          v-model="params.personnelPassword"
+                          :append-icon="show1 ? 'visibility' : 'visibility_off'"
+                          :rules="rulesPassword"
+                          :type="show1 ? 'text' : 'password'"
+                          name="Password"
+                          label="Password"
+                          hint="At least 8 characters"
+                          counter
+                          @click:append="show1 = !show1"
+                        ></v-text-field>
+                        <v-text-field
+                          autocomplete="confirm-password"
+                          label="Confirm Password"
+                          v-model="cpassword"
+                          :rules="rulesPasswordConfirmationPersonnel"
+                          :append-icon="e2 ? 'visibility' : 'visibility_off'"
+                          :type="e2 ? 'password' : 'text'"
+                          counter
+                          required
+                          @click:append="e2 = !e2"
+                        ></v-text-field>
+                      </template>
+                    </v-col>
+                  </v-row>
+                  <v-row justify-space-between v-if="!view">
+                    <v-col>
+                      <v-btn
+                        :loading="loader"
+                        v-if="edit == false"
+                        @click.once="submit"
+                        color="primary"
+                        :disabled="!valid"
+                      >{{$vuetify.lang.t('$vuetify.action.add')}}</v-btn>
+                    </v-col>
+                  </v-row>
                 </v-form>
               </div>
             </v-card-text>
@@ -96,6 +123,7 @@ export default {
       valid: false,
       loader: false,
       show1: false,
+      e2: false,
       params: {
         name: "",
         identifier: "",
@@ -103,7 +131,8 @@ export default {
         personnelEmail: "",
         personnelPhone: "",
         personnelPassword: ""
-      }
+      },
+      cpassword: ""
     };
   },
   components: {},

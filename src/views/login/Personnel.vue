@@ -3,11 +3,11 @@
     <v-container fluid fill-height id="loginpage">
       <v-row align="center" justify="center">
         <v-col xs="12" sm="8" md="4" class="text-xs-center">
-          <v-toolbar class="pt-2" color="primary">
+          <v-toolbar class color="primary">
             <v-toolbar-title class="white--text ml-2">
               <h4>
-                Inov
-                <v-chip color="accent">ide</v-chip>
+                Login
+                <v-chip color="#fafafa">personnel</v-chip>
               </h4>
             </v-toolbar-title>
             <v-toolbar-title class="ml-auto">
@@ -27,6 +27,7 @@
                         prepend-icon="vpn_key"
                         v-model="params.incubatorIdentifier"
                         :rules="rulesName"
+                        :disabled="!isMain"
                         required
                       ></v-text-field>
                     </v-col>
@@ -64,6 +65,7 @@
                   <v-row justify-end class="mt-2">
                     <v-col class="mt-2"></v-col>
                     <v-btn
+                      block
                       @click="submit"
                       :loading="loader"
                       :class=" { 'primary white--text' : valid}"
@@ -86,10 +88,11 @@ import bus from "@/config/bus";
 
 import * as config from "@/config/config";
 import { validationMixins } from "@/mixins/validationMixins";
+import { checkDomainMixins } from "./checkDomainMixins";
 
 export default {
-  mixins: [validationMixins],
-  name: "Login Personnel",
+  mixins: [validationMixins,checkDomainMixins],
+  name: "Login-Personnel",
   data: function() {
     return {
       loader: false,
@@ -127,8 +130,8 @@ export default {
           authUser.token = res.data.credentials.token;
           authUser.valid_until = res.data.credentials.valid_until;
           window.localStorage.setItem("lbUser", JSON.stringify(authUser));
-
-          this.$router.replace("/personnel/main");
+          window.sessionStorage.setItem("uploadMode", "personnel");
+          this.$router.replace("/personnel/account");
         })
         .catch(res => {
           bus.$emit("callNotif", "error", res);
@@ -145,7 +148,8 @@ export default {
 </script>
 <style scoped>
 #loginpage {
-  background-image: url("https://picsum.photos/1080/720?grayscale");
+  /* background-image: url("https://picsum.photos/1080/720?grayscale"); */
+  background-color: #fff;
   background-size: cover;
   background-position: center center;
   overflow: hidden;

@@ -1,6 +1,7 @@
 <template>
-  <v-col md="6">
+  <v-col>
     <v-text-field
+      dense
       :placeholder="field.placeholder"
       :hint="field.description"
       outlined
@@ -22,18 +23,22 @@ import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 export default {
   mixins: [validationMixins, formDynamicMixins],
-  props: ["field", "index"],
+  props: ["field", "index", "modeReload"],
   components: {},
   data: function() {
     return {
       clearable: true,
       value: ""
     };
+  },
+  created() {
+    if (this.modeReload) {
+      this.value = this.field.value;
+    }
   }
 };
 </script>
 
 <style scoped>
-
 </style>
 

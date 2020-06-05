@@ -1,15 +1,95 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
-      <v-col></v-col>
+      <v-col>Participation List</v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col md="10" lg="10">
         <v-data-table
           :search="search"
           :loading="tableLoad"
           :headers="tableHeaders"
           :items="dataList.list"
+          class="elevation-1"
+        >
+          <template v-slot:item.name="{item}">
+            <!-- <v-btn
+              class="elevation-0 mr-2"
+              fab
+              x-small
+              color="primary"
+              @click="openDetail(item.id)"
+            >
+              <v-icon>zoom_in</v-icon>
+            </v-btn>-->
+            {{item.program.name}}
+          </template>
+          <template v-slot:item.sub="{item}">
+            <v-btn
+              small
+              color="primary"
+              class="mr-2"
+              router
+              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + item.id + '/schedule'"
+            >
+              <v-icon left>today</v-icon>Mentoring Schedules
+            </v-btn>
+            <!-- <v-btn
+              small
+              color="primary"
+              class="mr-2"
+              router
+              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + item.id + '/journal'"
+            >
+              <v-icon left>book</v-icon>Journals
+            </v-btn>-->
+            <!-- <v-btn
+              small
+              color="primary"
+              class="mr-2"
+              router
+              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + item.id + '/mission'"
+            >
+              <v-icon left>emoji_objects</v-icon>Missions
+            </v-btn>-->
+          </template>
+          <template v-slot:item.note="{item}">
+            <template v-if="!item.program.removed">
+              <v-chip v-if="item.note">{{item.note}} program</v-chip>
+            </template>
+            <template v-if="item.program.removed">
+              <v-chip small color="error">Program Removed</v-chip>
+            </template>
+          </template>
+          <template v-slot:item.action="{item}">      
+            <template v-if="item.program.removed">
+
+            </template>    
+            <template v-else>
+              <v-btn
+                v-if="item.active"
+                small
+                color="warning"
+                class="mr-2"
+                @click="leftAct(item, 'Quit')"
+              >
+                <v-icon left>flag</v-icon>Quit Program
+              </v-btn>
+            </template>
+          </template>
+        </v-data-table>
+      </v-col>
+    </v-row>
+    <!-- <v-row>
+      <v-col>Program Registration</v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-data-table
+          :search="search"
+          :loading="tableLoad2"
+          :headers="tableHeaders2"
+          :items="dataList2.list"
           class="elevation-1"
         >
           <template v-slot:item.name="{item}">
@@ -22,45 +102,17 @@
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>
-            {{item.cohort.name}}
+            {{item.program.name}}
           </template>
-          <template v-slot:item.sub="{item}">
-            <v-btn
-              small
-              color="accent"
-              class="mr-2"
-              router
-              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + item.id + '/schedule'"
-            >
-              <v-icon left>today</v-icon>Schedules
-            </v-btn>
-            <v-btn
-              small
-              color="accent"
-              class="mr-2"
-              router
-              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + item.id + '/journal'"
-            >
-              <v-icon left>book</v-icon>Journals
-            </v-btn>
-            <v-btn
-              small
-              color="accent"
-              class="mr-2"
-              router
-              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + item.id + '/mission'"
-            >
-              <v-icon left>emoji_objects</v-icon>Missions
-            </v-btn>
-          </template>
+
           <template v-slot:item.action="{item}">
-            <v-btn small color="warning" class="mr-2" @click="leftAct(item, 'Cancel')">
-              <v-icon left>flag</v-icon>Quit
+            <v-btn small color="warning" class="mr-2" @click="leftCancel(item, 'Cancel')">
+              <v-icon left>cancel</v-icon>Cancel
             </v-btn>
           </template>
         </v-data-table>
       </v-col>
-    </v-row>
+    </v-row>-->
 
     <v-dialog v-model="dialogDelete" width="300" :persistent="true">
       <v-card :loading="loader">
@@ -70,8 +122,9 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn v-if="leftAction == 'Quit'" text color="red" @click="quitProgram(leftId)">Yes</v-btn>
+          <v-btn v-if="leftAction == 'Cancel'" text color="red" @click="cancelProgram(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -92,11 +145,11 @@
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.cohort.name">
-            <p>{{dataSingle.cohort.name}}</p>
-            <p>{{dataSingle.acceptedTime}}</p>
+          <v-card-text :key="dataSingle.name">
+            <p>{{dataSingle}}</p>
+            <!-- <p>{{dataSingle.acceptedTime}}</p>
             <p>{{dataSingle.active}}</p>
-            <p>{{dataSingle.note}}</p>
+            <p>{{dataSingle.note}}</p>-->
           </v-card-text>
         </transition>
         <v-card-actions>
@@ -111,19 +164,29 @@
 </template>
 <script>
 import bus from "@/config/bus";
-
-// import * as config from "@/config/config";
+import * as config from "@/config/config";
 import auth from "@/config/auth";
+import { programMixins } from "@/mixins/programMixins";
+import { teamWatcherMixins } from "@/mixins/teamWatcherMixins";
 
 export default {
+  mixins: [programMixins, teamWatcherMixins],
   data() {
     return {
       search: "",
       dataList: { total: 0, list: [] },
-      dataSingle: { cohort: { name: "" } },
+      dataList2: { total: 0, list: [] },
+      dataSingle: { name: "" },
       tableLoad: false,
+      tableLoad2: false,
       loader: false,
       tableHeaders: [
+        { text: "Name", value: "name", sortable: false },
+        { text: "", value: "sub", sortable: false, align: "left" },
+        { text: "Status", value: "note", sortable: false, align: "left" },
+        { text: "", value: "action", sortable: false, align: "right" }
+      ],
+      tableHeaders2: [
         { text: "Name", value: "name", sortable: false },
         { text: "", value: "sub", sortable: false, align: "left" },
         { text: "", value: "action", sortable: false, align: "right" }
@@ -139,19 +202,29 @@ export default {
       leftAction: ""
     };
   },
+  watch: {
+    teamId() {
+      this.$router.replace({
+        path: "/incubatee/team/" + this.teamId + "/participation"
+      });
+    },
+    $route() {
+      this.getDataList();
+    }
+  },
   mounted() {
     this.getDataList();
+    this.getDataList2();
   },
   methods: {
     getDataList() {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations",
+            "/program-participations",
           {
             headers: auth.getAuthHeader()
           }
@@ -168,15 +241,38 @@ export default {
           this.tableLoad = false;
         });
     },
+    getDataList2() {
+      this.tableLoad2 = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-registrations",
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          if (res.data.data) {
+            this.dataList2 = res.data.data;
+          } else {
+            this.dataList2 = { total: 0, list: [] };
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.tableLoad2 = false;
+        });
+    },
     getDataSingle(id) {
       this.loader = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-registrations/" +
             id,
           {
             headers: auth.getAuthHeader()
@@ -197,18 +293,23 @@ export default {
     leftAct(item, action) {
       this.dialogDelete = true;
       this.leftId = item.id;
-      this.leftName = item.cohort.name;
+      // this.leftName = item.program.name;
       this.leftAction = action;
     },
-    deleteAccount(id) {
+    leftCancel(item, action) {
+      this.dialogDelete = true;
+      this.leftId = item.id;
+      this.leftName = item.program.name;
+      this.leftAction = action;
+    },
+    quitProgram(id) {
       this.tableLoad = true;
       this.axios
         .delete(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             id,
           {
             headers: auth.getAuthHeader()
@@ -216,6 +317,7 @@ export default {
         )
         .then(() => {
           bus.$emit("callNotif", "info", "Successfully Quit");
+          bus.$emit("reloadNavParticipation");
           this.refresh();
         })
         .catch(res => {
@@ -224,6 +326,14 @@ export default {
         .finally(() => {
           this.tableLoad = false;
         });
+    },
+    refresh() {
+      this.dialogApply = false;
+      this.dialogForm = false;
+      this.dialogDelete = false;
+      this.dialogDetail = false;
+      this.getDataList();
+      this.getDataList2();
     }
   }
 };

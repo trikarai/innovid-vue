@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col md="4" xs="12">
         <v-text-field
@@ -9,8 +9,9 @@
           label="Search by email"
           outlined
           :rules="rulesEmail"
-          @input="isTyping = true"
         ></v-text-field>
+        <br />
+        <v-btn small @click="getTalent">search</v-btn>
       </v-col>
       <v-col md="12" xs="12" v-if="!async">
         <v-chip
@@ -30,10 +31,18 @@
     </v-row>
     <v-row v-if="incubatee !== null">
       <v-col md="4" v-if="!async">
-        <v-card>
+        <v-card class="pa-5">
           <v-card-text>
-            <p>{{incubatee.name}}</p>
-            <p>{{incubatee.email}}</p>
+            <p>
+              <b>Name</b>
+              <br />
+              {{incubatee.name}}
+            </p>
+            <p>
+              <b>Email</b>
+              <br />
+              {{incubatee.email}}
+            </p>
           </v-card-text>
           <v-card-text>
             <v-form v-model="valid" ref="form">
@@ -48,6 +57,7 @@
           </v-card-text>
           <v-card-actions>
             <v-btn
+              block
               @click="validate"
               :class=" { 'primary white--text' : valid}"
               :disabled="!valid"
@@ -63,9 +73,8 @@
 </template>
 <script>
 import Vue from "vue";
-import VueLodash from "vue-lodash";
-const options = { name: "lodash" }; // customize the way you want to call it
-Vue.use(VueLodash, options); // options is optional
+import lodash from "lodash";
+Vue.prototype._ = lodash;
 
 import bus from "@/config/bus";
 
@@ -95,14 +104,14 @@ export default {
     };
   },
   watch: {
-    search: Vue._.debounce(function() {
-      this.isTyping = false;
-    }, 1000),
-    isTyping: function(value) {
-      if (!value) {
-        this.getTalent();
-      }
-    }
+    // search: this._.debounce(function() {
+    //   this.isTyping = false;
+    // }, 1000),
+    // isTyping: function(value) {
+    //   if (!value) {
+    //     this.getTalent();
+    //   }
+    // }
   },
   created() {},
   mounted() {},
@@ -115,12 +124,15 @@ export default {
     getTalent() {
       this.async = true;
       this.axios
-        .get(config.baseUri + +"/incubatee/incubatees/" + this.search, {
-          headers: auth.getAuthHeader()
-        })
+        .get(
+          config.baseUri + "/founder/founders?email=" + encodeURI(this.search),
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
         .then(res => {
           if (res.data) {
-            this.incubatee = res.data;
+            this.incubatee = res.data.data;
           } else {
             this.incubatee = null;
           }
@@ -137,14 +149,15 @@ export default {
       this.axios
         .post(
           config.baseUri +
-            "/incubatee/as-team-member/" +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
             "/member-candidates",
-          { incubateeId: this.incubatee.id, position: this.position },
+          { founderId: this.incubatee.id, position: this.position },
           { headers: auth.getAuthHeader() }
         )
         .then(() => {
           bus.$emit("callNotif", "info", "Invitation Sent");
+          this.$router.got(-1);
         })
         .catch(res => {
           bus.$emit("callNotif", "error", res);

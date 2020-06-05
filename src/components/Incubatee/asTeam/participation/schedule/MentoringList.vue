@@ -1,10 +1,10 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col>Mentoring List</v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="12" md="6" lg="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -28,7 +28,7 @@
           <template v-slot:item.action="{item}">
             <v-btn
               small
-              color="accent"
+              color="primary"
               class="mr-2"
               router
               :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mentoring/' + item.id + '/mentor' "
@@ -42,41 +42,37 @@
 
     <v-dialog
       v-model="dialogDetail"
-      scrollable
-      persistent
       :overlay="false"
-      max-width="300px"
+      max-width="400px"
       transition="dialog-transition"
     >
       <v-card>
+        <v-progress-linear v-if="loader" :indeterminate="true" color="primary"></v-progress-linear>
         <v-card-title>
-          <p class="text-capitalize"></p>
+          <p class="text-capitalize">Mentoring Detail</p>
         </v-card-title>
-        <v-card-text v-if="loader">
+        <!-- <v-card-text v-if="loader">
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
-        </v-card-text>
+        </v-card-text> -->
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.name">
-            <p>{{dataSingle.name}}</p>
-            <!-- <p>{{dataSingle.acceptedTime}}</p>
-            <p>{{dataSingle.active}}</p>
-            <p>{{dataSingle.note}}</p>-->
+          <v-card-text :key="dataSingle.name">    
+            <p><b>Mentoring Name</b><br>{{dataSingle.name}}</p>
+            <p><b>Session Duration</b><br>{{dataSingle.sessionDuration}}</p>
           </v-card-text>
         </transition>
-        <v-card-actions>
+        <!-- <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
             <v-icon>close</v-icon>
           </v-btn>
-        </v-card-actions>
+        </v-card-actions> -->
       </v-card>
     </v-dialog>
   </v-container>
 </template>
 <script>
 // import bus from "@/config/bus";
-
-// import * as config from "@/config/config";
+import * as config from "@/config/config";
 import auth from "@/config/auth";
 
 export default {
@@ -111,11 +107,10 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
             "/mentorings",
           {
@@ -138,11 +133,10 @@ export default {
       this.loader = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
             "/mentorings/" +
             id,

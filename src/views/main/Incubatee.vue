@@ -1,8 +1,9 @@
 <template>
   <div class="home">
     <Navbar />
+    <!-- {{todayUnix}} - {{tokenExp}} = {{text}} -->
     <transition name="slide" mode="out-in">
-      <router-view></router-view>
+      <router-view style="margin-left:50px;"></router-view>
     </transition>
     <v-spacer></v-spacer>
     <Footer />
@@ -11,6 +12,8 @@
 
 <script>
 // @ is an alias to /src
+import auth from "@/config/auth";
+
 import Navbar from "@/components/Incubatee/incubateeNavBar";
 import Footer from "@/components/Footer";
 export default {
@@ -18,8 +21,31 @@ export default {
   components: { Navbar, Footer },
   data: function() {
     return {
-      //sasa
+      tokenExp: "",
+      todayUnix: "",
+      text: "",
+      user: {}
     };
+  },
+  created() {
+    this.user = JSON.parse(auth.getAuthData());
+  },
+  mounted() {
+    this.cekTokenExp();
+  },
+  methods: {
+    cekTokenExp() {
+      this.tokenExp = this.user.valid_until;
+      this.todayUnix = Math.round(new Date().getTime() / 1000);
+
+      if (this.todayUnix > this.tokenExp) {
+        this.text = "Force Logout";
+        window.localStorage.clear();
+        this.$router.replace({ path: "/" });
+      } else {
+        this.text = "Still Logged";
+      }
+    }
   }
 };
 </script>

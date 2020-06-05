@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <!-- {{authData.data.id}} -->
       <v-col md="8" xs="12">
@@ -8,7 +8,7 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row>
+    <!-- <v-row>
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -19,9 +19,9 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
-      <v-col>
+      <v-col cols="12" md="6" lg="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -63,8 +63,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -72,36 +72,39 @@
     <v-dialog
       v-model="dialogDetail"
       scrollable
-      persistent
       :overlay="false"
       max-width="300px"
       transition="dialog-transition"
     >
       <v-card>
+        <v-progress-linear v-if="loader" :indeterminate="true" color="primary"></v-progress-linear>
         <v-card-title>
-          <p class="text-capitalize"></p>
+          <p class="text-capitalize">Personnel Detail</p>
         </v-card-title>
-        <v-card-text v-if="loader">
-          <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
-        </v-card-text>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.name">{{dataSingle.name}}</v-card-text>
+          <v-card-text :key="dataSingle.name"><b>Name</b><br>{{dataSingle.name}}</v-card-text>
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.email">{{dataSingle.email}}</v-card-text>
+          <v-card-text :key="dataSingle.email"><b>Email</b><br>{{dataSingle.email}}</v-card-text>
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.phone">{{dataSingle.phone}}</v-card-text>
+          <v-card-text :key="dataSingle.phone"><b>Phone Number</b><br>{{dataSingle.phone}}</v-card-text>
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.joinTime">{{dataSingle.joinTime}}</v-card-text>
+          <v-card-text :key="dataSingle.joinTime"><b>Join Time</b><br>
+            <v-icon left color="primary">calendar_today</v-icon>
+              {{ dataSingle.joinTime | moment("MMMM Do YYYY") }}
+              <br />
+              <v-icon left color="primary">access_time</v-icon>
+              {{ dataSingle.joinTime | moment("h:mm a") }}
+          </v-card-text>
         </transition>
-        <v-card-actions>
+        <!-- <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
             <v-icon>close</v-icon>
           </v-btn>
-        </v-card-actions>
+        </v-card-actions> -->
       </v-card>
     </v-dialog>
   </v-container>
@@ -146,10 +149,8 @@ export default {
       this.axios
         .get(
           config.baseUri +
-            "/personnel/as-admin/programmes/" +
+            "/personnel/as-admin/programs/" +
             this.$route.params.programId +
-            "/cohorts/" +
-            this.$route.params.cohortId +
             "/coordinators",
           {
             headers: auth.getAuthHeader()
@@ -201,10 +202,8 @@ export default {
       this.axios
         .delete(
           config.baseUri +
-            "/personnel/as-admin/programmes/" +
+            "/personnel/as-admin/programs/" +
             this.$route.params.programId +
-            "/cohorts/" +
-            this.$route.params.cohortId +
             "/coordinators/" +
             id,
           {
@@ -226,12 +225,7 @@ export default {
     },
     gotoAssign() {
       this.$router.push({
-        path:
-          "/personnel/program/" +
-          this.$route.params.programId +
-          "/cohort/" +
-          this.$route.params.cohortId +
-          "/assign"
+        path: "/personnel/program/" + this.$route.params.programId + "/assign"
       });
     }
   }

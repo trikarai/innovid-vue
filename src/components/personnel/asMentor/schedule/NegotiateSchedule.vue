@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col>
         <v-data-table
@@ -10,7 +10,7 @@
           class="elevation-1"
         >
           <template v-slot:item.name="{item}">
-            <v-btn
+            <!-- <v-btn
               class="elevation-0 mr-2"
               fab
               x-small
@@ -18,19 +18,56 @@
               @click="openDetail(item.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn>
+            </v-btn> -->
             {{item.mentoring.name}}
+          </template> 
+          <template v-slot:item.startTime="{item}">
+            <v-row class="my-3">
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ item.startTime | moment("MMMM Do YYYY") }}
+            </v-row>
+            <v-row class="my-3">
+              <v-icon left color="primary">access_time</v-icon>
+              {{ item.startTime | moment("h:mm a") }}
+            </v-row>
+          </template>
+          <template v-slot:item.endTime="{item}">
+            <v-row class="my-3">
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ item.endTime | moment("MMMM Do YYYY") }}
+            </v-row>
+            <v-row class="my-3">
+              <v-icon left color="primary">access_time</v-icon>
+              {{ item.endTime | moment("h:mm a") }}
+            </v-row>
+          </template>
+          <template v-slot:item.status="{item}">
+             <v-chip x-small>{{item.status}}</v-chip>
           </template>
           <template v-slot:item.action="{item}">
-            <v-btn class="ml-2" small color="primary" @click="leftAct(item, 'accept')">
-              <v-icon small left>check</v-icon>Accept
-            </v-btn>
-            <v-btn class="ml-2" small color="accent" @click="offerAct(item)">
-              <v-icon small left>update</v-icon>Offer
-            </v-btn>
-            <v-btn class="ml-2" small color="warning" @click="leftAct(item, 'reject')">
-              <v-icon small left>block</v-icon>Reject
-            </v-btn>
+            <template v-if="!item.concluded">
+              <v-row>
+                <v-col>
+                  <v-row>
+                  <v-btn small color="primary" @click="leftAct(item, 'accept')">
+                    <v-icon small left>check</v-icon>Accept
+                  </v-btn>
+                  </v-row>               
+                </v-col>
+                <v-col>
+                   <v-row>
+                  <v-btn small color="primary" @click="offerAct(item)">
+                    <v-icon small left>update</v-icon>Offer
+                  </v-btn>
+                  </v-row>
+                  <v-row>
+                  <v-btn class="mt-2" small color="warning" @click="leftAct(item, 'reject')">
+                    <v-icon small left>block</v-icon>Reject
+                  </v-btn>
+                  </v-row>
+                </v-col>
+              </v-row>
+            </template>
           </template>
         </v-data-table>
       </v-col>
@@ -44,8 +81,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -58,60 +95,112 @@
       max-width="550px"
       transition="dialog-transition"
     >
-      <v-card>
+      <v-card class="pa-3">
         <v-card-title>
-          <p class="text-capitalize"></p>
+          <p class="text-capitalize">Offer New Schedule</p>
         </v-card-title>
         <v-card-text v-if="loader">
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
         <v-card-text>
-          <p>{{dataSingle.mentoring.name}}</p>
-          <p>{{dataSingle.participant.team.name}}</p>
-          <p>{{dataSingle.startTime}}</p>
-          <p>{{dataSingle.endTime}}</p>
+          <p><b>Name</b><br>{{dataSingle.mentoring.name}}</p>
+          <p><b>Team Name</b><br>{{dataSingle.participant.team.name}}</p>
+          <v-row>
+          <v-col>
+             <b>Start Time</b>
+             <v-row class="my-3">
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ dataSingle.startTime | moment("MMMM Do YYYY") }}
+            </v-row>
+            <v-row class="my-3">
+              <v-icon left color="primary">access_time</v-icon>
+              {{ dataSingle.startTime | moment("h:mm a") }}
+            </v-row>
+          </v-col>
+          <v-col>
+            <b>End Time</b>
+            <v-row class="my-3">
+              <v-icon left color="primary">calendar_today</v-icon>
+              {{ dataSingle.endTime | moment("MMMM Do YYYY") }}
+            </v-row>
+            <v-row class="my-3">
+              <v-icon left color="primary">access_time</v-icon>
+              {{ dataSingle.endTime | moment("h:mm a") }}
+            </v-row>
+          </v-col>
+          </v-row>
         </v-card-text>
-        <v-card-text>
-          <v-form ref="form" v-model="valid">
-            <v-menu
-              ref="menu"
-              v-model="menu"
-              :close-on-content-click="false"
-              :nudge-right="40"
-              transition="scale-transition"
-              offset-y
-              full-width
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="params.startTime"
-                  label="Date Offer"
-                  prepend-icon="today"
-                  readonly
-                  :rules="rulesRequired"
-                  v-on="on"
-                  clearable
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                ref="picker"
-                :locale="$vuetify.lang.current"
-                v-model="params.startTime"
-                min="1950-01-01"
-                @input="menu = false"
-              ></v-date-picker>
-            </v-menu>
+        <v-card-text class="mt-0 pt-0">
+          <v-form class="mt-0 pt-0" ref="form" v-model="valid">
+            <v-row class="mt-0 pt-0">
+              <v-col class="mt-0 pt-0">
+                <v-menu
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="date"
+                      label="New Date Offer"
+                      prepend-icon="today"
+                      readonly
+                      :rules="rulesRequired"
+                      v-on="on"
+                      clearable
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    ref="picker"
+                    :locale="$vuetify.lang.current"
+                    v-model="date"
+                    min="1950-01-01"
+                    @input="menu = false"
+                  ></v-date-picker>
+                </v-menu>
+              </v-col>
+              <v-col class="mt-0 pt-0">
+                <v-menu
+                  v-model="menu2"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="time"
+                      label="New Time Offer"
+                      prepend-icon="schedule"
+                      readonly
+                      :rules="rulesRequired"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    format="24hr"
+                    color="primary"
+                    :locale="$vuetify.lang.current"
+                    v-model="time"
+                  ></v-time-picker>
+                </v-menu>
+              </v-col>
+            </v-row>
           </v-form>
           <!-- {{startTime}} -->
         </v-card-text>
         <v-card-actions>
+          <v-spacer></v-spacer>
           <v-btn color="primary" :disabled="!valid" @click="offerAction()">
             <v-icon left>update</v-icon>Offer
           </v-btn>
-          <div class="flex-grow-1"></div>
-          <v-btn icon color="red" @click="dialogForm = false">
-            <v-icon>close</v-icon>
+          <v-btn text color="grey" @click="dialogForm = false">
+            close
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -145,7 +234,7 @@
 </template>
 <script>
 import bus from "@/config/bus";
-// import * as config from "@/config/config";
+import * as config from "@/config/config";
 import auth from "@/config/auth";
 import { validationMixins } from "@/mixins/validationMixins";
 
@@ -157,6 +246,7 @@ export default {
       search: "",
       valid: false,
       menu: false,
+      menu2: false,
       dataList: { total: 0, list: [] },
       dataSingle: {
         id: "",
@@ -182,7 +272,7 @@ export default {
         { text: "startTime", value: "startTime", sortable: false },
         { text: "endTime", value: "endTime", sortable: false },
         { text: "status", value: "status", sortable: false },
-        { text: "concluded", value: "concluded", sortable: false },
+        // { text: "concluded", value: "concluded", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       dialogForm: false,
@@ -194,19 +284,27 @@ export default {
       leftAction: "",
       params: {
         startTime: ""
-      }
+      },
+      date: "",
+      time: ""
     };
+  },
+  watch: {
+    date: "setDateTime",
+    time: "setDateTime"
   },
   mounted: function() {
     this.getDataList();
   },
   methods: {
+    setDateTime: function() {
+      this.params.startTime = this.date + " " + this.time;
+    },
     getDataList() {
       this.tableLoad = true;
       this.axios
         .get(
-          // config.baseUri
-          "http://localhost:3005/api" +
+          config.baseUri +
             "/personnel/mentorships/" +
             this.$route.params.mentorshipId +
             "/negotiate-schedules",
@@ -234,8 +332,7 @@ export default {
       this.loader = true;
       this.axios
         .get(
-          // config.baseUri
-          "http://localhost:3005/api" +
+          config.baseUri +
             "/personnel/mentorships/" +
             this.$route.params.mentorshipId +
             "/negotiate-schedules/" +
@@ -265,14 +362,14 @@ export default {
       this.tableLoad = true;
       this.axios
         .patch(
-          // config.baseUri
-          "http://localhost:3005/api" +
+          config.baseUri +
             "/personnel/mentorships/" +
             this.$route.params.mentorshipId +
             "/negotiate-schedules/" +
             id +
             "/" +
             this.leftAction,
+          {},
           {
             headers: auth.getAuthHeader()
           }
@@ -301,8 +398,7 @@ export default {
       this.tableLoad = true;
       this.axios
         .patch(
-          // config.baseUri
-          "http://localhost:3005/api" +
+          config.baseUri +
             "/personnel/mentorships/" +
             this.$route.params.mentorshipId +
             "/negotiate-schedules/" +

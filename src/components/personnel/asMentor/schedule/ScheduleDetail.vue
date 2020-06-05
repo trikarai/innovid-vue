@@ -1,6 +1,7 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
+      <!-- <v-col md="12">{{dataList}}</v-col> -->
       <v-col md="6">
         <v-card :loading="tableLoad">
           <v-card-title primary-title>
@@ -10,24 +11,80 @@
           </v-card-title>
           <v-card-text>
             <v-row>
-              <v-col md="12">{{dataList.participant.team.name}}</v-col>
-              <v-col md="12">{{dataList.startTime}}</v-col>
-              <v-col md="12">{{dataList.endTime}}</v-col>
+              <v-col md="12">
+                <b>Team Name</b>
+                <br />
+                {{dataList.participant.team.name}}
+              </v-col>
+              <v-col md="6">
+                <b>Start Time</b>
+                <v-row>
+                  <v-col>
+                    <v-icon left color="primary">calendar_today</v-icon>
+                    {{ dataList.startTime | moment("MMMM Do YYYY") }}
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col class="mt-0 pt-0">
+                    <v-icon left color="primary">access_time</v-icon>
+                    {{ dataList.startTime | moment("h:mm a") }}
+                  </v-col>
+                </v-row>
+              </v-col>
+              <v-col md="6">
+                <b>End Time</b>
+                <v-row>
+                  <v-col>
+                    <v-icon left color="primary">calendar_today</v-icon>
+                    {{ dataList.endTime | moment("MMMM Do YYYY") }}
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col class="mt-0 pt-0">
+                    <v-icon left color="primary">access_time</v-icon>
+                    {{ dataList.endTime | moment("h:mm a") }}
+                  </v-col>
+                </v-row>
+              </v-col>
             </v-row>
           </v-card-text>
+          <template v-if="!edit">
+            <v-card-title primary-title>
+              <h3 class="headline mb-0">Report</h3>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" small @click="edit = !edit">
+                <v-icon left small>edit</v-icon>Edit
+              </v-btn>
+            </v-card-title>
+            <v-card-text class="pt-0 mt-2 ml-3">
+              <render-record :fields="fields" />
+            </v-card-text>
+          </template>
+          <template v-if="dataList.mentorMentoringReport != null">
+            <template v-if="edit">
+              <v-card-title primary-title v-if="dataList.mentorMentoringReport !== null">
+                <v-spacer></v-spacer>
+                <v-btn color="warning" small @click="edit = !edit">
+                  <v-icon left small>close</v-icon>Cancel Edit
+                </v-btn>
+              </v-card-title>
+            </template>
+          </template>
         </v-card>
       </v-col>
-      <v-col md="12">
-        <!-- <pre> {{dataList.worksheetForm}} </pre> -->
+    </v-row>
+    <v-row>
+      <v-col cols="12" md="6" lg="6" xs="12" v-if="edit">
         <render-form
           v-if="!tableLoad"
-          :formTemplate="dataList.mentoring.mentorMentoringFeedbackForm"
+          :modeReload="isReload"
+          :formTemplate="dataListTemp.mentoring.mentorMentoringFeedbackForm"
           @submit-form="submitForm"
         />
       </v-col>
     </v-row>
 
-    <v-dialog v-model="dialogDelete" width="300" :persistent="true">
+    <!-- <v-dialog v-model="dialogDelete" width="300" :persistent="true">
       <v-card :loading="tableLoad">
         <v-card-title>
           <p class="text-capitalize">{{leftAction}}</p>
@@ -39,41 +96,55 @@
           <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+    </v-dialog>-->
+    <v-overlay :value="loader">
+      <v-progress-circular color="primary" indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </v-container>
 </template>
 <script>
 import bus from "@/config/bus";
 import auth from "@/config/auth";
 import * as config from "@/config/config";
+import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 import RenderForm from "@/components/buildform/incubatee/renderForm";
+import RenderRecord from "@/components/buildform/incubatee/renderRecord";
 
 export default {
+  mixins: [formDynamicMixins],
   data() {
     return {
+      isReload: false,
       search: "",
+      edit: true,
+      dataListTemp: {},
       dataList: {
         id: "",
-        mentoring: { id: "", name: "" },
-        participantMentoringFeedbackForm: {
+        mentoring: {
+          id: "",
           name: "",
-          description: "",
-          stringFields: [],
-          integerFields: [],
-          textAreaFields: [],
-          attachmentFields: [],
-          singleSelectFields: [],
-          multiSelectFields: []
+          mentorMentoringFeedbackForm: {
+            id: "",
+            name: "",
+            description: "",
+            stringFields: [],
+            integerFields: [],
+            textAreaFields: [],
+            attachmentFields: [],
+            singleSelectFields: [],
+            multiSelectFields: []
+          }
         },
         startTime: "",
         endTime: "",
-        mentor: {
+        participant: {
           id: "",
-          personnel: {
+          team: {
             name: ""
           }
-        }
+        },
+        mentorMentoringReport: null
       },
       tableLoad: false,
       loader: false,
@@ -82,14 +153,18 @@ export default {
       dialogApply: false,
       dialogDelete: false,
       dialogDetail: false,
-      edit: false,
       leftId: "",
       leftName: "",
-      leftAction: ""
+      leftAction: "",
+      fields: []
     };
   },
+  created() {
+    window.sessionStorage.setItem("uploadMode", "personnel");
+  },
   components: {
-    RenderForm
+    RenderForm,
+    RenderRecord
   },
   mounted() {
     this.getDataList();
@@ -99,8 +174,7 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3005/api" +
+          config.baseUri +
             "/personnel/mentorships/" +
             this.$route.params.mentorshipId +
             "/schedules/" +
@@ -111,6 +185,16 @@ export default {
         )
         .then(res => {
           this.dataList = res.data.data;
+          this.dataListTemp = JSON.parse(JSON.stringify(res.data.data));
+          if (res.data.data.mentorMentoringReport !== null) {
+            this.edit = false;
+            this.isReload = true;
+            this.refactorRecordJSON(res.data.data.mentorMentoringReport);
+            this.pairFieldValueReport(this.dataListTemp.mentorMentoringReport);
+          } else {
+            this.edit = true;
+            this.isReload = false;
+          }
         })
         .catch(() => {})
         .finally(() => {
@@ -119,20 +203,26 @@ export default {
     },
     submitForm(params) {
       this.loader = true;
+      params[
+        "Form_id"
+      ] = this.dataList.mentoring.mentorMentoringFeedbackForm.id;
+
       this.axios
-        .post(
+        .put(
           config.baseUri +
-            "/incubatee/as-team-member/" +
-            this.$route.params.teamId +
-            "/worksheets",
+            "/personnel/mentorships/" +
+            this.$route.params.mentorshipId +
+            "/schedules/" +
+            this.$route.params.scheduleId +
+            "/mentor-mentoring-report",
           params,
           {
             headers: auth.getAuthHeader()
           }
         )
         .then(() => {
-          bus.$emit("callNotif", "success", "Worksheet Data Uploaded");
-          this.$router.go(-2);
+          bus.$emit("callNotif", "success", "Report Data Uploaded");
+          this.$router.go(-1);
         })
         .catch(res => {
           bus.$emit("callNotif", "error", res);
@@ -141,41 +231,61 @@ export default {
           this.loader = false;
         });
     },
-    leftAct(item, action) {
-      this.dialogDelete = true;
-      this.leftId = item.id;
-      //   this.leftName = item.mentoring.name;
-      this.leftAction = action;
+    editReport() {
+      this.edit = true;
     },
-    deleteAccount(id) {
-      this.tableLoad = true;
-      this.axios
-        .delete(
-          config.baseUri +
-            "/incubatee/as-team-member/" +
-            this.$route.params.teamId +
-            "/cohort-participations/" +
-            this.$route.params.cohortId +
-            "/journals/" +
-            id,
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
-        .then(() => {
-          bus.$emit(
-            "callNotif",
-            "info",
-            "Successfully " + this.leftAction + " Mentoring Schedule"
-          );
-          this.refresh();
-        })
-        .catch(res => {
-          bus.$emit("callNotif", "error", res);
-        })
-        .finally(() => {
-          this.tableLoad = false;
-        });
+    pairFieldValueReport(data) {
+      //this code is only used in mentoring feedback report
+      //https://stackoverflow.com/questions/56444006/how-to-merge-the-property-with-same-key-in-two-object-array?noredirect=1&lq=1
+      //String
+      var map = new Map(
+        data.stringFieldRecords.map(o => [o.stringField.id, o])
+      );
+      var result = this.dataListTemp.mentoring.mentorMentoringFeedbackForm.stringFields.map(
+        o => Object.assign({}, o, map.get(o.id))
+      );
+      this.dataListTemp.mentoring.mentorMentoringFeedbackForm.stringFields = result;
+      // eslint-disable-next-line no-console
+      //textarea
+      var mapt = new Map(
+        data.textAreaFieldRecords.map(o => [o.textAreaField.id, o])
+      );
+      var resultt = this.dataListTemp.mentoring.mentorMentoringFeedbackForm.textAreaFields.map(
+        o => Object.assign({}, o, mapt.get(o.id))
+      );
+      this.dataListTemp.mentoring.mentorMentoringFeedbackForm.textAreaFields = resultt;
+      //integer
+      var mapi = new Map(
+        data.integerFieldRecords.map(o => [o.integerField.id, o])
+      );
+      var resulti = this.dataListTemp.mentoring.mentorMentoringFeedbackForm.integerFields.map(
+        o => Object.assign({}, o, mapi.get(o.id))
+      );
+      this.dataListTemp.mentoring.mentorMentoringFeedbackForm.integerFields = resulti;
+      //single select / radio
+      var mapr = new Map(
+        data.singleSelectFieldRecords.map(o => [o.singleSelectField.id, o])
+      );
+      var resultr = this.dataListTemp.mentoring.mentorMentoringFeedbackForm.singleSelectFields.map(
+        o => Object.assign({}, o, mapr.get(o.id))
+      );
+      this.dataListTemp.mentoring.mentorMentoringFeedbackForm.singleSelectFields = resultr;
+      //multi select
+      var mapm = new Map(
+        data.multiSelectFieldRecords.map(o => [o.multiSelectField.id, o])
+      );
+      var resultm = this.dataListTemp.mentoring.mentorMentoringFeedbackForm.multiSelectFields.map(
+        o => Object.assign({}, o, mapm.get(o.id))
+      );
+      this.dataListTemp.mentoring.mentorMentoringFeedbackForm.multiSelectFields = resultm;
+      //attachment
+      var mapa = new Map(
+        data.attachmentFieldRecords.map(o => [o.attachmentField.id, o])
+      );
+      var resulta = this.dataListTemp.mentoring.mentorMentoringFeedbackForm.attachmentFields.map(
+        o => Object.assign({}, o, mapa.get(o.id))
+      );
+      this.dataListTemp.mentoring.mentorMentoringFeedbackForm.attachmentFields = resulta;
     }
   }
 };

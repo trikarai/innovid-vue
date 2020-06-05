@@ -1,10 +1,26 @@
 <template>
   <transition name="modal">
     <div class="modal-mask">
-      <div class="modal-wrapper" @click="$emit('close')">
+      <div class="modal-wrapper" style="padding-top:6px !important" @click="$emit('close')">
         <div class="modal-container" @click.stop>
-          <v-card elevation="0" width="400" :loading="loader">
-            <v-card-text class="pt-4">
+          <v-card class="pa-5 pt-0" elevation="0" width="400" :loading="loader">
+            <v-card-title class="topaccent" primary-title>
+              <div>
+                <h3 v-if="!isbranch" class="headline mb-0">
+                  <template v-if="!edit">Add</template>
+                  <template v-else>Edit</template> Mission
+                </h3>
+                <h3 v-else class="headline mb-0">
+                  <template v-if="!edit">Add</template>
+                  <template v-else>Edit</template> Branch Mission
+                </h3>
+              </div>
+            </v-card-title>
+            <v-card-text>
+              <p v-if="isbranch">
+                <b>Parent Mission:</b>
+                {{rootname}}
+              </p>
               <div>
                 <v-form v-model="valid" ref="form">
                   <v-text-field
@@ -16,16 +32,28 @@
                     maxlength="25"
                     required
                   ></v-text-field>
+                  <v-text-field
+                    :disabled="edit"
+                    label="Position"
+                    v-model="params.position"
+                    :counter="25"
+                    maxlength="25"
+                    type="number"
+                    :rules="rulesRequired"
+                  ></v-text-field>
                   <v-textarea
+                    class="mt-8"
                     :disabled="view"
                     label="Description"
                     v-model="params.description"
-                    :counter="100"
-                    maxlength="100"
+                    :counter="500"
+                    maxlength="500"
+                    height="100"
                     required
                   ></v-textarea>
 
                   <v-select
+                    v-if="!edit"
                     :rules="rulesRequired"
                     v-model="params.worksheetFormId"
                     label="Worksheet"
@@ -38,12 +66,21 @@
 
                   <v-layout justify-space-between v-if="!view">
                     <v-btn
+                      block
                       v-if="edit == false"
                       @click.once="submit"
                       :loading="loader"
                       color="primary"
                       :disabled="!valid"
                     >{{$vuetify.lang.t('$vuetify.action.add')}}</v-btn>
+                    <v-btn
+                      block
+                      v-if="edit"
+                      @click.once="update"
+                      :loading="loader"
+                      color="primary"
+                      :disabled="!valid"
+                    >{{$vuetify.lang.t('$vuetify.action.edit')}}</v-btn>
                   </v-layout>
                 </v-form>
               </div>
@@ -63,7 +100,16 @@ import { validationMixins } from "@/mixins/validationMixins";
 
 export default {
   mixins: [validationMixins],
-  props: ["id", "edit", "view", "data", "isbranch", "rootid"],
+  props: [
+    "id",
+    "edit",
+    "view",
+    "data",
+    "isbranch",
+    "rootid",
+    "rootname",
+    "missionid"
+  ],
   data: function() {
     return {
       valid: false,
@@ -75,16 +121,18 @@ export default {
       params: {
         name: "",
         description: "",
-        worksheetFormId: ""
+        worksheetFormId: "",
+        position: ""
       }
     };
   },
   components: {},
   created: function() {},
   mounted: function() {
-    this.getDataList();
     if (this.edit) {
-      this.getSingleData(this.data.id);
+      this.getSingleData(this.rootid);
+    } else {
+      this.getDataList();
     }
   },
   methods: {
@@ -125,10 +173,8 @@ export default {
       this.axios
         .post(
           config.baseUri +
-            "/personnel/as-admin/programmes/" +
+            "/personnel/as-admin/programs/" +
             this.$route.params.programId +
-            "/cohorts/" +
-            this.$route.params.cohortId +
             "/missions",
           this.params,
           {
@@ -150,10 +196,8 @@ export default {
       this.axios
         .post(
           config.baseUri +
-            "/personnel/as-admin/programmes/" +
+            "/personnel/as-admin/programs/" +
             this.$route.params.programId +
-            "/cohorts/" +
-            this.$route.params.cohortId +
             "/missions/" +
             this.rootid,
           this.params,
@@ -171,8 +215,50 @@ export default {
           this.loader = false;
         });
     },
-    updateData: function() {},
-    getSingleData: function() {}
+    updateData() {
+      this.loader = true;
+      this.axios
+        .patch(
+          config.baseUri +
+            "/personnel/as-admin/programs/" +
+            this.$route.params.programId +
+            "/missions/" + this.rootid,
+          this.params,
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(() => {
+          this.$emit("refresh");
+        })
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
+        .finally(() => {
+          this.loader = false;
+        });
+    },
+    getSingleData() {
+      this.loader = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/personnel/as-admin/programs/" +
+            this.$route.params.programId +
+            "/missions/" +
+            this.rootid,
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          this.params = res.data.data;
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.loader = false;
+        });
+    }
   }
 };
 </script>

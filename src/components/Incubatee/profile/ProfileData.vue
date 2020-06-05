@@ -1,19 +1,28 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
+    <!-- <v-row>
+      <v-col md="8" xs="12">{{dataSingle}}</v-col>
+    </v-row>-->
     <v-row>
-      <v-col md="8" xs="12"></v-col>
-    </v-row>
-    <v-row>
-      <v-col>
-        <v-card>
-          <v-card-title primary-title>{{dataSingle.profileForm.name}}</v-card-title>
-          <v-card-text>
-            <template v-for="data in fields">
-              <v-row :key="data.id">
-                <v-col md="2" class="sub-title">{{data.field.name}}</v-col>
-                <v-col md="6" class="display-1">{{data.value}}</v-col>
-              </v-row>
-            </template>
+      <v-col cols="12" md="6" lg="6" xs="12" v-if="loader">
+        <v-card class="pa-3">
+          <v-skeleton-loader max-width="300" type="heading, list-item-two-line@4"></v-skeleton-loader>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="6" lg="6" xs="12" v-else>
+        <v-card class="pt-0 mt-5">
+          <v-card-title class="topaccentform" primary-title>
+            <h3 class="headline mb-0">{{dataSingle.profileForm.name}}</h3>
+            <v-spacer></v-spacer>
+            <v-btn
+              dark
+              small
+              color="#505050"
+              :to="'/incubatee/profile-form/'+ dataSingle.profileForm.id +'/add'"
+            >Edit</v-btn>
+          </v-card-title>
+          <v-card-text class="pa-7 pt-0">
+            <render-record :fields="fields" />
           </v-card-text>
         </v-card>
       </v-col>
@@ -26,6 +35,7 @@ import bus from "@/config/bus";
 import * as config from "@/config/config";
 import auth from "@/config/auth";
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
+import RenderRecord from "@/components/buildform/incubatee/renderRecord";
 
 export default {
   mixins: [formDynamicMixins],
@@ -51,7 +61,7 @@ export default {
       leftAction: ""
     };
   },
-  components: {},
+  components: { RenderRecord },
   created: function() {},
   mounted: function() {
     this.getDataSingle();
@@ -62,9 +72,7 @@ export default {
       this.loader = true;
       this.axios
         .get(
-          config.baseUri +
-            "/incubatee/profiles/" +
-            this.$route.params.profileId,
+          config.baseUri + "/founder/profiles/" + this.$route.params.profileId,
           {
             headers: auth.getAuthHeader()
           }
@@ -94,5 +102,15 @@ export default {
 /* .slide-fade-leave-active for <2.1.8 */ {
   /* transform: translateX(10px); */
   opacity: 0;
+}
+.topaccentform {
+  background: #249c90;
+  color: #fff;
+  margin-bottom: 18px;
+  width: 95%;
+  margin: 0 auto;
+  border-radius: 5px;
+  position: relative;
+  bottom: 24px;
 }
 </style>

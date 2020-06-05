@@ -1,10 +1,10 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col>Mentor List</v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="12" md="6" lg="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -13,7 +13,7 @@
           class="elevation-1"
         >
           <template v-slot:item.name="{item}">
-            <v-btn
+            <!-- <v-btn
               class="elevation-0 mr-2"
               fab
               x-small
@@ -21,12 +21,12 @@
               @click="openDetail(item.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn>
+            </v-btn> -->
             {{item.personnel.name}}
           </template>
 
           <template v-slot:item.action="{item}">
-            <v-btn color="accent" @click="proposeAct(item)">
+            <v-btn small color="primary" @click="proposeAct(item)">
               <v-icon left>insert_invitation</v-icon>Propose
             </v-btn>
           </template>
@@ -49,14 +49,12 @@
         <v-card-text v-if="loader">
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
-        <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.personnel.name">
-            <p>{{dataSingle.personnel.name}}</p>
+          <v-card-text >
+            <p>{{dataSingle}}</p>
             <!-- <p>{{dataSingle.acceptedTime}}</p>
             <p>{{dataSingle.active}}</p>
             <p>{{dataSingle.note}}</p>-->
           </v-card-text>
-        </transition>
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
@@ -76,13 +74,17 @@
     >
       <v-card>
         <v-card-title>
-          <p class="text-capitalize"></p>
+          <p class="text-capitalize">Propose Mentoring Schedule</p>
+          <v-spacer></v-spacer>
+          <v-btn icon class="posisix" color="primary" @click="dialogForm = false">
+            <v-icon>close</v-icon>
+          </v-btn>
         </v-card-title>
         <v-card-text v-if="loader">
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
         <v-card-text>
-          <p>{{dataSingle.personnel.name}}</p>
+          <p><b>Mentor Name</b><br>{{dataSingle.personnel.name}}</p>
         </v-card-text>
         <v-card-text>
           <v-form ref="form" v-model="valid">
@@ -109,10 +111,10 @@
                     ></v-text-field>
                   </template>
                   <v-date-picker
+                    color="primary"
                     ref="picker"
                     :locale="$vuetify.lang.current"
                     v-model="date"
-                    min="1950-01-01"
                     @input="menu = false"
                   ></v-date-picker>
                 </v-menu>
@@ -138,7 +140,7 @@
                   </template>
                   <v-time-picker
                     format="24hr"
-                    color="blue"
+                    color="primary"
                     :locale="$vuetify.lang.current"
                     v-model="time"
                   ></v-time-picker>
@@ -146,16 +148,13 @@
               </v-col>
             </v-row>
           </v-form>
-          {{params}}
+          <!-- {{params}} -->
         </v-card-text>
-        <v-card-actions>
-          <v-btn color="primary" :disabled="!valid" @click="proposeAction()">
+        <v-card-actions class="pa-5">
+          <v-btn block color="primary" :disabled="!valid" @click="proposeAction()">
             <v-icon left>update</v-icon>Propose
           </v-btn>
-          <div class="flex-grow-1"></div>
-          <v-btn icon color="red" @click="dialogForm = false">
-            <v-icon>close</v-icon>
-          </v-btn>
+          <div class="flex-grow-1"></div>         
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -164,7 +163,7 @@
 <script>
 // import bus from "@/config/bus";
 
-// import * as config from "@/config/config";
+import * as config from "@/config/config";
 import auth from "@/config/auth";
 import { validationMixins } from "@/mixins/validationMixins";
 
@@ -181,7 +180,7 @@ export default {
       tableLoad: false,
       loader: false,
       tableHeaders: [
-        { text: "Name", value: "name", sortable: false },
+        { text: "Mentor Name", value: "name", sortable: false },
         { text: "", value: "sub", sortable: false, align: "left" },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
@@ -200,7 +199,8 @@ export default {
         startTime: ""
       },
       date: "",
-      time: ""
+      time: "",
+      today: ""
     };
   },
   watch: {
@@ -209,6 +209,12 @@ export default {
   },
   mounted() {
     this.getDataList();
+    // this.today = new Date();
+    // var today = new Date();
+    // var dd = String(today.getDate()).padStart(2, '0');
+    // var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    // var yyyy = today.getFullYear();
+    // this.today = mm + '/' + dd + '/' + yyyy;
   },
   methods: {
     setDateTime: function() {
@@ -218,11 +224,10 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
             "/mentors",
           {
@@ -245,11 +250,10 @@ export default {
       this.loader = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
+          config.baseUri +
             "/incubatee/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
             "/mentors/" +
             id,
@@ -278,13 +282,12 @@ export default {
       this.loader = true;
       this.axios
         .post(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
-            "/negotiate-schedules",
+            "/negotiate-mentoring-schedules",
           this.params,
 
           {
@@ -294,7 +297,7 @@ export default {
         .then(() => {
           this.$router.replace({
             path:
-              "/incubatee/" +
+              "/incubatee/team/" + 
               this.$route.params.teamId +
               "/participation/" +
               this.$route.params.cohortId +
@@ -310,4 +313,9 @@ export default {
 };
 </script>
 <style scoped>
+.posisix {
+  position: relative;
+  bottom: 4px;
+  left: 9px;
+}
 </style>

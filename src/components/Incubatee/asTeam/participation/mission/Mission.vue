@@ -1,33 +1,169 @@
 <template>
-  <v-container grid-list-xs>
-    <v-row>
+  <v-container extend grid-list-xs>
+    <!-- jangan dihapus start-->
+    <v-row style="display:none">
       <v-col md="6">
-        <v-card :loading="tableLoad">
-          <v-card-title primary-title>
-            <div>
-              <h3 class="headline mb-0">{{dataList.name}}</h3>
-              <div>{{dataList.description}}</div>
-            </div>
-          </v-card-title>
-          <v-card-actions>
-            <v-btn
-              color="success"
-              fab
-              x-small
-              router
-              :to="'/incubatee/team/' + this.$route.params.teamId + '/participation/' + this.$route.params.cohortId + '/mission/' + dataList.id "
-            >
-              <v-icon small>zoom_in</v-icon>
-            </v-btn>
-            <v-spacer></v-spacer>
-            <v-btn
-              text
-              color="accent"
-              router
-              :to="'/incubatee/team/' + this.$route.params.teamId + '/participation/' + this.$route.params.cohortId + '/mission/' + dataList.id + '/next/' + dataList.nextMission.id "
-            >Next Mission</v-btn>
-          </v-card-actions>
-        </v-card>
+        <pre>{{journalList}}</pre>
+        <pre>{{journalList2}}</pre>
+      </v-col>
+    </v-row>
+    <!-- jangan dihapus end-->
+    <v-row>
+      <v-col md="12" v-if="missionLoader">
+        <v-skeleton-loader max-width="500" type="article"></v-skeleton-loader>
+      </v-col>
+      <v-col md="6" v-if="dataList.total == 0">
+        <div v-if="!missionLoader">
+          <v-alert
+            type="info"
+            :value="true"
+          >Incubator hasn't publish a mission at the momment for this program</v-alert>
+        </div>
+      </v-col>
+      <v-col md="12" v-else>
+        <v-timeline :reverse="true" align-top :dense="false">
+          <v-timeline-item v-for="(data, index) in reOrderMission(dataList.list)" :key="data.id">
+            <template v-slot:icon>
+              <v-avatar>
+                <span style="color:#fff">{{data.position}}</span>
+              </v-avatar>
+            </template>
+            <v-card class="pa-3 elevation-5">
+              <div style="float: right !important">
+                <span class="dot2"></span>
+                <span class="dot1 ml-1"></span>
+              </div>
+              <v-card-title class="headline">
+                <v-row>
+                  <v-col style="word-break: break-word;" md="6">{{data.name}}</v-col>
+                  <v-col style="text-align:end;" md="6" v-if="data.previousMission != null">
+                    <v-chip small>
+                      <v-avatar left>
+                        <v-icon small color="primary">account_tree</v-icon>
+                      </v-avatar>
+                      <span style="color:#999">{{data.previousMission.name}}</span>
+                    </v-chip>
+                  </v-col>
+                  <v-col style="text-align:end;" md="6" v-else>
+                    <v-chip small>
+                      <v-avatar left>
+                        <v-icon small color="primary">assignment_turned_in</v-icon>
+                      </v-avatar>
+                      <span style="color:#999">Main Mission</span>
+                    </v-chip>
+                  </v-col>
+                </v-row>
+              </v-card-title>
+
+              <v-card-text class="subtitle">
+                <span class="textlimit2">{{data.description}}</span>
+              </v-card-text>
+              <v-card-text v-if="journalCreateLoading">
+                <v-skeleton-loader v-if="data.journal.length == 0" max-width="350" type="list-item"></v-skeleton-loader>
+              </v-card-text>
+              <v-card-text class="pb-0" v-if="data.journal.length != 0">
+                <template v-if="data.selectedParentJournal">
+                  <b>{{data.worksheetForm.name}} under {{data.selectedParentJournal.worksheet.name}} :</b>
+                </template>
+
+                <v-select
+                  class="mt-2"
+                  :loading="journalCreateLoading"
+                  dense
+                  :label="'Submitted ' + data.worksheetForm.name "
+                  :items="data.journal"
+                  item-text="worksheet.name"
+                  item-value="id"
+                  outlined
+                  return-object
+                  v-model="selectedJournalinMission[index]"
+                  @change="getBranchJournal($event, data.id)"
+                  append-outer-icon="autorenew"
+                  @click:append-outer="refreshRootJournal"
+                ></v-select>
+              </v-card-text>
+              <v-card-text class="pb-0 grey--text text--lighten-1 caption" v-else>
+                <template v-if="!journalCreateLoading">
+                  <template v-if="data.previousMission != null">
+                    <template
+                      v-if="!data.selectedParentJournal"
+                    >No {{data.worksheetForm.name}} found, parent journal not selected</template>
+                    <template
+                      v-else
+                    >No {{data.worksheetForm.name}} found for this mission under {{data.selectedParentJournal.worksheet.name}}</template>
+                  </template>
+                  <template v-else>
+                    No Journal Data Found for this main mission
+                    <v-btn color="success" icon @click="refreshRootJournal()">
+                      <v-icon>autorenew</v-icon>
+                    </v-btn>
+                  </template>
+                </template>
+              </v-card-text>
+
+              <v-card-actions class="pt-0">
+                <template v-if="data.previousMission == null">
+                  <!-- root button-->
+                  <v-row>
+                    <v-col md="12">
+                      <v-btn
+                        class="ml-2"
+                        color="primary"
+                        small
+                        router
+                        :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom' "
+                      >
+                        <v-icon small left>add</v-icon>
+                        Learn & Add {{data.worksheetForm.name}}
+                      </v-btn>
+                    </v-col>
+                    <v-col md="12">
+                      <v-btn
+                        class="ml-2"
+                        v-show="selectedJournalinMission[index] != null"
+                        color="primary"
+                        small
+                        router
+                        @click="openJournal2(selectedJournalinMission[index], 'root', null)"
+                      >
+                        <v-icon small left>zoom_in</v-icon>
+                        View {{data.worksheetForm.name}}
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </template>
+                <template v-else>
+                  <v-row>
+                    <v-col md="12">
+                      <v-btn
+                        v-if="data.selectedParentJournal"
+                        color="primary"
+                        small
+                        router
+                        :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom/'+ data.selectedParentJournal.id "
+                      >
+                        <v-icon small left>add</v-icon>
+                        Learn & Add {{data.worksheetForm.name}}
+                      </v-btn>
+                    </v-col>
+                    <v-col md="12">
+                      <v-btn
+                        v-show="selectedJournalinMission[index] != null"
+                        color="primary"
+                        small
+                        router
+                        @click="openJournal2(selectedJournalinMission[index], 'branch', selectedJournalinMission[index].parent.id)"
+                      >
+                        <v-icon small left>zoom_in</v-icon>
+                        View {{data.worksheetForm.name}}
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </template>
+              </v-card-actions>
+            </v-card>
+          </v-timeline-item>
+        </v-timeline>
       </v-col>
     </v-row>
 
@@ -39,8 +175,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -51,11 +187,23 @@ import bus from "@/config/bus";
 import auth from "@/config/auth";
 import * as config from "@/config/config";
 
+import Vue from "vue";
+import lodash from "lodash";
+Vue.prototype._ = lodash;
+
+import { participationWatcherMixins } from "@/mixins/participationWatcherMixins";
+
 export default {
+  mixins: [participationWatcherMixins],
   data() {
     return {
+      selectedJournalinMission: [],
       search: "",
-      dataList: { id: "", name: "", description: "", nextMission: { id: "" } },
+      journalIdRoot: "",
+      dataList: { total: 0, list: [] },
+      missionLoader: false,
+      journalList: { total: 0, list: [] },
+      journalList2: [],
       tableLoad: false,
       loader: false,
       tableHeaders: [
@@ -72,22 +220,50 @@ export default {
       edit: false,
       leftId: "",
       leftName: "",
-      leftAction: ""
+      leftAction: "",
+      journalCreateLoading: false
     };
+  },
+  watch: {
+    $route() {
+      this.dataList = { total: 0, list: [] };
+      this.getDataList();
+      this.getRootMissionJurnal();
+    },
+    participationId() {
+      this.$router.replace({
+        path:
+          "/incubatee/team/" +
+          this.$route.params.teamId +
+          "/participation/" +
+          this.participationId +
+          "/mission"
+      });
+    }
   },
   mounted() {
     this.getDataList();
+    this.getRootMissionJurnal();
   },
   methods: {
+    reOrderMission: function(params) {
+      return this._.orderBy(
+        params,
+        function(o) {
+          return new Number(o.position);
+        },
+        "asc"
+      );
+    },
     getDataList() {
       this.tableLoad = true;
+      this.missionLoader = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
             "/missions",
           {
@@ -96,16 +272,20 @@ export default {
         )
         .then(res => {
           this.dataList = res.data.data;
+
+          this.dataList.list.forEach(element => {
+            element["journal"] = new Array();
+          });
         })
         .catch(() => {})
         .finally(() => {
           this.tableLoad = false;
+          this.missionLoader = false;
         });
     },
     leftAct(item, action) {
       this.dialogDelete = true;
       this.leftId = item.id;
-      //   this.leftName = item.mentoring.name;
       this.leftAction = action;
     },
     deleteAccount(id) {
@@ -113,9 +293,9 @@ export default {
       this.axios
         .delete(
           config.baseUri +
-            "/incubatee/as-team-member/" +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
             "/journals/" +
             id,
@@ -137,7 +317,183 @@ export default {
         .finally(() => {
           this.tableLoad = false;
         });
+    },
+    getRootMissionJurnal() {
+      this.journalCreateLoading = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/journals?parentJournalId=" +
+            encodeURI(null),
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          this.journalList = res.data.data;
+          // this.dataList.list[0]["journal"] = res.data.data;
+          this.journalList.list.forEach(journalElement => {
+            this.dataList.list.forEach(missionElement => {
+              if (missionElement.id == journalElement.mission.id) {
+                missionElement["journal"].push(journalElement);
+              }
+            });
+          });
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.journalCreateLoading = false;
+        });
+    },
+    openJournal(journal) {
+      // eslint-disable-next-line no-console
+      this.$router.push({
+        path:
+          "/incubatee/team/" +
+          this.$route.params.teamId +
+          "/participation/" +
+          this.$route.params.cohortId +
+          "/mission/" +
+          journal.mission.id +
+          "/journal/" +
+          journal.id +
+          "/worksheet/" +
+          journal.worksheet.id
+      });
+    },
+    // eslint-disable-next-line no-unused-vars
+    openJournal2(journal, type, parentId) {
+      // eslint-disable-next-line no-console
+      var parent_uri = "";
+
+      if (type == "branch") {
+        parent_uri = "/" + parentId;
+      }
+
+      this.$router.push({
+        path:
+          "/incubatee/team/" +
+          this.$route.params.teamId +
+          "/participation/" +
+          this.$route.params.cohortId +
+          "/mission/" +
+          journal.mission.id +
+          "/journal/" +
+          journal.id +
+          "/worksheet/" +
+          journal.worksheet.id +
+          "/new" +
+          parent_uri
+      });
+    },
+    getBranchJournal(event, missionId) {
+      this.journalCreateLoading = true;
+      this.resetElement(missionId);
+      this.dataList.list.forEach(element => {
+        if (
+          element.previousMission != null &&
+          element.previousMission.id == missionId
+        ) {
+          element["selectedParentJournal"] = event;
+        } 
+        // else {
+        //   delete element.selectedParentJournal;
+        // }
+      });
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/journals?parentJournalId=" +
+            event.id,
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          // this.journalList = res.data.data;
+          // this.dataList.list[index + 1]["journal"] = res.data.data;
+          this.journalList2 = res.data.data;
+
+          this.journalList2.list.forEach(journalElement => {
+            this.dataList.list.forEach(missionElement => {
+              if (missionElement.id == journalElement.mission.id) {
+                missionElement["journal"].push(journalElement);
+              }
+            });
+          });
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.journalCreateLoading = false;
+        });
+    },
+    resetElement(parentMissionId) {
+      this.dataList.list.forEach(element => {
+        if (
+          element.previousMission != null &&
+          element.previousMission.id == parentMissionId
+        ) {
+          this.resetElement(element.id);
+          element.journal = new Array();
+        }
+      });
+    },
+    refreshRootJournal() {
+      this.getRootMissionJurnal();
+    },
+    refreshBranchJournal() {
+      this.getBranchJournal();
     }
   }
 };
 </script>
+
+<style>
+.dot1 {
+  height: 7px;
+  width: 7px;
+  background-color: #249c90;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  bottom: 7px;
+  left: 1px;
+}
+.dot2 {
+  height: 7px;
+  width: 7px;
+  background-color: rgb(163, 215, 45);
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  bottom: 7px;
+  left: 1px;
+}
+</style>
+
+<style scoped>
+.textlimit {
+  display: block; /* or inline-block */
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 3.6em;
+  line-height: 1.8em;
+}
+.textlimit2 {
+  display: block; /* or inline-block */
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 5.6em;
+  line-height: 1.8em;
+}
+</style>

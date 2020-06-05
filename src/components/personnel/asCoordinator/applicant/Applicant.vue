@@ -1,6 +1,6 @@
 <template>
-  <v-container grid-list-xs>
-    <v-row>
+  <v-container extend grid-list-xs>
+    <!-- <v-row>
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -11,7 +11,7 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
       <v-col>
         <v-data-table
@@ -22,7 +22,7 @@
           class="elevation-1"
         >
           <template v-slot:item.name="{item}">
-            <v-btn
+            <!-- <v-btn
               class="elevation-0 mr-2"
               fab
               x-small
@@ -30,16 +30,21 @@
               @click="openDetail(item.id)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn>
+            </v-btn> -->
             {{item.team.name}}
           </template>
+          <template v-slot:item.note="{item}">
+            <v-chip small v-if="item.note !== null">{{item.note}}</v-chip>
+          </template>
           <template v-slot:item.action="{item}">
-            <v-btn class="ml-2" small color="primary" @click="leftAct(item, 'accept')">
-              <v-icon small left>check</v-icon>accept
-            </v-btn>
-            <v-btn class="ml-2" small color="warning" @click="leftAct(item, 'reject')">
-              <v-icon small left>block</v-icon>reject
-            </v-btn>
+            <template v-if="!item.concluded">
+              <v-btn class="ml-2" small color="primary" @click="leftAct(item, 'accept')">
+                <v-icon small left>check</v-icon>accept
+              </v-btn>
+              <v-btn class="ml-2" small color="warning" @click="leftAct(item, 'reject')">
+                <v-icon small left>block</v-icon>reject
+              </v-btn>
+            </template>
           </template>
         </v-data-table>
       </v-col>
@@ -53,8 +58,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -87,7 +92,7 @@
 </template>
 <script>
 import bus from "@/config/bus";
-// import * as config from "@/config/config";
+import * as config from "@/config/config";
 import auth from "@/config/auth";
 
 export default {
@@ -101,8 +106,7 @@ export default {
       loader: false,
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
-        { text: "concluded", value: "concluded", sortable: false },
-        { text: "note", value: "note", sortable: false },
+        { text: "Status", value: "note", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       dialogForm: false,
@@ -122,13 +126,10 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          // config.baseUri
-          "http://localhost:3006/api" +
+          config.baseUri +
             "/personnel/as-coordinator/" +
             this.$route.params.programId +
-            "/" +
-            this.$route.params.cohortId +
-            "/applicants",
+            "/registrants",
           {
             headers: auth.getAuthHeader()
           }
@@ -153,12 +154,10 @@ export default {
       this.loader = true;
       this.axios
         .get(
-          "http://localhost:3006/api" +
+          config.baseUri +
             "/personnel/as-coordinator/" +
             this.$route.params.programId +
-            "/" +
-            this.$route.params.cohortId +
-            "/applicants/" +
+            "/registrants/" +
             id,
           {
             headers: auth.getAuthHeader()
@@ -184,15 +183,14 @@ export default {
       this.tableLoad = true;
       this.axios
         .patch(
-          "http://localhost:3006/api" +
+          config.baseUri +
             "/personnel/as-coordinator/" +
             this.$route.params.programId +
-            "/" +
-            this.$route.params.cohortId +
-            "/applicants/" +
+            "/registrants/" +
             id +
             "/" +
             this.leftAction,
+          {},
           {
             headers: auth.getAuthHeader()
           }
@@ -201,7 +199,7 @@ export default {
           bus.$emit(
             "callNotif",
             "info",
-            "Successfully " + this.leftAction + " Participant"
+            "Successfully " + this.leftAction + " Registrant"
           );
           this.refresh();
         })
@@ -215,6 +213,7 @@ export default {
     refresh() {
       this.dialogForm = false;
       this.dialogDelete = false;
+      this.dialogDetail = false;
       this.getDataList();
     }
   }

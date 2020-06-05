@@ -1,13 +1,13 @@
 <template>
   <v-app>
-    <v-container fluid fill-height id="loginpage">
+    <v-container fluid id="loginpage">
       <v-row align="center" justify="center">
-        <v-col xs="12" sm="8" md="4" class="text-xs-center">
-          <v-toolbar class="pt-2" color="primary">
+        <v-col xs="12" sm="8" md="6" lg="4" class="text-xs-center mt-3">
+          <v-toolbar class="pt-0" color="primary">
             <v-toolbar-title class="white--text ml-2">
               <h4>
-                Inov
-                <v-chip color="accent">ide</v-chip>
+                Registration
+                <v-chip v-if="!isMain" color="#fafafa"><span style="color:#777777;">{{signup.incubatorIdentifier}}</span></v-chip>
               </h4>
             </v-toolbar-title>
             <v-toolbar-title class="ml-auto">
@@ -16,36 +16,35 @@
               </router-link>
             </v-toolbar-title>
           </v-toolbar>
-          <v-card style="padding:20px 30px 30px 30px;" class="text-center elevation-12">
+          <v-card id="accentlg" style="padding:20px 30px 30px 30px;" class="text-center elevation-0">
             <v-card-text style="pa-4" v-if="!issuccess">
               <div>
                 <v-form v-model="valid" ref="form">
-                  <v-row>
-                    <v-col>
+                  <v-row v-if="isMain">
                       <v-text-field
+                        outlined
                         label="Incubator Identifier"
-                        prepend-icon="emoji_objects"
                         v-model="signup.incubatorIdentifier"
                         :rules="rulesName"
                         required
                       ></v-text-field>
+                  </v-row>
+                  <v-row>
                       <v-text-field
+                        outlined
                         label="Name"
                         autocomplete="name"
-                        prepend-icon="person"
                         v-model="signup.name"
                         :rules="rulesName"
                         autofocus
                         required
                       ></v-text-field>
-                    </v-col>
                   </v-row>
                   <v-row>
-                    <v-col>
                       <v-text-field
+                        outlined
                         autocomplete="new-password"
                         label="Password"
-                        prepend-icon="lock"
                         v-model="signup.password"
                         :rules="rulesPassword"
                         min="8"
@@ -55,14 +54,12 @@
                         required
                         @click:append="e1 = !e1"
                       ></v-text-field>
-                    </v-col>
                   </v-row>
                   <v-row>
-                    <v-col>
                       <v-text-field
+                        outlined
                         autocomplete="confirm-password"
                         label="Confirm Password"
-                        prepend-icon="lock"
                         v-model="cpassword"
                         :rules="rulesPasswordConfirmation"
                         min="8"
@@ -72,19 +69,16 @@
                         required
                         @click:append="e2 = !e2"
                       ></v-text-field>
-                    </v-col>
                   </v-row>
                   <v-row>
-                    <v-col>
                       <v-text-field
+                        outlined
                         label="Email"
                         autocomplete="email"
-                        prepend-icon="mail"
                         v-model="signup.email"
                         :rules="rulesEmail"
                         required
                       ></v-text-field>
-                    </v-col>
                   </v-row>
 
                   <v-row justify-end class="mt-2">
@@ -98,7 +92,7 @@
                         :disabled="!valid"
                         color="primary"
                         style="color:#fff"
-                      >Sign Up</v-btn>
+                      >register</v-btn>
                     <!-- </vue-recaptcha> -->
                   </v-row>
                 </v-form>
@@ -136,9 +130,10 @@ import bus from "@/config/bus";
 import * as config from "@/config/config";
 import { validationMixins } from "@/mixins/validationMixins";
 // import VueRecaptcha from "vue-recaptcha";
+import { checkDomainMixins } from "../login/checkDomainMixins";
 
 export default {
-  mixins: [validationMixins],
+  mixins: [validationMixins, checkDomainMixins],
   name: "Incubatee Signup",
   data: function() {
     return {
@@ -156,6 +151,9 @@ export default {
         incubatorIdentifier: this.$route.params.incubatorIdentifier,
         name: "",
         email: ""
+      },
+      params: {
+        incubatorIdentifier: ""
       },
       issuccess: false
     };
@@ -191,7 +189,7 @@ export default {
     signupAct: function() {
       this.signupLoader = true;
       this.axios
-        .post(config.baseUri + "/incubatee-signup", this.signup)
+        .post(config.baseUri + "/founder-signup", this.signup)
         .then(() => {
           // this.$router.push({ path: "/login", query: { activate: true } });
           this.issuccess = true;
@@ -211,10 +209,24 @@ export default {
 </script>
 <style scoped>
 #loginpage {
-  background-image: url("https://picsum.photos/1080/720?grayscale");
+  /* background-image: url("https://picsum.photos/1080/720?grayscale"); */
+  background-color: #e8e8e8;
   background-size: cover;
   background-position: center center;
   overflow: hidden;
   height: 100%;
+}
+#accentlg {
+  position: relative;
+}
+
+#accentlg:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top: 20px solid #249c90 ;
+  border-left: 20px solid #fff;
+  width: 50%;
 }
 </style>

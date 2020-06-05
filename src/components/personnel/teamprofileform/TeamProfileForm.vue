@@ -1,14 +1,14 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <!-- {{authData.data.id}} -->
       <v-col md="8" xs="12">
-        <v-btn color="primary" @click="openAdd">
-          <v-icon left>add</v-icon>Add Program
+        <v-btn color="primary" router to="/personnel/team-profile-forms/build">
+          <v-icon left>add</v-icon>Create a Profile Form
         </v-btn>
       </v-col>
     </v-row>
-    <v-row>
+    <!-- <v-row>
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -19,9 +19,9 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
-      <v-col>
+      <v-col cols="12" md="6" lg="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -42,13 +42,11 @@
             {{item.name}}
           </template>
           <template v-slot:item.action="{item}">
+            <v-btn small color="primary" class="mr-2" @click="openEdit(item.id)">
+              <v-icon left small>edit</v-icon>edit 
+            </v-btn>
             <v-btn small color="warning" @click="leftAct(item, 'Delete')">
               <v-icon small>delete</v-icon>
-            </v-btn>
-          </template>
-          <template v-slot:item.sub="{item}">
-            <v-btn small color="accent" @click="gotoCohort(item.id)">
-              <v-icon left small>check</v-icon>Cohort
             </v-btn>
           </template>
         </v-data-table>
@@ -65,8 +63,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -92,6 +90,7 @@
         <transition name="slide-fade" mode="out-in">
           <v-card-text :key="dataSingle.description">{{dataSingle.description}}</v-card-text>
         </transition>
+        <!-- <v-card-text>{{dataSingle}}</v-card-text> -->
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
@@ -107,8 +106,6 @@
 import * as config from "@/config/config";
 import auth from "@/config/auth";
 
-import AddForm from "./addform";
-
 export default {
   data() {
     return {
@@ -120,7 +117,6 @@ export default {
       loader: false,
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
-        { text: "", value: "sub", sortable: false, align: "right" },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       dialogForm: false,
@@ -132,9 +128,7 @@ export default {
       leftAction: ""
     };
   },
-  components: {
-    AddForm
-  },
+  components: {},
   created: function() {
     this.authData = JSON.parse(auth.getAuthData());
   },
@@ -145,7 +139,7 @@ export default {
     getDataList() {
       this.tableLoad = true;
       this.axios
-        .get(config.baseUri + "/personnel/as-admin/programmes", {
+        .get(config.baseUri + "/personnel/as-admin/team-profile-forms", {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -164,7 +158,7 @@ export default {
       this.dataSingle = "";
       this.loader = true;
       this.axios
-        .get(config.baseUri + "/personnel/as-admin/programmes/" + id, {
+        .get(config.baseUri + "/personnel/as-admin/team-profile-forms/" + id, {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -179,9 +173,17 @@ export default {
       this.edit = false;
       this.dialogForm = true;
     },
+    openEdit(id) {
+      var formType = "team-profile-forms";
+      this.$router.push({
+        path: "/personnel/" + formType + "/" + id + "/edit"
+      });
+    },
     openDetail(id) {
-      this.dialogDetail = true;
-      this.getDataSingle(id);
+      // this.dialogDetail = true;
+      // this.getDataSingle(id);
+      var formType = "team-profile-forms";
+      this.$router.push({ path: "/personnel/preview/" + formType + "/" + id });
     },
     leftAct(item, action) {
       this.dialogDelete = true;
@@ -192,7 +194,7 @@ export default {
     deleteAccount(id) {
       this.tableLoad = true;
       this.axios
-        .delete(config.baseUri + "/personnel/as-admin/programmes/" + id, {
+        .delete(config.baseUri + "/personnel/as-admin/team-profile-forms/" + id, {
           headers: auth.getAuthHeader()
         })
         .then(() => {
@@ -207,9 +209,6 @@ export default {
       this.dialogForm = false;
       this.dialogDelete = false;
       this.getDataList();
-    },
-    gotoCohort(id) {
-      this.$router.push({ path: "/personnel/program/" + id + "/cohort" });
     }
   }
 };

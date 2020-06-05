@@ -9,10 +9,10 @@ export default {
         warning: colors.lime.base,
         info: colors.blue.base,
         success: colors.green.base,
-        bgcolor: "#f4f3ef",
+        bgcolor: colors.green.base,
         sidebar: '#e4e4e4',
     },
     dark: {
-        primary: '#8bc751'
+        primary: '#249c90'
     }
 }

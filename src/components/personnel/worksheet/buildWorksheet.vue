@@ -1,7 +1,7 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <!-- build form module-->
-    <buildform-module @postform="postform" />
+    <buildform-module @postform="postform" :edit="edit" :formtype="formtype" :canvasMode="true" />
     <!-- -->
     <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
@@ -21,11 +21,20 @@ export default {
     return {
       key: "",
       loader: false,
-      overlay: false
+      overlay: false,
+      edit: false,
+      formtype: "worksheet-forms"
     };
   },
   components: {
     BuildformModule
+  },
+  created() {
+    if (this.$route.params.formId) {
+      this.edit = true;
+    } else {
+      this.edit = false;
+    }
   },
   methods: {
     postformtest(params) {
@@ -34,21 +43,47 @@ export default {
     },
     postform(params) {
       this.overlay = true;
-      this.axios
-        .post(config.baseUri + "/personnel/as-admin/worksheet-forms", params, {
-          headers: auth.getAuthHeader()
-        })
-        .then(() => {
-          bus.$emit("resetField");
-          bus.$emit("callNotif", "success", "Form Created");
-          // this.resetField();
-        })
-        .catch(res => {
-          bus.$emit("callNotif", "error", res);
-        })
-        .finally(() => {
-          this.overlay = false;
-        });
+      if (this.edit) {
+        this.axios
+          .patch(
+            config.baseUri +
+              "/personnel/as-admin/worksheet-forms/" +
+              this.$route.params.formId,
+            params,
+            {
+              headers: auth.getAuthHeader()
+            }
+          )
+          .then(() => {
+            bus.$emit("resetField");
+            bus.$emit("callNotif", "success", "Form Updated");
+          })
+          .catch(res => {
+            bus.$emit("callNotif", "error", res);
+          })
+          .finally(() => {
+            this.overlay = false;
+          });
+      } else {
+        this.axios
+          .post(
+            config.baseUri + "/personnel/as-admin/worksheet-forms",
+            params,
+            {
+              headers: auth.getAuthHeader()
+            }
+          )
+          .then(() => {
+            bus.$emit("resetField");
+            bus.$emit("callNotif", "success", "Form Created");
+          })
+          .catch(res => {
+            bus.$emit("callNotif", "error", res);
+          })
+          .finally(() => {
+            this.overlay = false;
+          });
+      }
     }
   }
 };

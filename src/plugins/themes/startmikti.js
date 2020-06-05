@@ -2,11 +2,13 @@
 
 export default {
     light: {
-        primary: '#8bc751',
+        primary: '#249c90',
         sidebar: '#e4e4e4',
-        bgcolor: "#f4f3ef"
+        bgcolor: '#fff',
+        kastemkolor: '#fff'
     },
     dark: {
-        primary: '#8bc751'
+        primary: '#249c90',
+        kastemkolor: '#000'
     }
 }
