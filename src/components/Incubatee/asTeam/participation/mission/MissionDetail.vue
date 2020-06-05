@@ -1,28 +1,95 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col md="6">
-        <v-card :loading="tableLoad">
+        <v-card class="pa-3" :loading="tableLoad">
           <v-card-title primary-title>
-            <div>
-              <h3 class="headline mb-0">{{dataList.name}}</h3>
-              <div>{{dataList.description}}</div>
-            </div>
+              {{dataList.name}}
+              <v-spacer></v-spacer>
+              <span class="dot2"></span>
+              <span class="dot1 ml-1"></span>
           </v-card-title>
-          <v-card-actions>
-            <v-btn text color="accent" disabled>Prev Mission</v-btn>
-            <v-spacer></v-spacer>
-            <v-btn text color="accent" disabled>Next Mission</v-btn>
+          <v-card-text>
+            <div class="subtitle">{{dataList.description}}</div>
+          </v-card-text>
+          <v-card-text v-if="dataList.previousMission != null">
+           <v-chip small>
+              <v-avatar left>
+                <v-icon small color="primary">account_tree</v-icon>
+              </v-avatar>
+              <span style="color:#999">Branch Mission</span>
+            </v-chip>
+          </v-card-text>
+          <v-card-text v-else>
+            <v-chip small>
+              <v-avatar left>
+                <v-icon small color="primary">assignment_turned_in</v-icon>
+              </v-avatar>
+                <span style="color:#999">Main Mission</span>
+            </v-chip>
+          </v-card-text>
+          <!-- <v-card-actions>
+            <v-btn
+              v-if="dataList.previousMission !== null"
+              text
+              color="accent"
+              :disabled="dataList.previousMission == null"
+              router
+              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + dataList.previousMission.id "
+            >Prev Mission</v-btn>
+            <v-btn
+              v-else
+              text
+              color="accent"
+              :disabled="dataList.previousMission == null"
+              router
+            >Prev Mission</v-btn>
           </v-card-actions>
+          <v-card-text v-if="dataList.previousMission !== null">
+            <v-select
+              label="Parent Journal"
+              v-model="journalId"
+              :items="journalList.list"
+              item-text="worksheet.name"
+              item-value="id"
+              clearable
+            ></v-select>
+          </v-card-text>-->
+          <!-- <v-card-actions>
+            <v-btn class="mr-2" small color="primary" disabled>View Journal</v-btn>
+
+            <v-btn
+              v-if="!root"
+              color="primary"
+              small
+              router
+              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + dataList.id + '/atom/' + journalId "
+            >
+              <v-icon left>add</v-icon>Add Journal
+            </v-btn>
+          </v-card-actions>-->
         </v-card>
+      </v-col>
+      <v-col md="12 mt-5">Learning Material</v-col>
+      <v-col cols="12" md="8" lg="8" xs="12">
+        <!-- {{learningList}} -->
+        <v-expansion-panels>
+          <v-expansion-panel v-for="(learning,i) in learningList.list" :key="i">
+            <v-expansion-panel-header>{{learning.name}}</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <!-- <span v-dompurify-html="learning.content" /> -->
+              <span v-html="$sanitize(learning.content)" />
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </v-col>
       <v-col md="12">
         <!-- <pre> {{dataList.worksheetForm}} </pre> -->
-        <render-form
+        <!-- <render-form
           v-if="!tableLoad"
           :formTemplate="dataList.worksheetForm"
           @submit-form="submitForm"
-        />
+        />-->
       </v-col>
     </v-row>
 
@@ -46,13 +113,17 @@ import bus from "@/config/bus";
 import auth from "@/config/auth";
 import * as config from "@/config/config";
 
-import RenderForm from "@/components/buildform/incubatee/renderForm";
+// import RenderForm from "@/components/buildform/incubatee/renderForm";
 
 export default {
   data() {
     return {
+      root: true,
       search: "",
       dataList: { id: "", name: "", description: "", nextMission: { id: "" } },
+      journalList: { total: 0, list: [] },
+      learningList: { total: 0, list: [] },
+      journalId: null,
       tableLoad: false,
       loader: false,
       tableHeaders: [
@@ -69,25 +140,40 @@ export default {
       edit: false,
       leftId: "",
       leftName: "",
-      leftAction: ""
+      leftAction: "",
+      previousMission: {
+        id: "",
+        name: ""
+      }
     };
   },
   components: {
-    RenderForm
+    // RenderForm
   },
   mounted() {
     this.getDataList();
+    // this.getJournalList();
+    this.getLearningMaterialList();
+  },
+  watch: {
+    $route: "getDataList",
+    journalId() {
+      if (this.journalId == null) {
+        this.root = true;
+      } else {
+        this.root = false;
+      }
+    }
   },
   methods: {
     getDataList() {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
             "/missions/" +
             this.$route.params.missionId,
@@ -97,6 +183,54 @@ export default {
         )
         .then(res => {
           this.dataList = res.data.data;
+          this.previousMission = res.data.data.previousMission;
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.tableLoad = false;
+        });
+    },
+    getJournalList() {
+      this.tableLoad = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/journals?missionId=" +
+            this.previousMission.id,
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          this.journalList = res.data.data;
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.tableLoad = false;
+        });
+    },
+    getLearningMaterialList() {
+      this.tableLoad = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/missions/" +
+            this.$route.params.missionId +
+            "/learning-materials",
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          this.learningList = res.data.data;
         })
         .catch(() => {})
         .finally(() => {

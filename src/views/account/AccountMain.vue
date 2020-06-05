@@ -1,11 +1,11 @@
 <template>
   <div>
     <nav>
-      <v-app-bar color="primary">
-        <router-link v-bind:to="'/'">
-          <v-icon class="white--text mr-2">home</v-icon>
-        </router-link>
-        <v-toolbar-title class="white--text">Inovide</v-toolbar-title>
+      <v-app-bar class="elevation-0" color="transparent">
+        <v-btn v-bind:to="'/'" text>
+          <v-icon class="white--text mr-2" color="primary">home</v-icon>
+        </v-btn>
+        <v-toolbar-title class="white--text"></v-toolbar-title>
         <v-spacer></v-spacer>
 
         <v-menu left bottom>
@@ -30,11 +30,11 @@
       <router-view></router-view>
     </transition>
     <v-spacer></v-spacer>
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 <script>
-import Footer from "@/components/Footer";
+// import Footer from "@/components/Footer";
 
 export default {
   data() {
@@ -43,7 +43,7 @@ export default {
       email: this.$route.params.email
     };
   },
-  components: { Footer }
+  // components: { Footer }
 };
 </script>
 <style scoped>

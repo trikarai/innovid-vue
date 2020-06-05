@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col md="6">
         <v-card :loading="tableLoad">
@@ -10,18 +10,65 @@
           </v-card-title>
           <v-card-text>
             <v-row>
-              <v-col md="12">{{dataList.mentor.personnel.name}}</v-col>
-              <v-col md="12">{{dataList.startTime}}</v-col>
-              <v-col md="12">{{dataList.endTime}}</v-col>
+              <v-col md="12">
+                <b>Mentor Name</b>
+                <br />
+                {{dataList.mentor.personnel.name}}
+              </v-col>
+              <v-col>
+                <b>Start time</b>
+                <br />
+                <v-icon left color="primary">calendar_today</v-icon>
+                {{ dataList.startTime | moment("MMMM Do YYYY") }}
+                <br />
+                <v-icon left color="primary">access_time</v-icon>
+                {{ dataList.startTime | moment("h:mm a") }}
+              </v-col>
+              <v-col>
+                <b>End time</b>
+                <br />
+                <v-icon left color="primary">calendar_today</v-icon>
+                {{ dataList.endTime | moment("MMMM Do YYYY") }}
+                <br />
+                <v-icon left color="primary">access_time</v-icon>
+                {{ dataList.endTime | moment("h:mm a") }}
+              </v-col>
             </v-row>
           </v-card-text>
+          <template v-if="!edit">
+            <v-card-title primary-title>
+              <h3 class="headline mb-0">Report</h3>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" small @click="editReport">
+                <v-icon left small>edit</v-icon>Edit
+              </v-btn>
+            </v-card-title>
+            <v-card-text class="pa-7 pt-0">
+              <render-record :fields="fields" />
+            </v-card-text>
+          </template>
+          <template v-if="dataList.participantMentoringReport != null">
+            <template v-if="edit">
+              <v-card-title primary-title>
+                <v-spacer></v-spacer>
+                <v-btn color="warning" small @click="edit = !edit">
+                  <v-icon left small>close</v-icon>Cancel Edit
+                </v-btn>
+              </v-card-title>
+            </template>
+          </template>
         </v-card>
       </v-col>
-      <v-col md="12">
-        <!-- <pre> {{dataList.worksheetForm}} </pre> -->
+    </v-row>
+    <v-row>
+      <v-col cols="12" md="6" lg="6" xs="12" v-if="edit">
+        <!-- <pre> {{dataList.participantMentoringReport}} </pre>
+        <v-divider></v-divider>
+        <pre> {{dataListTemp.mentoring.participantMentoringFeedbackForm}} </pre>-->
         <render-form
           v-if="!tableLoad"
-          :formTemplate="dataList.mentoring.participantMentoringFeedbackForm"
+          :modeReload="isReload"
+          :formTemplate="dataListTemp.mentoring.participantMentoringFeedbackForm"
           @submit-form="submitForm"
         />
       </v-col>
@@ -35,39 +82,53 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-overlay :value="loader">
+      <v-progress-circular color="primary" indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </v-container>
 </template>
 <script>
 import bus from "@/config/bus";
 import auth from "@/config/auth";
 import * as config from "@/config/config";
+import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 import RenderForm from "@/components/buildform/incubatee/renderForm";
+import RenderRecord from "@/components/buildform/incubatee/renderRecord";
 
 export default {
+  mixins: [formDynamicMixins],
   data() {
     return {
+      isReload: false,
       search: "",
+      edit: true,
       dataList: {
         id: "",
-        mentoring: { id: "", name: "" },
-        participantMentoringFeedbackForm: {
+        mentoring: {
+          id: "",
           name: "",
-          description: "",
-          stringFields: [],
-          integerFields: [],
-          textAreaFields: [],
-          attachmentFields: [],
-          singleSelectFields: [],
-          multiSelectFields: []
+          participantMentoringFeedbackForm: {
+            id: "",
+            name: "",
+            description: "",
+            stringFields: [],
+            integerFields: [],
+            textAreaFields: [],
+            attachmentFields: [],
+            singleSelectFields: [],
+            multiSelectFields: []
+          }
         },
         startTime: "",
         endTime: "",
+        participantMentoringReport: null,
         mentor: {
           id: "",
           personnel: {
@@ -75,6 +136,34 @@ export default {
           }
         }
       },
+      dataListTemp: {
+        id: "",
+        mentoring: {
+          id: "",
+          name: "",
+          participantMentoringFeedbackForm: {
+            id: "",
+            name: "",
+            description: "",
+            stringFields: [],
+            integerFields: [],
+            textAreaFields: [],
+            attachmentFields: [],
+            singleSelectFields: [],
+            multiSelectFields: []
+          }
+        },
+        startTime: "",
+        endTime: "",
+        participantMentoringReport: null,
+        mentor: {
+          id: "",
+          personnel: {
+            name: ""
+          }
+        }
+      },
+      fields: [],
       tableLoad: false,
       loader: false,
       dialog: false,
@@ -82,14 +171,17 @@ export default {
       dialogApply: false,
       dialogDelete: false,
       dialogDetail: false,
-      edit: false,
       leftId: "",
       leftName: "",
       leftAction: ""
     };
   },
   components: {
-    RenderForm
+    RenderForm,
+    RenderRecord
+  },
+  created() {
+    window.sessionStorage.setItem("uploadMode", "team");
   },
   mounted() {
     this.getDataList();
@@ -99,13 +191,12 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
-            "/schedules/" +
+            "/mentoring-schedules/" +
             this.$route.params.scheduleId,
           {
             headers: auth.getAuthHeader()
@@ -113,6 +204,18 @@ export default {
         )
         .then(res => {
           this.dataList = res.data.data;
+          this.dataListTemp = JSON.parse(JSON.stringify(res.data.data));
+          if (res.data.data.participantMentoringReport !== null) {
+            this.edit = false;
+            this.isReload = true;
+            this.refactorRecordJSON(this.dataList.participantMentoringReport);
+            this.pairFieldValueReport(
+              this.dataListTemp.participantMentoringReport
+            );
+          } else {
+            this.edit = true;
+            this.isReload = false;
+          }
         })
         .catch(() => {})
         .finally(() => {
@@ -121,20 +224,28 @@ export default {
     },
     submitForm(params) {
       this.loader = true;
+      params[
+        "Form_id"
+      ] = this.dataList.mentoring.participantMentoringFeedbackForm.id;
+
       this.axios
-        .post(
+        .put(
           config.baseUri +
-            "/incubatee/as-team-member/" +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/worksheets",
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/mentoring-schedules/" +
+            this.$route.params.scheduleId +
+            "/participant-mentoring-report",
           params,
           {
             headers: auth.getAuthHeader()
           }
         )
         .then(() => {
-          bus.$emit("callNotif", "success", "Worksheet Data Uploaded");
-          this.$router.go(-2);
+          bus.$emit("callNotif", "success", "Form Report Uploaded");
+          this.$router.go(-1);
         })
         .catch(res => {
           bus.$emit("callNotif", "error", res);
@@ -143,41 +254,66 @@ export default {
           this.loader = false;
         });
     },
+    editReport() {
+      this.edit = true;
+    },
     leftAct(item, action) {
       this.dialogDelete = true;
       this.leftId = item.id;
       //   this.leftName = item.mentoring.name;
       this.leftAction = action;
     },
-    deleteAccount(id) {
-      this.tableLoad = true;
-      this.axios
-        .delete(
-          config.baseUri +
-            "/incubatee/as-team-member/" +
-            this.$route.params.teamId +
-            "/cohort-participations/" +
-            this.$route.params.cohortId +
-            "/journals/" +
-            id,
-          {
-            headers: auth.getAuthHeader()
-          }
-        )
-        .then(() => {
-          bus.$emit(
-            "callNotif",
-            "info",
-            "Successfully " + this.leftAction + " Mentoring Schedule"
-          );
-          this.refresh();
-        })
-        .catch(res => {
-          bus.$emit("callNotif", "error", res);
-        })
-        .finally(() => {
-          this.tableLoad = false;
-        });
+    pairFieldValueReport(data) {
+      //https://stackoverflow.com/questions/56444006/how-to-merge-the-property-with-same-key-in-two-object-array?noredirect=1&lq=1
+      //String
+      var map = new Map(
+        data.stringFieldRecords.map(o => [o.stringField.id, o])
+      );
+      var result = this.dataListTemp.mentoring.participantMentoringFeedbackForm.stringFields.map(
+        o => Object.assign({}, o, map.get(o.id))
+      );
+      this.dataListTemp.mentoring.participantMentoringFeedbackForm.stringFields = result;
+      // eslint-disable-next-line no-console
+      //textarea
+      var mapt = new Map(
+        data.textAreaFieldRecords.map(o => [o.textAreaField.id, o])
+      );
+      var resultt = this.dataListTemp.mentoring.participantMentoringFeedbackForm.textAreaFields.map(
+        o => Object.assign({}, o, mapt.get(o.id))
+      );
+      this.dataListTemp.mentoring.participantMentoringFeedbackForm.textAreaFields = resultt;
+      //integer
+      var mapi = new Map(
+        data.integerFieldRecords.map(o => [o.integerField.id, o])
+      );
+      var resulti = this.dataListTemp.mentoring.participantMentoringFeedbackForm.integerFields.map(
+        o => Object.assign({}, o, mapi.get(o.id))
+      );
+      this.dataListTemp.mentoring.participantMentoringFeedbackForm.integerFields = resulti;
+      //single select / radio
+      var mapr = new Map(
+        data.singleSelectFieldRecords.map(o => [o.singleSelectField.id, o])
+      );
+      var resultr = this.dataListTemp.mentoring.participantMentoringFeedbackForm.singleSelectFields.map(
+        o => Object.assign({}, o, mapr.get(o.id))
+      );
+      this.dataListTemp.mentoring.participantMentoringFeedbackForm.singleSelectFields = resultr;
+      //multi select
+      var mapm = new Map(
+        data.multiSelectFieldRecords.map(o => [o.multiSelectField.id, o])
+      );
+      var resultm = this.dataListTemp.mentoring.participantMentoringFeedbackForm.multiSelectFields.map(
+        o => Object.assign({}, o, mapm.get(o.id))
+      );
+      this.dataListTemp.mentoring.participantMentoringFeedbackForm.multiSelectFields = resultm;
+      //attachment
+      var mapa = new Map(
+        data.attachmentFieldRecords.map(o => [o.attachmentField.id, o])
+      );
+      var resulta = this.dataListTemp.mentoring.participantMentoringFeedbackForm.attachmentFields.map(
+        o => Object.assign({}, o, mapa.get(o.id))
+      );
+      this.dataListTemp.mentoring.participantMentoringFeedbackForm.attachmentFields = resulta;
     }
   }
 };

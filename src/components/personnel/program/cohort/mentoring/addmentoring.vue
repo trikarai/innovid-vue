@@ -4,7 +4,12 @@
       <div class="modal-wrapper" @click="$emit('close')">
         <div class="modal-container" @click.stop>
           <v-card elevation="0" width="400" :loading="loader">
-            <v-card-text class="pt-4">
+            <v-card-title class="topaccent" primary-title>
+              <div>
+                <h3 class="headline mb-0">Add Mentoring</h3>
+              </div>
+            </v-card-title>
+            <v-card-text class="pa-6 pt-0">
               <div>
                 <v-form v-model="valid" ref="form">
                   <v-text-field
@@ -50,6 +55,7 @@
 
                   <v-layout justify-space-between v-if="!view">
                     <v-btn
+                      block
                       v-if="edit == false"
                       @click.once="submit"
                       :loading="loader"
@@ -134,10 +140,8 @@ export default {
       this.axios
         .post(
           config.baseUri +
-            "/personnel/as-admin/programmes/" +
+            "/personnel/as-admin/programs/" +
             this.$route.params.programId +
-            "/cohorts/" +
-            this.$route.params.cohortId +
             "/mentorings",
           this.params,
           {

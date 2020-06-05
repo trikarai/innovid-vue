@@ -29,6 +29,10 @@ export const validationMixins = {
                 return pattern.test(value) || "E-mail must be valid";
             }
             ],
+            rulesIncubatorIdentifier: [v => !!v || "Field is required", v => v.length >= 3 || "Name must be more than 3 characters", v => {
+                const pattern = /^[a-z0-9]*$/;
+                return pattern.test(v) || "Lowercase Alphanumeric Only , no special characters"
+            }],
             rulesPassword: [
                 value => !!value || "Password Required.",
                 value => value.length >= 8 || "Min 8 characters"
@@ -38,10 +42,20 @@ export const validationMixins = {
                 () =>
                     this.cpassword === this.signup.password || "Password does not match"
             ],
+            rulesPasswordConfirmationPersonnel: [
+                v => !!v || "Confirmation Password is required",
+                () =>
+                    this.cpassword === this.params.personnelPassword || "Password does not match"
+            ],
             rulesChangePasswordConfirmation: [
                 v => !!v || "Confirmation Password is required",
                 () =>
                     this.cpassword === this.password.newPassword || "Password does not match"
+            ],
+            rulesFileSize: [
+                value =>
+                    value.size <= (this.field.maxSize * 1000000) ||
+                    "File size should be less than " + this.field.maxSize + " MB!"
             ],
             rules: {
                 max: value =>
@@ -52,16 +66,16 @@ export const validationMixins = {
                     "Min " + this.field.minValue + " characters",
                 maxValue: value =>
                     value <= this.field.maxValue ||
-                    "Max value is" + this.field.maxValue,
+                    "Max value is " + this.field.maxValue,
                 minValue: value =>
                     value >= this.field.minValue ||
                     "Min Value is " + this.field.minValue,
                 maxSize: value =>
                     value.size <= this.field.maxSize ||
-                    "Max size is " + this.field.maxSize + " Byte",
+                    "File size should be less than " + this.field.maxSize + " MB!",
                 minSize: value =>
                     value.size >= this.field.minSize ||
-                    "Min Size is " + this.field.minSize + " Byte"
+                    "Min Size is " + this.field.minSize + " MB"
             }
         };
     },
@@ -73,7 +87,7 @@ export const validationMixins = {
     methods: {
         checkRequired(value) {
             if (value.length === 0 && this.field.required) {
-                return "Field is Required?";
+                return "Field is Required!";
             } else {
                 return true;
             }

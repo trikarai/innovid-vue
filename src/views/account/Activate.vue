@@ -21,7 +21,7 @@
                 <v-col md="12">
                   <v-icon color="primary" size="150">check</v-icon>
                 </v-col>
-                <v-col md="12">Your account has been activated successfully. You can now login.</v-col>
+                <v-col md="12">Your account has been activated successfully.</v-col>
                 <v-col>
                   <v-btn
                     block
@@ -42,7 +42,7 @@
               <v-col>
                 <v-btn
                   block
-                  color="accent"
+                  color="primary"
                   router
                   :to="'/request-activation/' + params.incubatorIdentifier + '/' + params.email"
                 >Request Re-Activation Code</v-btn>
@@ -64,12 +64,12 @@ export default {
       params: {
         incubatorIdentifier: this.$route.params.incubatorIdentifier,
         email: this.$route.params.email,
-        token: this.$route.params.token
+        activationCode: this.$route.params.token
       },
       err_msg: "error",
       loader: false,
       issuccess: false,
-      iserror: false
+      iserror: true
     };
   },mounted () {
       this.activateAccount();
@@ -78,7 +78,7 @@ export default {
     activateAccount() {
       this.loader = true;
       this.axios
-        .patch(config.baseUri + "/incubatee-account/activate", this.params)
+        .patch(config.baseUri + "/founder-account/activate", this.params)
         .then(() => {
           this.issuccess = true;
           this.iserror = false;
@@ -98,7 +98,8 @@ export default {
 </script>
 <style scoped>
 #loginpage {
-  background-image: url("https://picsum.photos/1080/720?grayscale");
+  /* background-image: url("https://picsum.photos/1080/720?grayscale"); */
+  background-color: rgb(238, 238, 238) ;
   background-size: cover;
   background-position: center center;
   overflow: hidden;

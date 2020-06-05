@@ -1,6 +1,7 @@
 <template>
-  <v-col md="6">
+  <v-col>
     <v-textarea
+      dense
       :hint="field.description"
       :placeholder="field.placeholder"
       rows="3"
@@ -23,7 +24,7 @@ import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 export default {
   mixins: [validationMixins, formDynamicMixins],
-  props: ["field", "index"],
+  props: ["field", "index", "modeReload"],
   components: {},
   data: function() {
     return {
@@ -31,7 +32,12 @@ export default {
       value: ""
     };
   },
-  watch: {}
+  watch: {},
+  created() {
+    if (this.modeReload) {
+      this.value = this.field.value;
+    }
+  }
 };
 </script>
 

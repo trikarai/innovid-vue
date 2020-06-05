@@ -6,14 +6,35 @@ import store from './store'
 import vuetify from './plugins/vuetify';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import VueSanitize from "vue-sanitize";
 
 //global component
 import Notification from "@/components/Notification";
 Vue.component('notification', Notification);
 
+//scroll
+import vuescroll from 'vue-scroll'
+Vue.use(vuescroll)
+
+Vue.use(require('vue-moment'));
+
+var defaultOptions = {
+  allowedTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
+    'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
+    'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'iframe', 'img'],
+  allowedAttributes: {
+    'a': ['href', 'target'],
+    img: ['src', 'width', 'height'],
+    iframe: ['src', 'width', 'height', 'allowfullscreen', 'frameborder'],
+  },
+  allowedIframeHostnames: ['www.youtube.com', 'docs.google.com', 'drive.google.com', 'www.dailymotion.com', 'www.slideshare.net']
+};
+Vue.use(VueSanitize, defaultOptions);
+
 Vue.use(VueAxios, axios);
 Vue.config.productionTip = false
 
+var marked = require('marked');
 Vue.mixin({
   data() {
     return {
@@ -25,6 +46,11 @@ Vue.mixin({
       },
       err_msg: "",
     };
+  },
+  methods: {
+    marked: function (input) {
+      return marked(input);
+    }
   }
 });
 

@@ -221,7 +221,11 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
+<<<<<<< HEAD
   border-top: 20px solid #00667f;
+=======
+  border-top: 20px solid #249c90;
+>>>>>>> grid-canvas
   border-left: 20px solid #fff;
   width: 50%;
 }

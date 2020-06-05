@@ -1,15 +1,15 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend>
     <v-row>
       <v-col xs="12" md="5">
-        <v-form ref="form1" v-model="valid1">
+        <v-form class="mt-10" ref="form1" v-model="valid1">
           <v-card>
-            <v-card-title primary-title>
+            <v-card-title class="topaccent" primary-title>
               <div>
                 <h3 class="headline mb-0">{{$vuetify.lang.t('$vuetify.profile.profile')}}</h3>
               </div>
             </v-card-title>
-            <v-card-text>
+            <v-card-text  class="pa-6 pt-0">
               <v-text-field
                 name="name"
                 label="Name"
@@ -34,8 +34,16 @@
                   </v-fade-transition>
                 </template>
               </v-text-field>
+            <v-btn
+                class="mt-7"
+                @click="validateProfile"
+                :loading="loaderProfile"
+                :class=" { 'primary white--text' : valid1}"
+                :disabled="!valid1"
+                block
+              >{{$vuetify.lang.t('$vuetify.action.update')}} {{$vuetify.lang.t('$vuetify.profile.profile')}}</v-btn>
             </v-card-text>
-            <v-card-actions>
+            <!-- <v-card-actions>
               <v-btn
                 @click="validateProfile"
                 :loading="loaderProfile"
@@ -43,19 +51,19 @@
                 :disabled="!valid1"
                 block
               >{{$vuetify.lang.t('$vuetify.action.update')}} {{$vuetify.lang.t('$vuetify.profile.profile')}}</v-btn>
-            </v-card-actions>
+            </v-card-actions> -->
           </v-card>
         </v-form>
       </v-col>
       <v-col xs="12" md="5">
-        <v-form v-model="valid2" ref="form2">
+        <v-form class="mt-10" v-model="valid2" ref="form2">
           <v-card :loading="loaderPass">
-            <v-card-title primary-title>
+            <v-card-title class="topaccent" primary-title>
               <div>
                 <h3 class="headline mb-0">{{$vuetify.lang.t('$vuetify.profile.password')}}</h3>
               </div>
             </v-card-title>
-            <v-card-text>
+            <v-card-text class="pa-6 pt-0">
               <v-text-field
                 v-model="password.previousPassword"
                 :append-icon="show1 ? 'visibility' : 'visibility_off'"
@@ -92,8 +100,16 @@
                 counter
                 required
               ></v-text-field>
+              <v-btn
+                class="mt-7"
+                @click="validatePassword"
+                :loading="loaderPass"
+                :class=" { 'primary white--text' : valid2}"
+                :disabled="!valid2"
+                block
+              >{{$vuetify.lang.t('$vuetify.action.update')}} {{$vuetify.lang.t('$vuetify.profile.password')}}</v-btn>
             </v-card-text>
-            <v-card-actions>
+            <!-- <v-card-actions>
               <v-btn
                 @click="validatePassword"
                 :loading="loaderPass"
@@ -101,7 +117,7 @@
                 :disabled="!valid2"
                 block
               >{{$vuetify.lang.t('$vuetify.action.update')}} {{$vuetify.lang.t('$vuetify.profile.password')}}</v-btn>
-            </v-card-actions>
+            </v-card-actions> -->
           </v-card>
         </v-form>
       </v-col>
@@ -150,7 +166,7 @@ export default {
     updatePassword() {
       this.loaderPass = true;
       this.axios
-        .patch(config.baseUri + "/incubatee/change-password", this.password, {
+        .patch(config.baseUri + "/founder/change-password", this.password, {
           headers: auth.getAuthHeader()
         })
         .then(() => {
@@ -172,7 +188,7 @@ export default {
     updateProfile() {
       this.loaderProfile = true;
       this.axios
-        .patch(config.baseUri + "/incubatee/update-account", this.profiles, {
+        .patch(config.baseUri + "/founder/update-account", this.profiles, {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -192,7 +208,7 @@ export default {
       // this.loaderEmail = true;
       // var authData = JSON.parse(auth.getAuthData());
       // this.axios
-      //   .get(config.baseUri + "/incubatee/update-account" + authData.data.id, {
+      //   .get(config.baseUri + "/founder/update-account" + authData.data.id, {
       //     headers: auth.getAuthHeader()
       //   })
       //   .then(res => {

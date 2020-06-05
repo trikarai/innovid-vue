@@ -1,14 +1,14 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <!-- {{authData.data.id}} -->
-      <v-col md="8" xs="12">
-        <!-- <v-btn color="primary" @click="openAdd">
+      <!-- <v-col md="8" xs="12"> -->
+      <!-- <v-btn color="primary" @click="openAdd">
           <v-icon left>add</v-icon>Create Team
-        </v-btn>-->
-      </v-col>
+      </v-btn>-->
+      <!-- </v-col> -->
     </v-row>
-    <v-row>
+    <!-- <v-row>
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -19,7 +19,7 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row>
+    </v-row>-->
     <v-row>
       <v-col>
         <v-data-table
@@ -41,13 +41,22 @@
             </v-btn>
             {{item.team.name}}
           </template>
+          <template v-slot:item.concluded="{item}">
+            <v-icon v-if="item.concluded" color="green darken-1">check</v-icon>
+            <v-icon v-else color="red darken-1">removed</v-icon>
+          </template>
+          <template v-slot:item.note="{item}">
+           <v-chip v-if="item.note != null">{{item.note}}</v-chip>
+          </template>
           <template v-slot:item.action="{item}">
-            <v-btn small color="primary" class="mr-2" @click="leftAct(item, 'accept')">
-              <v-icon left small>check</v-icon>Accept
-            </v-btn>
-            <v-btn small color="warning" @click="leftAct(item, 'reject')">
-              <v-icon left small>block</v-icon>Reject
-            </v-btn>
+            <template v-if="!item.concluded">
+              <v-btn small color="primary" class="mr-2" @click="leftAct(item, 'accept')">
+                <v-icon left small>check</v-icon>Accept
+              </v-btn>
+              <v-btn small color="warning" @click="leftAct(item, 'reject')">
+                <v-icon left small>block</v-icon>Reject
+              </v-btn>
+            </template>
           </template>
         </v-data-table>
       </v-col>
@@ -61,8 +70,8 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text class="grey--text" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -118,7 +127,7 @@ export default {
         { text: "Name", value: "name", sortable: false },
         { text: "Position", value: "position", sortable: false },
         { text: "Concluded", value: "concluded", sortable: false },
-        { text: "Note", value: "note", sortable: false },
+        { text: "Status", value: "note", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       dialogForm: false,
@@ -139,7 +148,7 @@ export default {
     getDataList() {
       this.tableLoad = true;
       this.axios
-        .get(config.baseUri + "/incubatee/member-candidateships", {
+        .get(config.baseUri + "/founder/team-member-candidateships", {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -158,7 +167,7 @@ export default {
       this.dataSingle = "";
       this.loader = true;
       this.axios
-        .get(config.baseUri + "/incubatee/member-candidateships/" + id, {
+        .get(config.baseUri + "/founder/team-member-candidateships/" + id, {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -190,11 +199,11 @@ export default {
       this.axios
         .patch(
           config.baseUri +
-            // "http://localhost:3004/api" +
-            "/incubatee/member-candidateships/" +
+            "/founder/team-member-candidateships/" +
             id +
             "/" +
             this.leftAction,
+          {},
           {
             headers: auth.getAuthHeader()
           }

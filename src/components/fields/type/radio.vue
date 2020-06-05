@@ -1,7 +1,8 @@
 <template>
   <v-col>
+    <!-- {{field}} -->
     <div :class="{required: field.required}">{{field.name}}</div>
-    <v-radio-group v-model="option" :rules="checkRequired">
+    <v-radio-group v-model="option" :error="isError">
       <v-radio
         v-for="(option, index) in field.options"
         :key="index"
@@ -9,7 +10,8 @@
         :value="option.id"
       ></v-radio>
     </v-radio-group>
-    <!-- {{option}} -->
+    <!-- <pre>{{option}}</pre>
+    <pre>{{field.options}}</pre> -->
   </v-col>
 </template>
 <script>
@@ -19,21 +21,46 @@ import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 export default {
   mixins: [validationMixins, formDynamicMixins],
-  props: ["field", "index"],
+  props: ["field", "index", "modeReload"],
   components: {},
   data: function() {
     return {
       clearable: true,
-      option: ""
+      option: "",
+      isError: false,
+      errorMessages: ["cuk"]
     };
+  },
+  created() {
+    if (this.modeReload) {
+      this.option = this.field.selectedOption.id;
+    }
+    this.field.options = this.reOrderField(this.field.options);
+  },
+  mounted() {
+    if (this.field.required) {
+      this.isError = true;
+    } else {
+      this.isError = false;
+    }
   },
   watch: {
     option: function() {
-      var params = {
-        fieldId: this.field.id,
-        selectedOptionId: this.option,
-        type: this.field.type
-      };
+      this.isError = false;
+      var params;
+      if (this.modeReload) {
+        params = {
+          fieldId: this.field.singleSelectField.id,
+          selectedOptionId: this.option,
+          type: this.field.type
+        };
+      } else {
+        params = {
+          fieldId: this.field.id,
+          selectedOptionId: this.option,
+          type: this.field.type
+        };
+      }
       bus.$emit("getValue", params, this.index);
     }
   }

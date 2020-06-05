@@ -1,10 +1,10 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
-      <v-col></v-col>
+      <v-col>Available Program</v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="12" md="8" lg="8" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -12,7 +12,8 @@
           :items="dataList.list"
           class="elevation-1"
         >
-          <template v-slot:item.name="{item}">
+          <template v-slot:no-data>No Program Available / Already Participate one of the program</template>
+          <!-- <template v-slot:item.name="{item}">
             <v-btn
               class="elevation-0 mr-2"
               fab
@@ -22,14 +23,48 @@
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>
-            {{item.cohort.name}}
-          </template>
+            {{item.name}}
+          </template>-->
           <template v-slot:item.action="{item}">
-            <v-btn small color="accent" class="mr-2" @click="leftApply(item)">
-              <v-icon left>check</v-icon>Apply
+            <v-btn small color="primary" class="mr-2" @click="leftApply(item)">
+              <v-icon left>check</v-icon>Register
             </v-btn>
-            <v-btn small color="warning" class="mr-2" @click="leftAct(item, 'Cancel')">
+            <!-- <v-btn small color="warning" class="mr-2" @click="leftAct(item, 'Cancel')">
               <v-icon left>cancel</v-icon>Cancel
+            </v-btn>-->
+          </template>
+        </v-data-table>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>Registered Program</v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" md="8" lg="8" xs="12">
+        <v-data-table
+          :search="search"
+          :loading="tableLoad2"
+          :headers="tableHeaders2"
+          :items="filterRegistration(dataList2.list)"
+          class="elevation-1"
+        >
+          <template v-slot:item.name="{item}">
+            <!-- <v-btn
+              class="elevation-0 mr-2"
+              fab
+              x-small
+              color="primary"
+              @click="openDetail(item.program.id)"
+            >
+              <v-icon>zoom_in</v-icon>
+            </v-btn>-->
+            {{item.program.name}}
+          </template>
+
+          <template v-slot:item.action="{item}">
+            <v-btn small color="warning" class="mr-2" @click="leftAct(item, 'Cancel')">
+              <v-icon left>cancel</v-icon>Cancel Registration
             </v-btn>
           </template>
         </v-data-table>
@@ -39,13 +74,13 @@
     <v-dialog v-model="dialogApply" width="300" :persistent="true">
       <v-card :loading="loader">
         <v-card-title>
-          <p class="text-capitalize">Apply Cohort</p>
+          <p class="text-capitalize">Apply Program</p>
         </v-card-title>
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="applyCohort()">Yes</v-btn>
-          <v-btn color="red" @click="dialogApply = false">Cancel</v-btn>
+          <v-btn text color="red" @click="applyCohort()">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogApply = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -58,8 +93,9 @@
         <v-card-text>{{leftName}}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
+          <!-- <v-btn v-if="leftAction == 'Cancel'" text color="red" @click="deleteAccount(leftId)">Yes</v-btn> -->
+          <v-btn v-if="leftAction == 'Cancel'" text color="red" @click="cancelProgram(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -80,11 +116,8 @@
           <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
         </v-card-text>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.cohort.name">
-            <p>{{dataSingle.cohort.name}}</p>
-            <p>{{dataSingle.appliedTime}}</p>
-            <p>{{dataSingle.concluded}}</p>
-            <p>{{dataSingle.note}}</p>
+          <v-card-text :key="dataSingle.name">
+            <p>{{dataSingle.name}}</p>
           </v-card-text>
         </transition>
         <v-card-actions>
@@ -99,20 +132,31 @@
 </template>
 <script>
 import bus from "@/config/bus";
-
-// import * as config from "@/config/config";
+import * as config from "@/config/config";
 import auth from "@/config/auth";
 
+import { programMixins } from "@/mixins/programMixins";
+import { teamWatcherMixins } from "@/mixins/teamWatcherMixins";
+
 export default {
+  mixins: [programMixins,teamWatcherMixins],
   data() {
     return {
       search: "",
       dataList: { total: 0, list: [] },
-      dataSingle: { cohort: { name: "" } },
+      dataList2: { total: 0, list: [] },
+      dataSingle: { name: "" },
       tableLoad: false,
+      tableLoad2: false,
       loader: false,
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
+        { text: "Description", value: "description", sortable: false },
+        { text: "", value: "action", sortable: false, align: "right" }
+      ],
+      tableHeaders2: [
+        { text: "Name", value: "name", sortable: false },
+        { text: "", value: "sub", sortable: false, align: "left" },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       dialog: false,
@@ -125,24 +169,33 @@ export default {
       leftName: "",
       leftAction: "",
       params: {
-        programmeId: "",
-        cohortId: ""
+        programId: ""
       }
     };
   },
   mounted() {
     this.getDataList();
+    this.getDataList2();
+  },
+  watch: {
+    teamId() {
+      this.$router.replace({
+        path: "/incubatee/team/" + this.teamId + "/application"
+      });
+    },
+    $route() {
+      this.getDataList();
+    }
   },
   methods: {
     getDataList() {
       this.tableLoad = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-applications",
+            "/programs",
           {
             headers: auth.getAuthHeader()
           }
@@ -159,15 +212,38 @@ export default {
           this.tableLoad = false;
         });
     },
+    getDataList2() {
+      this.tableLoad2 = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-registrations",
+          {
+            headers: auth.getAuthHeader()
+          }
+        )
+        .then(res => {
+          if (res.data.data) {
+            this.dataList2 = res.data.data;
+          } else {
+            this.dataList2 = { total: 0, list: [] };
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.tableLoad2 = false;
+        });
+    },
     getDataSingle(id) {
       this.loader = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-applications/" +
+            "/programs/" +
             id,
           {
             headers: auth.getAuthHeader()
@@ -176,7 +252,9 @@ export default {
         .then(res => {
           this.dataSingle = res.data.data;
         })
-        .catch(() => {})
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
         .finally(() => {
           this.loader = false;
         });
@@ -188,24 +266,22 @@ export default {
     leftAct(item, action) {
       this.dialogDelete = true;
       this.leftId = item.id;
-      this.leftName = item.cohort.name;
+      this.leftName = item.program.name;
       this.leftAction = action;
     },
     leftApply(item) {
       this.dialogApply = true;
-      this.params.programmeId = item.id;
-      this.params.cohortId = item.cohort.id;
-      this.leftName = item.cohort.name;
+      this.params.programId = item.id;
+      this.leftName = item.name;
     },
     applyCohort() {
       this.loader = true;
       this.axios
         .post(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-applications/",
+            "/program-registrations",
           this.params,
           {
             headers: auth.getAuthHeader()
@@ -226,11 +302,10 @@ export default {
       this.tableLoad = true;
       this.axios
         .delete(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-applications/" +
+            "/programs/" +
             id,
           {
             headers: auth.getAuthHeader()
@@ -246,6 +321,14 @@ export default {
         .finally(() => {
           this.tableLoad = false;
         });
+    },
+    refresh() {
+      this.dialogApply = false;
+      this.dialogForm = false;
+      this.dialogDelete = false;
+      this.dialogDetail = false;
+      this.getDataList();
+      this.getDataList2();
     }
   }
 };

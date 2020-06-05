@@ -1,22 +1,7 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
-      <v-col md="8" xs="12"></v-col>
-    </v-row>
-    <v-row v-show="false">
-      <v-col md="4" xs="12">
-        <v-text-field
-          v-model="search"
-          append-icon="search"
-          label="Search"
-          single-line
-          hide-details
-          clearable
-        ></v-text-field>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
+      <v-col cols="12" md="6" lg="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -37,8 +22,8 @@
             {{item.name}}
           </template>
           <template v-slot:item.action="{item}">
-            <v-btn small color="accent" router :to="'/incubatee/profile-form/' + item.id + '/add'">
-              <v-icon>add</v-icon>
+            <v-btn small color="primary" router :to="'/incubatee/profile-form/' + item.id + '/add'">
+              <v-icon left>add</v-icon> Add Form
             </v-btn>
           </template>
         </v-data-table>
@@ -109,7 +94,7 @@ export default {
     getDataList() {
       this.tableLoad = true;
       this.axios
-        .get(config.baseUri + "/incubatee/profile-forms", {
+        .get(config.baseUri + "/founder/profile-forms", {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -128,7 +113,7 @@ export default {
       this.dataSingle = "";
       this.loader = true;
       this.axios
-        .get(config.baseUri + "/incubatee/profile-forms/" + id, {
+        .get(config.baseUri + "/founder/profile-forms/" + id, {
           headers: auth.getAuthHeader()
         })
         .then(res => {

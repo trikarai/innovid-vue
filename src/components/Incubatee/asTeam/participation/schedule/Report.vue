@@ -1,12 +1,13 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col md="8" xs="12"></v-col>
     </v-row>
     <v-row>
       <v-col>
         <v-card>
-          <v-card-title primary-title>Mentoring Report</v-card-title>
+          <v-card-title primary-title>{{dataSingle.mentoring.name}}</v-card-title>
+          <v-card-title subheader>{{dataSingle.mentor.personnel.name}}</v-card-title>
           <v-card-text>
             <template v-for="data in fields">
               <v-row :key="data.id">
@@ -23,7 +24,7 @@
 
 <script>
 import bus from "@/config/bus";
-// import * as config from "@/config/config";
+import * as config from "@/config/config";
 import auth from "@/config/auth";
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
@@ -62,22 +63,20 @@ export default {
       this.loader = true;
       this.axios
         .get(
-          //   config.baseUri +
-          "http://localhost:3004/api" +
-            "/incubatee/as-team-member/" +
+          config.baseUri +
+            "/founder/as-team-member/" +
             this.$route.params.teamId +
-            "/cohort-participations/" +
+            "/program-participations/" +
             this.$route.params.cohortId +
-            "/schedules/" +
-            this.$route.params.scheduleId +
-            "/participant-mentoring-report",
+            "/mentoring-schedules/" +
+            this.$route.params.scheduleId,
           {
             headers: auth.getAuthHeader()
           }
         )
         .then(res => {
           this.dataSingle = res.data.data;
-          this.refactorRecordJSON(res.data.data);
+          this.refactorRecordJSON(res.data.data.participantMentoringReport);
         })
         .catch(res => {
           bus.$emit("callNotif", "error", res);

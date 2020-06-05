@@ -1,13 +1,13 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col md="8" xs="12">
-        <v-btn color="accent" router to="/incubatee/profile-form">
-          <v-icon left>add</v-icon>Add Profiles
+        <v-btn color="primary" router to="/incubatee/profile-form">
+          <v-icon left>add</v-icon>Add Data
         </v-btn>
       </v-col>
     </v-row>
-    <v-row v-show="false">
+    <!-- <v-row v-show="false">
       <v-col md="4" xs="12">
         <v-text-field
           v-model="search"
@@ -18,9 +18,9 @@
           clearable
         ></v-text-field>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
-      <v-col>
+      <v-col cols="12" lg="6" md="6" xs="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
@@ -34,20 +34,34 @@
               fab
               x-small
               color="primary"
-              @click="openDetail(item.id)"
+              @click="openDetail(item.profileForm.id)"
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>
             {{item.profileForm.name}}
           </template>
-          <!-- <template v-slot:item.action="{item}">
-            <v-btn small color="accent" router :to="'/incubatee/profile/' + item.id">
-              <v-icon>visibility</v-icon>
+          <template v-slot:item.action="{item}">
+            <v-btn small color="warning" @click="leftAct(item, 'Remove')">
+              <v-icon left small>delete</v-icon> Remove
             </v-btn>
-          </template>-->
+          </template>
         </v-data-table>
       </v-col>
     </v-row>
+
+    <v-dialog v-model="dialogDelete" width="300" :persistent="true">
+      <v-card :loading="tableLoad">
+        <v-card-title>
+          <p class="text-capitalize">{{leftAction}}</p>
+        </v-card-title>
+        <v-card-text>{{leftName}}</v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
+          <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <v-dialog
       v-model="dialogDetail"
@@ -113,7 +127,7 @@ export default {
     getDataList() {
       this.tableLoad = true;
       this.axios
-        .get(config.baseUri + "/incubatee/profiles", {
+        .get(config.baseUri + "/founder/profiles", {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -132,7 +146,7 @@ export default {
       this.dataSingle = "";
       this.loader = true;
       this.axios
-        .get(config.baseUri + "/incubatee/profiles/" + id, {
+        .get(config.baseUri + "/founder/profiles/" + id, {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -149,6 +163,29 @@ export default {
       // this.dialogDetail = true;
       // this.getDataSingle(id);
       this.$router.push({ path: "/incubatee/profile/" + id });
+    },
+    leftAct(item, action) {
+      this.dialogDelete = true;
+      this.leftId = item.profileForm.id;
+      this.leftName = item.profileForm.name;
+      this.leftAction = action;
+    },
+    deleteAccount(id) {
+      this.tableLoad = true;
+      this.axios
+        .delete(config.baseUri + "/founder/profiles/" + id, {
+          headers: auth.getAuthHeader()
+        })
+        .then(() => {
+          bus.$emit("callNotif", "info", "Successfully Remove Profiles Data");
+          this.refresh();
+        })
+        .catch(res => {
+          bus.$emit("callNotif", "error", res);
+        })
+        .finally(() => {
+          this.tableLoad = false;
+        });
     },
     refresh() {
       this.dialogForm = false;

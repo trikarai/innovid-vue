@@ -1,12 +1,17 @@
 <template>
-  <v-container grid-list-xs>
-    <v-row>
+  <v-container extend grid-list-xs>
+    <v-row v-if="loader">
       <v-col md="12">
-        <v-progress-circular v-if="loader" indeterminate color="primary"></v-progress-circular>
+        <v-progress-circular indeterminate color="primary"></v-progress-circular>
       </v-col>
     </v-row>
 
-    <render-form v-if="!loader" :formTemplate="formTemplate" @submit-form="submitForm" />
+    <v-row>
+      <v-col md="6">
+         <render-form v-if="!loader" :formTemplate="formTemplate" @submit-form="submitForm" />
+      </v-col>
+    </v-row>
+    
   </v-container>
 </template>
 <script>
@@ -34,6 +39,9 @@ export default {
       }
     };
   },
+  created() {
+    window.sessionStorage.setItem("uploadMode", "founder");
+  },
   components: {
     RenderForm
   },
@@ -44,7 +52,7 @@ export default {
     getFormById() {
       this.loader = true;
       this.axios
-        .get(config.baseUri + "/incubatee/profile-forms/" + this.formId, {
+        .get(config.baseUri + "/founder/profile-forms/" + this.formId, {
           headers: auth.getAuthHeader()
         })
         .then(res => {
@@ -58,9 +66,10 @@ export default {
         });
     },
     submitForm(params) {
+      params["profileFormId"] = this.formTemplate.id;
       this.loader = true;
       this.axios
-        .post(config.baseUri + "/incubatee/profiles", params, {
+        .put(config.baseUri + "/founder/profiles/" + this.formId, params, {
           headers: auth.getAuthHeader()
         })
         .then(() => {
