@@ -188,9 +188,8 @@ import auth from "@/config/auth";
 import * as config from "@/config/config";
 
 import Vue from "vue";
-import VueLodash from "vue-lodash";
-const options = { name: "lodash" }; // customize the way you want to call it
-Vue.use(VueLodash, options); // options is optional
+import lodash from "lodash";
+Vue.prototype._ = lodash;
 
 import { participationWatcherMixins } from "@/mixins/participationWatcherMixins";
 
@@ -248,7 +247,7 @@ export default {
   },
   methods: {
     reOrderMission: function(params) {
-      return Vue._.orderBy(
+      return this._.orderBy(
         params,
         function(o) {
           return new Number(o.position);

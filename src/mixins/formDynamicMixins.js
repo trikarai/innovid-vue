@@ -1,7 +1,6 @@
 import Vue from "vue";
-import VueLodash from "vue-lodash";
-const options = { name: "lodash" }; // customize the way you want to call it
-Vue.use(VueLodash, options); // options is optional
+import lodash from "lodash";
+Vue.prototype._ = lodash;
 
 import bus from "@/config/bus";
 
@@ -36,10 +35,10 @@ export const formDynamicMixins = {
     },
     methods: {
         reOrderField: function (params) {
-            return Vue._.orderBy(params, function (o) { return new Number(o.position); }, ["asc"]);
+            return this._.orderBy(params, function (o) { return new Number(o.position); }, ["asc"]);
         },
         reOrderRecord: function (params) {
-            return Vue._.orderBy(params, function (o) { return new Number(o.field.position); }, ["asc"]);
+            return this._.orderBy(params, function (o) { return new Number(o.field.position); }, ["asc"]);
         },
         refactorJSON(data) {
             data.stringFields.forEach(element => {

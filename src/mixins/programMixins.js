@@ -1,7 +1,6 @@
 import Vue from "vue";
-import VueLodash from "vue-lodash";
-const options = { name: "lodash" }; // customize the way you want to call it
-Vue.use(VueLodash, options); // options is optional
+import lodash from "lodash";
+Vue.prototype._ = lodash;
 
 import bus from "@/config/bus";
 import * as config from "@/config/config";
@@ -10,10 +9,10 @@ import auth from "@/config/auth";
 export const programMixins = {
     methods: {
         filterActiveParticipation(params) {
-            return Vue._.filter(params, ["active", true]);
+            return this._.filter(params, ["active", true]);
         },
         filterRegistration(params) {
-            return Vue._.filter(params, ["concluded", false]);
+            return this._.filter(params, ["concluded", false]);
         },
         cancelProgram(id) {
             this.tableLoad = true;

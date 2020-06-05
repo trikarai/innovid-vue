@@ -1,7 +1,6 @@
 import Vue from "vue";
-import VueLodash from "vue-lodash";
-const options = { name: "lodash" }; // customize the way you want to call it
-Vue.use(VueLodash, options); // options is optional
+import lodash from "lodash";
+Vue.prototype._ = lodash;
 
 import bus from "@/config/bus";
 import * as config from "@/config/config";
@@ -54,7 +53,7 @@ export const participantjournalMixins = {
         groupByMission(participantJournalList) {
             for (let index = 0; index < participantJournalList.list.length; index++) {
                 // eslint-disable-next-line no-unused-vars
-                let grouped = Vue._.groupBy(
+                let grouped = this._.groupBy(
                     participantJournalList.list[index].journals,
                     currrent => currrent.mission.name
                 );

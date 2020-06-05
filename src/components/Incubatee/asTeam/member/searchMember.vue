@@ -9,8 +9,9 @@
           label="Search by email"
           outlined
           :rules="rulesEmail"
-          @input="isTyping = true"
         ></v-text-field>
+        <br />
+        <v-btn small @click="getTalent">search</v-btn>
       </v-col>
       <v-col md="12" xs="12" v-if="!async">
         <v-chip
@@ -72,9 +73,8 @@
 </template>
 <script>
 import Vue from "vue";
-import VueLodash from "vue-lodash";
-const options = { name: "lodash" }; // customize the way you want to call it
-Vue.use(VueLodash, options); // options is optional
+import lodash from "lodash";
+Vue.prototype._ = lodash;
 
 import bus from "@/config/bus";
 
@@ -104,14 +104,14 @@ export default {
     };
   },
   watch: {
-    search: Vue._.debounce(function() {
-      this.isTyping = false;
-    }, 1000),
-    isTyping: function(value) {
-      if (!value) {
-        this.getTalent();
-      }
-    }
+    // search: this._.debounce(function() {
+    //   this.isTyping = false;
+    // }, 1000),
+    // isTyping: function(value) {
+    //   if (!value) {
+    //     this.getTalent();
+    //   }
+    // }
   },
   created() {},
   mounted() {},
