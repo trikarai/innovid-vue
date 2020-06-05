@@ -30,6 +30,7 @@ export const checkDomainMixins = {
       if (parts.length >= 3) {
         this.mainDomain = parts[1];
         this.params.incubatorIdentifier = parts[1];
+        this.signup.incubatorIdentifier = parts[1];
         this.isMain = false;
       } else {
         this.mainDomain = parts[0];

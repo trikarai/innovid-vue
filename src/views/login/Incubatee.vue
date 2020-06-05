@@ -130,6 +130,9 @@ export default {
         email: "",
         password: ""
       },
+      signup: {
+        incubatorIdentifier: ""
+      },
       capsText: "",
       activate: false
     };
