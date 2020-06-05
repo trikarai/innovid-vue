@@ -46,8 +46,6 @@ export default {
 .required::after {
   content: "*";
 }
-<<<<<<< Updated upstream
-=======
 
 .imgkastem .v-image__image {
   background-attachment: fixed !important;
@@ -104,5 +102,4 @@ export default {
 .snack >>> .v-snack__content {
   padding-right: 16px;
 }
->>>>>>> Stashed changes
 </style>

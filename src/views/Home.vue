@@ -7,21 +7,11 @@
 
       <div class="flex-grow-1"></div>
 
-<<<<<<< Updated upstream
-      <v-btn icon router to="/sysadmin">
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-=======
       <v-toolbar-items class="d-none d-md-flex d-lg-flex">
         <v-btn text>Home</v-btn>
         <v-btn to="/signup" text>Registration</v-btn>
         <v-btn style=" border-radius: 28px !important;height: 34px !important;position: relative;top: 16px;" dark color="primary" to="/login">Login</v-btn>
       </v-toolbar-items>
->>>>>>> Stashed changes
 
       <v-menu left bottom>
         <template v-slot:activator="{ on }">
@@ -38,34 +28,6 @@
       </v-menu>
     </v-app-bar>
     <v-content>
-<<<<<<< Updated upstream
-      <section>
-        <v-parallax dark src="https://picsum.photos/1920/1080">
-          <v-layout column align-center justify-center class="white--text">
-            <h1 class="white--text mb-2 display-1 text-center">Parallax Template</h1>
-            <div class="subheading mb-4 text-center">Powered by Vuetify</div>
-            <v-btn
-              class="mt-12"
-              color="primary--text text--darken-2"
-              dark
-              large
-              router
-              to="/login"
-            >Login</v-btn>
-          </v-layout>
-        </v-parallax>
-      </section>
-
-      <section>
-        <v-layout column wrap class="my-12" align-center>
-          <v-flex xs12 sm4 class="my-4">
-            <div class="text-center">
-              <h2 class="headline">The best way to start developing</h2>
-              <span class="subheading">Cras facilisis mi vitae nunc</span>
-            </div>
-          </v-flex>
-          <v-flex xs12>
-=======
       <section style="max-height:590px">
         <v-img class="imgkastem" src="/img/mainbanner.jpg">
         <div class="container" style="margin-top:190px;">
@@ -96,28 +58,9 @@ Melalui inovasi, permasalahan dan kebutuhan tersebut dapat menjadi peluang yang 
       <section>
         <v-layout wrap class="py-12" align-center>
           <v-flex xs12 md12>
->>>>>>> Stashed changes
             <v-container grid-list-xl>
             <v-card dark elevation="5" class="pa-5" shaped="20" color="#00667f" style="padding-top:50px !important;padding-bottom:50px !important;">
               <v-layout row wrap align-center>
-<<<<<<< Updated upstream
-                <v-flex xs12 md4>
-                  <v-card flat class="transparent">
-                    <v-card-text class="text-center">
-                      <v-icon x-large class="primary--text text--darken-2">mdi-palette</v-icon>
-                    </v-card-text>
-                    <v-card-title primary-title class="layout justify-center">
-                      <div class="headline text-center">Material Design</div>
-                    </v-card-title>
-                    <v-card-text>
-                      Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                      Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                      Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
-                    </v-card-text>
-                  </v-card>
-                </v-flex>
-                <v-flex xs12 md4>
-=======
                 <v-flex xs12 md6 style="text-align:center">
                   <h1>Daftarkan diri anda segera !</h1>
                 </v-flex>
@@ -145,21 +88,9 @@ Melalui inovasi, permasalahan dan kebutuhan tersebut dapat menjadi peluang yang 
             <v-container grid-list-xl>
               <v-layout row wrap align-center>
                 <v-flex xs12 md6>
->>>>>>> Stashed changes
                   <v-card flat class="transparent">
                     <v-card-text class="text-center">
                       <v-icon x-large class="primary--text text--darken-2">mdi-flash</v-icon>
-<<<<<<< Updated upstream
-                    </v-card-text>
-                    <v-card-title primary-title class="layout justify-center">
-                      <div class="headline">Fast development</div>
-                    </v-card-title>
-                    <v-card-text>
-                      Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                      Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                      Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
-                    </v-card-text>
-=======
                     </v-card-text> -->
                     <v-card-title style="display: block" primary-title>
                       <div class="headline">Program Inkubasi Virtual</div>
@@ -192,23 +123,14 @@ Melalui inovasi, permasalahan dan kebutuhan tersebut dapat menjadi peluang yang 
                 <v-flex xs12 md6>
                   <v-card flat class="transparent">
                     <v-img style="margin: 0 auto !important;" max-width="363px" src="/img/i-organitation.png"></v-img> 
->>>>>>> Stashed changes
                   </v-card>
                 </v-flex>
                 <v-flex xs12 md4>
                   <v-card flat class="transparent">
-<<<<<<< Updated upstream
-                    <v-card-text class="text-center">
-                      <v-icon x-large class="primary--text text--darken-2">mdi-wrench</v-icon>
-                    </v-card-text>
-                    <v-card-title primary-title class="layout justify-center">
-                      <div class="headline text-center">Completely Open Sourced</div>
-=======
                   
                     <v-card-title style="display: block" primary-title>
                       <div class="headline">Managing Multi Stream Innovation Programs</div>
                       <div class="garis"></div>
->>>>>>> Stashed changes
                     </v-card-title>
                     <v-card-text>
                       Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
@@ -240,56 +162,6 @@ Melalui inovasi, permasalahan dan kebutuhan tersebut dapat menjadi peluang yang 
         </v-parallax>
       </section>
 
-<<<<<<< Updated upstream
-      <section>
-        <v-container grid-list-xl>
-          <v-layout row wrap justify-center class="my-12">
-            <v-flex xs12 sm4>
-              <v-card flat class="transparent">
-                <v-card-title primary-title class="layout justify-center">
-                  <div class="headline">Company info</div>
-                </v-card-title>
-                <v-card-text>
-                  Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                  Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
-                </v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex xs12 sm4 offset-sm1>
-              <v-card flat class="transparent">
-                <v-card-title primary-title class="layout justify-center">
-                  <div class="headline">Contact us</div>
-                </v-card-title>
-                <v-card-text>Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.</v-card-text>
-                <v-list class="transparent">
-                  <v-list-item>
-                    <v-list-item-action>
-                      <v-icon class="primary--text text--darken-2">mdi-phone</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                      <v-list-item-title>777-867-5309</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item>
-                    <v-list-item-action>
-                      <v-icon class="primary--text text--darken-2">mdi-map-marker</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                      <v-list-item-title>Chicago, US</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item>
-                    <v-list-item-action>
-                      <v-icon class="primary--text text--darken-2">mdi-email</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                      <v-list-item-title>john@vuetifyjs.com</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </v-card>
-=======
       <section style="min-height:400px;" class="mt-12">
         <v-container grid-list-xl>
           <v-layout row wrap justify-center class="my-12 text-center">
@@ -305,7 +177,6 @@ Terima kasih telah mengunjungi situs web kami, jika ada pertanyaan yang akan dia
               <div class="imail mt-5 py-2 px-5">
                 <h2 style="color:#00667f"><v-icon class="mr-2" large color="#00667f">mdi-email-edit-outline</v-icon> info@mikti.org</h2>
               </div>
->>>>>>> Stashed changes
             </v-flex>
           </v-layout>
         </v-container>
@@ -313,13 +184,8 @@ Terima kasih telah mengunjungi situs web kami, jika ada pertanyaan yang akan dia
 
       <v-footer color="primary">
         <v-layout row wrap align-center>
-<<<<<<< Updated upstream
-          <v-flex xs12>
-            <div class="white--text ml-4">Inovide</div>
-=======
           <v-flex class="text-center" xs12>
             <div class="white--text ml-4">@2020, start.mikti.id</div>
->>>>>>> Stashed changes
           </v-flex>
         </v-layout>
       </v-footer>

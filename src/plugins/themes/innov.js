@@ -13,10 +13,6 @@ export default {
         sidebar: '#e4e4e4',
     },
     dark: {
-<<<<<<< Updated upstream
-        primary: '#8bc751'
-=======
         primary: '#00667f'
->>>>>>> Stashed changes
     }
 }
