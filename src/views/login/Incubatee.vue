@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-container fluid id="loginpage">
-      <v-row align="center" justify="center">
-        <v-col xs="10" sm="8" md="4" lg="4" class="pertikal text-xs-center pa-0 elevation-6">
+      <v-row align="center" justify="center" style="margin-top:30px;">
+        <v-col xs="12" sm="8" md="6" lg="4" class="pertikal text-xs-center">
           <v-toolbar class="pt-0" color="primary">
             <v-toolbar-title class="white--text ml-2">
               <h4>
@@ -207,7 +207,7 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  border-top: 20px solid #249c90;
+  border-top: 20px solid #00667f;
   border-left: 20px solid #fff;
   width: 50%;
 }

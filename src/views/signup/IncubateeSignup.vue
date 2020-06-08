@@ -85,6 +85,7 @@
                     <v-col class="mt-2"></v-col>
                     <!-- <vue-recaptcha @verify="onVerify" @expired="onExpired" v-bind:sitekey="sitekey"> -->
                       <v-btn
+                        large
                         @click="submit"
                         block
                         :loading="signupLoader"
@@ -225,7 +226,7 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  border-top: 20px solid #249c90 ;
+  border-top: 20px solid #00667f ;
   border-left: 20px solid #fff;
   width: 50%;
 }
