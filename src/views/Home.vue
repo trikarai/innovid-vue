@@ -43,10 +43,10 @@
     <v-content>
       <section style="max-height:590px">
         <v-img class="imgkastem" src="/img/mainbanner.jpg">
-          <div class="container" style="margin-top:105px;">
+          <div class="container" style="margin-top:140px;">
             <v-row>
               <v-col cols="12" xs="6" sm="6">
-                <v-card style="opacity:0.9" elevation="0" class="pa-5">
+                <v-card style="opacity:0.9" elevation="0" class="pa-1">
                 <v-card-title style="display: block" primary-title>
                   <div class="headline">New Normal = New Opportunities</div>
                   <div class="garis"></div>
@@ -59,7 +59,7 @@
                   Registration
                   </v-btn>-->
                 </v-card>
-                <v-card style="opacity:0.9" elevation="0" class="pa-5 pt-0">
+                <v-card style="opacity:0.9" elevation="0" class="pa-1 mt-1 pt-0">
                     <v-card-title style="display: block" primary-title>
                       <div class="headline">Program Inkubasi Virtual</div>
                       <div class="garis"></div>
