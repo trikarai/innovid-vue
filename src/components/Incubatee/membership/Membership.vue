@@ -109,7 +109,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>Candidateship Invitation</v-col>
+      <v-col>Team Invitation</v-col>
     </v-row>
     <v-row>
       <v-col>
