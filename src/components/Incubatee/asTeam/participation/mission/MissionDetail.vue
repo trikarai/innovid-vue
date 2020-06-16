@@ -42,7 +42,10 @@
             <v-tab-item value="tab-2">
               <v-row>
                 <v-col cols="12" lg="12" v-if="!isNewWorksheet">
-                  <worksheet-viewer :isNewWorksheet.sync="isNewWorksheet" />
+                  <worksheet-viewer
+                    :isNewWorksheet.sync="isNewWorksheet"
+                    :dataMission="dataList"
+                  />
                 </v-col>
                 <v-col v-else>
                   <v-btn
@@ -139,6 +142,10 @@ export default {
   },
   created() {
     window.sessionStorage.setItem("uploadMode", "team");
+
+    bus.$on("UpdateWorksheet", () => {
+      this.loader = true;
+    });
   },
   mounted() {
     this.getDataList();

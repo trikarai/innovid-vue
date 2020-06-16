@@ -21,11 +21,30 @@
       <v-card-text v-if="loadingSelectedWorksheet">
         <v-skeleton-loader type="card" />
       </v-card-text>
+      <template v-if="!loadingSelectedWorksheet">
+        <v-card-actions v-if="worksheetId !== ''">
+          <v-btn small color="accent" v-if="!editWS" @click="editWorksheet">
+            <v-icon small left>edit</v-icon>Edit Records
+          </v-btn>
+          <v-btn color="warning" small @click="editWS = !editWS" v-else>
+            <v-icon small left>close</v-icon>Cancel Edit
+          </v-btn>
+        </v-card-actions>
+      </template>
       <v-card-text v-if="!loadingSelectedWorksheet">
         <template v-if="!editWS">
           <span class="title mb-3">{{ worksheet.name }}</span>
           <render-record :fields="fields" :canvasMode="desc.renderAs" />
+        </template>
+        <template v-else>
           <!-- <pre>{{ worksheet }}</pre> -->
+          <!-- <pre>{{ dataList }}</pre> -->
+          <edit-journal
+            v-if="editWS"
+            :worksheetId="worksheetId"
+            :name="worksheet.name"
+            :worksheetForm.sync="dataList.worksheetForm"
+          />
         </template>
       </v-card-text>
     </v-col>
@@ -37,18 +56,26 @@ import auth from "@/config/auth";
 import * as config from "@/config/config";
 
 import RenderRecord from "@/components/buildform/incubatee/renderRecord";
+import EditJournal from "../../journal/component/editJournal";
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 export default {
   mixins: [formDynamicMixins],
   components: {
     RenderRecord,
+    EditJournal,
   },
   props: {
+    dataMission: {
+      type: Object,
+    },
     isNewWorksheet: {
       type: Boolean,
       default: false,
     },
+    // loader: {
+    //   type: Boolean,
+    // },
   },
   data() {
     return {
@@ -57,17 +84,24 @@ export default {
       journals: { total: 0, list: [] },
       journal: {},
       worksheet: "",
+      worksheetId: "",
       editWS: false,
       fields: [],
       desc: {
         renderAs: false,
         description: "",
       },
+      dataList: {},
+      dataListTemp: {},
     };
   },
   watch: {
     journal: "getSelectedWorksheet",
     // missionId: "getJournals"
+  },
+  created() {
+    this.dataList = JSON.parse(JSON.stringify(this.dataMission));
+    this.dataListTemp = JSON.parse(JSON.stringify(this.dataMission));
   },
   mounted() {
     this.getJournals();
@@ -100,6 +134,9 @@ export default {
       this.$emit("update:isNewWorksheet", true);
     },
     getSelectedWorksheet() {
+      this.dataList = JSON.parse(JSON.stringify(this.dataMission));
+      this.editWS = false;
+      this.worksheetId = this.journal.worksheet.id;
       this.fields = [];
       this.loadingSelectedWorksheet = true;
       this.axios
@@ -115,6 +152,7 @@ export default {
         )
         .then((res) => {
           this.worksheet = res.data.data;
+          this.pairFieldValue(this.worksheet);
           this.refactorRecordJSON(res.data.data);
         })
         .catch(() => {})
@@ -124,6 +162,9 @@ export default {
     },
     refresh() {
       this.getJournals();
+    },
+    editWorksheet() {
+      this.editWS = true;
     },
   },
 };
