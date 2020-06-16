@@ -116,24 +116,24 @@
                 <div class="container">
                   <v-row style="margin-top:10px;margin-bottom:30px;text-align:center;">
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
-                        <v-img style="margin:0 auto" max-width="200" src="/img/mentor.png"></v-img>
-                        <h3 class="mt-5">Mentor 1</h3>
-                        <p>Frontend Developer</p>
+                        <v-img style="margin:0 auto" max-width="200" src="/img/dibya.png"></v-img>
+                        <h3 class="mt-5">Dibya Pradana</h3>
+                        <!-- <p>Frontend Developer</p> -->
                       </v-col>
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
-                        <v-img style="margin:0 auto" max-width="200" src="/img/mentor.png"></v-img>
-                        <h3 class="mt-5">Mentor 1</h3>
-                        <p>Frontend Developer</p>
+                        <v-img style="margin:0 auto" max-width="200" src="/img/dina.png"></v-img>
+                        <h3 class="mt-5">Dina Dellyana</h3>
+                        <!-- <p>Frontend Developer</p> -->
                       </v-col>
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
-                        <v-img style="margin:0 auto" max-width="200" src="/img/mentor.png"></v-img>
-                        <h3 class="mt-5">Mentor 1</h3>
-                        <p>Frontend Developer</p>
+                        <v-img style="margin:0 auto" max-width="200" src="/img/aditya.png"></v-img>
+                        <h3 class="mt-5">M Aditya Arief Nugraha</h3>
+                        <!-- <p>Frontend Developer</p> -->
                       </v-col>
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
-                        <v-img style="margin:0 auto" max-width="200" src="/img/mentor.png"></v-img>
-                        <h3 class="mt-5">Mentor 1</h3>
-                        <p>Frontend Developer</p>
+                        <v-img style="margin:0 auto" max-width="200" src="/img/andy.png"></v-img>
+                        <h3 class="mt-5">M Andy Zaky</h3>
+                        <!-- <p>Frontend Developer</p> -->
                       </v-col>
                   </v-row>
                 </div>
@@ -142,24 +142,24 @@
                 <div class="container">
                   <v-row style="margin-top:10px;margin-bottom:30px;text-align:center;">
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
-                        <v-img style="margin:0 auto" max-width="200" src="/img/mentor.png"></v-img>
-                        <h3 class="mt-5">Mentor 1</h3>
-                        <p>Frontend Developer</p>
+                        <v-img style="margin:0 auto" max-width="200" src="/img/andika.png"></v-img>
+                        <h3 class="mt-5">St. Andika Sutedjo</h3>
+                        <!-- <p>Frontend Developer</p> -->
                       </v-col>
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
-                        <v-img style="margin:0 auto" max-width="200" src="/img/mentor.png"></v-img>
-                        <h3 class="mt-5">Mentor 1</h3>
-                        <p>Frontend Developer</p>
+                        <v-img style="margin:0 auto" max-width="200" src="/img/vita.png"></v-img>
+                        <h3 class="mt-5">Vita Subiyakti</h3>
+                        <!-- <p>Frontend Developer</p> -->
                       </v-col>
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
-                        <v-img style="margin:0 auto" max-width="200" src="/img/mentor.png"></v-img>
-                        <h3 class="mt-5">Mentor 1</h3>
-                        <p>Frontend Developer</p>
+                        <v-img style="margin:0 auto" max-width="200" src="/img/zaenal.png"></v-img>
+                        <h3 class="mt-5">Zaenal Arifin</h3>
+                        <!-- <p>Frontend Developer</p> -->
                       </v-col>
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
-                        <v-img style="margin:0 auto" max-width="200" src="/img/mentor.png"></v-img>
+                        <!-- <v-img style="margin:0 auto" max-width="200" src="/img/mentor.png"></v-img>
                         <h3 class="mt-5">Mentor 1</h3>
-                        <p>Frontend Developer</p>
+                        <p>Frontend Developer</p> -->
                       </v-col>
                   </v-row>
                 </div>
