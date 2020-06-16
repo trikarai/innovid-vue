@@ -1,31 +1,26 @@
 <template>
   <v-container extend grid-list-xs>
-    <!-- jangan dihapus start-->
-    <v-row style="display:none">
-      <v-col md="6">
-        <pre>{{journalList}}</pre>
-        <pre>{{journalList2}}</pre>
-      </v-col>
-    </v-row>
-    <!-- jangan dihapus end-->
     <v-row>
-      <v-col md="12" v-if="missionLoader">
+      <v-col cols="12" md="12" v-if="missionLoader">
         <v-skeleton-loader max-width="500" type="article"></v-skeleton-loader>
       </v-col>
-      <v-col md="6" v-if="dataList.total == 0">
+      <v-col cols="12" md="6" v-if="dataList.total == 0">
         <div v-if="!missionLoader">
-          <v-alert
-            type="info"
-            :value="true"
-          >Incubator hasn't publish a mission at the momment for this program</v-alert>
+          <v-alert type="info" :value="true"
+            >Incubator hasn't publish a mission at the momment for this
+            program</v-alert
+          >
         </div>
       </v-col>
-      <v-col md="12" v-else>
+      <v-col cols="12" lg="12" md="12" v-else>
         <v-timeline :reverse="true" align-top :dense="false">
-          <v-timeline-item v-for="(data, index) in reOrderMission(dataList.list)" :key="data.id">
+          <v-timeline-item
+            v-for="data in reOrderMission(dataList.list)"
+            :key="data.id"
+          >
             <template v-slot:icon>
               <v-avatar>
-                <span style="color:#fff">{{data.position}}</span>
+                <span style="color:#fff">{{ data.position }}</span>
               </v-avatar>
             </template>
             <v-card class="pa-3 elevation-5">
@@ -35,19 +30,29 @@
               </div>
               <v-card-title class="headline">
                 <v-row>
-                  <v-col style="word-break: break-word;" md="6">{{data.name}}</v-col>
-                  <v-col style="text-align:end;" md="6" v-if="data.previousMission != null">
+                  <v-col style="word-break: break-word;" md="6">{{
+                    data.name
+                  }}</v-col>
+                  <v-col
+                    style="text-align:end;"
+                    md="6"
+                    v-if="data.previousMission != null"
+                  >
                     <v-chip small>
                       <v-avatar left>
                         <v-icon small color="primary">account_tree</v-icon>
                       </v-avatar>
-                      <span style="color:#999">{{data.previousMission.name}}</span>
+                      <span style="color:#999">{{
+                        data.previousMission.name
+                      }}</span>
                     </v-chip>
                   </v-col>
                   <v-col style="text-align:end;" md="6" v-else>
                     <v-chip small>
                       <v-avatar left>
-                        <v-icon small color="primary">assignment_turned_in</v-icon>
+                        <v-icon small color="primary"
+                          >assignment_turned_in</v-icon
+                        >
                       </v-avatar>
                       <span style="color:#999">Main Mission</span>
                     </v-chip>
@@ -56,110 +61,26 @@
               </v-card-title>
 
               <v-card-text class="subtitle">
-                <span class="textlimit2">{{data.description}}</span>
-              </v-card-text>
-              <v-card-text v-if="journalCreateLoading">
-                <v-skeleton-loader v-if="data.journal.length == 0" max-width="350" type="list-item"></v-skeleton-loader>
-              </v-card-text>
-              <v-card-text class="pb-0" v-if="data.journal.length != 0">
-                <template v-if="data.selectedParentJournal">
-                  <b>{{data.worksheetForm.name}} under {{data.selectedParentJournal.worksheet.name}} :</b>
-                </template>
-
-                <v-select
-                  class="mt-2"
-                  :loading="journalCreateLoading"
-                  dense
-                  :label="'Submitted ' + data.worksheetForm.name "
-                  :items="data.journal"
-                  item-text="worksheet.name"
-                  item-value="id"
-                  outlined
-                  return-object
-                  v-model="selectedJournalinMission[index]"
-                  @change="getBranchJournal($event, data.id)"
-                  append-outer-icon="autorenew"
-                  @click:append-outer="refreshRootJournal"
-                ></v-select>
-              </v-card-text>
-              <v-card-text class="pb-0 grey--text text--lighten-1 caption" v-else>
-                <template v-if="!journalCreateLoading">
-                  <template v-if="data.previousMission != null">
-                    <template
-                      v-if="!data.selectedParentJournal"
-                    >No {{data.worksheetForm.name}} found, parent journal not selected</template>
-                    <template
-                      v-else
-                    >No {{data.worksheetForm.name}} found for this mission under {{data.selectedParentJournal.worksheet.name}}</template>
-                  </template>
-                  <template v-else>
-                    No Journal Data Found for this main mission
-                    <v-btn color="success" icon @click="refreshRootJournal()">
-                      <v-icon>autorenew</v-icon>
-                    </v-btn>
-                  </template>
-                </template>
+                <span class="textlimit2">{{ data.description }}</span>
               </v-card-text>
 
               <v-card-actions class="pt-0">
-                <template v-if="data.previousMission == null">
-                  <!-- root button-->
-                  <v-row>
-                    <v-col md="12">
-                      <v-btn
-                        class="ml-2"
-                        color="primary"
-                        small
-                        router
-                        :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom' "
-                      >
-                        <v-icon small left>add</v-icon>
-                        Learn & Add {{data.worksheetForm.name}}
-                      </v-btn>
-                    </v-col>
-                    <v-col md="12">
-                      <v-btn
-                        class="ml-2"
-                        v-show="selectedJournalinMission[index] != null"
-                        color="primary"
-                        small
-                        router
-                        @click="openJournal2(selectedJournalinMission[index], 'root', null)"
-                      >
-                        <v-icon small left>zoom_in</v-icon>
-                        View {{data.worksheetForm.name}}
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                </template>
-                <template v-else>
-                  <v-row>
-                    <v-col md="12">
-                      <v-btn
-                        v-if="data.selectedParentJournal"
-                        color="primary"
-                        small
-                        router
-                        :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + data.id + '/atom/'+ data.selectedParentJournal.id "
-                      >
-                        <v-icon small left>add</v-icon>
-                        Learn & Add {{data.worksheetForm.name}}
-                      </v-btn>
-                    </v-col>
-                    <v-col md="12">
-                      <v-btn
-                        v-show="selectedJournalinMission[index] != null"
-                        color="primary"
-                        small
-                        router
-                        @click="openJournal2(selectedJournalinMission[index], 'branch', selectedJournalinMission[index].parent.id)"
-                      >
-                        <v-icon small left>zoom_in</v-icon>
-                        View {{data.worksheetForm.name}}
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                </template>
+                <v-row justify="space-between">
+                  <v-col cols="12" lg="6">
+                    <v-btn
+                      small
+                      color="primary"
+                      @click="gotoMissionDetail(data.id)"
+                    >
+                      <v-icon left>zoom_in</v-icon>Open
+                    </v-btn>
+                  </v-col>
+                  <!-- <v-col cols="12" lg="6">
+                    <span class="textlimit2"
+                      >Submitted Worksheet: {{ data.submittedWorksheet }}</span
+                    >
+                  </v-col> -->
+                </v-row>
               </v-card-actions>
             </v-card>
           </v-timeline-item>
@@ -170,9 +91,9 @@
     <v-dialog v-model="dialogDelete" width="300" :persistent="true">
       <v-card :loading="tableLoad">
         <v-card-title>
-          <p class="text-capitalize">{{leftAction}}</p>
+          <p class="text-capitalize">{{ leftAction }}</p>
         </v-card-title>
-        <v-card-text>{{leftName}}</v-card-text>
+        <v-card-text>{{ leftName }}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
@@ -210,7 +131,7 @@ export default {
         { text: "Mission", value: "name", sortable: false },
         { text: "Worksheet", value: "worksheet.name", sortable: false },
         { text: "", value: "sub", sortable: false, align: "left" },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
       dialog: false,
       dialogForm: false,
@@ -221,14 +142,14 @@ export default {
       leftId: "",
       leftName: "",
       leftAction: "",
-      journalCreateLoading: false
+      journalCreateLoading: false,
     };
   },
   watch: {
     $route() {
       this.dataList = { total: 0, list: [] };
       this.getDataList();
-      this.getRootMissionJurnal();
+      // this.getRootMissionJurnal();
     },
     participationId() {
       this.$router.replace({
@@ -237,13 +158,13 @@ export default {
           this.$route.params.teamId +
           "/participation/" +
           this.participationId +
-          "/mission"
+          "/mission",
       });
-    }
+    },
   },
   mounted() {
     this.getDataList();
-    this.getRootMissionJurnal();
+    // this.getRootMissionJurnal();
   },
   methods: {
     reOrderMission: function(params) {
@@ -267,13 +188,13 @@ export default {
             this.$route.params.cohortId +
             "/missions",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.dataList = res.data.data;
 
-          this.dataList.list.forEach(element => {
+          this.dataList.list.forEach((element) => {
             element["journal"] = new Array();
           });
         })
@@ -300,7 +221,7 @@ export default {
             "/journals/" +
             id,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
@@ -311,7 +232,7 @@ export default {
           );
           this.refresh();
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -330,14 +251,14 @@ export default {
             "/journals?parentJournalId=" +
             encodeURI(null),
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.journalList = res.data.data;
           // this.dataList.list[0]["journal"] = res.data.data;
-          this.journalList.list.forEach(journalElement => {
-            this.dataList.list.forEach(missionElement => {
+          this.journalList.list.forEach((journalElement) => {
+            this.dataList.list.forEach((missionElement) => {
               if (missionElement.id == journalElement.mission.id) {
                 missionElement["journal"].push(journalElement);
               }
@@ -362,7 +283,7 @@ export default {
           "/journal/" +
           journal.id +
           "/worksheet/" +
-          journal.worksheet.id
+          journal.worksheet.id,
       });
     },
     // eslint-disable-next-line no-unused-vars
@@ -387,19 +308,19 @@ export default {
           "/worksheet/" +
           journal.worksheet.id +
           "/new" +
-          parent_uri
+          parent_uri,
       });
     },
     getBranchJournal(event, missionId) {
       this.journalCreateLoading = true;
       this.resetElement(missionId);
-      this.dataList.list.forEach(element => {
+      this.dataList.list.forEach((element) => {
         if (
           element.previousMission != null &&
           element.previousMission.id == missionId
         ) {
           element["selectedParentJournal"] = event;
-        } 
+        }
         // else {
         //   delete element.selectedParentJournal;
         // }
@@ -414,16 +335,16 @@ export default {
             "/journals?parentJournalId=" +
             event.id,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           // this.journalList = res.data.data;
           // this.dataList.list[index + 1]["journal"] = res.data.data;
           this.journalList2 = res.data.data;
 
-          this.journalList2.list.forEach(journalElement => {
-            this.dataList.list.forEach(missionElement => {
+          this.journalList2.list.forEach((journalElement) => {
+            this.dataList.list.forEach((missionElement) => {
               if (missionElement.id == journalElement.mission.id) {
                 missionElement["journal"].push(journalElement);
               }
@@ -436,7 +357,7 @@ export default {
         });
     },
     resetElement(parentMissionId) {
-      this.dataList.list.forEach(element => {
+      this.dataList.list.forEach((element) => {
         if (
           element.previousMission != null &&
           element.previousMission.id == parentMissionId
@@ -451,8 +372,19 @@ export default {
     },
     refreshBranchJournal() {
       this.getBranchJournal();
-    }
-  }
+    },
+    gotoMissionDetail(missionId) {
+      // this.$store.commit("setMissionLength", this.missions.list.length);
+      this.$router.push({
+        name: "team-misssion-detail",
+        params: {
+          cohortId: this.$route.params.cohortId,
+          teamId: this.$route.params.teamId,
+          missionId: missionId,
+        },
+      });
+    },
+  },
 };
 </script>
 

@@ -1,19 +1,19 @@
 <template>
   <v-container extend grid-list-xs>
     <v-row>
-      <v-col md="6">
+      <v-col cols="12" lg="12" md="6">
         <v-card class="pa-3" :loading="tableLoad">
           <v-card-title primary-title>
-              {{dataList.name}}
-              <v-spacer></v-spacer>
-              <span class="dot2"></span>
-              <span class="dot1 ml-1"></span>
+            {{ dataList.name }}
+            <v-spacer></v-spacer>
+            <span class="dot2"></span>
+            <span class="dot1 ml-1"></span>
           </v-card-title>
           <v-card-text>
-            <div class="subtitle">{{dataList.description}}</div>
+            <div class="subtitle">{{ dataList.description }}</div>
           </v-card-text>
           <v-card-text v-if="dataList.previousMission != null">
-           <v-chip small>
+            <v-chip small>
               <v-avatar left>
                 <v-icon small color="primary">account_tree</v-icon>
               </v-avatar>
@@ -25,87 +25,59 @@
               <v-avatar left>
                 <v-icon small color="primary">assignment_turned_in</v-icon>
               </v-avatar>
-                <span style="color:#999">Main Mission</span>
+              <span style="color:#999">Main Mission</span>
             </v-chip>
           </v-card-text>
-          <!-- <v-card-actions>
-            <v-btn
-              v-if="dataList.previousMission !== null"
-              text
-              color="accent"
-              :disabled="dataList.previousMission == null"
-              router
-              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + dataList.previousMission.id "
-            >Prev Mission</v-btn>
-            <v-btn
-              v-else
-              text
-              color="accent"
-              :disabled="dataList.previousMission == null"
-              router
-            >Prev Mission</v-btn>
-          </v-card-actions>
-          <v-card-text v-if="dataList.previousMission !== null">
-            <v-select
-              label="Parent Journal"
-              v-model="journalId"
-              :items="journalList.list"
-              item-text="worksheet.name"
-              item-value="id"
-              clearable
-            ></v-select>
-          </v-card-text>-->
-          <!-- <v-card-actions>
-            <v-btn class="mr-2" small color="primary" disabled>View Journal</v-btn>
-
-            <v-btn
-              v-if="!root"
-              color="primary"
-              small
-              router
-              :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mission/' + dataList.id + '/atom/' + journalId "
-            >
-              <v-icon left>add</v-icon>Add Journal
-            </v-btn>
-          </v-card-actions>-->
         </v-card>
       </v-col>
-      <v-col md="12 mt-5">Learning Material</v-col>
-      <v-col cols="12" md="8" lg="8" xs="12">
-        <!-- {{learningList}} -->
-        <v-expansion-panels>
-          <v-expansion-panel v-for="(learning,i) in learningList.list" :key="i">
-            <v-expansion-panel-header>{{learning.name}}</v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <!-- <span v-dompurify-html="learning.content" /> -->
-              <span v-html="$sanitize(learning.content)" />
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
-      </v-col>
-      <v-col md="12">
-        <!-- <pre> {{dataList.worksheetForm}} </pre> -->
-        <!-- <render-form
-          v-if="!tableLoad"
-          :formTemplate="dataList.worksheetForm"
-          @submit-form="submitForm"
-        />-->
+      <v-col cols="12" lg="12">
+        <v-tabs v-model="tab" color="primary" slider-color="primary">
+          <v-tabs-slider></v-tabs-slider>
+          <v-tab href="#tab-1">Learning Material</v-tab>
+          <v-tab href="#tab-2">Worksheets</v-tab>
+          <v-tabs-items v-model="tab">
+            <v-tab-item value="tab-1">
+              <learning-material :missionId.sync="dataList.id" class="pa-2" />
+            </v-tab-item>
+            <v-tab-item value="tab-2">
+              <v-row>
+                <v-col cols="12" lg="12" v-if="!isNewWorksheet">
+                  <worksheet-viewer :isNewWorksheet.sync="isNewWorksheet" />
+                </v-col>
+                <v-col v-else>
+                  <v-btn
+                    class="mb-3"
+                    color="warning"
+                    small
+                    @click="isNewWorksheet = false"
+                  >
+                    <v-icon left small>close</v-icon>Cancel
+                  </v-btn>
+                  <new-journal
+                    :dataListTemp.sync="dataListTemp"
+                    :tableLoad2="tableLoad"
+                    :loader.sync="loader"
+                    :branchUri.sync="branchUri"
+                  />
+                </v-col>
+              </v-row>
+            </v-tab-item>
+          </v-tabs-items>
+        </v-tabs>
       </v-col>
     </v-row>
-
-    <v-dialog v-model="dialogDelete" width="300" :persistent="true">
-      <v-card :loading="tableLoad">
-        <v-card-title>
-          <p class="text-capitalize">{{leftAction}}</p>
-        </v-card-title>
-        <v-card-text>{{leftName}}</v-card-text>
-        <v-card-actions>
-          <div class="flex-grow-1"></div>
-          <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn color="red" @click="dialogDelete = false">Cancel</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <v-overlay :value="loader">
+      <v-row>
+        <v-col cols="12" lg="12">
+          <v-progress-circular
+            color="primary"
+            indeterminate
+            size="64"
+          ></v-progress-circular>
+        </v-col>
+        <v-col cols="12" lg="12">please wait...</v-col>
+      </v-row>
+    </v-overlay>
   </v-container>
 </template>
 <script>
@@ -113,13 +85,26 @@ import bus from "@/config/bus";
 import auth from "@/config/auth";
 import * as config from "@/config/config";
 
+import LearningMaterial from "./sub/subLearning";
+import WorksheetViewer from "./sub/worksheetViewer";
+import NewJournal from "../journal/component/newJournal";
+
 // import RenderForm from "@/components/buildform/incubatee/renderForm";
 
 export default {
   data() {
     return {
+      tab: "tab-1",
+      isNewWorksheet: false,
       root: true,
+      branchUri: "",
       search: "",
+      dataListTemp: {
+        id: "",
+        name: "",
+        description: "",
+        nextMission: { id: "" },
+      },
       dataList: { id: "", name: "", description: "", nextMission: { id: "" } },
       journalList: { total: 0, list: [] },
       learningList: { total: 0, list: [] },
@@ -130,7 +115,7 @@ export default {
         { text: "Mission", value: "name", sortable: false },
         { text: "Worksheet", value: "worksheet.name", sortable: false },
         { text: "", value: "sub", sortable: false, align: "left" },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
       dialog: false,
       dialogForm: false,
@@ -143,17 +128,22 @@ export default {
       leftAction: "",
       previousMission: {
         id: "",
-        name: ""
-      }
+        name: "",
+      },
     };
   },
   components: {
-    // RenderForm
+    LearningMaterial,
+    WorksheetViewer,
+    NewJournal,
+  },
+  created() {
+    window.sessionStorage.setItem("uploadMode", "team");
   },
   mounted() {
     this.getDataList();
     // this.getJournalList();
-    this.getLearningMaterialList();
+    // this.getLearningMaterialList();
   },
   watch: {
     $route: "getDataList",
@@ -163,7 +153,7 @@ export default {
       } else {
         this.root = false;
       }
-    }
+    },
   },
   methods: {
     getDataList() {
@@ -178,11 +168,12 @@ export default {
             "/missions/" +
             this.$route.params.missionId,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.dataList = res.data.data;
+          Object.assign(this.dataListTemp, this.dataList);
           this.previousMission = res.data.data.previousMission;
         })
         .catch(() => {})
@@ -202,10 +193,10 @@ export default {
             "/journals?missionId=" +
             this.previousMission.id,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.journalList = res.data.data;
         })
         .catch(() => {})
@@ -226,10 +217,10 @@ export default {
             this.$route.params.missionId +
             "/learning-materials",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.learningList = res.data.data;
         })
         .catch(() => {})
@@ -247,14 +238,14 @@ export default {
             "/worksheets",
           params,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
           bus.$emit("callNotif", "success", "Worksheet Data Uploaded");
           this.$router.go(-2);
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -279,7 +270,7 @@ export default {
             "/journals/" +
             id,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
@@ -290,13 +281,13 @@ export default {
           );
           this.refresh();
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
           this.tableLoad = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
