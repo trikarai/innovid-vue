@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-width="500"
+  <v-dialog v-model="dialog" max-width="500" persistent
     ><v-card>
       <v-card-title class="headline grey lighten-2" primary-title>
         {{ mentor.name }}
