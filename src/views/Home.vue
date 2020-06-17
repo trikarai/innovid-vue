@@ -123,7 +123,10 @@
           </div>
         </div>
         <v-carousel height="auto" hide-delimiters>
-          <v-carousel-item>
+          <v-carousel-item
+            v-for="(carousel, index) in carousels"
+            :key="index"
+          >
             <div class="container">
               <v-row
                 style="margin-top:10px;margin-bottom:30px;text-align:center;"
@@ -134,7 +137,7 @@
                   sm="12"
                   md="3"
                   lg="3"
-                  v-for="mentor in mentors1"
+                  v-for="mentor in carousel.mentors"
                   :key="mentor.id"
                 >
                   <v-btn
@@ -219,67 +222,81 @@ export default {
       title: "Home",
       dialogMentor: false,
       mentor: {},
-      mentors1: [
+      carousels: [
         {
-          id: "111",
-          name: "Dibya Pradana",
-          role: "CEO PT. Jejala Pararta International and CTO PT. Ayomobile",
-          bio:
-            "Dibya Pradana is a specialist in IS/IT Planning and\n Digital Business Re-engineering. Experienced CEO at PT\n Jejala Pararta International and Founder/CTO PT\n Ayomobile Media International. Actively involved as a\n Consultant at Bappenas and Coordinating Ministry for\n Economic Affairs. Furthermore, also taking a role as\n Director Executive at Bandung, Jogja, Makassar Digital\n Valley under MIKTI.",
-          photo: "/img/dibya.png",
+          mentors: [
+            {
+              id: "111",
+              name: "Dibya Pradana",
+              role:
+                "CEO PT. Jejala Pararta International and CTO PT. Ayomobile",
+              bio:
+                "Dibya Pradana is a specialist in IS/IT Planning and\n Digital Business Re-engineering. Experienced CEO at PT\n Jejala Pararta International and Founder/CTO PT\n Ayomobile Media International. Actively involved as a\n Consultant at Bappenas and Coordinating Ministry for\n Economic Affairs. Furthermore, also taking a role as\n Director Executive at Bandung, Jogja, Makassar Digital\n Valley under MIKTI.",
+              photo: "/img/dibya.png",
+            },
+            {
+              id: "112",
+              name: "Dina Dellyana",
+              role: "Director, Bussiness Incubator at SBM ITB",
+              bio:
+                "Dr. Dina Dellyana, S.Farm., Apt., MBA., CBAP is a lecturer and business incubator director at the School of Business and Management, Institut Teknologi Bandung (SBM ITB). Actively involved in several startup development activities and also become a lead mentor in Bekraf for Startup, Startup development division in MIKTI and head of startup development in west Java’s Chambers of Commerce. Also actively conducting research with topics on Business Model Innovation, SME Development, Business Incubator and Social Media and E-commerce for SME’s.",
+              photo: "/img/dina.png",
+            },
+            {
+              id: "113",
+              name: "Muhammad Andy Zaky",
+              role: "CEO Teknopreneur",
+              bio:
+                "M Andy Zaky is experienced C-level with a demonstrated history of working in the tech industry. Also actively investing and become mentor and/or member of board commissioner of some prominent digital startups in Indonesia. Furthermore, also  taking role as Vice Secretary of Indonesia National ICT Council (WANTIKNASl) and General Secretary of MIKTI (Indonesia Digital Creative Industries Society) as part of contribution to strengthen the digital industry ecosystem.",
+              photo: "/img/andy.png",
+            },
+            {
+              id: "114",
+              name: "Zaenal Arifin",
+              role: "Co-Founder Andromedia",
+              bio:
+                "Zaenal Arifin is Co-Founder at Andromedia and also Gerdhu Inc. Furthermore, also an alumnus at Apple Developer Academy",
+              photo: "/img/zaenal.png",
+            },
+          ],
         },
         {
-          id: "112",
-          name: "Dina Dellyana",
-          role: "Director, Bussiness Incubator at SBM ITB",
-          bio: "Dr. Dina Dellyana, S.Farm., Apt., MBA., CBAP is a lecturer and business incubator director at the School of Business and Management, Institut Teknologi Bandung (SBM ITB). Actively involved in several startup development activities and also become a lead mentor in Bekraf for Startup, Startup development division in MIKTI and head of startup development in west Java’s Chambers of Commerce. Also actively conducting research with topics on Business Model Innovation, SME Development, Business Incubator and Social Media and E-commerce for SME’s.",
-          photo: "/img/dina.png",
+          mentors: [
+            {
+              id: "115",
+              name: "St. Andika Sutedjo",
+              role: "CEO PT Smart Meter Indonesia",
+              bio:
+                "St. Andika Sutedjo is CEO at PT Smart Meter Indonesia. Actively involved in several awarding, such as Winner of Indonesia ICT Award – INAICTA 2008, Nominator Asia Pasific ICT Award – APICTA 2008, and Winner of Indonesia ICT Award – INAICTA 2009",
+              photo: "/img/andika.png",
+            },
+            {
+              id: "116",
+              name: "M Aditya Arief Nugraha",
+              role: "President Director at PT Gametechno Indonesia",
+              bio:
+                "M Aditya Arief Nugraha is Technology & Business Enthusiast. Actively working as President Director at PT Gametechno Indonesia. Also involved in PT AINO Indonesia as Comissioner.",
+              photo: "/img/aditya.png",
+            },
+            {
+              id: "117",
+              name: "Arief Widhiyasa",
+              role: "CEO Agate",
+              bio:
+                "After participating in the International Olympics of Informatics. Arief Widhiyasa found that his true calling was in games. In 2009, along with his 18 closest friends, he co-foundeded Agate, and is Agate's CEO today. In 2016, he was nominated as one of the Forbes 30 under 30 Asia. Agate currently become the leading and biggest Indonesian game development in Indonesia. Right now Indonesian game industry is rapidly growing and his goal is to create a sustainable game ecosystem by working together with Indonesian Game Association and the Indonesian Government.",
+              photo: "/img/arief.png",
+            },
+            {
+              id: "118",
+              name: "Vita Subiyakti",
+              role: "Executive Director at SixSense Restaurant",
+              bio:
+                "Vita Subiyakti is Co-Founder in BOTIKA and also Executive Director at SixSense Restaurant. Actively involved at Soroptimist International of the South West Pacific as Secretary. Furthermore, also taking role as Marketing Director at RuangKerja Software Engineering and Managing Director at Best Retail Supply",
+              photo: "/img/vita.png",
+            },
+          ],
         },
-        {
-          id: "113",
-          name: "Muhammad Andy Zaky",
-          role: "CEO Teknopreneur",
-          bio: "M Andy Zaky is experienced C-level with a demonstrated history of working in the tech industry. Also actively investing and become mentor and/or member of board commissioner of some prominent digital startups in Indonesia. Furthermore, also  taking role as Vice Secretary of Indonesia National ICT Council (WANTIKNASl) and General Secretary of MIKTI (Indonesia Digital Creative Industries Society) as part of contribution to strengthen the digital industry ecosystem.",
-          photo: "/img/andy.png",
-        },
-        {
-          id: "114",
-          name: "Zaenal Arifin",
-          role: "Co-Founder Andromedia",
-          bio: "Zaenal Arifin is Co-Founder at Andromedia and also Gerdhu Inc. Furthermore, also an alumnus at Apple Developer Academy",
-          photo: "/img/zaenal.png",
-        },
-        {
-          id: "115",
-          name: "St. Andika Sutedjo",
-          role: "CEO PT Smart Meter Indonesia",
-          bio:
-            "St. Andika Sutedjo is CEO at PT Smart Meter Indonesia. Actively involved in several awarding, such as Winner of Indonesia ICT Award – INAICTA 2008, Nominator Asia Pasific ICT Award – APICTA 2008, and Winner of Indonesia ICT Award – INAICTA 2009",
-          photo: "/img/andika.png",
-        },
-        {
-          id: "116",
-          name: "M Aditya Arief Nugraha",
-          role: "President Director at PT Gametechno Indonesia",
-          bio: "M Aditya Arief Nugraha is Technology & Business Enthusiast. Actively working as President Director at PT Gametechno Indonesia. Also involved in PT AINO Indonesia as Comissioner.",
-          photo: "/img/aditya.png",
-        },
-        {
-          id: "117",
-          name: "Arief Widhiyasa",
-          role: "CEO Agate",
-          bio: "After participating in the International Olympics of Informatics. Arief Widhiyasa found that his true calling was in games. In 2009, along with his 18 closest friends, he co-foundeded Agate, and is Agate's CEO today. In 2016, he was nominated as one of the Forbes 30 under 30 Asia. Agate currently become the leading and biggest Indonesian game development in Indonesia. Right now Indonesian game industry is rapidly growing and his goal is to create a sustainable game ecosystem by working together with Indonesian Game Association and the Indonesian Government.",
-          photo: "/img/arief.png",
-        },
-        {
-          id: "118",
-          name: "Vita Subiyakti",
-          role: "Executive Director at SixSense Restaurant",
-          bio: "Vita Subiyakti is Co-Founder in BOTIKA and also Executive Director at SixSense Restaurant. Actively involved at Soroptimist International of the South West Pacific as Secretary. Furthermore, also taking role as Marketing Director at RuangKerja Software Engineering and Managing Director at Best Retail Supply",
-          photo: "/img/vita.png",
-        }
       ],
-      mentors2: [],
     };
   },
   methods: {
