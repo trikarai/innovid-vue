@@ -2,12 +2,22 @@
   <v-app>
     <v-container fluid id="loginpage">
       <v-row align="center" justify="center">
-        <v-col xs="10" sm="8" md="4" lg="4" class="pertikal text-xs-center pa-0 elevation-6">
+        <v-col
+          xs="10"
+          sm="8"
+          md="4"
+          lg="4"
+          class="pertikal text-xs-center pa-0 elevation-6"
+        >
           <v-toolbar class="pt-0" color="primary">
             <v-toolbar-title class="white--text ml-2">
               <h4>
                 login
-                <v-chip v-if="!isMain" color="#fafafa"><span style="color:#777777;">{{params.incubatorIdentifier}}</span></v-chip>
+                <v-chip v-if="!isMain" color="#fafafa"
+                  ><span style="color:#777777;">{{
+                    params.incubatorIdentifier
+                  }}</span></v-chip
+                >
               </h4>
             </v-toolbar-title>
             <v-toolbar-title class="ml-auto">
@@ -16,19 +26,36 @@
               </router-link>
             </v-toolbar-title>
           </v-toolbar>
-          <v-card id="accentlg" style="padding:20px 30px 0px 30px;" class="text-center elevation-0">
+          <v-card
+            id="accentlg"
+            style="padding:20px 30px 0px 30px;"
+            class="text-center elevation-0"
+          >
             <v-card-text class="pa-8">
               <div>
                 <v-form v-model="valid" ref="form">
-                  <v-row v-if="isMain">
-                    <v-text-field
-                      outlined
-                      label="Incubator Identifier"
-                      v-model="params.incubatorIdentifier"
-                      :rules="rulesName"
-                      required
-                    ></v-text-field>
-                  </v-row>
+                  <template v-if="isProduction">
+                    <v-row v-if="isMain">
+                      <v-text-field
+                        outlined
+                        label="Incubator Identifier"
+                        v-model="params.incubatorIdentifier"
+                        :rules="rulesName"
+                        required
+                      ></v-text-field>
+                    </v-row>
+                  </template>
+                  <template v-else>
+                    <v-row>
+                      <v-text-field
+                        outlined
+                        label="Incubator Identifier"
+                        v-model="params.incubatorIdentifier"
+                        :rules="rulesName"
+                        required
+                      ></v-text-field>
+                    </v-row>
+                  </template>
                   <v-row>
                     <v-text-field
                       outlined
@@ -67,7 +94,7 @@
                       <v-avatar left>
                         <v-icon small>priority_high</v-icon>
                       </v-avatar>
-                      {{capsText}}
+                      {{ capsText }}
                     </v-chip>
                   </template>
                   <v-row></v-row>
@@ -77,12 +104,13 @@
                       block
                       @click="submit"
                       :loading="loader"
-                      :class=" { 'primary white--text' : valid}"
+                      :class="{ 'primary white--text': valid }"
                       :disabled="!valid"
                       color="#e4e4e4"
                       style="color:#fff"
                       large
-                    >Login</v-btn>
+                      >Login</v-btn
+                    >
                   </v-row>
                   <v-row class="mt-3">
                     <v-col>
@@ -92,7 +120,8 @@
                         x-small
                         router
                         :to="'/forgot-password/' + params.incubatorIdentifier"
-                      >forgot password?</v-btn>
+                        >forgot password?</v-btn
+                      >
                     </v-col>
                   </v-row>
                 </v-form>
@@ -128,17 +157,22 @@ export default {
       params: {
         incubatorIdentifier: this.$route.params.identifier,
         email: "",
-        password: ""
+        password: "",
       },
       signup: {
-        incubatorIdentifier: ""
+        incubatorIdentifier: "",
       },
       capsText: "",
-      activate: false
+      activate: false,
+      isProduction: false,
     };
   },
   watch: {},
-  created: function() {},
+  created: function() {
+    if (process.env.NODE_ENV === "production") {
+      this.isProduction = true;
+    }
+  },
   mounted: function() {
     this.isEdge = this.$browserDetect.isEdge;
   },
@@ -161,7 +195,7 @@ export default {
       var authUser = {};
       this.axios
         .post(config.baseUri + "/founder-login", this.params)
-        .then(res => {
+        .then((res) => {
           this.$store.state.isLoggedIn = true;
           this.response = res.data.data;
           authUser.role = "INCUBATEE";
@@ -176,7 +210,7 @@ export default {
 
           this.$router.replace("/incubatee/dashboard");
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -185,8 +219,8 @@ export default {
     },
     clear() {
       this.$refs.form.reset();
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
