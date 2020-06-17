@@ -95,6 +95,7 @@
                 dark
                 elevation="5"
                 class="pa-5"
+                shaped
                 color="#00667f"
                 style="padding-top:50px !important;padding-bottom:50px !important;"
               >
@@ -235,7 +236,7 @@ export default {
           photo: "/img/dina.png",
         },
       ],
-      mentors2: []
+      mentors2: [],
     };
   },
   methods: {
