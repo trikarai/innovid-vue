@@ -1,8 +1,9 @@
 <template>
   <v-app>
     <v-container fluid id="loginpage">
-      <v-row align="center" justify="center">
+      <v-row align="center" justify="center" style="margin-top:30px;">
         <v-col
+          cols="12"
           xs="10"
           sm="8"
           md="4"
