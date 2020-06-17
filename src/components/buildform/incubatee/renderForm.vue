@@ -7,18 +7,24 @@
       <v-card class="pa-5 mt-6" :loading="loader">
         <v-card-title class="topaccentform" primary-title>
           <div>
-            <h3 class="headline mb-0">{{formName}}</h3>
+            <h3 class="headline mb-0">{{ formName }}</h3>
           </div>
         </v-card-title>
-        <v-card-text class="subtitle pb-0" v-if="formDesc !==''">
+        <v-card-text class="subtitle pb-0" v-if="formDesc !== ''">
           <b>Description</b>
         </v-card-text>
-        <v-card-text class="subtitle grey--text">{{desc.description}}</v-card-text>
+        <v-card-text class="subtitle grey--text">{{
+          desc.description
+        }}</v-card-text>
         <v-card-text>
           <v-form ref="form" v-model="valid" v-if="!desc.renderAs">
             <template v-for="(field, index) in reOrderField(fields)">
               <v-row :key="index">
-                <field-module :field="field" :index="index" :modeReload="modeReload" />
+                <field-module
+                  :field="field"
+                  :index="index"
+                  :modeReload="modeReload"
+                />
               </v-row>
             </template>
           </v-form>
@@ -32,7 +38,11 @@
                   elevation="2"
                   outlined
                 >
-                  <field-module :field="field" :index="index" :modeReload="modeReload" />
+                  <field-module
+                    :field="field"
+                    :index="index"
+                    :modeReload="modeReload"
+                  />
                 </v-card>
               </template>
             </div>
@@ -41,7 +51,13 @@
         <v-card-actions>
           <!--generic button-->
           <v-spacer></v-spacer>
-          <v-btn v-if="!modeAtom" color="primary" :disabled="!valid" @click="sendtoParent">Submit</v-btn>
+          <v-btn
+            v-if="!modeAtom"
+            color="primary"
+            :disabled="!valid"
+            @click="sendtoParent"
+            >Submit</v-btn
+          >
           <!--atomic journal button-->
           <v-tooltip top>
             <template v-slot:activator="{ on }">
@@ -51,7 +67,8 @@
                 color="primary"
                 :disabled="!valid"
                 @click="sendtoParent2"
-              >Assign Worksheet</v-btn>
+                >Assign Worksheet</v-btn
+              >
             </template>
             <span>Edited Worksheet record won't be saved</span>
           </v-tooltip>
@@ -60,7 +77,8 @@
             color="primary"
             :disabled="!valid"
             @click="sendtoParent"
-          >Save as New Journal</v-btn>
+            >Save as New Journal</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-col>
@@ -88,12 +106,12 @@ export default {
       test: {},
       desc: {
         renderAs: false,
-        description: ""
-      }
+        description: "",
+      },
     };
   },
   components: {
-    FieldModule
+    FieldModule,
   },
   created() {
     bus.$on("getValue", (params, index) => {
@@ -124,8 +142,8 @@ export default {
     sendtoParent2() {
       this.test = this.refactorParams(this.params);
       this.$emit("assignworksheet", this.test);
-    }
-  }
+    },
+  },
 };
 </script>
 

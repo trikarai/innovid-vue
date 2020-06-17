@@ -8,18 +8,32 @@
           <em>* Required field record only to be replaced</em>
         </v-col>-->
         <v-col md="12" v-if="!isReplace">
-          <div :class="{required : field.required}">
-            <b>{{field.name}}</b>
+          <div :class="{ required: field.required }">
+            <b>{{ field.name }}</b>
           </div>
           <template v-for="(file, index) in field.attachedFiles">
             <template v-if="getFileExt(file.fileInfo.path) == 'pdf'">
-              <v-img src="/img/pdf-icon.png" @click="viewPdf(file)" max-width="150" :key="file.id" />
+              <v-img
+                src="/img/pdf-icon.png"
+                @click="viewPdf(file)"
+                max-width="150"
+                :key="file.id"
+              />
             </template>
             <template v-else>
-              <v-img :key="file.id" :src="base_uri+file.fileInfo.path" max-width="350"></v-img>
+              <v-img
+                :key="file.id"
+                :src="base_uri + file.fileInfo.path"
+                max-width="350"
+              ></v-img>
             </template>
             <template v-if="field.required">
-              <v-btn x-small :key="index" color="error" @click="replaceAttached(index)">
+              <v-btn
+                x-small
+                :key="index"
+                color="error"
+                @click="replaceAttached(index)"
+              >
                 <v-icon small left>autorenew</v-icon>Replace
               </v-btn>
             </template>
@@ -40,22 +54,36 @@
             @change="onFilePicked"
           >
             <template v-slot:label>
-              <div :class="{required : field.required}">{{field.name}}</div>
+              <div :class="{ required: field.required }">{{ field.name }}</div>
             </template>
           </v-file-input>
-          <v-btn x-small color="accent" @click="cancelReplaceAttached" v-if="isReplaceBtn">
+          <v-btn
+            x-small
+            color="accent"
+            @click="cancelReplaceAttached"
+            v-if="isReplaceBtn"
+          >
             <v-icon small left>replay</v-icon>cancel replace
           </v-btn>
         </v-col>
       </template>
       <template v-else>
         <v-col md="12" v-if="field.attachedFiles.length > 0">
-          <div :class="{required : field.required}">
-            <b>{{field.name}}</b>
+          <div :class="{ required: field.required }">
+            <b>{{ field.name }}</b>
           </div>
           <template v-for="(file, index) in field.attachedFiles">
-            <v-img :key="file.id" :src="base_uri+file.fileInfo.path" max-width="350"></v-img>
-            <v-btn x-small :key="index" color="error" @click="removeAttached(index)">
+            <v-img
+              :key="file.id"
+              :src="base_uri + file.fileInfo.path"
+              max-width="350"
+            ></v-img>
+            <v-btn
+              x-small
+              :key="index"
+              color="error"
+              @click="removeAttached(index)"
+            >
               <v-icon small left>delete</v-icon>remove
             </v-btn>
           </template>
@@ -75,7 +103,7 @@
             @change="onFilePicked"
           >
             <template v-slot:label>
-              <div :class="{required : field.required}">{{field.name}}</div>
+              <div :class="{ required: field.required }">{{ field.name }}</div>
             </template>
           </v-file-input>
         </v-col>
@@ -102,7 +130,7 @@
       >
         <!-- :rules="[rules.maxSize, rules.minSize, checkRequired]" -->
         <template v-slot:label>
-          <div :class="{required : field.required}">{{field.name}}</div>
+          <div :class="{ required: field.required }">{{ field.name }}</div>
         </template>
       </v-file-input>
       <!-- <span class="subtitle">Min: {{field.minSize}} - Max: {{field.maxSize}} MB</span> -->
@@ -118,7 +146,8 @@
           width="5"
           :value="valueDeterminate"
           color="red"
-        >{{ valueDeterminate }} %</v-progress-circular>
+          >{{ valueDeterminate }} %</v-progress-circular
+        >
       </v-expand-x-transition>
     </v-col>
     <v-col md="4">
@@ -127,7 +156,13 @@
           <v-img src="/img/pdf-icon.png" contain max-height="150" />
         </template>
         <template v-else>
-          <v-img class="ml-5" :src="imageUrl" contain max-width="250" v-if="imageUrl" />
+          <v-img
+            class="ml-5"
+            :src="imageUrl"
+            contain
+            max-width="250"
+            v-if="imageUrl"
+          />
         </template>
       </v-expand-transition>
     </v-col>
@@ -176,29 +211,39 @@ export default {
       ext: "",
       uploadUri: "",
       base_uri: "",
-      isError: true
+      isError: true,
     };
   },
   watch: {
     fileInfo: function() {
-      var params = {
-        fieldId: this.field.id,
-        fileInfoIdList: this.value,
-        type: this.field.type
-      };
-      bus.$emit("getValue", params, this.index);
+      var params = {};
+      if (this.modeReload) {
+        params = {
+          fieldId: this.field.attachmentField.id,
+          fileInfoIdList: this.value,
+          type: this.field.type,
+        };
+        bus.$emit("getValue", params, this.index);
+      } else {
+        params = {
+          fieldId: this.field.id,
+          fileInfoIdList: this.value,
+          type: this.field.type,
+        };
+        bus.$emit("getValue", params, this.index);
+      }
     },
     value() {
       var params;
       if (this.modeReload) {
         params = {
-          fieldId: this.field.id,
-          value: this.value,
-          type: this.field.type
+          fieldId: this.field.attachmentField.id,
+          fileInfoIdList: this.value,
+          type: this.field.type,
         };
+        bus.$emit("getValue", params, this.index);
       }
-      bus.$emit("getValue", params, this.index);
-    }
+    },
   },
   mounted() {
     if (this.field.required) {
@@ -210,14 +255,14 @@ export default {
   created() {
     var mode = sessionStorage.getItem("uploadMode");
     if (process.env.NODE_ENV === "production") {
-      this.base_uri = "https://innov.id/bara-inovasi/storage/app";
+      this.base_uri = window.location.origin + "/bara-inovasi/storage/app";
     } else {
       // this.base_uri = "http://localhost:8001/bara-inovasi/storage/app";
       this.base_uri = "http://localhost/bara-inovasi/storage/app";
     }
     if (this.modeReload) {
       for (var i = 0; i < this.field.attachedFiles.length; i++) {
-        this.value[i] = this.field.attachedFiles[i].fileInfo.id;
+        this.value.push(this.field.attachedFiles[i].fileInfo.id);
       }
     }
     if (mode == "founder") {
@@ -282,16 +327,16 @@ export default {
               // console.log((e.loaded / e.total) * 100);
               app.valueDeterminate = Math.round((e.loaded / e.total) * 100);
             }
-          }
+          },
         })
-        .then(res => {
+        .then((res) => {
           this.uploaded = true;
           this.value[0] = res.data.data.id;
           this.fileInfo = res.data.data;
           this.isError = false;
           this.isReplaceBtn = false;
         })
-        .catch(res => {
+        .catch((res) => {
           this.uploaded = false;
           bus.$emit("callNotif", "error", res);
         })
@@ -319,11 +364,9 @@ export default {
     },
     getFileExt(path) {
       return path.split(".").pop();
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped>
-</style>
-
+<style scoped></style>
