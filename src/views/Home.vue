@@ -116,24 +116,197 @@
                 <div class="container">
                   <v-row style="margin-top:10px;margin-bottom:30px;text-align:center;">
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
+                        
+                        <v-dialog
+                          v-model="dialog"
+                          width="500"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                              class="sbio"
+                              color="primary"
+                              x-small rounded elevation="5"
+                              v-bind="attrs"
+                              v-on="on"
+                            >
+                              short bio
+                            </v-btn>
+                          </template>
+
+                          <v-card>
+                            <v-card-title
+                              class="headline grey lighten-2"
+                              primary-title
+                            >
+                              Dibya Pradana
+                            </v-card-title>
+
+                            <v-card-text class="mt-5">
+                              Dibya Pradana is a specialist in IS/IT Planning and Digital Business Re-engineering. Experienced CEO at PT Jejala Pararta International and Founder/CTO PT Ayomobile Media International. Actively involved as a Consultant at Bappenas and Coordinating Ministry for Economic Affairs. Furthermore, also taking a role as Director Executive at Bandung, Jogja, Makassar Digital Valley under MIKTI.
+                            </v-card-text>
+
+                            <v-divider></v-divider>
+
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                small
+                                color="primary"
+                                text
+                                @click="dialog = false"
+                              >
+                                close
+                              </v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
                         <v-img style="margin:0 auto" max-width="200" src="/img/dibya.png"></v-img>
                         <h3 class="mt-5">Dibya Pradana</h3>
-                        <!-- <p>Frontend Developer</p> -->
+                        <p>CEO PT. Jejala Pararta International and CTO PT. Ayomobile</p>
                       </v-col>
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
+                        <v-dialog
+                          v-model="dialog"
+                          width="500"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                              class="sbio"
+                              color="primary"
+                              x-small rounded elevation="5"
+                              v-bind="attrs"
+                              v-on="on"
+                            >
+                              short bio
+                            </v-btn>
+                          </template>
+
+                          <v-card>
+                            <v-card-title
+                              class="headline grey lighten-2"
+                              primary-title
+                            >
+                              Dibya Pradana
+                            </v-card-title>
+
+                            <v-card-text class="mt-5">
+                              Dibya Pradana is a specialist in IS/IT Planning and Digital Business Re-engineering. Experienced CEO at PT Jejala Pararta International and Founder/CTO PT Ayomobile Media International. Actively involved as a Consultant at Bappenas and Coordinating Ministry for Economic Affairs. Furthermore, also taking a role as Director Executive at Bandung, Jogja, Makassar Digital Valley under MIKTI.
+                            </v-card-text>
+
+                            <v-divider></v-divider>
+
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                small
+                                color="primary"
+                                text
+                                @click="dialog = false"
+                              >
+                                close
+                              </v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
                         <v-img style="margin:0 auto" max-width="200" src="/img/dina.png"></v-img>
                         <h3 class="mt-5">Dina Dellyana</h3>
-                        <!-- <p>Frontend Developer</p> -->
+                        <p>Director, Bussiness Incubator at SBM ITB</p>
                       </v-col>
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
+                        <v-dialog
+                          v-model="dialog"
+                          width="500"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                              class="sbio"
+                              color="primary"
+                              x-small rounded elevation="5"
+                              v-bind="attrs"
+                              v-on="on"
+                            >
+                              short bio
+                            </v-btn>
+                          </template>
+
+                          <v-card>
+                            <v-card-title
+                              class="headline grey lighten-2"
+                              primary-title
+                            >
+                              Dibya Pradana
+                            </v-card-title>
+
+                            <v-card-text class="mt-5">
+                              Dibya Pradana is a specialist in IS/IT Planning and Digital Business Re-engineering. Experienced CEO at PT Jejala Pararta International and Founder/CTO PT Ayomobile Media International. Actively involved as a Consultant at Bappenas and Coordinating Ministry for Economic Affairs. Furthermore, also taking a role as Director Executive at Bandung, Jogja, Makassar Digital Valley under MIKTI.
+                            </v-card-text>
+
+                            <v-divider></v-divider>
+
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                small
+                                color="primary"
+                                text
+                                @click="dialog = false"
+                              >
+                                close
+                              </v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
                         <v-img style="margin:0 auto" max-width="200" src="/img/aditya.png"></v-img>
                         <h3 class="mt-5">M Aditya Arief Nugraha</h3>
-                        <!-- <p>Frontend Developer</p> -->
+                        <p>President Director at PT Gametechno Indonesia</p>
                       </v-col>
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
+                        <v-dialog
+                          v-model="dialog"
+                          width="500"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                              class="sbio"
+                              color="primary"
+                              x-small rounded elevation="5"
+                              v-bind="attrs"
+                              v-on="on"
+                            >
+                              short bio
+                            </v-btn>
+                          </template>
+
+                          <v-card>
+                            <v-card-title
+                              class="headline grey lighten-2"
+                              primary-title
+                            >
+                              Dibya Pradana
+                            </v-card-title>
+
+                            <v-card-text class="mt-5">
+                              Dibya Pradana is a specialist in IS/IT Planning and Digital Business Re-engineering. Experienced CEO at PT Jejala Pararta International and Founder/CTO PT Ayomobile Media International. Actively involved as a Consultant at Bappenas and Coordinating Ministry for Economic Affairs. Furthermore, also taking a role as Director Executive at Bandung, Jogja, Makassar Digital Valley under MIKTI.
+                            </v-card-text>
+
+                            <v-divider></v-divider>
+
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                small
+                                color="primary"
+                                text
+                                @click="dialog = false"
+                              >
+                                close
+                              </v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
                         <v-img style="margin:0 auto" max-width="200" src="/img/andy.png"></v-img>
                         <h3 class="mt-5">M Andy Zaky</h3>
-                        <!-- <p>Frontend Developer</p> -->
+                        <p>CEO Teknopreneur</p>
                       </v-col>
                   </v-row>
                 </div>
@@ -142,24 +315,196 @@
                 <div class="container">
                   <v-row style="margin-top:10px;margin-bottom:30px;text-align:center;">
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
+                        <v-dialog
+                          v-model="dialog"
+                          width="500"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                              class="sbio"
+                              color="primary"
+                              x-small rounded elevation="5"
+                              v-bind="attrs"
+                              v-on="on"
+                            >
+                              short bio
+                            </v-btn>
+                          </template>
+
+                          <v-card>
+                            <v-card-title
+                              class="headline grey lighten-2"
+                              primary-title
+                            >
+                              Dibya Pradana
+                            </v-card-title>
+
+                            <v-card-text class="mt-5">
+                              Dibya Pradana is a specialist in IS/IT Planning and Digital Business Re-engineering. Experienced CEO at PT Jejala Pararta International and Founder/CTO PT Ayomobile Media International. Actively involved as a Consultant at Bappenas and Coordinating Ministry for Economic Affairs. Furthermore, also taking a role as Director Executive at Bandung, Jogja, Makassar Digital Valley under MIKTI.
+                            </v-card-text>
+
+                            <v-divider></v-divider>
+
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                small
+                                color="primary"
+                                text
+                                @click="dialog = false"
+                              >
+                                close
+                              </v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
                         <v-img style="margin:0 auto" max-width="200" src="/img/andika.png"></v-img>
                         <h3 class="mt-5">St. Andika Sutedjo</h3>
-                        <!-- <p>Frontend Developer</p> -->
+                        <p>CEO PT. Smart Meter Indonesia</p>
                       </v-col>
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
+                        <v-dialog
+                          v-model="dialog"
+                          width="500"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                              class="sbio"
+                              color="primary"
+                              x-small rounded elevation="5"
+                              v-bind="attrs"
+                              v-on="on"
+                            >
+                              short bio
+                            </v-btn>
+                          </template>
+
+                          <v-card>
+                            <v-card-title
+                              class="headline grey lighten-2"
+                              primary-title
+                            >
+                              Dibya Pradana
+                            </v-card-title>
+
+                            <v-card-text class="mt-5">
+                              Dibya Pradana is a specialist in IS/IT Planning and Digital Business Re-engineering. Experienced CEO at PT Jejala Pararta International and Founder/CTO PT Ayomobile Media International. Actively involved as a Consultant at Bappenas and Coordinating Ministry for Economic Affairs. Furthermore, also taking a role as Director Executive at Bandung, Jogja, Makassar Digital Valley under MIKTI.
+                            </v-card-text>
+
+                            <v-divider></v-divider>
+
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                small
+                                color="primary"
+                                text
+                                @click="dialog = false"
+                              >
+                                close
+                              </v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
                         <v-img style="margin:0 auto" max-width="200" src="/img/vita.png"></v-img>
                         <h3 class="mt-5">Vita Subiyakti</h3>
-                        <!-- <p>Frontend Developer</p> -->
+                        <p>Executive Director at SixSense Restaurant</p>
                       </v-col>
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
+                        <v-dialog
+                          v-model="dialog"
+                          width="500"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                              class="sbio"
+                              color="primary"
+                              x-small rounded elevation="5"
+                              v-bind="attrs"
+                              v-on="on"
+                            >
+                              short bio
+                            </v-btn>
+                          </template>
+
+                          <v-card>
+                            <v-card-title
+                              class="headline grey lighten-2"
+                              primary-title
+                            >
+                              Dibya Pradana
+                            </v-card-title>
+
+                            <v-card-text class="mt-5">
+                              Dibya Pradana is a specialist in IS/IT Planning and Digital Business Re-engineering. Experienced CEO at PT Jejala Pararta International and Founder/CTO PT Ayomobile Media International. Actively involved as a Consultant at Bappenas and Coordinating Ministry for Economic Affairs. Furthermore, also taking a role as Director Executive at Bandung, Jogja, Makassar Digital Valley under MIKTI.
+                            </v-card-text>
+
+                            <v-divider></v-divider>
+
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                small
+                                color="primary"
+                                text
+                                @click="dialog = false"
+                              >
+                                close
+                              </v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
                         <v-img style="margin:0 auto" max-width="200" src="/img/zaenal.png"></v-img>
                         <h3 class="mt-5">Zaenal Arifin</h3>
-                        <!-- <p>Frontend Developer</p> -->
+                        <p>Co-Founder Andromedia</p>
                       </v-col>
                       <v-col cols="12" xs="12" sm="12" md="3" lg="3">
-                        <!-- <v-img style="margin:0 auto" max-width="200" src="/img/mentor.png"></v-img>
-                        <h3 class="mt-5">Mentor 1</h3>
-                        <p>Frontend Developer</p> -->
+                        <v-dialog
+                          v-model="dialog"
+                          width="500"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                              class="sbio"
+                              color="primary"
+                              x-small rounded elevation="5"
+                              v-bind="attrs"
+                              v-on="on"
+                            >
+                              short bio
+                            </v-btn>
+                          </template>
+
+                          <v-card>
+                            <v-card-title
+                              class="headline grey lighten-2"
+                              primary-title
+                            >
+                              Dibya Pradana
+                            </v-card-title>
+
+                            <v-card-text class="mt-5">
+                              Dibya Pradana is a specialist in IS/IT Planning and Digital Business Re-engineering. Experienced CEO at PT Jejala Pararta International and Founder/CTO PT Ayomobile Media International. Actively involved as a Consultant at Bappenas and Coordinating Ministry for Economic Affairs. Furthermore, also taking a role as Director Executive at Bandung, Jogja, Makassar Digital Valley under MIKTI.
+                            </v-card-text>
+
+                            <v-divider></v-divider>
+
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                small
+                                color="primary"
+                                text
+                                @click="dialog = false"
+                              >
+                                close
+                              </v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
+                        <v-img style="margin:0 auto" max-width="200" src="/img/arief.png"></v-img>
+                        <h3 class="mt-5">Arief Widhiyasa</h3>
+                        <p>CEO Agate</p>
                       </v-col>
                   </v-row>
                 </div>
@@ -252,7 +597,8 @@ export default {
   name: "App",
   data: function() {
     return {
-      title: "Home"
+      title: "Home",
+      dialog: false
     };
   }
 };
@@ -309,6 +655,13 @@ export default {
   border-top: 40px solid rgb(232, 232, 232);
   border-left: 40px solid #fff;
   width: 50%;
+}
+
+.sbio {
+  position: relative;
+  right: 101px;
+  top: 182px;
+  z-index: 9;
 }
 
 </style>
