@@ -129,7 +129,7 @@
           >
             <div class="container">
               <v-row
-                style="margin-top:10px;margin-bottom:30px;text-align:center;"
+                style="margin-bottom:30px;text-align:center;"
               >
                 <v-col
                   cols="12"
