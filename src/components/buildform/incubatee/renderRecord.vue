@@ -132,7 +132,7 @@
             elevation="2"
             outlined
           >
-            <v-card-title>{{ data.field.name }}</v-card-title>
+            <v-card-title><span class="taitel">{{ data.field.name }}</span></v-card-title>
             <v-card-text v-if="data.type == 'textarea'">{{
               data.value
             }}</v-card-text>
@@ -450,5 +450,17 @@ export default {
   margin-right: 6px;
   top: 2px;
   position: relative;
+}
+.taitel {
+  background: #8b8b8b;
+  color: #fff;
+  padding: 19px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  font-size: 12px;
+  border-left-style: solid;
+  border-left-color: black;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 </style>
