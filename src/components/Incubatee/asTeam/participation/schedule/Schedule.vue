@@ -6,7 +6,13 @@
           color="primary"
           router
           small
-          :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + $route.params.cohortId + '/mentoring' "
+          :to="
+            '/incubatee/team/' +
+              $route.params.teamId +
+              '/participation/' +
+              $route.params.cohortId +
+              '/mentoring'
+          "
         >
           <v-icon left>add</v-icon>Propose New Mentoring Schedule to Mentor
         </v-btn>
@@ -21,7 +27,9 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col><span class="title">Mentoring Agenda: Approved Schedule </span></v-col>
+      <v-col
+        ><span class="title">Mentoring Agenda: Approved Schedule </span></v-col
+      >
       <!-- <v-col><pre>{{dataList.list}}</pre></v-col> -->
     </v-row>
     <v-row>
@@ -33,7 +41,7 @@
           :items="dataList.list"
           class="elevation-1"
         >
-          <template v-slot:item.name="{item}">
+          <template v-slot:item.name="{ item }">
             <v-btn
               class="elevation-0 mr-2"
               fab
@@ -43,9 +51,9 @@
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>
-            {{item.mentoring.name}}
+            {{ item.mentoring.name }}
           </template>
-          <template v-slot:item.startTime="{item}">
+          <template v-slot:item.startTime="{ item }">
             <v-row class="my-3">
               <v-icon left color="primary">calendar_today</v-icon>
               {{ item.startTime | moment("MMMM Do YYYY") }}
@@ -55,7 +63,7 @@
               {{ item.startTime | moment("h:mm a") }}
             </v-row>
           </template>
-          <template v-slot:item.endTime="{item}">
+          <template v-slot:item.endTime="{ item }">
             <v-row class="my-3">
               <v-icon left color="primary">calendar_today</v-icon>
               {{ item.endTime | moment("MMMM Do YYYY") }}
@@ -65,7 +73,22 @@
               {{ item.endTime | moment("h:mm a") }}
             </v-row>
           </template>
-          <template v-slot:item.action="{item}">
+          <template v-slot:item.action="{ item }">
+            <v-btn
+              class="mr-2"
+              small
+              color="primary"
+              :to="{
+                name: 'team-mentoring-conference',
+                params: {
+                  teamId: $route.params.teamId,
+                  cohortId: $route.params.cohortId,
+                  scheduleId: item.id,
+                },
+              }"
+            >
+              <v-icon>mdi-message-video</v-icon>
+            </v-btn>
             <v-btn
               v-if="item.participantMentoringReport == null"
               class="ml-2"
@@ -86,7 +109,11 @@
     <!-- <v-divider></v-divider> -->
 
     <v-row>
-      <v-col><span class="title">Mentoring Agenda: Waiting for Schedule Approval</span></v-col>
+      <v-col
+        ><span class="title"
+          >Mentoring Agenda: Waiting for Schedule Approval</span
+        ></v-col
+      >
     </v-row>
     <v-row>
       <v-col>
@@ -98,7 +125,7 @@
           :items="dataList2.list"
           class="elevation-1"
         >
-          <template v-slot:item.name="{item}">
+          <template v-slot:item.name="{ item }">
             <!-- <v-btn
               class="elevation-0 mr-2"
               fab
@@ -108,9 +135,9 @@
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>-->
-            {{item.mentoring.name}}
+            {{ item.mentoring.name }}
           </template>
-          <template v-slot:item.startTime="{item}">
+          <template v-slot:item.startTime="{ item }">
             <v-row class="my-3">
               <v-icon left color="primary">calendar_today</v-icon>
               {{ item.startTime | moment("MMMM Do YYYY") }}
@@ -120,7 +147,7 @@
               {{ item.startTime | moment("h:mm a") }}
             </v-row>
           </template>
-          <template v-slot:item.endTime="{item}">
+          <template v-slot:item.endTime="{ item }">
             <v-row class="my-3">
               <v-icon left color="primary">calendar_today</v-icon>
               {{ item.endTime | moment("MMMM Do YYYY") }}
@@ -130,18 +157,28 @@
               {{ item.endTime | moment("h:mm a") }}
             </v-row>
           </template>
-          <template v-slot:item.status="{item}">
-            <v-chip small>{{item.status}}</v-chip>
+          <template v-slot:item.status="{ item }">
+            <v-chip small>{{ item.status }}</v-chip>
           </template>
-          <template v-slot:item.action="{item}">
+          <template v-slot:item.action="{ item }">
             <template v-if="item.status != 'scheduled'">
               <template v-if="item.status !== 'proposed'">
                 <template v-if="item.status !== 'cancelled'">
-                  <v-btn class="ml-2" small color="primary" @click="leftAct(item, 'accept')">
+                  <v-btn
+                    class="ml-2"
+                    small
+                    color="primary"
+                    @click="leftAct(item, 'accept')"
+                  >
                     <v-icon small left>check</v-icon>Accept
                   </v-btn>
                 </template>
-                <v-btn class="ml-2" small color="primary" @click="reproposeAct(item)">
+                <v-btn
+                  class="ml-2"
+                  small
+                  color="primary"
+                  @click="reproposeAct(item)"
+                >
                   <v-icon small left>update</v-icon>Re-schedule
                 </v-btn>
               </template>
@@ -173,9 +210,12 @@
           <p class="text-capitalize"></p>
         </v-card-title>
         <v-card-text v-if="loader">
-          <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
+          <v-progress-linear
+            :indeterminate="true"
+            color="primary"
+          ></v-progress-linear>
         </v-card-text>
-        <v-card-text>{{dataSingle}}</v-card-text>
+        <v-card-text>{{ dataSingle }}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
@@ -188,13 +228,25 @@
     <v-dialog v-model="dialogDelete" width="300" :persistent="true">
       <v-card :loading="tableLoad">
         <v-card-title>
-          <p class="text-capitalize">{{leftAction}}</p>
+          <p class="text-capitalize">{{ leftAction }}</p>
         </v-card-title>
-        <v-card-text>{{leftName}}</v-card-text>
+        <v-card-text>{{ leftName }}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn v-if="leftAction == 'cancel'" text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
-          <v-btn v-if="leftAction == 'accept'" text color="red" @click="acceptAccount(leftId)">Yes</v-btn>
+          <v-btn
+            v-if="leftAction == 'cancel'"
+            text
+            color="red"
+            @click="deleteAccount(leftId)"
+            >Yes</v-btn
+          >
+          <v-btn
+            v-if="leftAction == 'accept'"
+            text
+            color="red"
+            @click="acceptAccount(leftId)"
+            >Yes</v-btn
+          >
           <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
@@ -217,18 +269,21 @@
           </v-btn>
         </v-card-title>
         <v-card-text v-if="loader">
-          <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
+          <v-progress-linear
+            :indeterminate="true"
+            color="primary"
+          ></v-progress-linear>
         </v-card-text>
         <v-card-text>
           <p>
             <b>Mentoring Name</b>
             <br />
-            {{dataSingle.mentoring.name}}
+            {{ dataSingle.mentoring.name }}
           </p>
           <p>
             <b>Mentor Name</b>
             <br />
-            {{dataSingle.mentor.personnel.name}}
+            {{ dataSingle.mentor.personnel.name }}
           </p>
           <b>Offered Schedule</b>
 
@@ -432,7 +487,13 @@
           </v-form>
         </v-card-text>
         <v-card-actions class="pa-5">
-          <v-btn block :disabled="!valid" color="primary" @click="submitIncidentalMentoring">Report</v-btn>
+          <v-btn
+            block
+            :disabled="!valid"
+            color="primary"
+            @click="submitIncidentalMentoring"
+            >Report</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -460,11 +521,11 @@ export default {
         mentoring: { name: "" },
         mentor: {
           personnel: {
-            name: ""
-          }
+            name: "",
+          },
         },
         startTime: "",
-        endTime: ""
+        endTime: "",
       },
       tableLoad: false,
       tableLoad2: false,
@@ -474,7 +535,7 @@ export default {
         { text: "Mentor", value: "mentor.personnel.name", sortable: false },
         { text: "startTime", value: "startTime", sortable: false },
         { text: "endTime", value: "endTime", sortable: false },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
       dialogForm: false,
       dialogDelete: false,
@@ -485,12 +546,12 @@ export default {
       leftName: "",
       leftAction: "",
       params: {
-        startTime: ""
+        startTime: "",
       },
       incidentalParams: {
         mentoringId: "",
         mentorId: "",
-        startTime: ""
+        startTime: "",
       },
       mentoringLoad: false,
       mentorings: { total: 0, list: [] },
@@ -498,7 +559,7 @@ export default {
       mentors: { total: 0, list: [] },
       date: "",
       time: "",
-      nowDate: new Date().toISOString().slice(0, 10)
+      nowDate: new Date().toISOString().slice(0, 10),
     };
   },
   watch: {
@@ -515,9 +576,9 @@ export default {
           this.$route.params.teamId +
           "/participation/" +
           this.participationId +
-          "/schedule"
+          "/schedule",
       });
-    }
+    },
   },
   mounted: function() {
     this.getDataList();
@@ -539,10 +600,10 @@ export default {
             this.$route.params.cohortId +
             "/mentoring-schedules",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.dataList = res.data.data;
           } else {
@@ -565,10 +626,10 @@ export default {
             this.$route.params.cohortId +
             "/negotiate-mentoring-schedules",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.dataList2 = res.data.data;
           } else {
@@ -590,7 +651,7 @@ export default {
           "/participation/" +
           this.$route.params.cohortId +
           "/schedule/" +
-          id
+          id,
       });
     },
     openNegoDetail(id) {
@@ -609,13 +670,13 @@ export default {
             "/negotiate-mentoring-schedules/" +
             id,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.dataSingle = res.data.data;
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -640,7 +701,7 @@ export default {
             "/negotiate-mentoring-schedules/" +
             id,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
@@ -651,7 +712,7 @@ export default {
           );
           this.refresh();
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -673,7 +734,7 @@ export default {
             this.leftAction,
           {},
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
@@ -684,7 +745,7 @@ export default {
           );
           this.refresh();
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -709,14 +770,14 @@ export default {
             "/re-propose",
           this.params,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
           bus.$emit("callNotif", "info", "Successfully Repropose Schedule");
           this.refresh();
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -739,10 +800,10 @@ export default {
             this.$route.params.cohortId +
             "/mentorings",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.mentorings = res.data.data;
           } else {
@@ -765,10 +826,10 @@ export default {
             this.$route.params.cohortId +
             "/mentors",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.mentors = res.data.data;
           } else {
@@ -793,13 +854,13 @@ export default {
           this.incidentalParams,
 
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
           this.refresh();
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -813,7 +874,7 @@ export default {
       this.dialogDetail = false;
       this.getDataList();
       this.getDataList2();
-    }
-  }
+    },
+  },
 };
 </script>
