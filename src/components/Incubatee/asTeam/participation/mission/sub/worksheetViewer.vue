@@ -34,7 +34,10 @@
       <v-card-text v-if="!loadingSelectedWorksheet">
         <template v-if="!editWS">
           <span class="title mb-3">{{ worksheet.name }}</span>
-          <render-record :fields="fields" :canvasMode="desc.renderAs" />
+          <render-record
+            :fields="fields"
+            :canvasMode="dataList.worksheetForm.description"
+          />
         </template>
         <template v-else>
           <!-- <pre>{{ worksheet }}</pre> -->
