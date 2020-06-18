@@ -73,6 +73,7 @@ export default {
       type: Boolean,
       default: false,
     },
+    missionId: { type: String, required: true },
     // loader: {
     //   type: Boolean,
     // },
@@ -97,7 +98,7 @@ export default {
   },
   watch: {
     journal: "getSelectedWorksheet",
-    // missionId: "getJournals"
+    missionId: "getJournals",
   },
   created() {
     this.dataList = JSON.parse(JSON.stringify(this.dataMission));
@@ -108,6 +109,7 @@ export default {
   },
   methods: {
     getJournals() {
+      this.journals = { total: 0, list: [] };
       this.loadingJournals = true;
       this.axios
         .get(
@@ -118,7 +120,7 @@ export default {
             this.$route.params.cohortId +
             "/journals",
           {
-            params: { missionId: this.$route.params.missionId },
+            params: { missionId: this.missionId },
             headers: auth.getAuthHeader(),
           }
         )
