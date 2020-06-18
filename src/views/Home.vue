@@ -122,7 +122,7 @@
             List Mentor
           </div>
         </div>
-        <v-carousel height="auto" hide-delimiters>
+        <v-carousel height="auto" hide-delimiters :show-arrows="false">
           <v-carousel-item
             v-for="(carousel, index) in carousels"
             :key="index"
@@ -135,8 +135,8 @@
                   cols="12"
                   xs="12"
                   sm="12"
-                  md="3"
-                  lg="3"
+                  md="4"
+                  lg="4"
                   v-for="mentor in carousel.mentors"
                   :key="mentor.id"
                 >
@@ -226,6 +226,14 @@ export default {
         {
           mentors: [
             {
+              id: "117",
+              name: "Arief Widhiyasa",
+              role: "CEO Agate",
+              bio:
+                "After participating in the International Olympics of Informatics. Arief Widhiyasa found that his true calling was in games. In 2009, along with his 18 closest friends, he co-foundeded Agate, and is Agate's CEO today. In 2016, he was nominated as one of the Forbes 30 under 30 Asia. Agate currently become the leading and biggest Indonesian game development in Indonesia. Right now Indonesian game industry is rapidly growing and his goal is to create a sustainable game ecosystem by working together with Indonesian Game Association and the Indonesian Government.",
+              photo: "/img/arief.png",
+            },
+            {
               id: "111",
               name: "Dibya Pradana",
               role:
@@ -243,12 +251,47 @@ export default {
               photo: "/img/dina.png",
             },
             {
+              id: "119",
+              name: "Indra Purnama",
+              role: "CEO PT. Barapraja",
+              bio:
+                "Experienced in tech incubation since 2009, in Indonesia and Asia Region (Lean Startup Machine, Bandung Digital Valley, BEKUP, Project BrainChild, etc). Customer Development, Lean Startup, Metrics & Strategy are among his specializations.",
+              photo: "/img/indra.png",
+            },
+            {
+              id: "116",
+              name: "M Aditya Arief Nugraha",
+              role: "President Director at PT Gametechno Indonesia",
+              bio:
+                "M Aditya Arief Nugraha is Technology & Business Enthusiast. Actively working as President Director at PT Gametechno Indonesia. Also involved in PT AINO Indonesia as Comissioner.",
+              photo: "/img/aditya.png",
+            },
+            {
               id: "113",
               name: "Muhammad Andy Zaky",
               role: "CEO Teknopreneur",
               bio:
                 "M Andy Zaky is experienced C-level with a demonstrated history of working in the tech industry. Also actively investing and become mentor and/or member of board commissioner of some prominent digital startups in Indonesia. Furthermore, also  taking role as Vice Secretary of Indonesia National ICT Council (WANTIKNASl) and General Secretary of MIKTI (Indonesia Digital Creative Industries Society) as part of contribution to strengthen the digital industry ecosystem.",
               photo: "/img/andy.png",
+            },
+            
+            {
+              id: "115",
+              name: "St. Andika Sutedjo",
+              role: "CEO PT Smart Meter Indonesia",
+              bio:
+                "St. Andika Sutedjo is CEO at PT Smart Meter Indonesia. Actively involved in several awarding, such as Winner of Indonesia ICT Award – INAICTA 2008, Nominator Asia Pasific ICT Award – APICTA 2008, and Winner of Indonesia ICT Award – INAICTA 2009",
+              photo: "/img/andika.png",
+            },
+            
+            
+            {
+              id: "118",
+              name: "Vita Subiyakti",
+              role: "Executive Director at SixSense Restaurant",
+              bio:
+                "Vita Subiyakti is Co-Founder in BOTIKA and also Executive Director at SixSense Restaurant. Actively involved at Soroptimist International of the South West Pacific as Secretary. Furthermore, also taking role as Marketing Director at RuangKerja Software Engineering and Managing Director at Best Retail Supply",
+              photo: "/img/vita.png",
             },
             {
               id: "114",
@@ -258,6 +301,7 @@ export default {
                 "Zaenal Arifin is Co-Founder at Andromedia and also Gerdhu Inc. Furthermore, also an alumnus at Apple Developer Academy",
               photo: "/img/zaenal.png",
             },
+            
           ],
         },
         {
