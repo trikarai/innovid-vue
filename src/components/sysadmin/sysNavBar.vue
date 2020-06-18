@@ -147,7 +147,8 @@ export default {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
     logout: function() {
-      localStorage.removeItem("lbUser");
+      this.$vuetify.theme.dark = false;
+      localStorage.clear();
       this.$router.replace({ path: "/" });
     }
   }

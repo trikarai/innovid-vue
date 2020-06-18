@@ -304,6 +304,7 @@ export default {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
     logout: function() {
+      this.$vuetify.theme.dark = false;
       localStorage.clear();
       this.$router.replace({ path: "/" });
     }
