@@ -13,7 +13,11 @@
         ></v-select>
       </v-col>
       <v-col md="6">
-        <v-btn v-if="dataMentorships.total != 0" color="primary" @click="openIncidental()">
+        <v-btn
+          v-if="dataMentorships.total != 0"
+          color="primary"
+          @click="openIncidental()"
+        >
           <v-icon left>add</v-icon>Report Incidental Mentoring
         </v-btn>
       </v-col>
@@ -27,7 +31,7 @@
           :items="schedulementorings.list"
           class="elevation-1"
         >
-          <template v-slot:item.name="{item}">
+          <template v-slot:item.name="{ item }">
             <v-btn
               class="elevation-0 mr-2"
               fab
@@ -37,9 +41,9 @@
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>
-            {{item.mentoring.name}}
+            {{ item.mentoring.name }}
           </template>
-          <template v-slot:item.startTime="{item}">
+          <template v-slot:item.startTime="{ item }">
             <v-row class="my-3">
               <v-icon left color="primary">calendar_today</v-icon>
               {{ item.startTime | moment("MMMM Do YYYY") }}
@@ -49,7 +53,7 @@
               {{ item.startTime | moment("h:mm a") }}
             </v-row>
           </template>
-          <template v-slot:item.endTime="{item}">
+          <template v-slot:item.endTime="{ item }">
             <v-row class="my-3">
               <v-icon left color="primary">calendar_today</v-icon>
               {{ item.endTime | moment("MMMM Do YYYY") }}
@@ -59,7 +63,21 @@
               {{ item.endTime | moment("h:mm a") }}
             </v-row>
           </template>
-          <template v-slot:item.action="{item}">
+          <template v-slot:item.action="{ item }">
+            <v-btn
+              class="mr-2"
+              small
+              color="primary"
+              :to="{
+                name: 'mentor-schedule-conference',
+                params: {
+                  mentorshipId: selectedCohort.id,
+                  scheduleId: item.id,
+                },
+              }"
+            >
+              <v-icon>mdi-message-video</v-icon>
+            </v-btn>
             <v-btn
               v-if="!item.containMentorMentoringReport"
               class="ml-2"
@@ -86,8 +104,10 @@
           :items="negotiateschedulementorings.list"
           class="elevation-1"
         >
-          <template v-slot:item.name="{item}">{{item.mentoring.name}}</template>
-          <template v-slot:item.startTime="{item}">
+          <template v-slot:item.name="{ item }">{{
+            item.mentoring.name
+          }}</template>
+          <template v-slot:item.startTime="{ item }">
             <v-row class="my-3">
               <v-icon left color="primary">calendar_today</v-icon>
               {{ item.startTime | moment("MMMM Do YYYY") }}
@@ -97,7 +117,7 @@
               {{ item.startTime | moment("h:mm a") }}
             </v-row>
           </template>
-          <template v-slot:item.endTime="{item}">
+          <template v-slot:item.endTime="{ item }">
             <v-row class="my-3">
               <v-icon left color="primary">calendar_today</v-icon>
               {{ item.endTime | moment("MMMM Do YYYY") }}
@@ -107,15 +127,19 @@
               {{ item.endTime | moment("h:mm a") }}
             </v-row>
           </template>
-          <template v-slot:item.status="{item}">
-            <v-chip x-small>{{item.status}}</v-chip>
+          <template v-slot:item.status="{ item }">
+            <v-chip x-small>{{ item.status }}</v-chip>
           </template>
-          <template v-slot:item.action="{item}">
+          <template v-slot:item.action="{ item }">
             <template v-if="!item.concluded">
               <v-row>
                 <v-col>
                   <v-row>
-                    <v-btn small color="primary" @click="leftAct(item, 'accept')">
+                    <v-btn
+                      small
+                      color="primary"
+                      @click="leftAct(item, 'accept')"
+                    >
                       <v-icon small left>check</v-icon>Accept
                     </v-btn>
                   </v-row>
@@ -127,7 +151,12 @@
                     </v-btn>
                   </v-row>
                   <v-row>
-                    <v-btn class="mt-2" small color="warning" @click="leftAct(item, 'reject')">
+                    <v-btn
+                      class="mt-2"
+                      small
+                      color="warning"
+                      @click="leftAct(item, 'reject')"
+                    >
                       <v-icon small left>block</v-icon>Reject
                     </v-btn>
                   </v-row>
@@ -154,9 +183,9 @@
     <v-dialog v-model="dialogAction" width="300" :persistent="true">
       <v-card :loading="actionLoad">
         <v-card-title>
-          <p class="text-capitalize">{{leftAction}}</p>
+          <p class="text-capitalize">{{ leftAction }}</p>
         </v-card-title>
-        <v-card-text>{{leftName}}</v-card-text>
+        <v-card-text>{{ leftName }}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn text color="red" @click="executeAction(leftId)">Yes</v-btn>
@@ -178,7 +207,7 @@ import OfferMentoring from "./dialog/DialogOffer";
 export default {
   components: {
     IncidentalMentoring,
-    OfferMentoring
+    OfferMentoring,
   },
   data() {
     return {
@@ -187,17 +216,17 @@ export default {
         id: "",
         mentoring: {
           id: "",
-          name: "1"
+          name: "1",
         },
         participant: {
           id: "",
           team: {
             id: "",
-            name: ""
-          }
+            name: "",
+          },
         },
         startTime: "",
-        endTime: ""
+        endTime: "",
       },
       dialogAction: false,
       actionLoad: false,
@@ -208,7 +237,7 @@ export default {
         { text: "Team", value: "participant.team.name", sortable: false },
         { text: "startTime", value: "startTime", sortable: false },
         { text: "endTime", value: "endTime", sortable: false },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
       negotiateschedulementorings: { total: 0, list: [] },
       negotiatescheduleHeaders: [
@@ -217,7 +246,7 @@ export default {
         { text: "startTime", value: "startTime", sortable: false },
         { text: "endTime", value: "endTime", sortable: false },
         { text: "status", value: "status", sortable: false },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
       dataMentorships: { total: 0, list: [] },
       scheduleLoad: false,
@@ -226,12 +255,12 @@ export default {
         id: "",
         program: {
           id: "",
-          name: ""
-        }
+          name: "",
+        },
       },
       leftId: "",
       leftName: "",
-      leftAction: ""
+      leftAction: "",
     };
   },
   watch: {
@@ -240,7 +269,7 @@ export default {
     selectedCohort() {
       this.getScheduleMentorings();
       this.getNegotiateScheduleMentorings();
-    }
+    },
   },
   mounted() {
     this.getMentorship();
@@ -253,9 +282,9 @@ export default {
       this.scheduleLoad = true;
       this.axios
         .get(config.baseUri + "/personnel/mentorships", {
-          headers: auth.getAuthHeader()
+          headers: auth.getAuthHeader(),
         })
-        .then(res => {
+        .then((res) => {
           this.dataMentorships = res.data.data;
           this.selectedCohort = res.data.data.list[0];
           this.getScheduleMentorings();
@@ -275,10 +304,10 @@ export default {
             this.selectedCohort.id +
             "/schedules",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.schedulementorings = res.data.data;
         })
         .catch(() => {})
@@ -295,10 +324,10 @@ export default {
             this.selectedCohort.id +
             "/negotiate-schedules",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.negotiateschedulementorings = res.data.data;
         })
         .catch(() => {})
@@ -311,7 +340,7 @@ export default {
     },
     openDetail(id) {
       this.$router.push({
-        path: "/personnel/mentor/" + this.selectedCohort.id + "/schedule/" + id
+        path: "/personnel/mentor/" + this.selectedCohort.id + "/schedule/" + id,
       });
     },
     leftAct(item, action) {
@@ -333,7 +362,7 @@ export default {
             this.leftAction,
           {},
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
@@ -344,7 +373,7 @@ export default {
           );
           this.$emit("refresh");
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -361,9 +390,8 @@ export default {
       this.dialogAction = false;
       this.getScheduleMentorings();
       this.getNegotiateScheduleMentorings();
-    }
-  }
+    },
+  },
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>
