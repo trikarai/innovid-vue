@@ -2,6 +2,8 @@
   <v-row>
     <v-col cols="12" lg="4">
       <v-select
+        background-color="#fff"
+        dense
         :loading="loadingJournals"
         :items="journals.list"
         item-text="worksheet.name"
@@ -13,16 +15,16 @@
       <!-- {{ journal }} -->
     </v-col>
     <v-col cols="12" lg="2">
-      <v-btn class="mt-4" small color="primary" @click="addNewWorksheet"
+      <v-btn style="margin-top:6px;" small color="primary" @click="addNewWorksheet"
         >Add New</v-btn
       >
     </v-col>
     <v-col cols="12" lg="12" md="12">
-      <v-card-text v-if="loadingSelectedWorksheet">
+      <v-card-text class="pa-0" v-if="loadingSelectedWorksheet">
         <v-skeleton-loader type="card" />
       </v-card-text>
       <template v-if="!loadingSelectedWorksheet">
-        <v-card-actions v-if="worksheetId !== ''">
+        <v-card-actions class="pa-0" v-if="worksheetId !== ''">
           <v-btn small color="accent" v-if="!editWS" @click="editWorksheet">
             <v-icon small left>edit</v-icon>Edit Records
           </v-btn>
@@ -31,10 +33,10 @@
           </v-btn>
         </v-card-actions>
       </template>
-      <v-card-text v-if="!loadingSelectedWorksheet">
+      <v-card-text class="pa-0 pt-5" v-if="!loadingSelectedWorksheet">
         <template v-if="!editWS">
-          <span class="title mb-3">{{ worksheet.name }}</span>
-          <render-record
+          <span class="title">{{ worksheet.name }}</span>
+          <render-record class="mt-2"
             :fields="fields"
             :canvasMode="dataList.worksheetForm.description"
           />
