@@ -62,7 +62,7 @@ export default {
             "/program-participations/" +
             this.$route.params.cohortId +
             "/missions/" +
-            this.$route.params.missionId +
+            this.missionId +
             "/learning-materials",
           {
             headers: auth.getAuthHeader(),

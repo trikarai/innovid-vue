@@ -4,8 +4,28 @@
       <v-col cols="12" lg="12" md="6">
         <v-card class="pa-3" :loading="tableLoad">
           <v-card-title primary-title>
-            {{ dataList.name }}
-            <v-spacer></v-spacer>
+            <v-row justify="space-between">
+              <v-col cols="12" lg="10">{{ dataList.name }}</v-col>
+              <v-col cols="12" lg="2">
+                <v-btn
+                  icon
+                  v-if="dataList.position !== '1'"
+                  @click="gotoMissionByPosPrev(dataList.position)"
+                >
+                  <v-icon>mdi-triangle mdi-rotate-270</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  @click="gotoMissionByPosNext(dataList.position)"
+                  v-if="
+                    dataList.position !==
+                      $store.getters.getMissionLength.toString()
+                  "
+                >
+                  <v-icon>mdi-triangle mdi-rotate-90</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
             <span class="dot2"></span>
             <span class="dot1 ml-1"></span>
           </v-card-title>
@@ -44,7 +64,8 @@
                 <v-col cols="12" lg="12" v-if="!isNewWorksheet">
                   <worksheet-viewer
                     :isNewWorksheet.sync="isNewWorksheet"
-                    :dataMission="dataList"
+                    :dataMission.sync="dataList"
+                    :missionId.sync="dataList.id"
                   />
                 </v-col>
                 <v-col v-else>
@@ -164,6 +185,15 @@ export default {
   },
   methods: {
     getDataList() {
+      this.tab = "tab-1";
+      // this.componentKey += 1;
+      if (this.$route.params.missionPos) {
+        this.getDataListByPosition();
+      } else {
+        this.getDataListById();
+      }
+    },
+    getDataListById() {
       this.tableLoad = true;
       this.axios
         .get(
@@ -172,8 +202,33 @@ export default {
             this.$route.params.teamId +
             "/program-participations/" +
             this.$route.params.cohortId +
-            "/missions/" +
+            "/missions/by-id/" +
             this.$route.params.missionId,
+          {
+            headers: auth.getAuthHeader(),
+          }
+        )
+        .then((res) => {
+          this.dataList = res.data.data;
+          Object.assign(this.dataListTemp, this.dataList);
+          this.previousMission = res.data.data.previousMission;
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.tableLoad = false;
+        });
+    },
+    getDataListByPosition() {
+      this.tableLoad = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/missions/by-position/" +
+            this.$route.params.missionPos,
           {
             headers: auth.getAuthHeader(),
           }
@@ -294,6 +349,30 @@ export default {
         .finally(() => {
           this.tableLoad = false;
         });
+    },
+    gotoMissionByPosNext(pos) {
+      var next = parseInt(pos) + 1;
+      // eslint-disable-next-line no-console
+      // console.log("next pos is " + pos);
+      this.$router.push({
+        name: "team-misssion-detail-pos",
+        params: {
+          teamId: this.$route.params.teamId,
+          cohortId: this.$route.params.cohortId,
+          missionPos: next,
+        },
+      });
+    },
+    gotoMissionByPosPrev(pos) {
+      var prev = parseInt(pos) - 1;
+      this.$router.push({
+        name: "team-misssion-detail-pos",
+        params: {
+          teamId: this.$route.params.teamId,
+          cohortId: this.$route.params.cohortId,
+          missionPos: prev,
+        },
+      });
     },
   },
 };
