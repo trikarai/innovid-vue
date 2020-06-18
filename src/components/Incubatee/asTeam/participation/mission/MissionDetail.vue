@@ -1,20 +1,44 @@
 <template>
   <v-container extend grid-list-xs>
     <v-row>
-      <v-col cols="12" lg="12" md="6">
-        <v-card class="pa-3" :loading="tableLoad">
-          <v-card-title primary-title>
+      <v-col class="pl-0" cols="12" lg="12" md="6">
+        <v-card elevation="0" class="pa-0" :loading="tableLoad">
+          <v-card-title class="pb-0" primary-title>
             <v-row justify="space-between">
-              <v-col cols="12" lg="10">{{ dataList.name }}</v-col>
-              <v-col cols="12" lg="2">
+              <v-col cols="12" lg="9">
+                <div style="display: -webkit-box;">
+                {{ dataList.name }}
+                <v-card-text style="position: relative;bottom: 11px;" v-if="dataList.previousMission != null">
+                  <v-chip small>
+                    <v-avatar left>
+                      <v-icon small color="primary">account_tree</v-icon>
+                    </v-avatar>
+                    <span style="color:#999">Branch Mission</span>
+                  </v-chip>
+                </v-card-text>
+                <v-card-text style="position: relative;bottom: 11px;" v-else>
+                  <v-chip small>
+                    <v-avatar left>
+                      <v-icon small color="primary">assignment_turned_in</v-icon>
+                    </v-avatar>
+                    <span style="color:#999">Main Mission</span>
+                  </v-chip>
+                </v-card-text>
+                </div>
+              </v-col>
+              <v-col style="text-align:right;" cols="12" lg="3">
                 <v-btn
+                  style="margin-right:80px;"
+                  small
                   icon
                   v-if="dataList.position !== '1'"
                   @click="gotoMissionByPosPrev(dataList.position)"
                 >
-                  <v-icon>mdi-triangle mdi-rotate-270</v-icon>
+                   <v-icon>mdi-triangle mdi-rotate-270</v-icon> previous mission
                 </v-btn>
                 <v-btn
+                  style="margin-left:80px;margin-right:25px;"
+                  small
                   icon
                   @click="gotoMissionByPosNext(dataList.position)"
                   v-if="
@@ -22,35 +46,21 @@
                       $store.getters.getMissionLength.toString()
                   "
                 >
-                  <v-icon>mdi-triangle mdi-rotate-90</v-icon>
+                  next mission <v-icon>mdi-triangle mdi-rotate-90</v-icon>
                 </v-btn>
               </v-col>
             </v-row>
-            <span class="dot2"></span>
-            <span class="dot1 ml-1"></span>
+            <!-- <span class="dot2"></span>
+            <span class="dot1 ml-1"></span> -->
           </v-card-title>
-          <v-card-text>
-            <div class="subtitle">{{ dataList.description }}</div>
+          <v-card-text style="position:relative;bottom:20px;">
+            <div class="subtitle"> 
+            {{ dataList.description }}</div>
           </v-card-text>
-          <v-card-text v-if="dataList.previousMission != null">
-            <v-chip small>
-              <v-avatar left>
-                <v-icon small color="primary">account_tree</v-icon>
-              </v-avatar>
-              <span style="color:#999">Branch Mission</span>
-            </v-chip>
-          </v-card-text>
-          <v-card-text v-else>
-            <v-chip small>
-              <v-avatar left>
-                <v-icon small color="primary">assignment_turned_in</v-icon>
-              </v-avatar>
-              <span style="color:#999">Main Mission</span>
-            </v-chip>
-          </v-card-text>
+          
         </v-card>
       </v-col>
-      <v-col cols="12" lg="12">
+      <v-col class="pt-0" cols="12" lg="12">
         <v-tabs v-model="tab" color="primary" slider-color="primary">
           <v-tabs-slider></v-tabs-slider>
           <v-tab href="#tab-1">Learning Material</v-tab>
@@ -377,3 +387,15 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+a.v-tab.v-tab--active {
+    background: #efefef;
+}
+.v-window.v-item-group.theme--light.v-tabs-items {
+    background: #efefef;
+    padding: 30px;
+    padding-top: 16px;
+    border-radius: 7px;
+}
+</style>
