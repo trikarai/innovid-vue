@@ -72,6 +72,7 @@ export default {
         )
         .then((res) => {
           this.learnings = res.data.data;
+          this.learning = this.learnings.list[0];
         })
         .catch(() => {})
         .finally(() => {
