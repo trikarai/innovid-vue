@@ -34,7 +34,10 @@
       <v-card-text v-if="!loadingSelectedWorksheet">
         <template v-if="!editWS">
           <span class="title mb-3">{{ worksheet.name }}</span>
-          <render-record :fields="fields" :canvasMode="desc.renderAs" />
+          <render-record
+            :fields="fields"
+            :canvasMode="dataList.worksheetForm.description"
+          />
         </template>
         <template v-else>
           <!-- <pre>{{ worksheet }}</pre> -->
@@ -73,6 +76,7 @@ export default {
       type: Boolean,
       default: false,
     },
+    missionId: { type: String, required: true },
     // loader: {
     //   type: Boolean,
     // },
@@ -97,7 +101,7 @@ export default {
   },
   watch: {
     journal: "getSelectedWorksheet",
-    // missionId: "getJournals"
+    missionId: "getJournals",
   },
   created() {
     this.dataList = JSON.parse(JSON.stringify(this.dataMission));
@@ -108,6 +112,7 @@ export default {
   },
   methods: {
     getJournals() {
+      this.journals = { total: 0, list: [] };
       this.loadingJournals = true;
       this.axios
         .get(
@@ -118,7 +123,7 @@ export default {
             this.$route.params.cohortId +
             "/journals",
           {
-            params: { missionId: this.$route.params.missionId },
+            params: { missionId: this.missionId },
             headers: auth.getAuthHeader(),
           }
         )

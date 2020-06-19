@@ -1039,6 +1039,20 @@ const routes = [
       },
       {
         path:
+          "/incubatee/team/:teamId/participation/:cohortId/mission-by-pos/:missionPos",
+        component: TeamMemberMissionDetail,
+        name: "team-misssion-detail-pos",
+        meta: {
+          text: "Mission",
+          level: 4,
+          requiredAuth: true,
+          incubateeAuth: true,
+          personnelAuth: false,
+          sysadminAuth: false,
+        },
+      },
+      {
+        path:
           "/incubatee/team/:teamId/participation/:cohortId/mission/:rootId/next/:missionId",
         component: TeamMemberMissionDetail,
         name: "team-misssion-detail2",

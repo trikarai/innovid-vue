@@ -75,11 +75,12 @@
                       <v-icon left>zoom_in</v-icon>Open
                     </v-btn>
                   </v-col>
-                  <!-- <v-col cols="12" lg="6">
-                    <span class="textlimit2"
-                      >Submitted Worksheet: {{ data.submittedWorksheet }}</span
+                  <v-col cols="12" lg="6">
+                    <span class="textlimit2" v-if="data.submittedJournal"
+                      >Submitted Journal: {{ data.submittedJournal }}</span
                     >
-                  </v-col> -->
+                    <span v-else>No Journal Submitted</span>
+                  </v-col>
                 </v-row>
               </v-card-actions>
             </v-card>
@@ -373,8 +374,9 @@ export default {
     refreshBranchJournal() {
       this.getBranchJournal();
     },
+    
     gotoMissionDetail(missionId) {
-      // this.$store.commit("setMissionLength", this.missions.list.length);
+      this.$store.commit("setMissionLength", this.dataList.list.length);
       this.$router.push({
         name: "team-misssion-detail",
         params: {

@@ -7,10 +7,16 @@
       <v-row v-if="fields.length != 0" class="tabel-row"></v-row>
       <template v-for="(data, index) in reOrderRecord(fields)">
         <v-row :key="index">
-          <v-col style="word-break: break-word" class="tabel-left" md="4" lg="4" xs="12">
+          <v-col
+            style="word-break: break-word"
+            class="tabel-left"
+            md="4"
+            lg="4"
+            xs="12"
+          >
             <span class="subtitle-2 font-weight-black">
               <span class="left-accent"></span>
-              {{data.field.name}}
+              {{ data.field.name }}
             </span>
           </v-col>
           <v-col
@@ -20,7 +26,8 @@
             xs="12"
             :key="data.id"
             v-if="data.type == 'string'"
-          >{{data.value}}</v-col>
+            >{{ data.value }}</v-col
+          >
           <v-col
             class="tabel-right"
             md="8"
@@ -28,7 +35,8 @@
             xs="12"
             :key="data.id"
             v-if="data.type == 'integer'"
-          >{{data.value}}</v-col>
+            >{{ data.value }}</v-col
+          >
           <v-col
             class="tabel-right"
             md="8"
@@ -36,7 +44,8 @@
             xs="12"
             :key="data.id"
             v-if="data.type == 'textarea'"
-          >{{data.value}}</v-col>
+            >{{ data.value }}</v-col
+          >
           <v-col
             class="tabel-right"
             md="8"
@@ -45,7 +54,9 @@
             :key="data.id"
             v-if="data.type == 'radio'"
           >
-            <template v-if="data.selectedOption != null">{{data.selectedOption.name}}</template>
+            <template v-if="data.selectedOption != null">{{
+              data.selectedOption.name
+            }}</template>
             <template v-else>-</template>
           </v-col>
           <v-col
@@ -57,7 +68,9 @@
             v-if="data.type == 'select'"
           >
             <template v-if="data.selectedOptions.length == 0">-</template>
-            <template v-for="opt in data.selectedOptions">{{opt.option.name}} ,</template>
+            <template v-for="opt in data.selectedOptions"
+              >{{ opt.option.name }} ,</template
+            >
           </v-col>
           <v-col
             class="tabel-right"
@@ -81,14 +94,22 @@
                 </template>
                 <template v-else>
                   <v-img
+                    max-width="300"
                     :name="file.id"
-                    :src="base_uri+file.fileInfo.path"
+                    :src="base_uri + file.fileInfo.path"
                     :key="file.id"
                     @click="viewImage(file)"
                   >
                     <template v-slot:placeholder>
-                      <v-row class="fill-height ma-0" align="center" justify="center">
-                        <v-progress-circular indeterminate color="primary lighten-5"></v-progress-circular>
+                      <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                      >
+                        <v-progress-circular
+                          indeterminate
+                          color="primary lighten-5"
+                        ></v-progress-circular>
                       </v-row>
                     </template>
                   </v-img>
@@ -111,8 +132,10 @@
             elevation="2"
             outlined
           >
-            <v-card-title>{{data.field.name}}</v-card-title>
-            <v-card-text v-if="data.type == 'textarea'">{{data.value}}</v-card-text>
+            <v-card-title>{{ data.field.name }}</v-card-title>
+            <v-card-text v-if="data.type == 'textarea'">{{
+              data.value
+            }}</v-card-text>
             <v-card-text v-if="data.type == 'attachment'">
               <template v-if="data.attachedFiles.length == 0">-</template>
               <template v-else>
@@ -128,14 +151,22 @@
                   </template>
                   <template v-else>
                     <v-img
+                      max-width="300"
                       :name="file.id"
-                      :src="base_uri+file.fileInfo.path"
+                      :src="base_uri + file.fileInfo.path"
                       :key="file.id"
                       @click="viewImage(file)"
                     >
                       <template v-slot:placeholder>
-                        <v-row class="fill-height ma-0" align="center" justify="center">
-                          <v-progress-circular indeterminate color="primary lighten-5"></v-progress-circular>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-progress-circular
+                            indeterminate
+                            color="primary lighten-5"
+                          ></v-progress-circular>
                         </v-row>
                       </template>
                     </v-img>
@@ -187,18 +218,26 @@
       </template>
     </template>-->
     <!-- end atas bawah-->
-    <v-dialog v-model="dialogZoom" scrollable :overlay="true" transition="dialog-transition">
+    <v-dialog
+      v-model="dialogZoom"
+      scrollable
+      :overlay="true"
+      transition="dialog-transition"
+    >
       <v-card>
         <v-img
           class="ZoomOutImg"
           :name="fileDetail.id"
-          :src="base_uri+fileDetail.fileInfo.path"
+          :src="base_uri + fileDetail.fileInfo.path"
           :key="fileDetail.id"
           @click="dialogZoom = false"
         >
           <template v-slot:placeholder>
             <v-row class="fill-height ma-0" align="center" justify="center">
-              <v-progress-circular indeterminate color="primary lighten-5"></v-progress-circular>
+              <v-progress-circular
+                indeterminate
+                color="primary lighten-5"
+              ></v-progress-circular>
             </v-row>
           </template>
         </v-img>
@@ -240,14 +279,26 @@
               <div
                 style="background-color: green; color: white; text-align: center"
                 :style="{ width: loadedRatio * 100 + '%' }"
-              >{{ Math.floor(loadedRatio * 100) }}%</div>
+              >
+                {{ Math.floor(loadedRatio * 100) }}%
+              </div>
             </v-col>
             <v-col md="12">
-              <v-btn color="primary" :disabled="page == 1" icon @click="page = page -  1">
+              <v-btn
+                color="primary"
+                :disabled="page == 1"
+                icon
+                @click="page = page - 1"
+              >
                 <v-icon>chevron_left</v-icon>
               </v-btn>
-              {{page}} / {{numPages}}
-              <v-btn color="primary" :disabled="page == numPages" icon @click="page = page +  1">
+              {{ page }} / {{ numPages }}
+              <v-btn
+                color="primary"
+                :disabled="page == numPages"
+                icon
+                @click="page = page + 1"
+              >
                 <v-icon>chevron_right</v-icon>
               </v-btn>
             </v-col>
@@ -257,7 +308,7 @@
               <pdf
                 ref="pdf"
                 style="border: 1px solid red"
-                :src="base_uri+fileDetail.fileInfo.path"
+                :src="base_uri + fileDetail.fileInfo.path"
                 :page="page"
                 @progress="loadedRatio = $event"
                 @num-pages="numPages = $event"
@@ -265,11 +316,21 @@
               ></pdf>
             </v-col>
             <v-col md="12">
-              <v-btn color="primary" :disabled="page == 1" icon @click="page = page -  1">
+              <v-btn
+                color="primary"
+                :disabled="page == 1"
+                icon
+                @click="page = page - 1"
+              >
                 <v-icon>chevron_left</v-icon>
               </v-btn>
-              {{page}} / {{numPages}}
-              <v-btn color="primary" :disabled="page == numPages" icon @click="page = page +  1">
+              {{ page }} / {{ numPages }}
+              <v-btn
+                color="primary"
+                :disabled="page == numPages"
+                icon
+                @click="page = page + 1"
+              >
                 <v-icon>chevron_right</v-icon>
               </v-btn>
             </v-col>
@@ -300,11 +361,11 @@ export default {
       fileDetail: { id: "", fileInfo: { path: "" } },
       isFullscreen: false,
       keyState: null,
-      basedomain: ""
+      basedomain: "",
     };
   },
   components: {
-    pdf
+    pdf,
   },
 
   mounted() {},
@@ -353,8 +414,8 @@ export default {
 			How we respond depends on our state. If keyState is null, 
 			it meand we aren't doing anything, so BSM are valid.
 			*/
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
