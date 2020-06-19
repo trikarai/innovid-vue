@@ -2,6 +2,8 @@
   <v-row>
     <v-col cols="12" md="6" lg="6" xs="12">
       <v-select
+        background-color="#fff"
+        dense
         :loading="loading"
         :items="learnings.list"
         item-text="name"
