@@ -9,7 +9,7 @@
       <!--- notification start-->
       <founder-notification />
       <!-- notification end-->
-      <v-btn text @click="rightDrawer =! rightDrawer">
+      <v-btn text @click="rightDrawer = !rightDrawer">
         <v-icon>settings</v-icon>
       </v-btn>
       <v-btn text depressed small @click="logout">
@@ -26,12 +26,12 @@
       class="ml-3 mt-5"
       icon
       v-if="$route.meta.level !== 0"
-      @click="$router.go(-1) "
+      @click="$router.go(-1)"
     >
       <v-icon>arrow_back</v-icon>
     </v-btn>
     <div style="margin-left: 49px;" class="container extend mt-2">
-      <h2 class="mb-2">{{$route.meta.text}}</h2>
+      <h2 class="mb-2">{{ $route.meta.text }}</h2>
       <div class="garis"></div>
     </div>
 
@@ -45,9 +45,19 @@
       <!-- list head-->
       <v-list class="pa-1">
         <template v-if="!failed_image">
-              <v-img class="logoinc" max-width="180" v-if="!miniVariant" :src="cPicture" contain v-on:error="onImgError" />
+          <v-img
+            class="logoinc"
+            max-width="180"
+            v-if="!miniVariant"
+            :src="cPicture"
+            contain
+            v-on:error="onImgError"
+          />
         </template>
-        <v-list-item v-if="miniVariant" @click.stop="miniVariant = !miniVariant">
+        <v-list-item
+          v-if="miniVariant"
+          @click.stop="miniVariant = !miniVariant"
+        >
           <v-list-item-action>
             <v-icon>chevron_right</v-icon>
           </v-list-item-action>
@@ -57,7 +67,7 @@
             <img src="/img/profile2.png" />
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title>{{user.data.name}}</v-list-item-title>
+            <v-list-item-title>{{ user.data.name }}</v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
             <v-btn icon @click.stop="miniVariant = !miniVariant">
@@ -89,12 +99,20 @@
             item-value="id"
             v-model="participationId"
             @change="changeParticipant()"
-          ></v-select>
+            append-outer-icon="refresh"
+            @click:append-outer="getParticipations"
+          >
+          </v-select>
         </v-list-item>
       </v-list>
       <v-list v-else>
         <v-list-item>
-          <v-select :loading="teamLoad" disabled label="No Team" :items="[]"></v-select>
+          <v-select
+            :loading="teamLoad"
+            disabled
+            label="No Team"
+            :items="[]"
+          ></v-select>
         </v-list-item>
       </v-list>
 
@@ -108,10 +126,12 @@
           :disabled="link.disabled"
         >
           <v-list-item-action>
-            <v-icon color="#676767">{{link.icon}}</v-icon>
+            <v-icon color="#676767">{{ link.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text">{{link.text}}</v-list-item-title>
+            <v-list-item-title class="grey--text">{{
+              link.text
+            }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -119,18 +139,32 @@
       <v-list v-if="participationId != ''">
         <v-list-item
           router
-          :to="'/incubatee/team/' + teamId +'/participation/' + participationId + '/mission' "
+          :to="
+            '/incubatee/team/' +
+              teamId +
+              '/participation/' +
+              participationId +
+              '/mission'
+          "
         >
           <v-list-item-action>
             <v-icon>emoji_objects</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text">Program Mission</v-list-item-title>
+            <v-list-item-title class="grey--text"
+              >Program Mission</v-list-item-title
+            >
           </v-list-item-content>
         </v-list-item>
         <v-list-item
           router
-          :to="'/incubatee/team/' + teamId +'/participation/' + participationId + '/schedule' "
+          :to="
+            '/incubatee/team/' +
+              teamId +
+              '/participation/' +
+              participationId +
+              '/schedule'
+          "
         >
           <v-list-item-action>
             <v-icon>today</v-icon>
@@ -141,7 +175,13 @@
         </v-list-item>
         <v-list-item
           router
-          :to="'/incubatee/team/' + teamId +'/participation/' + participationId + '/journal' "
+          :to="
+            '/incubatee/team/' +
+              teamId +
+              '/participation/' +
+              participationId +
+              '/journal'
+          "
         >
           <v-list-item-action>
             <v-icon>assignment</v-icon>
@@ -160,7 +200,9 @@
                 <v-icon>emoji_objects</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title class="grey--text">Program Mission</v-list-item-title>
+                <v-list-item-title class="grey--text"
+                  >Program Mission</v-list-item-title
+                >
               </v-list-item-content>
             </v-list-item>
           </template>
@@ -173,7 +215,9 @@
                 <v-icon>today</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title class="grey--text">Mentoring</v-list-item-title>
+                <v-list-item-title class="grey--text"
+                  >Mentoring</v-list-item-title
+                >
               </v-list-item-content>
             </v-list-item>
           </template>
@@ -186,7 +230,9 @@
                 <v-icon>assignment</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title class="grey--text">Journal</v-list-item-title>
+                <v-list-item-title class="grey--text"
+                  >Journal</v-list-item-title
+                >
               </v-list-item-content>
             </v-list-item>
           </template>
@@ -200,33 +246,53 @@
             <v-icon color="#676767">group</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text">Team Management</v-list-item-title>
+            <v-list-item-title class="grey--text"
+              >Team Management</v-list-item-title
+            >
           </v-list-item-content>
         </template>
 
-        <v-list-item class="ml-5" router :to="'/incubatee/team/' + teamId +'/profile' ">
+        <v-list-item
+          class="ml-5"
+          router
+          :to="'/incubatee/team/' + teamId + '/profile'"
+        >
           <v-list-item-title class="grey--text">Team Profile</v-list-item-title>
           <v-list-item-icon>
             <!-- <v-icon>group_work</v-icon> -->
           </v-list-item-icon>
         </v-list-item>
 
-        <v-list-item class="ml-5" router :to="'/incubatee/team/' + teamId +'/member' ">
+        <v-list-item
+          class="ml-5"
+          router
+          :to="'/incubatee/team/' + teamId + '/member'"
+        >
           <v-list-item-title class="grey--text">Members</v-list-item-title>
           <v-list-item-icon>
             <!-- <v-icon>group</v-icon> -->
           </v-list-item-icon>
         </v-list-item>
 
-        <v-list-item class="ml-5" router :to="'/incubatee/team/' + teamId +'/worksheet' ">
+        <v-list-item
+          class="ml-5"
+          router
+          :to="'/incubatee/team/' + teamId + '/worksheet'"
+        >
           <v-list-item-title class="grey--text">Worksheet</v-list-item-title>
           <v-list-item-icon>
             <!-- <v-icon>assignments</v-icon> -->
           </v-list-item-icon>
         </v-list-item>
 
-        <v-list-item class="ml-5" router :to="'/incubatee/team/' + teamId +'/participation' ">
-          <v-list-item-title class="grey--text">Participation</v-list-item-title>
+        <v-list-item
+          class="ml-5"
+          router
+          :to="'/incubatee/team/' + teamId + '/participation'"
+        >
+          <v-list-item-title class="grey--text"
+            >Participation</v-list-item-title
+          >
           <v-list-item-icon>
             <!-- <v-icon>how_to_vote</v-icon> -->
           </v-list-item-icon>
@@ -240,7 +306,9 @@
                 <v-icon>group</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title class="grey--text">Team Management</v-list-item-title>
+                <v-list-item-title class="grey--text"
+                  >Team Management</v-list-item-title
+                >
               </v-list-item-content>
             </v-list-item>
           </template>
@@ -271,7 +339,9 @@
             <v-icon color="#676767">{{link.icon}}</v-icon>
           </v-list-item-action>-->
           <v-list-item-content>
-            <v-list-item-title class="grey--text">{{link.text}}</v-list-item-title>
+            <v-list-item-title class="grey--text">{{
+              link.text
+            }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-group>
@@ -329,10 +399,16 @@
     >
       <v-card class="mx-auto">
         <v-list-item>
-          <v-list-item-avatar color="transparent"><v-icon class="pl-3" right>mail</v-icon></v-list-item-avatar>
+          <v-list-item-avatar color="transparent"
+            ><v-icon class="pl-3" right>mail</v-icon></v-list-item-avatar
+          >
           <v-list-item-content>
             <v-list-item-subtitle>Technical Support</v-list-item-subtitle>
-            <v-list-item-title class="title"><a style="text-decoration: none" href="mailto:support@innov.id">support@innov.id</a></v-list-item-title>
+            <v-list-item-title class="title"
+              ><a style="text-decoration: none" href="mailto:support@innov.id"
+                >support@innov.id</a
+              ></v-list-item-title
+            >
           </v-list-item-content>
         </v-list-item>
       </v-card>
@@ -350,7 +426,7 @@ import { programMixins } from "@/mixins/programMixins";
 export default {
   mixins: [programMixins],
   components: {
-    FounderNotification
+    FounderNotification,
   },
   data() {
     return {
@@ -378,28 +454,28 @@ export default {
           icon: "dashboard",
           text: "Home",
           route: "/incubatee/dashboard",
-          disabled: false
-        }
+          disabled: false,
+        },
       ],
       links2: [
         {
           icon: "account_circle",
           text: "My Account",
           route: "/incubatee/account",
-          disabled: false
+          disabled: false,
         },
         {
           icon: "folder_shared",
           text: "Biodata",
           route: "/incubatee/profile",
-          disabled: false
+          disabled: false,
         },
         {
           icon: "group_work",
           text: "My Team",
           route: "/incubatee/membership",
-          disabled: false
-        }
+          disabled: false,
+        },
         // {
         //   icon: "inbox",
         //   text: "Candidateship",
@@ -412,33 +488,33 @@ export default {
           icon: "folder_shared",
           text: "Team Profile",
           route: "/incubatee/profile",
-          disabled: true
+          disabled: true,
         },
         {
           icon: "folder_shared",
           text: "Participation",
           route: "/incubatee/profile",
-          disabled: true
+          disabled: true,
         },
         {
           icon: "folder_shared",
           text: "Application",
           route: "/incubatee/profile",
-          disabled: true
+          disabled: true,
         },
         {
           icon: "folder_shared",
           text: "Worksheet",
           route: "/incubatee/profile",
-          disabled: true
+          disabled: true,
         },
         {
           icon: "folder_shared",
           text: "Mentoring",
           route: "/incubatee/profile",
-          disabled: true
-        }
-      ]
+          disabled: true,
+        },
+      ],
     };
   },
   created() {
@@ -456,14 +532,14 @@ export default {
     bus.$on("reloadNavParticipation", () => {
       this.getParticipations();
     });
-    bus.$on("changeNavbarParticipant", id => {
+    bus.$on("changeNavbarParticipant", (id) => {
       this.participationId = id;
     });
   },
   watch: {
     selectedMembership() {
       this.getParticipations();
-    }
+    },
   },
   mounted() {
     this.getTeamMembership();
@@ -476,7 +552,7 @@ export default {
       return this.failed_image
         ? "/img/incubator-logo/bara.png"
         : "/img/incubator-logo/" + this.incubatorIdentifier + ".png";
-    }
+    },
   },
   methods: {
     goback: function() {
@@ -501,9 +577,9 @@ export default {
       this.teamLoad = true;
       this.axios
         .get(config.baseUri + "/founder/team-memberships", {
-          headers: auth.getAuthHeader()
+          headers: auth.getAuthHeader(),
         })
-        .then(res => {
+        .then((res) => {
           this.teamMemberships = res.data.data;
           if (this.teamMemberships.total !== 0) {
             this.selectedMembership = this.teamMemberships.list[0];
@@ -532,10 +608,10 @@ export default {
             this.teamId +
             "/program-participations",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.data.total != 0) {
             this.participationList.total = res.data.data.total;
             this.participationList.list = this.filterActiveParticipation(
@@ -555,8 +631,8 @@ export default {
         .finally(() => {
           this.participationLoad = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -568,7 +644,6 @@ export default {
   filter: gray; /* IE6-9 */
   -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
   filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
-
 }
 /* Disable grayscale on hover */
 .logoinc:hover {
