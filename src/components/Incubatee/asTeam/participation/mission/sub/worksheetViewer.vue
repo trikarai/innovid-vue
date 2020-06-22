@@ -43,7 +43,7 @@
           <render-record
             class="mt-2"
             :fields="fields"
-            :canvasMode="dataList.worksheetForm.description"
+            :canvasMode="desc.renderAs"
           />
         </template>
         <template v-else>
@@ -114,11 +114,20 @@ export default {
   created() {
     this.dataList = JSON.parse(JSON.stringify(this.dataMission));
     this.dataListTemp = JSON.parse(JSON.stringify(this.dataMission));
+    this.checkRenderMode();
   },
   mounted() {
     this.getJournals();
   },
   methods: {
+    checkRenderMode() {
+      let tempObj = JSON.parse(this.dataMission.description);
+      if (tempObj.hasOwnProperty("renderAs")) {
+        this.desc = JSON.parse(this.dataMission.description);
+      } else {
+        this.desc.renderAs = false;
+      }
+    },
     getJournals() {
       this.editWS = false;
       this.fields = [];
