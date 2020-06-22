@@ -2,7 +2,7 @@
   <v-container extend grid-list-xs>
     <v-row name="one">
       <v-col cols="12" sm="4" md="5" xs="12">
-        <v-card @click="$router.push({path: '/incubatee/profile'})">
+        <v-card @click="$router.push({ path: '/incubatee/profile' })">
           <v-card-title style="word-break: break-word;" primary-title>
             <v-col style="max-width:100% !important" md="5">
               <v-card color="primary" class="pa-9 elevation-7">
@@ -14,13 +14,15 @@
               <h4
                 class="subtitle-2 grey--text"
                 style="word-break: normal !important;"
-              >fill in the profile form based on your experience</h4>
+              >
+                fill in the profile form based on your experience
+              </h4>
             </v-col>
           </v-card-title>
         </v-card>
       </v-col>
       <v-col cols="12" sm="4" md="5" xs="12">
-        <v-card @click="$router.push({path: '/incubatee/membership'})">
+        <v-card @click="$router.push({ path: '/incubatee/membership' })">
           <v-card-title style="word-break: break-word;" primary-title>
             <v-col style="max-width:100% !important" md="5">
               <v-card color="primary" class="pa-9 elevation-7">
@@ -28,7 +30,8 @@
                   color="#fff"
                   style="width:40px;position: relative;left: 23px;"
                   x-large
-                >groups</v-icon>
+                  >groups</v-icon
+                >
               </v-card>
             </v-col>
             <v-col md="6" sm="12">
@@ -36,7 +39,9 @@
               <h4
                 class="subtitle-2 grey--text"
                 style="word-break: normal !important;"
-              >Create your team before register the program</h4>
+              >
+                Create your team before register the program
+              </h4>
             </v-col>
           </v-card-title>
         </v-card>
@@ -45,24 +50,44 @@
     <!-- team participated program end-->
     <v-row v-if="participatedPrograms.total != 0">
       <v-col>
-        <v-skeleton-loader max-width="230" type="card" v-if="participatedLoad"></v-skeleton-loader>
+        <v-skeleton-loader
+          max-width="230"
+          type="card"
+          v-if="participatedLoad"
+        ></v-skeleton-loader>
         <v-data-iterator
           :items="participatedPrograms.list"
           hide-default-footer
           :loading="participatedLoad"
         >
           <template v-slot:header>
-            <v-toolbar class="kastemtoolbar mb-2" color="grey lighten-1" dark flat dense>
+            <v-toolbar
+              class="kastemtoolbar mb-2"
+              color="grey lighten-1"
+              dark
+              flat
+              dense
+            >
               <v-toolbar-title>Participated Program</v-toolbar-title>
             </v-toolbar>
           </template>
           <template v-slot:default="props">
             <v-row>
-              <v-col v-for="item in props.items" :key="item.id" cols="12" sm="6" md="4" lg="4">
+              <v-col
+                v-for="item in props.items"
+                :key="item.id"
+                cols="12"
+                sm="6"
+                md="4"
+                lg="4"
+              >
                 <v-card class="elevation-7">
-                  <v-img v-if="item.program.removed" src="/img/part-program-off.png"></v-img>
+                  <v-img
+                    v-if="item.program.removed"
+                    src="/img/part-program-off.png"
+                  ></v-img>
                   <v-img v-else src="/img/part-program.png">
-                    <!-- <div v-if="item.program.removed" class="fill-height bottom-gradient"></div> -->                   
+                    <!-- <div v-if="item.program.removed" class="fill-height bottom-gradient"></div> -->
                   </v-img>
                   <v-card-title class="subheading font-weight-bold">
                     <v-badge
@@ -71,14 +96,22 @@
                       icon="star"
                       inline
                       :value="item.id == participationId"
-                    >{{ item.program.name }}</v-badge>
+                      >{{ item.program.name }}</v-badge
+                    >
                   </v-card-title>
                   <v-divider v-if="!item.program.removed"></v-divider>
                   <template v-if="item.program.removed">
                     <v-list dense>
                       <v-list-item>
                         <v-list-item-content>
-                          <v-alert class="mt-4" dense outlined type="warning" border="left">Program Removed</v-alert>
+                          <v-alert
+                            class="mt-4"
+                            dense
+                            outlined
+                            type="warning"
+                            border="left"
+                            >Program Removed</v-alert
+                          >
                         </v-list-item-content>
                       </v-list-item>
                     </v-list>
@@ -90,7 +123,8 @@
                           <v-btn
                             @click="gotoMission(teamId, item, 'mission')"
                             color="primary"
-                          >Mission</v-btn>
+                            >Mission</v-btn
+                          >
                         </v-list-item-content>
                       </v-list-item>
                       <v-list-item>
@@ -98,7 +132,8 @@
                           <v-btn
                             color="primary"
                             @click="gotoMission(teamId, item, 'schedule')"
-                          >Mentoring</v-btn>
+                            >Mentoring</v-btn
+                          >
                         </v-list-item-content>
                       </v-list-item>
                       <v-list-item>
@@ -108,7 +143,8 @@
                             color="warning"
                             router
                             :to="'/incubatee/team/' + teamId + '/participation'"
-                          >Quit Program</v-btn>
+                            >Quit Program</v-btn
+                          >
                         </v-list-item-content>
                       </v-list-item>
                     </v-list>
@@ -124,27 +160,50 @@
     <!-- team registered program end-->
     <v-row v-if="filterRegistration(registeredPrograms.list).length !== 0">
       <v-col>
-        <v-data-iterator hide-default-footer :items="filterRegistration(registeredPrograms.list)">
+        <v-data-iterator
+          hide-default-footer
+          :items="filterRegistration(registeredPrograms.list)"
+        >
           <template v-slot:header>
-            <v-toolbar class="kastemtoolbar mb-2" color="grey lighten-1" dark flat dense>
+            <v-toolbar
+              class="kastemtoolbar mb-2"
+              color="grey lighten-1"
+              dark
+              flat
+              dense
+            >
               <v-toolbar-title>Registered Program</v-toolbar-title>
             </v-toolbar>
           </template>
           <template v-slot:default="props">
             <v-row>
-              <v-col v-for="item in props.items" :key="item.id" cols="12" sm="6" md="4" lg="4">
+              <v-col
+                v-for="item in props.items"
+                :key="item.id"
+                cols="12"
+                sm="6"
+                md="4"
+                lg="4"
+              >
                 <v-card>
-                  <v-card-title class="subheading font-weight-bold">{{ item.program.name }}</v-card-title>
+                  <v-card-title class="subheading font-weight-bold">{{
+                    item.program.name
+                  }}</v-card-title>
                   <v-divider></v-divider>
                   <v-list dense>
                     <v-list-item>
                       <v-list-item-content>
+                        <v-list-item-subtitle
+                          >waiting for approval from program
+                          coordinator</v-list-item-subtitle
+                        >
                         <v-btn
                           dark
                           color="warning"
                           router
                           :to="'/incubatee/team/' + teamId + '/application'"
-                        >Cancel registration</v-btn>
+                          >Cancel registration</v-btn
+                        >
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
@@ -159,7 +218,11 @@
     <!-- team available program start-->
     <v-row v-if="!showFounderProgram">
       <v-col>
-        <v-skeleton-loader max-width="230" type="card" v-if="availLoader"></v-skeleton-loader>
+        <v-skeleton-loader
+          max-width="230"
+          type="card"
+          v-if="availLoader"
+        ></v-skeleton-loader>
         <v-data-iterator
           :items="availablePrograms.list"
           hide-default-footer
@@ -167,35 +230,48 @@
           v-else
         >
           <template v-slot:header>
-            <v-toolbar class="kastemtoolbar mb-2" color="grey lighten-1" dark flat dense>
+            <v-toolbar
+              class="kastemtoolbar mb-2"
+              color="grey lighten-1"
+              dark
+              flat
+              dense
+            >
               <v-toolbar-title>Available Program</v-toolbar-title>
             </v-toolbar>
           </template>
           <template v-slot:no-data>
             <v-row class="mt-5">
               <v-col md="6" lg="6" xs="12" sm="12">
-                <v-img class="mx-auto" width="300" src="/img/no-data-program.png"></v-img>
+                <v-img
+                  class="mx-auto"
+                  width="300"
+                  src="/img/no-data-program.png"
+                ></v-img>
               </v-col>
               <v-col md="6" lg="6" xs="12" sm="12">
-                <v-card v-if="teamId == '' " style="margin-top:27px;" flat>
+                <v-card v-if="teamId == ''" style="margin-top:27px;" flat>
                   <v-card-title>Create team first</v-card-title>
-                  <v-card-subtitle>You can join a program if you have a team</v-card-subtitle>
+                  <v-card-subtitle
+                    >You can join a program if you have a team</v-card-subtitle
+                  >
                 </v-card>
                 <v-card class="mx-auto" v-else style="margin-top:57px;" flat>
                   <v-card-title>No Program Available</v-card-title>
                   <v-card-subtitle class="grey--text">
                     You have already join all available program
                     <br />or the coordinator hasn't made a program yet
-                    <template
-                      v-if="user.data.teamMemberships.length == 0"
-                    >, create team first before join a program</template>
+                    <template v-if="user.data.teamMemberships.length == 0"
+                      >, create team first before join a program</template
+                    >
                   </v-card-subtitle>
                   <v-card-text>
                     <v-btn
                       v-if="user.data.teamMemberships.length == 0"
                       router
                       to="/incubatee/membership"
-                    >create Team</v-btn>
+                      >create Team</v-btn
+                    >
                   </v-card-text>
                 </v-card>
               </v-col>
@@ -203,17 +279,28 @@
           </template>
           <template v-slot:default="props">
             <v-row>
-              <v-col v-for="item in props.items" :key="item.id" cols="12" sm="6" md="4" lg="4">
+              <v-col
+                v-for="item in props.items"
+                :key="item.id"
+                cols="12"
+                sm="6"
+                md="4"
+                lg="4"
+              >
                 <v-card>
                   <v-img src="/img/hero-program.jpg"></v-img>
-                  <v-card-title class="subheading font-weight-bold">{{ item.name }}</v-card-title>
+                  <v-card-title class="subheading font-weight-bold">{{
+                    item.name
+                  }}</v-card-title>
                   <v-divider></v-divider>
                   <v-list dense>
                     <v-list-item>
                       <v-list-item-content>Description:</v-list-item-content>
                     </v-list-item>
                     <v-list-item>
-                      <v-list-item-content class="grey--text">{{ item.description }}</v-list-item-content>
+                      <v-list-item-content class="grey--text">{{
+                        item.description
+                      }}</v-list-item-content>
                     </v-list-item>
                     <v-list-item>
                       <v-list-item-content>
@@ -221,7 +308,8 @@
                           color="primary"
                           router
                           :to="'/incubatee/team/' + teamId + '/application'"
-                        >Apply</v-btn>
+                          >Apply</v-btn
+                        >
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
@@ -236,7 +324,11 @@
     <!-- non team founder program start-->
     <v-row v-if="showFounderProgram">
       <v-col>
-        <v-skeleton-loader max-width="230" type="card" v-if="founderprogramLoad"></v-skeleton-loader>
+        <v-skeleton-loader
+          max-width="230"
+          type="card"
+          v-if="founderprogramLoad"
+        ></v-skeleton-loader>
         <v-data-iterator
           :items="founderprograms.list"
           hide-default-footer
@@ -244,7 +336,13 @@
           v-else
         >
           <template v-slot:header>
-            <v-toolbar class="kastemtoolbar mb-2" color="grey lighten-1" dark flat dense>
+            <v-toolbar
+              class="kastemtoolbar mb-2"
+              color="grey lighten-1"
+              dark
+              flat
+              dense
+            >
               <v-toolbar-title>Incubator Program</v-toolbar-title>
             </v-toolbar>
           </template>
@@ -257,7 +355,10 @@
               <v-col md="4">
                 <v-card style="margin-top:27px;" flat>
                   <v-card-title>No Program Available</v-card-title>
-                  <v-card-subtitle class="grey--text">The coordinator hasn't publish a program yet</v-card-subtitle>
+                  <v-card-subtitle class="grey--text"
+                    >The coordinator hasn't publish a program
+                    yet</v-card-subtitle
+                  >
                   <v-card-text></v-card-text>
                 </v-card>
               </v-col>
@@ -266,17 +367,28 @@
           </template>
           <template v-slot:default="props">
             <v-row>
-              <v-col v-for="item in props.items" :key="item.id" cols="12" sm="6" md="4" lg="4">
+              <v-col
+                v-for="item in props.items"
+                :key="item.id"
+                cols="12"
+                sm="6"
+                md="4"
+                lg="4"
+              >
                 <v-card>
                   <v-img src="/img/hero-program.jpg"></v-img>
-                  <v-card-title class="subheading font-weight-bold">{{ item.name }}</v-card-title>
+                  <v-card-title class="subheading font-weight-bold">{{
+                    item.name
+                  }}</v-card-title>
                   <v-divider></v-divider>
                   <v-list dense>
                     <v-list-item>
                       <v-list-item-content>Description:</v-list-item-content>
                     </v-list-item>
                     <v-list-item>
-                      <v-list-item-content class="grey--text">{{ item.description }}</v-list-item-content>
+                      <v-list-item-content class="grey--text">{{
+                        item.description
+                      }}</v-list-item-content>
                     </v-list-item>
                   </v-list>
                 </v-card>
@@ -302,8 +414,8 @@ export default {
     return {
       user: {
         data: {
-          teamMemberships: []
-        }
+          teamMemberships: [],
+        },
       },
       teamId: "",
       participationId: "",
@@ -317,14 +429,14 @@ export default {
       availLoader: false,
       founderprograms: { total: 0, list: [] },
       founderprogramLoad: false,
-      showFounderProgram: true
+      showFounderProgram: true,
     };
   },
   created() {
-    bus.$on("changeDashboardTeam", teamId => {
+    bus.$on("changeDashboardTeam", (teamId) => {
       this.teamId = teamId;
     });
-    bus.$on("changeDashboardParticipant", participationId => {
+    bus.$on("changeDashboardParticipant", (participationId) => {
       this.participationId = participationId;
     });
     if (localStorage.getItem("DashboardTeamId")) {
@@ -339,7 +451,7 @@ export default {
       this.getParticipant();
       this.getAvailablePrograms();
       this.getRegisteredPrograms();
-    }
+    },
   },
   mounted() {
     this.user = JSON.parse(auth.getAuthData());
@@ -354,9 +466,9 @@ export default {
       this.founderprogramLoad = true;
       this.axios
         .get(config.baseUri + "/founder/programs", {
-          headers: auth.getAuthHeader()
+          headers: auth.getAuthHeader(),
         })
-        .then(res => {
+        .then((res) => {
           this.founderprograms = res.data.data;
         })
         .catch(() => {})
@@ -373,10 +485,10 @@ export default {
             this.teamId +
             "/program-participations",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.data.total != 0) {
             this.participatedPrograms.total = this.filterActiveParticipation(
               res.data.data.list
@@ -403,10 +515,10 @@ export default {
             this.teamId +
             "/programs",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.availablePrograms = res.data.data;
           } else {
@@ -428,10 +540,10 @@ export default {
             this.teamId +
             "/program-registrations",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.registeredPrograms = res.data.data;
           } else {
@@ -447,10 +559,10 @@ export default {
       bus.$emit("changeNavbarParticipant", item.id);
       this.$router.push({
         path:
-          "/incubatee/team/" + teamId + "/participation/" + item.id + "/" + uri
+          "/incubatee/team/" + teamId + "/participation/" + item.id + "/" + uri,
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
