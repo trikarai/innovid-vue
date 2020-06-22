@@ -1,7 +1,11 @@
 <template>
   <transition name="modal">
     <div class="modal-mask">
-      <div class="modal-wrapper" style="padding-top:6px !important" @click="$emit('close')">
+      <div
+        class="modal-wrapper"
+        style="padding-top:6px !important"
+        @click="$emit('close')"
+      >
         <div class="modal-container" @click.stop>
           <v-card class="pa-5 pt-0" elevation="0" width="400" :loading="loader">
             <v-card-title class="topaccent" primary-title>
@@ -19,69 +23,103 @@
             <v-card-text>
               <p v-if="isbranch">
                 <b>Parent Mission:</b>
-                {{rootname}}
+                {{ rootname }}
               </p>
               <div>
                 <v-form v-model="valid" ref="form">
-                  <v-text-field
-                    :disabled="view"
-                    label="Name"
-                    v-model="params.name"
-                    :rules="rulesName"
-                    :counter="25"
-                    maxlength="25"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    :disabled="edit"
-                    label="Position"
-                    v-model="params.position"
-                    :counter="25"
-                    maxlength="25"
-                    type="number"
-                    :rules="rulesRequired"
-                  ></v-text-field>
-                  <v-textarea
-                    class="mt-8"
-                    :disabled="view"
-                    label="Description"
-                    v-model="params.description"
-                    :counter="500"
-                    maxlength="500"
-                    height="100"
-                    required
-                  ></v-textarea>
-
-                  <v-select
-                    v-if="!edit"
-                    :rules="rulesRequired"
-                    v-model="params.worksheetFormId"
-                    label="Worksheet"
-                    :items="dataList.list"
-                    item-value="id"
-                    item-text="name"
-                    autocomplete
-                    class="mb-4"
-                  ></v-select>
-
-                  <v-layout justify-space-between v-if="!view">
-                    <v-btn
-                      block
-                      v-if="edit == false"
-                      @click.once="submit"
-                      :loading="loader"
-                      color="primary"
-                      :disabled="!valid"
-                    >{{$vuetify.lang.t('$vuetify.action.add')}}</v-btn>
-                    <v-btn
-                      block
-                      v-if="edit"
-                      @click.once="update"
-                      :loading="loader"
-                      color="primary"
-                      :disabled="!valid"
-                    >{{$vuetify.lang.t('$vuetify.action.edit')}}</v-btn>
-                  </v-layout>
+                  <v-row no-gutters>
+                    <v-col cols="12" lg="12">
+                      <v-text-field
+                        :disabled="view"
+                        label="Name"
+                        v-model="params.name"
+                        :rules="rulesName"
+                        :counter="25"
+                        maxlength="25"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" lg="12">
+                      <v-text-field
+                        :disabled="edit"
+                        label="Position"
+                        v-model="params.position"
+                        :counter="25"
+                        maxlength="25"
+                        type="number"
+                        :rules="rulesRequired"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" lg="12">
+                      <v-textarea
+                        class="mt-8"
+                        :disabled="view"
+                        label="Description"
+                        v-model="params.description"
+                        :counter="500"
+                        maxlength="500"
+                        height="100"
+                        required
+                      ></v-textarea>
+                    </v-col>
+                    <v-col cols="12" lg="12">
+                      <v-select
+                        v-if="!edit"
+                        :rules="rulesRequired"
+                        v-model="params.worksheetFormId"
+                        label="Worksheet"
+                        :items="dataList.list"
+                        item-value="id"
+                        item-text="name"
+                        autocomplete
+                        :loading="tableLoad"
+                        class="mb-4"
+                        no-data-text="No Worksheet Found"
+                      >
+                        <template v-slot:append-outer>
+                          <v-btn icon small @click="getDataList">
+                            <v-icon>refresh</v-icon>
+                          </v-btn>
+                        </template>
+                      </v-select>
+                      <template v-if="!edit">
+                        <template v-if="!tableLoad">
+                          <v-btn
+                            v-if="dataList.total === 0"
+                            color="accent"
+                            :to="{ name: 'personnel-worksheet-form' }"
+                            target="_blank"
+                            small
+                            >Create Worksheet</v-btn
+                          ></template
+                        ></template
+                      >
+                    </v-col>
+                  </v-row>
+                  <v-row v-if="!view">
+                    <v-col cols="12" lg="12">
+                      <v-btn
+                        block
+                        v-if="edit == false"
+                        @click.once="submit"
+                        :loading="loader"
+                        color="primary"
+                        :disabled="!valid"
+                        >{{ $vuetify.lang.t("$vuetify.action.add") }}</v-btn
+                      >
+                    </v-col>
+                    <v-col cols="12" lg="12">
+                      <v-btn
+                        block
+                        v-if="edit"
+                        @click.once="update"
+                        :loading="loader"
+                        color="primary"
+                        :disabled="!valid"
+                        >{{ $vuetify.lang.t("$vuetify.action.edit") }}</v-btn
+                      ></v-col
+                    >
+                  </v-row>
                 </v-form>
               </div>
             </v-card-text>
@@ -108,7 +146,7 @@ export default {
     "isbranch",
     "rootid",
     "rootname",
-    "missionid"
+    "missionid",
   ],
   data: function() {
     return {
@@ -122,8 +160,9 @@ export default {
         name: "",
         description: "",
         worksheetFormId: "",
-        position: ""
-      }
+        position: "",
+      },
+      tableLoad: false,
     };
   },
   components: {},
@@ -140,9 +179,9 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(config.baseUri + "/personnel/as-admin/worksheet-forms", {
-          headers: auth.getAuthHeader()
+          headers: auth.getAuthHeader(),
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.dataList = res.data.data;
           } else {
@@ -178,13 +217,13 @@ export default {
             "/missions",
           this.params,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
           this.$emit("refresh");
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -202,13 +241,13 @@ export default {
             this.rootid,
           this.params,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
           this.$emit("refresh");
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -222,16 +261,17 @@ export default {
           config.baseUri +
             "/personnel/as-admin/programs/" +
             this.$route.params.programId +
-            "/missions/" + this.rootid,
+            "/missions/" +
+            this.rootid,
           this.params,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
           this.$emit("refresh");
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -248,18 +288,18 @@ export default {
             "/missions/" +
             this.rootid,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.params = res.data.data;
         })
         .catch(() => {})
         .finally(() => {
           this.loader = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

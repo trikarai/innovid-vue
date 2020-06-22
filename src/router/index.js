@@ -273,7 +273,7 @@ const routes = [
       {
         path: "/personnel/worksheet-forms",
         component: PersonnelWorksheet,
-        name: "worksheet-form",
+        name: "personnel-worksheet-form",
         meta: {
           text: "Worksheet Form",
           level: 0,
