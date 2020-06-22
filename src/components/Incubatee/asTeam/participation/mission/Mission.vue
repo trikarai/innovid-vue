@@ -76,7 +76,8 @@
                     </v-btn>
                   </v-col>
                   <v-col cols="12" lg="6">
-                    <span class="textlimit2" v-if="data.submittedJournal"
+                    <!-- <span class="textlimit2" v-if="data.submittedJournal" -->
+                    <span class="" v-if="data.submittedJournal"
                       >Submitted Journal: {{ data.submittedJournal }}</span
                     >
                     <span v-else>No Journal Submitted</span>
