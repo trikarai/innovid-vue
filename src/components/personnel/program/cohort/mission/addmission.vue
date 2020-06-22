@@ -58,7 +58,7 @@
                         v-model="params.description"
                         :counter="500"
                         maxlength="500"
-                        height="100"
+                        height="150"
                         required
                       ></v-textarea>
                     </v-col>
