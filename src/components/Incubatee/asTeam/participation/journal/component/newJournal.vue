@@ -15,7 +15,7 @@
         outlined
       ></v-select>
     </v-col>
-    <template v-if="parentJournalId !== ''">
+    <template>
       <v-col cols="12" md="12" class="px-5">
         <v-btn
           small
@@ -163,7 +163,7 @@ export default {
     if (this.dataList.previousMission !== null) {
       this.parentUri = "/" + this.parentJournalId;
     } else {
-      this.parentJournalId = "ok";
+      this.parentJournalId = "";
     }
   },
   watch: {
