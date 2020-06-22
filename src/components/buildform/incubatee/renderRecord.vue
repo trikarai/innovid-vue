@@ -3,7 +3,6 @@
     <!-- <v-switch label="label" v-model="jancux"></v-switch> -->
     <!-- start kiri kanan-->
     <template v-if="!canvasMode">
-      <!-- {{fields}} -->
       <v-row v-if="fields.length != 0" class="tabel-row"></v-row>
       <template v-for="(data, index) in reOrderRecord(fields)">
         <v-row :key="index">
