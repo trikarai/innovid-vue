@@ -46,8 +46,11 @@
         <v-card-title>
           <p class="text-capitalize">{{ dataSingle.personnel.name }}</p>
         </v-card-title>
-        <v-card-text>
+        <v-card-text v-if="dataSingle.introduction !== null">
           <div v-html="marked(dataSingle.introduction)"></div>
+        </v-card-text>
+        <v-card-text v-else>
+          No Mentor introduction
         </v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
