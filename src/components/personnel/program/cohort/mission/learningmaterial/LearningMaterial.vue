@@ -13,6 +13,7 @@
           :loading="tableLoad"
           :headers="tableHeaders"
           :items="dataList.list"
+          sort-by="name"
           class="elevation-1"
         >
           <template v-slot:item.name="{item}">

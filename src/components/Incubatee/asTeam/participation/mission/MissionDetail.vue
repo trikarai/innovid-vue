@@ -7,23 +7,28 @@
             <v-row justify="space-between">
               <v-col cols="12" lg="9">
                 <div style="display: -webkit-box;">
-                {{ dataList.name }}
-                <v-card-text style="position: relative;bottom: 11px;" v-if="dataList.previousMission != null">
-                  <v-chip small>
-                    <v-avatar left>
-                      <v-icon small color="primary">account_tree</v-icon>
-                    </v-avatar>
-                    <span style="color:#999">Branch Mission</span>
-                  </v-chip>
-                </v-card-text>
-                <v-card-text style="position: relative;bottom: 11px;" v-else>
-                  <v-chip small>
-                    <v-avatar left>
-                      <v-icon small color="primary">assignment_turned_in</v-icon>
-                    </v-avatar>
-                    <span style="color:#999">Main Mission</span>
-                  </v-chip>
-                </v-card-text>
+                  {{ dataList.name }}
+                  <v-card-text
+                    style="position: relative;bottom: 11px;"
+                    v-if="dataList.previousMission != null"
+                  >
+                    <v-chip small>
+                      <v-avatar left>
+                        <v-icon small color="primary">account_tree</v-icon>
+                      </v-avatar>
+                      <span style="color:#999">Branch Mission</span>
+                    </v-chip>
+                  </v-card-text>
+                  <v-card-text style="position: relative;bottom: 11px;" v-else>
+                    <v-chip small>
+                      <v-avatar left>
+                        <v-icon small color="primary"
+                          >assignment_turned_in</v-icon
+                        >
+                      </v-avatar>
+                      <span style="color:#999">Main Mission</span>
+                    </v-chip>
+                  </v-card-text>
                 </div>
               </v-col>
               <v-col style="text-align:right;" cols="12" lg="3">
@@ -34,7 +39,7 @@
                   v-if="dataList.position !== '1'"
                   @click="gotoMissionByPosPrev(dataList.position)"
                 >
-                   <v-icon>mdi-triangle mdi-rotate-270</v-icon> previous mission
+                  <v-icon>mdi-triangle mdi-rotate-270</v-icon> previous mission
                 </v-btn>
                 <v-btn
                   style="margin-left:80px;margin-right:25px;"
@@ -54,10 +59,10 @@
             <span class="dot1 ml-1"></span> -->
           </v-card-title>
           <v-card-text style="position:relative;bottom:20px;">
-            <div class="subtitle"> 
-            {{ dataList.description }}</div>
+            <div class="subtitle">
+              {{ dataList.description }}
+            </div>
           </v-card-text>
-          
         </v-card>
       </v-col>
       <v-col class="pt-0" cols="12" lg="12">
@@ -196,6 +201,7 @@ export default {
   methods: {
     getDataList() {
       this.tab = "tab-1";
+      this.isNewWorksheet = false;
       // this.componentKey += 1;
       if (this.$route.params.missionPos) {
         this.getDataListByPosition();
@@ -390,12 +396,12 @@ export default {
 
 <style scoped>
 a.v-tab.v-tab--active {
-    background: #efefef;
+  background: #efefef;
 }
 .v-window.v-item-group.theme--light.v-tabs-items {
-    background: #efefef;
-    padding: 30px;
-    padding-top: 16px;
-    border-radius: 7px;
+  background: #efefef;
+  padding: 30px;
+  padding-top: 16px;
+  border-radius: 7px;
 }
 </style>

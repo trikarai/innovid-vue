@@ -1,37 +1,42 @@
 <template>
   <v-container extend grid-list-xs>
     <v-row>
-      <v-col cols="12" md="6" lg="6" xs="12" v-if="dataLoad">
+      <v-col cols="12"  lg="12" md="6" xs="12" v-if="dataLoad">
         <v-skeleton-loader
           type="card-heading, card-heading, card-heading, list-item-avatar-two-line@3"
         ></v-skeleton-loader>
       </v-col>
-      <v-col cols="12" md="6" lg="6" xs="12" v-if="!dataLoad">
+      <v-col cols="12" md="6" lg="12" xs="12" v-if="!dataLoad">
         <v-card class="pa-3">
           <v-card-title primary-title>
-            <b>{{dataSingle.name}}</b>
+            <b>{{ dataSingle.name }}</b>
           </v-card-title>
           <v-card-text class="subtitle-1">
             <b>Mission</b>
             <br />
-            {{dataList.name}}
+            {{ dataList.name }}
             <br />
             <!-- <blockquote class="blockquote">{{dataList.description}}</blockquote> -->
           </v-card-text>
           <v-card-text class="subtitle-1">
             <b>Description</b>
             <br />
-            {{dataList.description}}
+            {{ dataList.description }}
             <br />
           </v-card-text>
           <v-card-text class="subtitle-1">
             <b>Worksheet</b>
             <br />
-            {{dataList.worksheetForm.name}}
+            {{ dataList.worksheetForm.name }}
           </v-card-text>
           <v-card-actions>
             <template v-if="!updateJ">
-              <v-btn color="primary" small v-if="!editWS" @click="editWorksheet">
+              <v-btn
+                color="primary"
+                small
+                v-if="!editWS"
+                @click="editWorksheet"
+              >
                 <v-icon small left>edit</v-icon>Edit Worksheet Record
               </v-btn>
               <v-btn color="warning" small @click="editWS = !editWS" v-else>
@@ -39,7 +44,12 @@
               </v-btn>
             </template>
             <template v-if="!editWS">
-              <v-btn color="primary" small v-if="!updateJ" @click="updateJournal">
+              <v-btn
+                color="primary"
+                small
+                v-if="!updateJ"
+                @click="updateJournal"
+              >
                 <v-icon small left>edit</v-icon>Update Journal
               </v-btn>
               <v-btn color="warning" small @click="updateJ = !updateJ" v-else>
@@ -49,14 +59,21 @@
           </v-card-actions>
           <template v-if="!updateJ">
             <v-card-text class="pt-0 mt-2" v-if="!editWS">
-              <render-record :fields="fields" />
+              <render-record
+                :fields="fields"
+                :canvasMode="dataList.worksheetForm.description"
+              />
             </v-card-text>
           </template>
           <!--edit worksheet jurnal start-->
           <template v-if="!worksheetDataLoad">
             <v-row class="mt-5" v-if="editWS">
               <v-col>
-                <v-text-field label="Worksheet Name" outlined v-model="newWsName"></v-text-field>
+                <v-text-field
+                  label="Worksheet Name"
+                  outlined
+                  v-model="newWsName"
+                ></v-text-field>
               </v-col>
               <v-col md="12" lg="12" xs="12">
                 <render-form
@@ -71,7 +88,9 @@
           <template v-else>
             <v-row>
               <v-col md="6" lg="6" xs="12">
-                <v-skeleton-loader type="card-heading, article, actions"></v-skeleton-loader>
+                <v-skeleton-loader
+                  type="card-heading, article, actions"
+                ></v-skeleton-loader>
               </v-col>
             </v-row>
           </template>
@@ -87,7 +106,8 @@
                   :text="mode"
                   @click="createNewWorksheet"
                 >
-                  <v-icon left v-if="!mode" small>star</v-icon>Create New Worksheet
+                  <v-icon left v-if="!mode" small>star</v-icon>Create New
+                  Worksheet
                 </v-btn>
                 <v-btn
                   small
@@ -96,7 +116,8 @@
                   :text="!mode"
                   @click="createReloadWorksheet"
                 >
-                  <v-icon left v-if="mode" small>star</v-icon>Replace With Existing Worksheet
+                  <v-icon left v-if="mode" small>star</v-icon>Replace With
+                  Existing Worksheet
                 </v-btn>
               </v-col>
               <v-col v-if="selectWorksheet">
@@ -116,7 +137,12 @@
             </v-row>
             <v-row v-if="is_newWorksheet">
               <v-col>
-                <v-text-field class="ml-3" label="Worksheet Name" v-model="worksheetName" solo></v-text-field>
+                <v-text-field
+                  class="ml-3"
+                  label="Worksheet Name"
+                  v-model="worksheetName"
+                  solo
+                ></v-text-field>
               </v-col>
               <v-col md="12">
                 <render-form
@@ -151,7 +177,11 @@
       <!--comment block-->
     </v-row>
     <v-overlay :value="worksheetDataLoad">
-      <v-progress-circular color="primary" indeterminate size="64"></v-progress-circular>
+      <v-progress-circular
+        color="primary"
+        indeterminate
+        size="64"
+      ></v-progress-circular>
     </v-overlay>
   </v-container>
 </template>
@@ -188,14 +218,14 @@ export default {
         description: "",
         nextMission: { id: "" },
         worksheetForm: {
-          name: ""
-        }
+          name: "",
+        },
       },
       dataListTemp: {
         id: "",
         name: "",
         description: "",
-        nextMission: { id: "" }
+        nextMission: { id: "" },
       },
       worksheetList: { total: 0, list: [] },
       dataSingle: {},
@@ -208,7 +238,7 @@ export default {
       loader: false,
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
       dialogForm: false,
       dialogDelete: false,
@@ -218,7 +248,7 @@ export default {
       leftId: "",
       leftName: "",
       leftAction: "",
-      params: ""
+      params: "",
     };
   },
   components: { RenderForm, RenderRecord, CommentModule },
@@ -240,16 +270,16 @@ export default {
             "/worksheets/" +
             this.$route.params.worksheetId,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.dataSingle = res.data.data;
           this.worksheetData = res.data.data;
           this.refactorRecordJSON(res.data.data);
           // this.pairFieldValue(res.data.data);
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -279,10 +309,10 @@ export default {
           // this.exworksheetId,
           // this.$route.params.worksheetId,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.worksheetData = res.data.data;
           this.newWsName = this.worksheetData.name;
           this.pairFieldValue(res.data.data);
@@ -307,13 +337,13 @@ export default {
             this.$route.params.teamId +
             "/program-participations/" +
             this.$route.params.cohortId +
-            "/missions/" +
+            "/missions/by-id/" +
             this.$route.params.missionId,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.dataList = res.data.data;
           // Object.assign(this.dataListTemp, this.dataList);
           this.dataListTemp = JSON.parse(JSON.stringify(res.data.data));
@@ -352,7 +382,7 @@ export default {
             this.$route.params.worksheetId,
           params,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
@@ -377,14 +407,14 @@ export default {
             this.$route.params.journalId,
           params,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
           // this.refreshData();
           this.$router.go(-1);
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -405,7 +435,7 @@ export default {
             this.$route.params.journalId,
           params,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
@@ -453,10 +483,10 @@ export default {
             this.$route.params.teamId +
             "/worksheets",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.worksheetList = res.data.data;
           } else {
@@ -474,8 +504,8 @@ export default {
       this.updateJ = false;
       this.getMissionDetail();
       this.getDataSingle();
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

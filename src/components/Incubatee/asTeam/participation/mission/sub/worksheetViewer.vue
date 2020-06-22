@@ -15,7 +15,11 @@
       <!-- {{ journal }} -->
     </v-col>
     <v-col cols="12" lg="2">
-      <v-btn style="margin-top:6px;" small color="primary" @click="addNewWorksheet"
+      <v-btn
+        style="margin-top:6px;"
+        small
+        color="primary"
+        @click="addNewWorksheet"
         >Add New</v-btn
       >
     </v-col>
@@ -36,7 +40,8 @@
       <v-card-text class="pa-0 pt-5" v-if="!loadingSelectedWorksheet">
         <template v-if="!editWS">
           <span class="title">{{ worksheet.name }}</span>
-          <render-record class="mt-2"
+          <render-record
+            class="mt-2"
             :fields="fields"
             :canvasMode="dataList.worksheetForm.description"
           />
@@ -99,6 +104,7 @@ export default {
       },
       dataList: {},
       dataListTemp: {},
+      viewAble: false,
     };
   },
   watch: {
@@ -114,6 +120,10 @@ export default {
   },
   methods: {
     getJournals() {
+      this.editWS = false;
+      this.fields = [];
+      this.worksheetId = "";
+      this.worksheet = "";
       this.journals = { total: 0, list: [] };
       this.loadingJournals = true;
       this.axios
@@ -161,6 +171,7 @@ export default {
           this.worksheet = res.data.data;
           this.pairFieldValue(this.worksheet);
           this.refactorRecordJSON(res.data.data);
+          this.viewAble = true;
         })
         .catch(() => {})
         .finally(() => {

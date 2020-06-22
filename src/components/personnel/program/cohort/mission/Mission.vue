@@ -28,6 +28,7 @@
           :loading="tableLoad"
           :headers="tableHeaders"
           :items="dataList.list"
+          sort-by="position"
           class="elevation-1"
         >
           <template v-slot:item.name="{item}">
@@ -195,7 +196,7 @@ export default {
         {
           text: "Postition",
           value: "position",
-          sortable: true,
+          sortable: false,
           align: "right"
         },
         {

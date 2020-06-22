@@ -16,18 +16,30 @@
               </router-link>
             </v-toolbar-title>
           </v-toolbar>
-          <v-card style="padding:20px 30px 30px 30px;" class="text-center elevation-12">
+          <v-card
+            style="padding:20px 30px 30px 30px;"
+            class="text-center elevation-12"
+          >
             <v-card-text style="pa-4">
               <div>
                 <v-form v-model="valid" ref="form">
                   <v-row>
-                    <v-col>
+                    <v-col v-if="isProduction">
                       <v-text-field
                         label="Incubator Identifier"
                         prepend-icon="vpn_key"
                         v-model="params.incubatorIdentifier"
                         :rules="rulesName"
                         :disabled="!isMain"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col v-else>
+                      <v-text-field
+                        label="Incubator Identifier"
+                        prepend-icon="vpn_key"
+                        v-model="params.incubatorIdentifier"
+                        :rules="rulesName"
                         required
                       ></v-text-field>
                     </v-col>
@@ -68,11 +80,12 @@
                       block
                       @click="submit"
                       :loading="loader"
-                      :class=" { 'primary white--text' : valid}"
+                      :class="{ 'primary white--text': valid }"
                       :disabled="!valid"
                       color="#e4e4e4"
                       style="color:#fff"
-                    >Login</v-btn>
+                      >Login</v-btn
+                    >
                   </v-row>
                 </v-form>
               </div>
@@ -91,7 +104,7 @@ import { validationMixins } from "@/mixins/validationMixins";
 import { checkDomainMixins } from "./checkDomainMixins";
 
 export default {
-  mixins: [validationMixins,checkDomainMixins],
+  mixins: [validationMixins, checkDomainMixins],
   name: "Login-Personnel",
   data: function() {
     return {
@@ -103,12 +116,17 @@ export default {
       params: {
         incubatorIdentifier: "",
         email: "",
-        password: ""
+        password: "",
       },
-      activate: false
+      activate: false,
+      isProduction: false,
     };
   },
-  created: function() {},
+  created: function() {
+    if (process.env.NODE_ENV === "production") {
+      this.isProduction = true;
+    }
+  },
   mounted: function() {},
   components: {},
   methods: {
@@ -122,7 +140,7 @@ export default {
       var authUser = {};
       this.axios
         .post(config.baseUri + "/personnel-login", this.params)
-        .then(res => {
+        .then((res) => {
           this.$store.state.isLoggedIn = true;
           this.response = res.data.data;
           authUser.role = "PERSONNEL";
@@ -133,7 +151,7 @@ export default {
           window.sessionStorage.setItem("uploadMode", "personnel");
           this.$router.replace("/personnel/account");
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -142,8 +160,8 @@ export default {
     },
     clear() {
       this.$refs.form.reset();
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

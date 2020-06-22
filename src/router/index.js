@@ -102,6 +102,7 @@ import MentorScheduleNegotiate from "../components/personnel/asMentor/schedule/N
 
 import MentorDashboardParticipantJournal from "../components/personnel/asMentor/participantjournal/ParticipantJournal";
 import MentorDashboardMentoringSchedule from "../components/personnel/asMentor/mentoringschedule/MentoringSchedule";
+import MentorIntroduction from "../components/personnel/asMentor/introduction/Introduction";
 
 import ConferenceComponent from "../components/Conference";
 
@@ -273,7 +274,7 @@ const routes = [
       {
         path: "/personnel/worksheet-forms",
         component: PersonnelWorksheet,
-        name: "worksheet-form",
+        name: "personnel-worksheet-form",
         meta: {
           text: "Worksheet Form",
           level: 0,
@@ -619,6 +620,18 @@ const routes = [
         name: "mentor-dashboard",
         meta: {
           text: "Mentor Dashboard",
+          level: 1,
+          requiredAuth: true,
+          personnelAuth: true,
+          sysadminAuth: false,
+        },
+      },
+      {
+        path: "/personnel/mentor/introduction",
+        component: MentorIntroduction,
+        name: "mentor-introduction",
+        meta: {
+          text: "Selt Introduction",
           level: 1,
           requiredAuth: true,
           personnelAuth: true,

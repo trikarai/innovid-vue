@@ -30,6 +30,11 @@
 // import bus from "@/config/bus";
 import * as config from "@/config/config";
 import auth from "@/config/auth";
+
+import Vue from "vue";
+import lodash from "lodash";
+Vue.prototype._ = lodash;
+
 export default {
   props: {
     loading: {
@@ -52,6 +57,9 @@ export default {
     this.getLearningMaterial();
   },
   methods: {
+    reOrderByName: function(params) {
+      return this._.orderBy(params, "name", "asc");
+    },
     getLearningMaterial() {
       this.learnings = { total: 0, list: [] };
       this.learning = { content: "" };
@@ -72,6 +80,7 @@ export default {
         )
         .then((res) => {
           this.learnings = res.data.data;
+          this.learnings.list = this.reOrderByName(this.learnings.list);
           this.learning = this.learnings.list[0];
         })
         .catch(() => {})

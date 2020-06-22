@@ -152,7 +152,7 @@ export default {
   display: grid;
 }
 .topaccentform {
-  background: #249c90;
+  background: var(--v-primary-base);
   color: #fff;
   margin-bottom: 18px;
   width: 100%;

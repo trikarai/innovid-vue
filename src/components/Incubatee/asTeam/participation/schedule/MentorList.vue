@@ -12,20 +12,20 @@
           :items="dataList.list"
           class="elevation-1"
         >
-          <template v-slot:item.name="{item}">
-            <!-- <v-btn
+          <template v-slot:item.name="{ item }">
+            <v-btn
               class="elevation-0 mr-2"
               fab
               x-small
               color="primary"
-              @click="openDetail(item.id)"
+              @click="openDetail(item)"
             >
               <v-icon>zoom_in</v-icon>
-            </v-btn> -->
-            {{item.personnel.name}}
+            </v-btn>
+            {{ item.personnel.name }}
           </template>
 
-          <template v-slot:item.action="{item}">
+          <template v-slot:item.action="{ item }">
             <v-btn small color="primary" @click="proposeAct(item)">
               <v-icon left>insert_invitation</v-icon>Propose
             </v-btn>
@@ -39,22 +39,16 @@
       scrollable
       persistent
       :overlay="false"
-      max-width="300px"
+      max-width="500px"
       transition="dialog-transition"
     >
       <v-card>
         <v-card-title>
-          <p class="text-capitalize"></p>
+          <p class="text-capitalize">{{ dataSingle.personnel.name }}</p>
         </v-card-title>
-        <v-card-text v-if="loader">
-          <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
+        <v-card-text>
+          <div v-html="marked(dataSingle.introduction)"></div>
         </v-card-text>
-          <v-card-text >
-            <p>{{dataSingle}}</p>
-            <!-- <p>{{dataSingle.acceptedTime}}</p>
-            <p>{{dataSingle.active}}</p>
-            <p>{{dataSingle.note}}</p>-->
-          </v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
@@ -76,15 +70,23 @@
         <v-card-title>
           <p class="text-capitalize">Propose Mentoring Schedule</p>
           <v-spacer></v-spacer>
-          <v-btn icon class="posisix" color="primary" @click="dialogForm = false">
+          <v-btn
+            icon
+            class="posisix"
+            color="primary"
+            @click="dialogForm = false"
+          >
             <v-icon>close</v-icon>
           </v-btn>
         </v-card-title>
         <v-card-text v-if="loader">
-          <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
+          <v-progress-linear
+            :indeterminate="true"
+            color="primary"
+          ></v-progress-linear>
         </v-card-text>
         <v-card-text>
-          <p><b>Mentor Name</b><br>{{dataSingle.personnel.name}}</p>
+          <p><b>Mentor Name</b><br />{{ dataSingle.personnel.name }}</p>
         </v-card-text>
         <v-card-text>
           <v-form ref="form" v-model="valid">
@@ -151,10 +153,15 @@
           <!-- {{params}} -->
         </v-card-text>
         <v-card-actions class="pa-5">
-          <v-btn block color="primary" :disabled="!valid" @click="proposeAction()">
+          <v-btn
+            block
+            color="primary"
+            :disabled="!valid"
+            @click="proposeAction()"
+          >
             <v-icon left>update</v-icon>Propose
           </v-btn>
-          <div class="flex-grow-1"></div>         
+          <div class="flex-grow-1"></div>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -176,13 +183,13 @@ export default {
       menu: false,
       menu2: false,
       dataList: { total: 0, list: [] },
-      dataSingle: { personnel: { name: "" } },
+      dataSingle: { introduction: null, personnel: { name: "" } },
       tableLoad: false,
       loader: false,
       tableHeaders: [
         { text: "Mentor Name", value: "name", sortable: false },
         { text: "", value: "sub", sortable: false, align: "left" },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
       dialog: false,
       dialogForm: false,
@@ -196,16 +203,16 @@ export default {
       params: {
         mentoringId: this.$route.params.mentoringId,
         mentorId: "",
-        startTime: ""
+        startTime: "",
       },
       date: "",
       time: "",
-      today: ""
+      today: "",
     };
   },
   watch: {
     date: "setDateTime",
-    time: "setDateTime"
+    time: "setDateTime",
   },
   mounted() {
     this.getDataList();
@@ -231,10 +238,10 @@ export default {
             this.$route.params.cohortId +
             "/mentors",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.dataList = res.data.data;
           } else {
@@ -258,10 +265,10 @@ export default {
             "/mentors/" +
             id,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.dataSingle = res.data.data;
         })
         .catch(() => {})
@@ -269,9 +276,10 @@ export default {
           this.loader = false;
         });
     },
-    openDetail(id) {
+    openDetail(data) {
       this.dialogDetail = true;
-      this.getDataSingle(id);
+      this.dataSingle = data;
+      // this.getDataSingle(id);
     },
     proposeAct(item) {
       this.dataSingle = item;
@@ -291,25 +299,25 @@ export default {
           this.params,
 
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
           this.$router.replace({
             path:
-              "/incubatee/team/" + 
+              "/incubatee/team/" +
               this.$route.params.teamId +
               "/participation/" +
               this.$route.params.cohortId +
-              "/schedule"
+              "/schedule",
           });
         })
         .catch(() => {})
         .finally(() => {
           this.loader = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
