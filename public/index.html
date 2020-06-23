@@ -1,20 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <title>Start MIKTI</title>
-    <script src='https://meet.jit.si/external_api.js'></script>
-    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.8.95/css/materialdesignicons.css">
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but inovasi-web-v3 doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <title>Start MIKTI</title>
+  <script src='https://meet.jit.si/external_api.js'></script>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.8.95/css/materialdesignicons.css">
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but inovasi-web-v3 doesn't work properly without JavaScript enabled. Please enable it to
+      continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-analytics.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyCy5X7jqhpBkDU58D5ZHhC4lN7Rp1Uw8r8",
+      authDomain: "start-mikti-2020.firebaseapp.com",
+      databaseURL: "https://start-mikti-2020.firebaseio.com",
+      projectId: "start-mikti-2020",
+      storageBucket: "start-mikti-2020.appspot.com",
+      messagingSenderId: "157635197855",
+      appId: "1:157635197855:web:a64218f2013e3566805baa",
+      measurementId: "G-60PCJWDN9Q"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+</body>
+
 </html>
