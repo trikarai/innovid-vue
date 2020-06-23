@@ -1,7 +1,7 @@
 <template>
-  <v-container extend grid-list-xs>
+  <v-container fluid>
     <v-row>
-      <v-col cols="12" md="12" v-if="missionLoader">
+      <v-col cols="12" xl="6" lg="12" md="12" v-if="missionLoader">
         <v-skeleton-loader max-width="500" type="article"></v-skeleton-loader>
       </v-col>
       <v-col cols="12" md="6" v-if="dataList.total == 0">
@@ -12,81 +12,81 @@
           >
         </div>
       </v-col>
-      <v-col cols="12" lg="12" md="12" v-else>
-        <v-timeline :reverse="true" align-top :dense="false">
-          <v-timeline-item
-            v-for="data in reOrderMission(dataList.list)"
-            :key="data.id"
-          >
-            <template v-slot:icon>
-              <v-avatar>
-                <span style="color:#fff">{{ data.position }}</span>
-              </v-avatar>
-            </template>
-            <v-card class="pa-3 elevation-5">
-              <div style="float: right !important">
-                <span class="dot2"></span>
-                <span class="dot1 ml-1"></span>
-              </div>
-              <v-card-title class="headline">
-                <v-row>
-                  <v-col style="word-break: break-word;" md="6">{{
-                    data.name
-                  }}</v-col>
-                  <v-col
-                    style="text-align:end;"
-                    md="6"
-                    v-if="data.previousMission != null"
-                  >
-                    <v-chip small>
-                      <v-avatar left>
-                        <v-icon small color="primary">account_tree</v-icon>
-                      </v-avatar>
-                      <span style="color:#999">{{
-                        data.previousMission.name
-                      }}</span>
-                    </v-chip>
-                  </v-col>
-                  <v-col style="text-align:end;" md="6" v-else>
-                    <v-chip small>
-                      <v-avatar left>
-                        <v-icon small color="primary"
-                          >assignment_turned_in</v-icon
-                        >
-                      </v-avatar>
-                      <span style="color:#999">Main Mission</span>
-                    </v-chip>
-                  </v-col>
-                </v-row>
-              </v-card-title>
-
-              <v-card-text class="subtitle">
-                <span class="textlimit2">{{ data.description }}</span>
-              </v-card-text>
-
-              <v-card-actions class="pt-0">
-                <v-row justify="space-between">
-                  <v-col cols="12" lg="6">
-                    <v-btn
-                      small
-                      color="primary"
-                      @click="gotoMissionDetail(data.id)"
+      <v-col cols="12" xl="10" lg="11" md="12" v-else>
+          <v-timeline :reverse="true" align-top :dense="false">
+            <v-timeline-item
+              v-for="data in reOrderMission(dataList.list)"
+              :key="data.id"
+            >
+              <template v-slot:icon>
+                <v-avatar>
+                  <span style="color:#fff">{{ data.position }}</span>
+                </v-avatar>
+              </template>
+              <v-card class="pa-3 elevation-5">
+                <div style="float: right !important">
+                  <span class="dot2"></span>
+                  <span class="dot1 ml-1"></span>
+                </div>
+                <v-card-title class="headline">
+                  <v-row>
+                    <v-col style="word-break: break-word;" md="6">{{
+                      data.name
+                    }}</v-col>
+                    <v-col
+                      style="text-align:end;"
+                      md="6"
+                      v-if="data.previousMission != null"
                     >
-                      <v-icon left>zoom_in</v-icon>Open
-                    </v-btn>
-                  </v-col>
-                  <v-col cols="12" lg="6">
-                    <!-- <span class="textlimit2" v-if="data.submittedJournal" -->
-                    <span class="" v-if="data.submittedJournal"
-                      >Submitted Journal: {{ data.submittedJournal }}</span
-                    >
-                    <span v-else>No Journal Submitted</span>
-                  </v-col>
-                </v-row>
-              </v-card-actions>
-            </v-card>
-          </v-timeline-item>
-        </v-timeline>
+                      <v-chip small>
+                        <v-avatar left>
+                          <v-icon small color="primary">account_tree</v-icon>
+                        </v-avatar>
+                        <span style="color:#999">{{
+                          data.previousMission.name
+                        }}</span>
+                      </v-chip>
+                    </v-col>
+                    <v-col style="text-align:end;" md="6" v-else>
+                      <v-chip small>
+                        <v-avatar left>
+                          <v-icon small color="primary"
+                            >assignment_turned_in</v-icon
+                          >
+                        </v-avatar>
+                        <span style="color:#999">Main Mission</span>
+                      </v-chip>
+                    </v-col>
+                  </v-row>
+                </v-card-title>
+
+                <v-card-text class="subtitle">
+                  <span class="textlimit2">{{ data.description }}</span>
+                </v-card-text>
+
+                <v-card-actions class="pt-0">
+                  <v-row justify="space-between">
+                    <v-col cols="12" lg="6">
+                      <v-btn
+                        small
+                        color="primary"
+                        @click="gotoMissionDetail(data.id)"
+                      >
+                        <v-icon left>zoom_in</v-icon>Open
+                      </v-btn>
+                    </v-col>
+                    <v-col cols="12" lg="6">
+                      <!-- <span class="textlimit2" v-if="data.submittedJournal" -->
+                      <span class="" v-if="data.submittedJournal"
+                        >Submitted Journal: {{ data.submittedJournal }}</span
+                      >
+                      <span v-else>No Journal Submitted</span>
+                    </v-col>
+                  </v-row>
+                </v-card-actions>
+              </v-card>
+            </v-timeline-item>
+          </v-timeline>
       </v-col>
     </v-row>
 
@@ -375,7 +375,7 @@ export default {
     refreshBranchJournal() {
       this.getBranchJournal();
     },
-    
+
     gotoMissionDetail(missionId) {
       this.$store.commit("setMissionLength", this.dataList.list.length);
       this.$router.push({

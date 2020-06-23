@@ -1,5 +1,5 @@
 <template>
-  <v-container extend grid-list-xs>
+  <v-container fluid>
     <v-row name="one">
       <v-col cols="12" sm="4" md="5" xs="12">
         <v-card @click="$router.push({ path: '/incubatee/profile' })">
