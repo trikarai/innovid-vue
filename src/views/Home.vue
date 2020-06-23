@@ -184,7 +184,7 @@
                 <h2 style="color:#00667f">
                   <v-icon class="mr-2" large color="#00667f"
                     >mdi-email-edit-outline</v-icon
-                  >info@mikti.org
+                  >start@mikti.org
                 </h2>
               </div>
             </v-flex>
@@ -230,7 +230,7 @@ export default {
               name: "Arief Widhiyasa",
               role: "CEO Agate",
               bio:
-                "After participating in the International Olympics of Informatics. Arief Widhiyasa found that his true calling was in games. In 2009, along with his 18 closest friends, he co-foundeded Agate, and is Agate's CEO today. In 2016, he was nominated as one of the Forbes 30 under 30 Asia. Agate currently become the leading and biggest Indonesian game development in Indonesia. Right now Indonesian game industry is rapidly growing and his goal is to create a sustainable game ecosystem by working together with Indonesian Game Association and the Indonesian Government.",
+                "Setelah berpartisipasi dalam International Olympics of Informatics, Arief Widhiyasa berkeinginan untuk menggeluti dunia game. Pada tahun 2009, bersama 18 temannya, ia mendirikan Agate dan menjabat sebagai CEO perusahaan tersebut.",
               photo: "/img/arief.png",
             },
             {
@@ -239,7 +239,7 @@ export default {
               role:
                 "CEO PT. Jejala Pararta International and CTO PT. Ayomobile",
               bio:
-                "Dibya Pradana is a specialist in IS/IT Planning and\n Digital Business Re-engineering. Experienced CEO at PT\n Jejala Pararta International and Founder/CTO PT\n Ayomobile Media International. Actively involved as a\n Consultant at Bappenas and Coordinating Ministry for\n Economic Affairs. Furthermore, also taking a role as\n Director Executive at Bandung, Jogja, Makassar Digital\n Valley under MIKTI.",
+                "Dr. Dina Dellyana, S.Farm., Apt., MBA., CBAP adalah seorang dosen dan Direktur Bisnis Inkubator di Sekolah Bisnis dan Manajemen Institut Teknologi Bandung (SBM ITB). Ia aktif berkontribusi dalam perkembangan startup Indonesia dengan perannya sebagai Lead Mentor Startup Bekraf, Divisi Pengembangan Startup MIKTI, Kepala Pengembangan Startup KADIN Jawa Barat. Ia juga aktif mengadakan penelitian yang berkaitan dengan Business Model Innovation, SME Development, Business Incubator, dan SME Sosial Media and E-commerce.",
               photo: "/img/dibya.png",
             },
             {
@@ -253,9 +253,9 @@ export default {
             {
               id: "119",
               name: "Indra Purnama",
-              role: "CEO PT. Barapraja",
+              role: "CEO PT. Barapraja & Managing Partner Angel.ID ",
               bio:
-                "Experienced in tech incubation since 2009, in Indonesia and Asia Region (Lean Startup Machine, Bandung Digital Valley, BEKUP, Project BrainChild, etc). Customer Development, Lean Startup, Metrics & Strategy are among his specializations.",
+                "Berpengalaman dalam inkubasi teknologi sejak 2009, di Indonesia dan Wilayah Asia (Lean Startup Machine, Bandung Digital Valley, BEKUP, Project BrainChild, dll). Pengembangan Pelanggan, Lean Startup, Metrik & Strategi adalah di antara spesialisasinya.",
               photo: "/img/indra.png",
             },
             {
@@ -263,7 +263,7 @@ export default {
               name: "M Aditya Arief Nugraha",
               role: "President Director at PT Gametechno Indonesia",
               bio:
-                "M Aditya Arief Nugraha is Technology & Business Enthusiast. Actively working as President Director at PT Gametechno Indonesia. Also involved in PT AINO Indonesia as Comissioner.",
+                "M. Aditya Arif Nugraha adalah pegiat bisnis dan teknologi. Ia aktif berperan sebagai Presiden Direktur PT Gametechno Indonesia. Ia juga merupakan Komisioner PT AINO Indonesia.",
               photo: "/img/aditya.png",
             },
             {
@@ -271,7 +271,7 @@ export default {
               name: "Muhammad Andy Zaky",
               role: "CEO Teknopreneur",
               bio:
-                "M Andy Zaky is experienced C-level with a demonstrated history of working in the tech industry. Also actively investing and become mentor and/or member of board commissioner of some prominent digital startups in Indonesia. Furthermore, also  taking role as Vice Secretary of Indonesia National ICT Council (WANTIKNASl) and General Secretary of MIKTI (Indonesia Digital Creative Industries Society) as part of contribution to strengthen the digital industry ecosystem.",
+                "M. Andy Zaky memiliki banyak pengalaman dalam berkarya di bidang industri teknologi. Ia berperan sebagai Sekretaris Dewan Teknologi Informasi dan Komunikasi (WANTIKNAS) dan Sekretaris Jendral Masyarakat Industri Kreatif Teknologi Informasi (MIKTI) sebagai upayanya untuk memajukan digital industri. Selain itu, ia juga secara aktif berkontribusi melalui perannya sebagai mentor dan/atau anggota di berbagai digital startups ternama Indonesia.",
               photo: "/img/andy.png",
             },
             
@@ -280,7 +280,7 @@ export default {
               name: "St. Andika Sutedjo",
               role: "CEO PT Smart Meter Indonesia",
               bio:
-                "St. Andika Sutedjo is CEO at PT Smart Meter Indonesia. Actively involved in several awarding, such as Winner of Indonesia ICT Award – INAICTA 2008, Nominator Asia Pasific ICT Award – APICTA 2008, and Winner of Indonesia ICT Award – INAICTA 2009",
+                "St. Andika Sutedjo adalah CEO PT Smart Meter Indonesia yang kerap meraih banyak penghargaan, di antaranya Winner of Indonesia ICT Award 2008, Nominator Asia Pacific ICT Award 2008, dan Winner of Indonesia ICT Award 2009.",
               photo: "/img/andika.png",
             },
             
@@ -290,7 +290,7 @@ export default {
               name: "Vita Subiyakti",
               role: "Executive Director at SixSense Restaurant",
               bio:
-                "Vita Subiyakti is Co-Founder in BOTIKA and also Executive Director at SixSense Restaurant. Actively involved at Soroptimist International of the South West Pacific as Secretary. Furthermore, also taking role as Marketing Director at RuangKerja Software Engineering and Managing Director at Best Retail Supply",
+                "Vita Subiyakti aktif berperan sebagai salah satu pendiri BOTIKA,Direktur Eksekutif di SixSense Restaurant dan juga aktif sebagai Sekretaris di Soroptimist International South West Pasific",
               photo: "/img/vita.png",
             },
             {
@@ -298,7 +298,7 @@ export default {
               name: "Zaenal Arifin",
               role: "Co-Founder Andromedia",
               bio:
-                "Zaenal Arifin is Co-Founder at Andromedia and also Gerdhu Inc. Furthermore, also an alumnus at Apple Developer Academy",
+                "Zaenal Arifin adalah salah satu pendiri Andromedia dan Gerdhu Inc. Ia merupakan alumni dari Apple Developer Academy.",
               photo: "/img/zaenal.png",
             },
             
