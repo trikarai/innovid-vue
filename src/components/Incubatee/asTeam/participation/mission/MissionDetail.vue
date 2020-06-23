@@ -1,11 +1,11 @@
 <template>
-  <v-container extend grid-list-xs>
+  <v-container fluid>
     <v-row>
-      <v-col class="pl-0" cols="12" lg="12" md="6">
+      <v-col class="pl-0" cols="12" xl="12" lg="12" md="6">
         <v-card elevation="0" class="pa-0" :loading="tableLoad">
           <v-card-title class="pb-0" primary-title>
             <v-row justify="space-between">
-              <v-col cols="12" lg="9">
+              <v-col cols="12" xl="4" lg="6" md="6" sm="6">
                 <div style="display: -webkit-box;">
                   {{ dataList.name }}
                   <v-card-text
@@ -31,28 +31,33 @@
                   </v-card-text>
                 </div>
               </v-col>
-              <v-col style="text-align:right;" cols="12" lg="3">
-                <v-btn
-                  style="margin-right:80px;"
-                  small
-                  icon
-                  v-if="dataList.position !== '1'"
-                  @click="gotoMissionByPosPrev(dataList.position)"
-                >
-                  <v-icon>mdi-triangle mdi-rotate-270</v-icon> previous mission
-                </v-btn>
-                <v-btn
-                  style="margin-left:80px;margin-right:25px;"
-                  small
-                  icon
-                  @click="gotoMissionByPosNext(dataList.position)"
-                  v-if="
-                    dataList.position !==
-                      $store.getters.getMissionLength.toString()
-                  "
-                >
-                  next mission <v-icon>mdi-triangle mdi-rotate-90</v-icon>
-                </v-btn>
+              <v-col cols="12" xl="8" lg="6" md="2" sm="2">
+                <v-row>
+                  <v-col cols="12" xl="2" lg="4">
+                    <v-btn
+                      small
+                      icon
+                      v-if="dataList.position !== '1'"
+                      @click="gotoMissionByPosPrev(dataList.position)"
+                    >
+                      <v-icon>mdi-triangle mdi-rotate-270</v-icon> previous
+                      mission
+                    </v-btn>
+                  </v-col>
+                  <v-col xl="2" lg="4">
+                    <v-btn
+                      small
+                      icon
+                      @click="gotoMissionByPosNext(dataList.position)"
+                      v-if="
+                        dataList.position !==
+                          $store.getters.getMissionLength.toString()
+                      "
+                    >
+                      next mission <v-icon>mdi-triangle mdi-rotate-90</v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-col>
             </v-row>
             <!-- <span class="dot2"></span>
@@ -65,7 +70,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col class="pt-0" cols="12" lg="12">
+      <v-col class="pt-0" cols="12" xl="10" lg="11">
         <v-tabs v-model="tab" color="primary" slider-color="primary">
           <v-tabs-slider></v-tabs-slider>
           <v-tab href="#tab-1">Learning Material</v-tab>
@@ -107,7 +112,7 @@
     </v-row>
     <v-overlay :value="loader">
       <v-row>
-        <v-col cols="12" lg="12">
+        <v-col cols="12" xl="12" lg="12">
           <v-progress-circular
             color="primary"
             indeterminate
