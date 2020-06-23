@@ -121,9 +121,9 @@ export default {
   },
   methods: {
     checkRenderMode() {
-      let tempObj = JSON.parse(this.dataMission.description);
+      let tempObj = JSON.parse(this.dataMission.worksheetForm.description);
       if (tempObj.hasOwnProperty("renderAs")) {
-        this.desc = JSON.parse(this.dataMission.description);
+        this.desc = JSON.parse(this.dataMission.worksheetForm.description);
       } else {
         this.desc.renderAs = false;
       }
