@@ -239,7 +239,7 @@ export default {
               role:
                 "CEO PT. Jejala Pararta International and CTO PT. Ayomobile",
               bio:
-                "Dr. Dina Dellyana, S.Farm., Apt., MBA., CBAP adalah seorang dosen dan Direktur Bisnis Inkubator di Sekolah Bisnis dan Manajemen Institut Teknologi Bandung (SBM ITB). Ia aktif berkontribusi dalam perkembangan startup Indonesia dengan perannya sebagai Lead Mentor Startup Bekraf, Divisi Pengembangan Startup MIKTI, Kepala Pengembangan Startup KADIN Jawa Barat. Ia juga aktif mengadakan penelitian yang berkaitan dengan Business Model Innovation, SME Development, Business Incubator, dan SME Sosial Media and E-commerce.",
+                "Dibya Pradana adalah pakar dalam IS/IT Planning dan Digital Business Re-engineering. Ia aktif berkontribusi melalui perannya sebagai CEO PT Jejala Pararta Internasional, CTO PT Ayomobile Media International, Consultant Bappenas, dan Konsultan Mentri Koordinator Bidang Perekonomian. Selain itu, ia juga berperan sebagai Direktur Eksekutif Digital Valley di Bandung, Jogja, dan Makassar.",
               photo: "/img/dibya.png",
             },
             {
@@ -247,7 +247,7 @@ export default {
               name: "Dina Dellyana",
               role: "Director, Bussiness Incubator at SBM ITB",
               bio:
-                "Dr. Dina Dellyana, S.Farm., Apt., MBA., CBAP is a lecturer and business incubator director at the School of Business and Management, Institut Teknologi Bandung (SBM ITB). Actively involved in several startup development activities and also become a lead mentor in Bekraf for Startup, Startup development division in MIKTI and head of startup development in west Java’s Chambers of Commerce. Also actively conducting research with topics on Business Model Innovation, SME Development, Business Incubator and Social Media and E-commerce for SME’s.",
+                "Dr. Dina Dellyana, S.Farm., Apt., MBA., CBAP adalah seorang dosen dan Direktur Bisnis Inkubator di Sekolah Bisnis dan Manajemen Institut Teknologi Bandung (SBM ITB). Ia aktif berkontribusi dalam perkembangan startup Indonesia dengan perannya sebagai Lead Mentor Startup Bekraf, Divisi Pengembangan Startup MIKTI, Kepala Pengembangan Startup KADIN Jawa Barat. Ia juga aktif mengadakan penelitian yang berkaitan dengan Business Model Innovation, SME Development, Business Incubator, dan SME Sosial Media and E-commerce.",
               photo: "/img/dina.png",
             },
             {
