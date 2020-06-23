@@ -121,8 +121,20 @@
                         x-small
                         router
                         :to="'/forgot-password/' + params.incubatorIdentifier"
-                        >forgot password?</v-btn
-                      >
+                        >forgot password?
+                      </v-btn>                      
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col class="pt-0 mt-0">
+                      <v-btn
+                        class="grey--text"
+                        text
+                        x-small
+                        router
+                        :to="'/request-activation/' + params.incubatorIdentifier"
+                        >Request Activation Code
+                      </v-btn>                      
                     </v-col>
                   </v-row>
                 </v-form>
