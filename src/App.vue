@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-responsive aspect-ratio="16/10">
+    <v-responsive aspect-ratio="16/10" width="4096">
     <v-content color="bgcolor">
       <notification :message="err_msg" :stats="status" />
       <router-view />
