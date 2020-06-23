@@ -405,8 +405,8 @@
           <v-list-item-content>
             <v-list-item-subtitle>Technical Support</v-list-item-subtitle>
             <v-list-item-title class="title"
-              ><a style="text-decoration: none" href="mailto:support@innov.id"
-                >support@innov.id</a
+              ><a style="text-decoration: none" href="mailto:start@mikti.org"
+                >start@mikti.org</a
               ></v-list-item-title
             >
           </v-list-item-content>
