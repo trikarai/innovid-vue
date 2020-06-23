@@ -298,7 +298,7 @@ export default {
               name: "Zaenal Arifin",
               role: "Co-Founder Andromedia",
               bio:
-                "Zaenal Arifin adalah salah satu pendiri Andromedia dan Gerdhu Inc. Ia merupakan alumni dari Apple Developer Academy.",
+                "Zaenal Arifin adalah co-founder dari andromedia dan gerdhu",
               photo: "/img/zaenal.png",
             },
             
