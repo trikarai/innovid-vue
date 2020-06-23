@@ -297,6 +297,7 @@ export default {
       );
       this.ext = files.name.split(".").pop();
       this.removeFileBtn = true;
+      this.uploadFile();
     },
     removeFile() {
       this.file = null;

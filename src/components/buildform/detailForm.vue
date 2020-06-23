@@ -3,14 +3,17 @@
     <v-col cols="12" md="12" lg="12" xs="12">
       <v-card class="pa-10">
         <v-card-title v-if="!loader">
-          <span class="headline">{{dataSingle.name}}</span>
+          <span class="headline">{{ dataSingle.name }}</span>
         </v-card-title>
         <v-card-text v-if="loader">
-          <v-skeleton-loader ref="skeleton1" type="card-heading"></v-skeleton-loader>
+          <v-skeleton-loader
+            ref="skeleton1"
+            type="card-heading"
+          ></v-skeleton-loader>
         </v-card-text>
         <v-card-text>
-          <span class="sub-title" v-if="obj.renderAs">{{obj.description}}</span>
-          <span class="sub-title" v-else>{{dataSingle.description}}</span>
+          <span class="sub-title">{{ obj.description }}</span>
+          <!-- <span class="sub-title">{{ dataSingle.description }}</span> -->
         </v-card-text>
         <v-card-text v-if="!loader">
           <template v-if="!obj.renderAs">
@@ -24,7 +27,14 @@
             <!-- <pre> {{fields}} </pre> -->
             <div class="grid-container">
               <template v-for="field in fields">
-                <v-card class="ma-1" :style="'grid-area:' + field.position" :key="field.id" elevation="2" shaped outlined>
+                <v-card
+                  class="ma-1"
+                  :style="'grid-area:' + field.position"
+                  :key="field.id"
+                  elevation="2"
+                  shaped
+                  outlined
+                >
                   <v-card-text>
                     <field-module :field="field" />
                   </v-card-text>
@@ -62,15 +72,15 @@ export default {
         textAreaFields: [],
         attachmentFields: [],
         singleSelectFields: [],
-        multiSelectFields: []
+        multiSelectFields: [],
       },
       obj: { description: "", renderAs: false },
       fields: [],
-      loader: false
+      loader: false,
     };
   },
   components: {
-    FieldModule
+    FieldModule,
   },
   mounted() {
     this.getDataSingle();
@@ -78,6 +88,7 @@ export default {
   methods: {
     checkRenderMode() {
       let tempObj = JSON.parse(this.dataSingle.description);
+      this.obj.description = this.dataSingle.description;
       if (tempObj.hasOwnProperty("renderAs")) {
         this.obj = JSON.parse(this.dataSingle.description);
       }
@@ -93,10 +104,10 @@ export default {
             "/" +
             this.$route.params.formId,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.dataSingle = res.data.data;
           this.refactorJSON(res.data.data);
           this.checkRenderMode();
@@ -105,8 +116,8 @@ export default {
         .finally(() => {
           this.loader = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
