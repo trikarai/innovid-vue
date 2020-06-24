@@ -23,34 +23,34 @@
                   <span style="color:#fff">{{ data.position }}</span>
                 </v-avatar>
               </template>
-              <v-card class="pa-3 elevation-5">
-                <div style="float: right !important">
+              <v-card class="pa-3 pt-0 elevation-5">
+                <div style="float: right !important;position: relative;top: 38px;">
                   <span class="dot2"></span>
                   <span class="dot1 ml-1"></span>
                 </div>
                 <v-card-title class="headline">
                   <v-row>
-                    <v-col style="word-break: break-word;" md="6">{{
+                    <v-col style="word-break: break-word;font-size: 15px;font-weight: 600;" md="8">{{
                       data.name
                     }}</v-col>
                     <v-col
                       style="text-align:end;"
-                      md="6"
+                      md="4"
                       v-if="data.previousMission != null"
                     >
-                      <v-chip small>
+                      <v-chip x-small>
                         <v-avatar left>
-                          <v-icon small color="primary">account_tree</v-icon>
+                          <v-icon x-small color="primary">account_tree</v-icon>
                         </v-avatar>
                         <span style="color:#999">{{
                           data.previousMission.name
                         }}</span>
                       </v-chip>
                     </v-col>
-                    <v-col style="text-align:end;" md="6" v-else>
-                      <v-chip small>
+                    <v-col style="text-align:end;" md="4" v-else>
+                      <v-chip x-small>
                         <v-avatar left>
-                          <v-icon small color="primary"
+                          <v-icon x-small color="primary"
                             >assignment_turned_in</v-icon
                           >
                         </v-avatar>
@@ -75,12 +75,25 @@
                         <v-icon left>zoom_in</v-icon>Open
                       </v-btn>
                     </v-col>
-                    <v-col cols="12" lg="6">
+                    <v-col style="text-align:right;" cols="12" lg="6">
                       <!-- <span class="textlimit2" v-if="data.submittedJournal" -->
-                      <span class="" v-if="data.submittedJournal"
-                        >Submitted Journal: {{ data.submittedJournal }}</span
+                      <span style="
+                            position: relative;
+                            top: 6px;
+                            background: #d6f7ff;
+                            color: #646464;
+                            padding: 3px 13px 3px 13px;" 
+                            v-if="data.submittedJournal"
+                        >Submitted Journal: <span style="color: #00667f;font-weight: 900;margin-left: 5px;">{{ data.submittedJournal }}</span> </span
                       >
-                      <span v-else>No Journal Submitted</span>
+                      <span 
+                      style="
+                          position: relative;
+                          top: 6px;
+                          background: #d6f7ff;
+                          color: #646464;
+                          padding: 3px 13px 3px 13px;" 
+                      v-else>No Journal Submitted</span>
                     </v-col>
                   </v-row>
                 </v-card-actions>
