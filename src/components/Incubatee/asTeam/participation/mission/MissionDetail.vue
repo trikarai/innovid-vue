@@ -32,7 +32,7 @@
                 </div>
               </v-col>
               <v-col cols="12" xl="8" lg="6" md="2" sm="2">
-                <v-row>
+                <v-row style="text-align:right;">
                   <v-col cols="12" xl="2" lg="4">
                     <v-btn
                       small
