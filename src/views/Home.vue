@@ -44,10 +44,10 @@
     <v-content>
       <section style="max-height:590px">
         <v-img class="imgkastem" src="/img/mainbanner.jpg">
-          <div class="container" style="margin-top:140px;">
+          <div class="container" style="margin-top:190px;">
             <v-row>
               <v-col cols="12" xs="6" sm="6">
-                <v-card style="opacity:0.9" elevation="0" class="pa-1">
+                <v-card style="opacity:0.8" elevation="0" class="pa-1">
                   <v-card-title style="display: block" primary-title>
                     <div class="headline">New Normal = New Opportunities</div>
                     <div class="garis"></div>
@@ -239,7 +239,7 @@ export default {
               role:
                 "CEO PT. Jejala Pararta International and CTO PT. Ayomobile",
               bio:
-                "Dibya Pradana adalah pakar dalam IS/IT Planning dan Digital Business Re-engineering. Ia aktif berkontribusi melalui perannya sebagai CEO PT Jejala Pararta Internasional, CTO PT Ayomobile Media International, Consultant Bappenas, dan Konsultan Mentri Koordinator Bidang Perekonomian. Selain itu, ia juga berperan sebagai Direktur Eksekutif Digital Valley di Bandung, Jogja, dan Makassar.",
+                "Dibya Pradana adalah pakar dalam IS/IT Planning dan Digital Business Re-engineering. Ia aktif berkontribusi melalui perannya sebagai CEO PT Jejala Pararta Internasional, CTO PT Ayomobile Media International, Konsultan di Bappenas dan  Mentri Koordinator Bidang Perekonomian. Selain itu, ia juga berperan sebagai Direktur Eksekutif Digital Valley di Bandung, Jogja, dan Makassar.",
               photo: "/img/dibya.png",
             },
             {
@@ -298,7 +298,7 @@ export default {
               name: "Zaenal Arifin",
               role: "Co-Founder Andromedia",
               bio:
-                "Zaenal Arifin adalah co-founder dari andromedia dan gerdhu",
+                "Zaenal Arifin adalah Co-founder dari andromedia dan gerdhu. Ia merupakan alumni dari Apple Developer Academy.",
               photo: "/img/zaenal.png",
             },
             
