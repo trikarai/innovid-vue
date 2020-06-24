@@ -97,11 +97,11 @@
                 class="pa-5"
                 shaped
                 color="#00667f"
-                style="padding-top:50px !important;padding-bottom:50px !important;"
+                style="padding-top:50px !important;padding-bottom:50px !important;margin-top:44px;"
               >
                 <v-layout row wrap align-center>
                   <v-flex xs12 md6 style="text-align:center">
-                    <h1>Daftarkan diri anda segera !</h1>
+                    <h2>Daftarkan diri anda segera!</h2>
                   </v-flex>
                   <v-flex xs12 md6 style="text-align:center">
                     <v-btn to="/signup" x-large color="#fd4010">
