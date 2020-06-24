@@ -1,5 +1,5 @@
 <template>
-  <v-container extend grid-list-xs>
+  <v-container fluid>
     <!-- <v-row>
       <v-col md="4" xs="12">
         <v-text-field
@@ -13,12 +13,14 @@
       </v-col>
     </v-row> -->
     <v-row>
-      <v-col>
+      <v-col cols="12" xl="10" lg="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
           :headers="tableHeaders"
           :items="dataList.list"
+          :options.sync="options"
+          :server-items-length="dataList.total"
           class="elevation-1"
         >
           <!-- <template v-slot:item.name="{item}">
@@ -33,11 +35,13 @@
             </v-btn>
             {{item.name}}
           </template> -->
-          <template v-slot:item.activated="{item}">
-            <v-icon v-if="item.activated" large color="green darken-1">check</v-icon>
+          <template v-slot:item.activated="{ item }">
+            <v-icon v-if="item.activated" large color="green darken-1"
+              >check</v-icon
+            >
             <v-icon v-else large color="red darken-1">remove</v-icon>
           </template>
-          <template v-slot:item.action="{item}"></template>
+          <!-- <template v-slot:item.action="{ item }"></template> -->
         </v-data-table>
       </v-col>
     </v-row>
@@ -45,9 +49,9 @@
     <v-dialog v-model="dialogDelete" width="300" :persistent="true">
       <v-card :loading="tableLoad">
         <v-card-title>
-          <p class="text-capitalize">{{leftAction}}</p>
+          <p class="text-capitalize">{{ leftAction }}</p>
         </v-card-title>
-        <v-card-text>{{leftName}}</v-card-text>
+        <v-card-text>{{ leftName }}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn color="green" @click="deleteAccount(leftId)">Yes</v-btn>
@@ -69,19 +73,30 @@
           <p class="text-capitalize"></p>
         </v-card-title>
         <v-card-text v-if="loader">
-          <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
+          <v-progress-linear
+            :indeterminate="true"
+            color="primary"
+          ></v-progress-linear>
         </v-card-text>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.name">{{dataSingle.name}}</v-card-text>
+          <v-card-text :key="dataSingle.name">{{
+            dataSingle.name
+          }}</v-card-text>
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.email">{{dataSingle.email}}</v-card-text>
+          <v-card-text :key="dataSingle.email">{{
+            dataSingle.email
+          }}</v-card-text>
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.phone">{{dataSingle.phone}}</v-card-text>
+          <v-card-text :key="dataSingle.phone">{{
+            dataSingle.phone
+          }}</v-card-text>
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.joinTime">{{dataSingle.joinTime}}</v-card-text>
+          <v-card-text :key="dataSingle.joinTime">{{
+            dataSingle.joinTime
+          }}</v-card-text>
         </transition>
         <v-card-actions>
           <div class="flex-grow-1"></div>
@@ -112,18 +127,22 @@ export default {
         { text: "Email", value: "email", sortable: false },
         { text: "Signup Time", value: "signupTime", sortable: false },
         { text: "activated", value: "activated", sortable: false },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
+      options: { page: 1, itemsPerPage: 15 },
       dialogForm: false,
       dialogDelete: false,
       dialogDetail: false,
       edit: false,
       leftId: "",
       leftName: "",
-      leftAction: ""
+      leftAction: "",
     };
   },
   components: {},
+  watch: {
+    options: "getDataList",
+  },
   created: function() {
     // this.authData = JSON.parse(auth.getAuthData());
   },
@@ -135,9 +154,13 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(config.baseUri + "/personnel/as-admin/founders", {
-          headers: auth.getAuthHeader()
+          params: {
+            page: this.options.page,
+            pageSize: this.options.itemsPerPage,
+          },
+          headers: auth.getAuthHeader(),
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.dataList = res.data.data;
           } else {
@@ -158,9 +181,9 @@ export default {
       this.loader = true;
       this.axios
         .get(config.baseUri + "/personnel/as-admin/founders/" + id, {
-          headers: auth.getAuthHeader()
+          headers: auth.getAuthHeader(),
         })
-        .then(res => {
+        .then((res) => {
           this.dataSingle = res.data.data;
         })
         .catch(() => {})
@@ -186,7 +209,7 @@ export default {
       this.tableLoad = true;
       this.axios
         .delete(config.baseUri + "/sys-admin/sys-admins/" + id, {
-          headers: auth.getAuthHeader()
+          headers: auth.getAuthHeader(),
         })
         .then(() => {
           this.refresh();
@@ -200,8 +223,8 @@ export default {
       this.dialogForm = false;
       this.dialogDelete = false;
       this.getDataList();
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <v-container extend grid-list-xs>
+  <v-container fluid>
     <!-- <v-row>
       <v-col md="4" xs="12">
         <v-text-field
@@ -13,15 +13,17 @@
       </v-col>
     </v-row> -->
     <v-row>
-      <v-col>
+      <v-col cols="12" xl="10" lg="12">
         <v-data-table
           :search="search"
           :loading="tableLoad"
           :headers="tableHeaders"
           :items="dataList.list"
+          :options.sync="options"
+          :server-items-length="dataList.total"
           class="elevation-1"
         >
-          <template v-slot:item.name="{item}">
+          <template v-slot:item.name="{ item }">
             <!-- <v-btn
               class="elevation-0 mr-2"
               fab
@@ -31,17 +33,27 @@
             >
               <v-icon>zoom_in</v-icon>
             </v-btn> -->
-            {{item.team.name}}
+            {{ item.team.name }}
           </template>
-          <template v-slot:item.note="{item}">
-            <v-chip small v-if="item.note !== null">{{item.note}}</v-chip>
+          <template v-slot:item.note="{ item }">
+            <v-chip small v-if="item.note !== null">{{ item.note }}</v-chip>
           </template>
-          <template v-slot:item.action="{item}">
+          <template v-slot:item.action="{ item }">
             <template v-if="!item.concluded">
-              <v-btn class="ml-2" small color="primary" @click="leftAct(item, 'accept')">
+              <v-btn
+                class="ml-2"
+                small
+                color="primary"
+                @click="leftAct(item, 'accept')"
+              >
                 <v-icon small left>check</v-icon>accept
               </v-btn>
-              <v-btn class="ml-2" small color="warning" @click="leftAct(item, 'reject')">
+              <v-btn
+                class="ml-2"
+                small
+                color="warning"
+                @click="leftAct(item, 'reject')"
+              >
                 <v-icon small left>block</v-icon>reject
               </v-btn>
             </template>
@@ -53,9 +65,9 @@
     <v-dialog v-model="dialogDelete" width="300" :persistent="true">
       <v-card :loading="tableLoad">
         <v-card-title>
-          <p class="text-capitalize">{{leftAction}}</p>
+          <p class="text-capitalize">{{ leftAction }}</p>
         </v-card-title>
-        <v-card-text>{{leftName}}</v-card-text>
+        <v-card-text>{{ leftName }}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
@@ -77,9 +89,12 @@
           <p class="text-capitalize"></p>
         </v-card-title>
         <v-card-text v-if="loader">
-          <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
+          <v-progress-linear
+            :indeterminate="true"
+            color="primary"
+          ></v-progress-linear>
         </v-card-text>
-        <v-card-text>{{dataSingle}}</v-card-text>
+        <v-card-text>{{ dataSingle }}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn icon color="red" @click="dialogDetail = false">
@@ -107,16 +122,20 @@ export default {
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
         { text: "Status", value: "note", sortable: false },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
+      options: { page: 1, itemsPerPage: 15 },
       dialogForm: false,
       dialogDelete: false,
       dialogDetail: false,
       edit: false,
       leftId: "",
       leftName: "",
-      leftAction: ""
+      leftAction: "",
     };
+  },
+  watch: {
+    options: "getDataList",
   },
   mounted: function() {
     this.getDataList();
@@ -131,10 +150,14 @@ export default {
             this.$route.params.programId +
             "/registrants",
           {
-            headers: auth.getAuthHeader()
+            params: {
+              page: this.options.page,
+              pageSize: this.options.itemsPerPage,
+            },
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.dataList = res.data.data;
           } else {
@@ -160,13 +183,13 @@ export default {
             "/registrants/" +
             id,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.dataSingle = res.data.data;
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -192,7 +215,7 @@ export default {
             this.leftAction,
           {},
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
@@ -203,7 +226,7 @@ export default {
           );
           this.refresh();
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -215,9 +238,8 @@ export default {
       this.dialogDelete = false;
       this.dialogDetail = false;
       this.getDataList();
-    }
-  }
+    },
+  },
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>
