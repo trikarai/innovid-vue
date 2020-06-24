@@ -14,8 +14,6 @@ import * as firebase from "firebase/app";
 import "firebase/analytics";
 
 const firebaseConfig = {
-  appId: "<your-app-id>",
-  measurementId: "<your-measurement-id>",
   apiKey: "AIzaSyCy5X7jqhpBkDU58D5ZHhC4lN7Rp1Uw8r8",
   authDomain: "start-mikti-2020.firebaseapp.com",
   databaseURL: "https://start-mikti-2020.firebaseio.com",
