@@ -1,6 +1,6 @@
 {
   "name": "inovasi-web-v3",
-  "version": "2.2.200623-start",
+  "version": "2.2.200624-start",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -30,7 +30,8 @@
     "vue-simplemde": "^1.0.6",
     "vue-uuid": "^1.1.1",
     "vuetify": "^2.2.32",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "worker-loader": "^2.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.4.1",
