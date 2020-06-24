@@ -231,6 +231,9 @@ export default {
         )
         .then((res) => {
           this.dataList = res.data.data;
+          this.$analytics.logEvent("mission_view", {
+            name: this.dataList.name,
+          });
           Object.assign(this.dataListTemp, this.dataList);
           this.previousMission = res.data.data.previousMission;
         })
@@ -256,6 +259,9 @@ export default {
         )
         .then((res) => {
           this.dataList = res.data.data;
+          this.$analytics.logEvent("mission_view", {
+            name: this.dataList.name,
+          });
           Object.assign(this.dataListTemp, this.dataList);
           this.previousMission = res.data.data.previousMission;
         })

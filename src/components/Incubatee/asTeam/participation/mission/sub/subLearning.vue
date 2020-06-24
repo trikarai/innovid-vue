@@ -41,17 +41,22 @@ export default {
       type: Boolean,
       default: false,
     },
-    missionId: { type: String, required: true },
+    missionId: { type: String, required: false },
   },
   data() {
     return {
       loadingLearning: false,
       learnings: { total: 0, list: [] },
-      learning: { content: "" },
+      learning: { content: null },
     };
   },
   watch: {
     missionId: "getLearningMaterial",
+    learning() {
+      this.$analytics.logEvent("learning_view", {
+        name: this.learning.name,
+      });
+    },
   },
   mounted() {
     this.getLearningMaterial();
@@ -61,32 +66,34 @@ export default {
       return this._.orderBy(params, "name", "asc");
     },
     getLearningMaterial() {
-      this.learnings = { total: 0, list: [] };
-      this.learning = { content: "" };
-      this.loadingLearning = true;
-      this.axios
-        .get(
-          config.baseUri +
-            "/founder/as-team-member/" +
-            this.$route.params.teamId +
-            "/program-participations/" +
-            this.$route.params.cohortId +
-            "/missions/" +
-            this.missionId +
-            "/learning-materials",
-          {
-            headers: auth.getAuthHeader(),
-          }
-        )
-        .then((res) => {
-          this.learnings = res.data.data;
-          this.learnings.list = this.reOrderByName(this.learnings.list);
-          this.learning = this.learnings.list[0];
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.loadingLearning = false;
-        });
+      if (this.missionId !== "") {
+        this.learnings = { total: 0, list: [] };
+        this.learning = { content: null };
+        this.loadingLearning = true;
+        this.axios
+          .get(
+            config.baseUri +
+              "/founder/as-team-member/" +
+              this.$route.params.teamId +
+              "/program-participations/" +
+              this.$route.params.cohortId +
+              "/missions/" +
+              this.missionId +
+              "/learning-materials",
+            {
+              headers: auth.getAuthHeader(),
+            }
+          )
+          .then((res) => {
+            this.learnings = res.data.data;
+            this.learnings.list = this.reOrderByName(this.learnings.list);
+            this.learning = this.learnings.list[0];
+          })
+          .catch(() => {})
+          .finally(() => {
+            this.loadingLearning = false;
+          });
+      }
     },
   },
 };

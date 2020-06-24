@@ -8,13 +8,33 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import VueSanitize from "vue-sanitize";
 
+// Firebase App (the core Firebase SDK) is always required and must be listed first
+import * as firebase from "firebase/app";
+// If you enabled Analytics in your project, add the Firebase SDK for Analytics
+import "firebase/analytics";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCy5X7jqhpBkDU58D5ZHhC4lN7Rp1Uw8r8",
+  authDomain: "start-mikti-2020.firebaseapp.com",
+  databaseURL: "https://start-mikti-2020.firebaseio.com",
+  projectId: "start-mikti-2020",
+  storageBucket: "start-mikti-2020.appspot.com",
+  messagingSenderId: "157635197855",
+  appId: "1:157635197855:web:a64218f2013e3566805baa",
+  measurementId: "G-60PCJWDN9Q",
+};
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+// firebase alias
+Vue.prototype.$analytics = firebase.analytics();
+
 //global component
 import Notification from "@/components/Notification";
 Vue.component("notification", Notification);
 
-//scroll
-import vuescroll from "vue-scroll";
-Vue.use(vuescroll);
+// //scroll
+// import vuescroll from "vue-scroll";
+// Vue.use(vuescroll);
 
 Vue.use(require("vue-moment"));
 
