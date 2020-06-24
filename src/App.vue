@@ -96,6 +96,9 @@ export default {
     max-width: 1185px !important;
   }
 }
+html {
+  font-size: 14px !important;
+}
 </style>
 <style scoped>
 /* Provide better right-edge spacing when using an icon button there. */
