@@ -30,12 +30,12 @@
                 </div>
                 <v-card-title class="headline">
                   <v-row>
-                    <v-col style="word-break: break-word;font-size: 15px;font-weight: 600;" md="8">{{
+                    <v-col style="word-break: break-word;font-size: 15px;font-weight: 600;" md="7">{{
                       data.name
                     }}</v-col>
                     <v-col
                       style="text-align:end;"
-                      md="4"
+                      md="5"
                       v-if="data.previousMission != null"
                     >
                       <v-chip x-small>
@@ -47,7 +47,7 @@
                         }}</span>
                       </v-chip>
                     </v-col>
-                    <v-col style="text-align:end;" md="4" v-else>
+                    <v-col style="text-align:end;" md="5" v-else>
                       <v-chip x-small>
                         <v-avatar left>
                           <v-icon x-small color="primary"
@@ -66,7 +66,7 @@
 
                 <v-card-actions class="pt-0">
                   <v-row justify="space-between">
-                    <v-col cols="12" lg="6">
+                    <v-col cols="12" lg="4">
                       <v-btn
                         small
                         color="primary"
@@ -75,7 +75,7 @@
                         <v-icon left>zoom_in</v-icon>Open
                       </v-btn>
                     </v-col>
-                    <v-col style="text-align:right;" cols="12" lg="6">
+                    <v-col style="text-align:right;" cols="12" lg="8">
                       <!-- <span class="textlimit2" v-if="data.submittedJournal" -->
                       <span style="
                             position: relative;

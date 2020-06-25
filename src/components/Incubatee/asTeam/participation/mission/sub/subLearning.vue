@@ -20,7 +20,7 @@
         >
       </v-col>
     </template>
-    <v-col cols="12" md="12" lg="12" xs="12">
+    <v-col style="max-width:800px;" cols="12" md="12" lg="12" xs="12">
       <span v-html="$sanitize(learning.content)" />
     </v-col>
   </v-row>
