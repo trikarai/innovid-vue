@@ -60,8 +60,8 @@
                   </v-row>
                 </v-card-title>
 
-                <v-card-text class="subtitle">
-                  <span class="textlimit2">{{ data.description }}</span>
+                <v-card-text class="subtitle" style="text-align:justify;">
+                  <span class="">{{ data.description }}</span>
                 </v-card-text>
 
                 <v-card-actions class="pt-0">
