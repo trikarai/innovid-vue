@@ -1,7 +1,30 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col class="pl-0" cols="12" xl="12" lg="12" md="6">
+      <v-col class="pl-0" cols="12" xl="12" lg="12" md="12">
+        <div style="text-align:right;height:0px;position: relative;bottom: 72px;">
+          <v-btn
+            small
+            rounded
+            v-if="dataList.position !== '1'"
+            @click="gotoMissionByPosPrev(dataList.position)"
+          >
+            <v-icon left small>mdi-triangle mdi-rotate-270</v-icon> previous
+            mission
+          </v-btn>
+          <v-btn
+            class="ml-5"
+            small
+            rounded
+            @click="gotoMissionByPosNext(dataList.position)"
+            v-if="
+              dataList.position !==
+                $store.getters.getMissionLength.toString()
+            "
+          >
+            next mission <v-icon right small>mdi-triangle mdi-rotate-90</v-icon>
+          </v-btn>
+        </div>
         <v-card elevation="0" class="pa-0" :loading="tableLoad">
           <v-card-title class="pb-0" primary-title>
             <v-row justify="space-between">
@@ -32,7 +55,7 @@
                 </div>
               </v-col>
               <v-col cols="12" xl="8" lg="6" md="2" sm="2">
-                <v-row style="text-align:right;">
+                <!-- <v-row style="text-align:right;">
                   <v-col cols="12" xl="2" lg="4">
                     <v-btn
                       small
@@ -57,7 +80,7 @@
                       next mission <v-icon>mdi-triangle mdi-rotate-90</v-icon>
                     </v-btn>
                   </v-col>
-                </v-row>
+                </v-row> -->
               </v-col>
             </v-row>
             <!-- <span class="dot2"></span>
