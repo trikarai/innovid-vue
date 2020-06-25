@@ -3,7 +3,7 @@
     <Navbar />
     <!-- {{todayUnix}} - {{tokenExp}} = {{text}} -->
     <transition name="slide" mode="out-in">
-      <router-view style="margin-left:50px;width: 90%;"></router-view>
+      <router-view style="margin-left:50px;width: 94%;"></router-view>
     </transition>
     <v-spacer></v-spacer>
     <Footer />
