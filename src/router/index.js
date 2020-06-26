@@ -106,6 +106,8 @@ import MentorIntroduction from "../components/personnel/asMentor/introduction/In
 
 import ConferenceComponent from "../components/Conference";
 
+import InfoProgram from "../components/InfoProgram";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -775,6 +777,15 @@ const routes = [
       sysadminAuth: false,
     },
     children: [
+      {
+        path: "/info-program",
+        name: "info-program",
+        component: InfoProgram,
+        meta: {
+          text: "Info Program",
+          level: 0,
+        },
+      },
       {
         path: "/incubatee/dashboard",
         component: IncubateeDashboard,

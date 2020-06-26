@@ -115,7 +115,6 @@
           ></v-select>
         </v-list-item>
       </v-list>
-
       <v-list>
         <!--sub list other-->
         <v-list-item
@@ -132,6 +131,20 @@
             <v-list-item-title class="grey--text">{{
               link.text
             }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+          router
+          :to="{ name: 'info-program' }"
+          v-if="participationId == '0fcc3943-3954-4e99-a135-0e7430a6a09a'"
+        >
+          <v-list-item-action>
+            <v-icon>mdi-information-variant</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="grey--text">
+              Info Program</v-list-item-title
+            >
           </v-list-item-content>
         </v-list-item>
       </v-list>
