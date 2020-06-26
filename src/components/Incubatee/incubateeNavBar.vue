@@ -37,6 +37,7 @@
 
     <v-navigation-drawer
       height="100%"
+      permanent="true"
       app
       v-model="drawer"
       :mini-variant="miniVariant"

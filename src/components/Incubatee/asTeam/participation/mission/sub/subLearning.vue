@@ -21,7 +21,10 @@
       </v-col>
     </template>
     <v-col style="max-width:800px;" cols="12" md="12" lg="12" xs="12">
-      <span v-html="$sanitize(learning.content)" />
+      <span
+        v-html="$sanitize(learning.content)"
+        v-if="learning.content != null"
+      />
     </v-col>
   </v-row>
 </template>
@@ -47,7 +50,7 @@ export default {
     return {
       loadingLearning: false,
       learnings: { total: 0, list: [] },
-      learning: { content: null },
+      learning: { name: "", content: null },
     };
   },
   watch: {
