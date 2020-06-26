@@ -21,27 +21,37 @@
         <v-data-table
           :headers="tableHeaders2"
           :items="participantJournalList.list"
-          hide-default-footer
           class="elevation-1"
           :loading="tableLoad"
+          :options.sync="options"
+          :server-items-length="participantJournalList.total"
         >
-          <template v-if="!modeJournal" v-slot:item.journal="{item}">
+          <template v-if="!modeJournal" v-slot:item.journal="{ item }">
             <template v-for="journal in item.journals">
               <v-row :key="journal.id">
-                <v-chip class="ma-1">{{journal.mission.name}} - {{journal.worksheet.name}}</v-chip>
-                <v-btn icon color="success" @click="gotoJournalDetail(item.id, journal.id)">
+                <v-chip class="ma-1"
+                  >{{ journal.mission.name }} -
+                  {{ journal.worksheet.name }}</v-chip
+                >
+                <v-btn
+                  icon
+                  color="success"
+                  @click="gotoJournalDetail(item.id, journal.id)"
+                >
                   <v-icon>zoom_in</v-icon>
                 </v-btn>
               </v-row>
             </template>
-            <template v-if="item.journals.length == 0">No Journal Submitted</template>
+            <template v-if="item.journals.length == 0"
+              >No Journal Submitted</template
+            >
           </template>
 
-          <template v-if="modeJournal" v-slot:item.group="{item}">
+          <template v-if="modeJournal" v-slot:item.group="{ item }">
             <template v-for="(group, index) in item.grouped">
               <v-row :key="index">
                 <template>
-                  <v-col md="12" class="title">{{group[0]}}</v-col>
+                  <v-col md="12" class="title">{{ group[0] }}</v-col>
                 </template>
                 <template v-for="data in group[1]">
                   <v-col :key="data.id">
@@ -50,12 +60,15 @@
                       close-icon="zoom_in"
                       @click="gotoJournalDetail(item.id, data.id)"
                       @click:close="gotoJournalDetail(item.id, data.id)"
-                    >{{data.worksheet.name}}</v-chip>
+                      >{{ data.worksheet.name }}</v-chip
+                    >
                   </v-col>
                 </template>
               </v-row>
             </template>
-            <template v-if="item.journals.length == 0">No Journal Submitted</template>
+            <template v-if="item.journals.length == 0"
+              >No Journal Submitted</template
+            >
           </template>
         </v-data-table>
       </v-col>
@@ -81,21 +94,25 @@ export default {
         id: "",
         program: {
           id: "",
-          name: ""
-        }
+          name: "",
+        },
       },
       tableHeaders2: [
         { text: "Team", value: "team.name", sortable: false },
         { text: "", value: "journal", sortable: false },
         { text: "", value: "group", sortable: false },
-        { text: "", value: "action", sortable: false, align: "right" }
-      ]
+        { text: "", value: "action", sortable: false, align: "right" },
+      ],
+      options: { page: 1, itemsPerPage: 10 },
     };
   },
   watch: {
     selectedCohort() {
       this.getParticipantJournal();
-    }
+    },
+    options() {
+      this.getParticipantJournal();
+    },
   },
   mounted() {
     this.getMentorship();
@@ -105,9 +122,9 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(config.baseUri + "/personnel/mentorships", {
-          headers: auth.getAuthHeader()
+          headers: auth.getAuthHeader(),
         })
-        .then(res => {
+        .then((res) => {
           this.dataMentorships = res.data.data;
           this.selectedCohort = res.data.data.list[0];
           this.getParticipantJournal();
@@ -116,9 +133,8 @@ export default {
         .finally(() => {
           this.tableLoad = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>
