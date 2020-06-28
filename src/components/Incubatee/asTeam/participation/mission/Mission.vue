@@ -13,93 +13,135 @@
         </div>
       </v-col>
       <v-col cols="12" xl="10" lg="11" md="12" v-else>
-          <v-timeline :reverse="true" align-top :dense="false">
-            <v-timeline-item
-              v-for="data in reOrderMission(dataList.list)"
-              :key="data.id"
-            >
-              <template v-slot:icon>
-                <v-avatar>
-                  <span style="color:#fff">{{ data.position }}</span>
-                </v-avatar>
-              </template>
-              <v-card class="pa-3 pt-0 elevation-5">
-                <div style="float: right !important;position: relative;top: 38px;">
-                  <span class="dot2"></span>
-                  <span class="dot1 ml-1"></span>
-                </div>
-                <v-card-title class="headline">
-                  <v-row>
-                    <v-col style="word-break: break-word;font-size: 15px;font-weight: 600;" md="7">{{
-                      data.name
-                    }}</v-col>
-                    <v-col
-                      style="text-align:end;"
-                      md="5"
-                      v-if="data.previousMission != null"
-                    >
-                      <v-chip x-small>
-                        <v-avatar left>
-                          <v-icon x-small color="primary">account_tree</v-icon>
-                        </v-avatar>
-                        <span style="color:#999">{{
-                          data.previousMission.name
-                        }}</span>
-                      </v-chip>
-                    </v-col>
-                    <v-col style="text-align:end;" md="5" v-else>
-                      <v-chip x-small>
-                        <v-avatar left>
-                          <v-icon x-small color="primary"
-                            >assignment_turned_in</v-icon
-                          >
-                        </v-avatar>
-                        <span style="color:#999">Main Mission</span>
-                      </v-chip>
-                    </v-col>
-                  </v-row>
-                </v-card-title>
+        <v-timeline :reverse="true" align-top :dense="false">
+          <v-timeline-item
+            v-for="(data, index) in dataList.list"
+            :key="data.id"
+          >
+            <template v-slot:icon>
+              <v-avatar>
+                <span style="color:#fff">{{ data.position }}</span>
+              </v-avatar>
+            </template>
+            <v-card class="pa-3 pt-0 elevation-5">
+              <div
+                style="float: right !important;position: relative;top: 38px;"
+              >
+                <span class="dot2"></span>
+                <span class="dot1 ml-1"></span>
+              </div>
+              <v-card-title class="headline">
+                <v-row>
+                  <v-col
+                    style="word-break: break-word;font-size: 15px;font-weight: 600;"
+                    md="7"
+                    >{{ data.name }}</v-col
+                  >
+                  <v-col
+                    style="text-align:end;"
+                    md="5"
+                    v-if="data.previousMission != null"
+                  >
+                    <v-chip x-small>
+                      <v-avatar left>
+                        <v-icon x-small color="primary">account_tree</v-icon>
+                      </v-avatar>
+                      <span style="color:#999">{{
+                        data.previousMission.name
+                      }}</span>
+                    </v-chip>
+                  </v-col>
+                  <v-col style="text-align:end;" md="5" v-else>
+                    <v-chip x-small>
+                      <v-avatar left>
+                        <v-icon x-small color="primary"
+                          >assignment_turned_in</v-icon
+                        >
+                      </v-avatar>
+                      <span style="color:#999">Main Mission</span>
+                    </v-chip>
+                  </v-col>
+                </v-row>
+              </v-card-title>
 
-                <v-card-text class="subtitle" style="text-align:justify;">
-                  <span class="">{{ data.description }}</span>
-                </v-card-text>
+              <v-card-text class="subtitle" style="text-align:justify;">
+                <span class="">{{ data.description }}</span>
+              </v-card-text>
 
-                <v-card-actions class="pt-0">
-                  <v-row justify="space-between">
-                    <v-col cols="12" lg="4">
-                      <v-btn
-                        small
-                        color="primary"
-                        @click="gotoMissionDetail(data.id)"
-                      >
-                        <v-icon left>zoom_in</v-icon>Open
-                      </v-btn>
-                    </v-col>
-                    <v-col style="text-align:right;" cols="12" lg="8">
-                      <!-- <span class="textlimit2" v-if="data.submittedJournal" -->
-                      <span style="
-                            position: relative;
-                            top: 6px;
-                            background: #d6f7ff;
-                            color: #646464;
-                            padding: 3px 13px 3px 13px;" 
-                            v-if="data.submittedJournal"
-                        >Submitted Journal: <span style="color: #00667f;font-weight: 900;margin-left: 5px;">{{ data.submittedJournal }}</span> </span
-                      >
-                      <span 
+              <v-card-actions class="pt-0">
+                <v-row justify="space-between">
+                  <v-col
+                    cols="12"
+                    xl="12"
+                    lg="12"
+                    md="12"
+                    sm="12"
+                    v-if="index !== 0"
+                  >
+                    <span
+                      v-if="dataList.list[index - 1].submittedJournal == null"
                       style="
                           position: relative;
                           top: 6px;
                           background: #d6f7ff;
                           color: #646464;
-                          padding: 3px 13px 3px 13px;" 
-                      v-else>No Journal Submitted</span>
-                    </v-col>
-                  </v-row>
-                </v-card-actions>
-              </v-card>
-            </v-timeline-item>
-          </v-timeline>
+                          padding: 3px 13px 3px 13px;"
+                    >
+                      Finish previous mission first</span
+                    >
+                  </v-col>
+                  <v-col cols="12" lg="4">
+                    <v-btn
+                      v-if="index !== 0"
+                      :disabled="
+                        dataList.list[index - 1].submittedJournal == null
+                      "
+                      small
+                      color="primary"
+                      @click="gotoMissionDetail(data.id)"
+                    >
+                      <v-icon left>zoom_in</v-icon>Open
+                    </v-btn>
+                    <v-btn
+                      v-if="index === 0"
+                      small
+                      color="primary"
+                      @click="gotoMissionDetail(data.id)"
+                      ><v-icon left>zoom_in</v-icon>Open
+                    </v-btn>
+                  </v-col>
+                  <v-col style="text-align:right;" cols="12" lg="8">
+                    <!-- <span class="textlimit2" v-if="data.submittedJournal" -->
+                    <span
+                      style="
+                            position: relative;
+                            top: 6px;
+                            background: #d6f7ff;
+                            color: #646464;
+                            padding: 3px 13px 3px 13px;"
+                      v-if="data.submittedJournal"
+                      >Submitted Journal:
+                      <span
+                        style="color: #00667f;font-weight: 900;margin-left: 5px;"
+                        >{{ data.submittedJournal }}</span
+                      >
+                    </span>
+                    <span
+                      style="
+                          position: relative;
+                          top: 6px;
+                          background: #d6f7ff;
+                          color: #646464;
+                          padding: 3px 13px 3px 13px;"
+                      v-else
+                      >No Journal Submitted</span
+                    >
+                  </v-col>
+                </v-row>
+              </v-card-actions>
+            </v-card>
+          </v-timeline-item>
+        </v-timeline>
       </v-col>
     </v-row>
 
@@ -208,10 +250,11 @@ export default {
         )
         .then((res) => {
           this.dataList = res.data.data;
+          this.dataList.list = this.reOrderMission(this.dataList.list);
 
-          this.dataList.list.forEach((element) => {
-            element["journal"] = new Array();
-          });
+          // this.dataList.list.forEach((element) => {
+          //   element["journal"] = new Array();
+          // });
         })
         .catch(() => {})
         .finally(() => {
