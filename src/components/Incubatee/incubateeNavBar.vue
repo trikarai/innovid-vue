@@ -116,12 +116,7 @@
           ></v-select>
         </v-list-item>
       </v-list>
-<<<<<<< Updated upstream
-
-      <v-list>
-=======
       <v-list class="pb-0">
->>>>>>> Stashed changes
         <!--sub list other-->
         <v-list-item
           v-for="link in links"
