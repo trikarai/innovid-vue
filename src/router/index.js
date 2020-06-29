@@ -963,7 +963,7 @@ const routes = [
         component: TeamMemberInvite,
         name: "team-invite",
         meta: {
-          text: "Invite New Member",
+          text: "Add New Team Member",
           level: 2,
           requiredAuth: true,
           incubateeAuth: true,
