@@ -14,7 +14,7 @@
                 <v-form v-model="valid" ref="form">
                   <v-text-field
                     :disabled="view"
-                    label="Team Name"
+                    label="Your Startup Name"
                     v-model="params.name"
                     :rules="rulesName"
                     :counter="25"
@@ -23,7 +23,7 @@
                   ></v-text-field>
                   <v-text-field
                     :disabled="view"
-                    label="Your Position"
+                    label="Your Role in this Startup"
                     v-model="params.memberPosition"
                     :rules="rulesName"
                     :counter="25"

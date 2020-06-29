@@ -3,7 +3,7 @@
     <v-row>
       <v-col style="max-width:248px !important" cols="12" md="4" lg="3" xs="12">
         <v-btn color="primary" router :to="'/incubatee/team/' + $route.params.teamId + '/invite'">
-          <v-icon left>email</v-icon>Invite New Members
+          <v-icon left>email</v-icon>Add New Team Member
         </v-btn>
       </v-col>
       <v-col cols="12" md="4" lg="4" xs="12">

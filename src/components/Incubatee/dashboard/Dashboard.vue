@@ -193,17 +193,21 @@
                   <v-list dense>
                     <v-list-item>
                       <v-list-item-content>
-                        <v-list-item-subtitle
-                          >waiting for approval from program
-                          coordinator</v-list-item-subtitle
-                        >
-                        <v-btn
-                          dark
-                          color="warning"
-                          router
-                          :to="'/incubatee/team/' + teamId + '/application'"
-                          >Cancel registration</v-btn
-                        >
+                        <v-row no-gutters>
+                          <v-col cols="12" xl="12" lg="12">
+                            <v-alert type="info" dense outlined>
+                              waiting for approval from program coordinator
+                            </v-alert> </v-col
+                          ><v-col cols="12" xl="12" lg="12">
+                            <v-btn
+                              dark
+                              color="warning"
+                              router
+                              :to="'/incubatee/team/' + teamId + '/application'"
+                              >Cancel registration</v-btn
+                            ></v-col
+                          >
+                        </v-row>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>

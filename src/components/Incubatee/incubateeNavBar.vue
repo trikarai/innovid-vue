@@ -116,7 +116,7 @@
           ></v-select>
         </v-list-item>
       </v-list>
-      <v-list>
+      <v-list class="pb-0">
         <!--sub list other-->
         <v-list-item
           v-for="link in links"
@@ -150,7 +150,7 @@
         </v-list-item>
       </v-list>
 
-      <v-list v-if="participationId != ''">
+      <v-list class="pt-0" v-if="participationId != ''">
         <v-list-item
           router
           :to="
@@ -206,7 +206,7 @@
         </v-list-item>
       </v-list>
       <!--disabled menu-->
-      <v-list v-else>
+      <v-list class="pt-0" v-else>
         <v-tooltip right color="warning">
           <template v-slot:activator="{ on }">
             <v-list-item v-on="on">

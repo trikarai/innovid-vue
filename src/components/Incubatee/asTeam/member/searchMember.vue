@@ -1,7 +1,10 @@
 <template>
   <v-container extend grid-list-xs>
     <v-row>
-      <v-col md="4" xs="12">
+      <h5 class="container">*Ask your partners to sign up first, then add them to this startup using this form</h5>
+    </v-row>
+    <v-row>
+      <v-col md="4" xs="12">    
         <v-text-field
           autocomplete="email"
           v-model="search"
@@ -9,7 +12,7 @@
           label="Search by email"
           outlined
           :rules="rulesEmail"
-        ></v-text-field>
+        ></v-text-field>     
         <br />
         <v-btn small @click="getTalent">search</v-btn>
       </v-col>
