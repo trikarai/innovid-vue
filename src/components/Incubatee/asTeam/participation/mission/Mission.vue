@@ -434,6 +434,7 @@ export default {
 
     gotoMissionDetail(missionId) {
       this.$store.commit("setMissionLength", this.dataList.list.length);
+      this.$store.commit("setMissionList", this.dataList.list);
       this.$router.push({
         name: "team-misssion-detail",
         params: {
