@@ -322,7 +322,7 @@ const routes = [
       {
         path: "/personnel/profile-forms",
         component: PersonnelProfileForm,
-        name: "profile-forms",
+        name: "personnel-profile-forms",
         meta: {
           text: "Profile Form",
           level: 0,
@@ -334,7 +334,7 @@ const routes = [
       {
         path: "/personnel/profile-forms/build",
         component: PersonnelProfileFormBuild,
-        name: "profile-form-create",
+        name: "personnel-profile-form-create",
         meta: {
           text: "Create Profile Form",
           level: 1,
@@ -346,7 +346,7 @@ const routes = [
       {
         path: "/personnel/profile-forms/:formId/edit",
         component: PersonnelProfileFormBuild,
-        name: "profile-form-edit",
+        name: "personnel-profile-form-edit",
         meta: {
           text: "Edit Profile Form",
           level: 2,
@@ -909,9 +909,22 @@ const routes = [
       {
         path: "/incubatee/profile-form/:formId/add",
         component: IncubateeProfilesAdd,
-        name: "profile-form-add",
+        name: "founder-profile-form-add",
         meta: {
-          text: "Add/Edit Profile Form",
+          text: "Add Profile Form",
+          level: 4,
+          requiredAuth: true,
+          incubateeAuth: true,
+          personnelAuth: false,
+          sysadminAuth: false,
+        },
+      },
+      {
+        path: "/incubatee/profile-form/:formId/edit/:profileId",
+        component: IncubateeProfilesAdd,
+        name: "founder-profile-form-edit",
+        meta: {
+          text: "Edit Profile Form",
           level: 4,
           requiredAuth: true,
           incubateeAuth: true,
@@ -925,6 +938,19 @@ const routes = [
         name: "team-profile-form-add",
         meta: {
           text: "Add Team Profile Form",
+          level: 4,
+          requiredAuth: true,
+          incubateeAuth: true,
+          personnelAuth: false,
+          sysadminAuth: false,
+        },
+      },
+      {
+        path: "/incubatee/team/:teamId/team-profile-form/:formId/edit/:profileId",
+        component: IncubateeTeamProfilesAdd,
+        name: "founder-team-profile-form-edit",
+        meta: {
+          text: "Edit Team Profile Form",
           level: 4,
           requiredAuth: true,
           incubateeAuth: true,

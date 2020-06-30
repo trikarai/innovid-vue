@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     missionsLength: "",
     missionsList: [],
+    profileRecord: {},
   },
   getters: {
     getMissionLength: (state) => {
@@ -15,8 +16,14 @@ export default new Vuex.Store({
     getMissionList: (state) => {
       return state.missionsList;
     },
+    getProfileRecord: (state) => {
+      return state.profileRecord;
+    },
   },
   mutations: {
+    setProfileRecord: (state, payload) => {
+      state.profileRecord = payload;
+    },
     setMissionLength: (state, payload) => {
       state.missionsLength = payload;
     },
