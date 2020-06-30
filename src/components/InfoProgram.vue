@@ -1,9 +1,9 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="12" xl="10" lg="10" md="10" sm="12">
+      <v-col cols="12" xl="8" lg="8" md="8" sm="12">
         <v-card class="pa-5">
-            <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRnq7nPBoVj3JczUpfA2OMOiocdJxdX0cGZ5NKJmA7MGpVAYNdaTbnzg1TON7NMnlQdoT_A1JcRi-rd/embed?start=false&amp;loop=false&amp;delayms=10000" width="100%" height="569" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+            <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRnq7nPBoVj3JczUpfA2OMOiocdJxdX0cGZ5NKJmA7MGpVAYNdaTbnzg1TON7NMnlQdoT_A1JcRi-rd/embed?start=false&amp;loop=false&amp;delayms=10000" width="100%" height="440" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
         </v-card>
       </v-col>
     </v-row>
@@ -58,7 +58,7 @@
     </v-row>
 
     <v-row>
-      <v-col cols="12" xl="10" lg="10" md="10" sm="12">
+      <v-col cols="12" xl="9" lg="9" md="9" sm="12">
         <v-card class="pa-5" elevation="">
           <v-card-title class="mb-5">
           <h4 style="color:#00667f;">Frequently Asked Questions (FAQ)</h4> 
