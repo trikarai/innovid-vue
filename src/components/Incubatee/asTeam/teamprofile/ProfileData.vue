@@ -114,7 +114,7 @@ export default {
   opacity: 0;
 }
 .topaccentform {
-  background: #249c90;
+  background: var(--v-primary-base);
   color: #fff;
   margin-bottom: 18px;
   width: 95%;
