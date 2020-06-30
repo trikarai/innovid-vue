@@ -29,7 +29,6 @@ import bus from "@/config/bus";
 
 export default {
   name: "App",
-
   components: {},
   data() {
     return {
@@ -63,10 +62,6 @@ export default {
       }
     });
   },
-
-  data: () => ({
-    //
-  }),
 };
 </script>
 <style>
