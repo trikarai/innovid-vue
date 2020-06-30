@@ -40,7 +40,7 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-content>
+    <v-main>
       <section>
         <v-img class="imgkastem" src="/img/mainbanner.jpg">
         <div class="container" style="margin-top:190px;">
@@ -224,7 +224,7 @@ Thank you for visiting our website, if there any questions that will be submitte
           </v-flex>
         </v-layout>
       </v-footer>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 

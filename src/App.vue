@@ -1,18 +1,18 @@
 <template>
   <v-app>
-    <!-- <v-content color="bgcolor"> -->
-    <v-content>
+    <!-- <v-main color="bgcolor"> -->
+    <v-main>
       <notification :message="err_msg" :stats="status" />
       <router-view />
       <v-snackbar v-model="snackWithButtons" :timeout="timeout" bottom left class="snack">
         {{ snackWithBtnText }}
         <v-spacer />
-        <v-btn dark flat color="#00f500" @click.native="refreshApp">{{ snackBtnText }}</v-btn>
+        <v-btn dark text color="#00f500" @click.native="refreshApp">{{ snackBtnText }}</v-btn>
         <v-btn icon @click="snackWithButtons = false">
           <v-icon>close</v-icon>
         </v-btn>
       </v-snackbar>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
@@ -29,7 +29,7 @@ export default {
       snackBtnText: "",
       snackWithBtnText: "",
       snackWithButtons: false,
-      timeout: 0
+      timeout: -1
     };
   },
   created() {
