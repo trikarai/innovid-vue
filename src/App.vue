@@ -1,9 +1,26 @@
 <template>
   <v-app>
-    <v-content color="bgcolor">
+    <v-main color="bgcolor">
+      <!-- <v-main> -->
       <notification :message="err_msg" :stats="status" />
       <router-view />
-    </v-content>
+      <v-snackbar
+        v-model="snackWithButtons"
+        :timeout="timeout"
+        bottom
+        left
+        class="snack"
+      >
+        {{ snackWithBtnText }}
+        <v-spacer />
+        <v-btn dark text color="#00f500" @click.native="refreshApp">{{
+          snackBtnText
+        }}</v-btn>
+        <v-btn icon @click="snackWithButtons = false">
+          <v-icon>close</v-icon>
+        </v-btn>
+      </v-snackbar>
+    </v-main>
   </v-app>
 </template>
 
@@ -14,6 +31,16 @@ export default {
   name: "App",
 
   components: {},
+  data() {
+    return {
+      refreshing: false,
+      registration: null,
+      snackBtnText: "",
+      snackWithBtnText: "",
+      snackWithButtons: false,
+      timeout: -1,
+    };
+  },
   created() {
     bus.$on("callNotif", (type, res) => {
       switch (type) {
@@ -39,7 +66,7 @@ export default {
 
   data: () => ({
     //
-  })
+  }),
 };
 </script>
 <style>

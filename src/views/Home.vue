@@ -41,7 +41,8 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-content>
+
+    <v-main>
       <section style="max-height:590px">
         <v-img class="imgkastem" src="/img/mainbanner.jpg">
           <div class="container" style="margin-top:190px;">
@@ -123,14 +124,9 @@
           </div>
         </div>
         <v-carousel height="auto" hide-delimiters :show-arrows="false">
-          <v-carousel-item
-            v-for="(carousel, index) in carousels"
-            :key="index"
-          >
+          <v-carousel-item v-for="(carousel, index) in carousels" :key="index">
             <div class="container">
-              <v-row
-                style="margin-bottom:30px;text-align:center;"
-              >
+              <v-row style="margin-bottom:30px;text-align:center;">
                 <v-col
                   cols="12"
                   xs="12"
@@ -199,7 +195,7 @@
           </v-flex>
         </v-layout>
       </v-footer>
-    </v-content>
+    </v-main>
 
     <dialog-mentor
       v-if="dialogMentor"
@@ -274,7 +270,7 @@ export default {
                 "M. Andy Zaky memiliki banyak pengalaman dalam berkarya di bidang industri teknologi. Ia berperan sebagai Sekretaris Dewan Teknologi Informasi dan Komunikasi (WANTIKNAS) dan Sekretaris Jendral Masyarakat Industri Kreatif Teknologi Informasi (MIKTI) sebagai upayanya untuk memajukan digital industri. Selain itu, ia juga secara aktif berkontribusi melalui perannya sebagai mentor dan/atau anggota di berbagai digital startups ternama Indonesia.",
               photo: "/img/andy.png",
             },
-            
+
             {
               id: "115",
               name: "St. Andika Sutedjo",
@@ -283,8 +279,7 @@ export default {
                 "St. Andika Sutedjo adalah CEO PT Smart Meter Indonesia yang kerap meraih banyak penghargaan, di antaranya Winner of Indonesia ICT Award 2008, Nominator Asia Pacific ICT Award 2008, dan Winner of Indonesia ICT Award 2009.",
               photo: "/img/andika.png",
             },
-            
-            
+
             {
               id: "118",
               name: "Vita Subiyakti",
@@ -301,7 +296,6 @@ export default {
                 "Zaenal Arifin adalah Co-founder dari andromedia dan gerdhu. Ia merupakan alumni dari Apple Developer Academy.",
               photo: "/img/zaenal.png",
             },
-            
           ],
         },
         {

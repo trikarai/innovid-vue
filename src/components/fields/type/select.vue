@@ -1,9 +1,5 @@
 <template>
   <v-col>
-    <!-- build mode : {{build}} -->
-    <!-- {{modeReload}} -->
-    <!-- Min : {{field.minValue}} -
-    Max : {{field.maxValue}}-->
     <v-select
       dense
       v-if="build"
@@ -43,7 +39,6 @@
       </template>
     </v-select>
     <template v-if="field.required">Min:{{field.minValue}} Max:{{field.maxValue}}</template>
-    <!-- {{optionList.length}} -->
   </v-col>
 </template>
 <script>
@@ -57,7 +52,7 @@ export default {
   components: {},
   data: function() {
     return {
-      clearable: true,
+      clearable: false,
       errorMessages: [],
       optionList: [],
       isError: false
