@@ -24,3 +24,5 @@ yarn-error.log*
 *.sw?
 clipboard.txt
 package-lock.json
+package-lock.json
+package.json
