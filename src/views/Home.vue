@@ -125,7 +125,7 @@
         </div>
         <v-carousel height="auto" hide-delimiters :show-arrows="false">
           <v-carousel-item v-for="(carousel, index) in carousels" :key="index">
-            <div class="container">
+            <div class="container black--text">
               <v-row style="margin-bottom:30px;text-align:center;">
                 <v-col
                   cols="12"
