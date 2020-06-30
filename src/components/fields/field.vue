@@ -24,6 +24,7 @@
       v-bind:index="index"
       v-bind:field="field"
       v-if="field.type === 'radio'"
+      v-bind:build="build"
     ></radio-field>
     <select-field
       :modeReload="modeReload"
