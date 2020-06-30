@@ -98,7 +98,8 @@
             :items="filterActiveParticipation(participationList.list)"
             item-text="program.name"
             item-value="id"
-            v-model="participationId"
+            v-model="participation"
+            return-object
             @change="changeParticipant()"
             append-outer-icon="refresh"
             @click:append-outer="getParticipations"
@@ -137,7 +138,7 @@
         <v-list-item
           router
           :to="{ name: 'info-program' }"
-          v-if="participationId == '0fcc3943-3954-4e99-a135-0e7430a6a09a'"
+          v-if="participation.program.name == 'MIKTI Start 2020'"
         >
           <v-list-item-action>
             <v-icon>mdi-information-variant</v-icon>
@@ -150,14 +151,14 @@
         </v-list-item>
       </v-list>
 
-      <v-list class="pt-0" v-if="participationId != ''">
+      <v-list class="pt-0" v-if="participation.id != ''">
         <v-list-item
           router
           :to="
             '/incubatee/team/' +
               teamId +
               '/participation/' +
-              participationId +
+              participation.id +
               '/mission'
           "
         >
@@ -176,7 +177,7 @@
             '/incubatee/team/' +
               teamId +
               '/participation/' +
-              participationId +
+              participation.id +
               '/schedule'
           "
         >
@@ -193,7 +194,7 @@
             '/incubatee/team/' +
               teamId +
               '/participation/' +
-              participationId +
+              participation.id +
               '/journal'
           "
         >
@@ -462,6 +463,7 @@ export default {
       notificationList: { total: 0, list: [] },
       participationList: { total: 0, list: [] },
       participationLoad: false,
+      participation: {},
       participationId: "",
       links: [
         {
@@ -547,7 +549,7 @@ export default {
       this.getParticipations();
     });
     bus.$on("changeNavbarParticipant", (id) => {
-      this.participationId = id;
+      this.participation.id = id;
     });
   },
   watch: {
@@ -584,8 +586,8 @@ export default {
       this.$router.replace({ path: "/" });
     },
     changeParticipant() {
-      localStorage.setItem("ParticipantTeamId", this.participationId);
-      bus.$emit("changeDashboardParticipant", this.participationId);
+      localStorage.setItem("ParticipantTeamId", this.participation.id);
+      bus.$emit("changeDashboardParticipant", this.participation.id);
     },
     getTeamMembership() {
       this.teamLoad = true;
@@ -631,14 +633,14 @@ export default {
             this.participationList.list = this.filterActiveParticipation(
               res.data.data.list
             );
-            this.participationId = this.participationList.list[0].id;
+            this.participation = this.participationList.list[0];
             localStorage.setItem(
               "DashboardParticipantId",
-              this.participationId
+              this.participation.id
             );
           } else {
             this.participationList = { total: 0, list: [] };
-            this.participationId = "";
+            this.participation = { id: "", program: { name: " " } };
           }
         })
         .catch(() => {})

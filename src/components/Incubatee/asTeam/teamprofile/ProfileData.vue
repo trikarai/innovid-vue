@@ -2,16 +2,17 @@
   <v-container extend grid-list-xs>
     <v-row>
       <v-col cols="12" md="6" lg="6" xs="12">
-          <v-card class="pt-0 mt-5">
+        <v-card class="pt-0 mt-5">
           <v-card-title class="topaccentform" primary-title>
-            <h3 class="headline mb-0">{{dataSingle.teamProfileForm.name}}</h3>
+            <h3 class="headline mb-0">{{ dataSingle.teamProfileForm.name }}</h3>
             <v-spacer></v-spacer>
             <v-btn
               dark
               small
               color="#505050"
-              :to="'/incubatee/team/'+ $route.params.teamId +'/team-profile-form/'+ dataSingle.teamProfileForm.id +'/add'"
-            >Edit</v-btn>
+              @click="editData(dataSingle.teamProfileForm.id)"
+              >Edit</v-btn
+            >
           </v-card-title>
           <v-card-text class="pa-7 pt-0">
             <render-record :fields="fields" />
@@ -43,7 +44,7 @@ export default {
       loader: false,
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
       dialogForm: false,
       dialogDelete: false,
@@ -51,7 +52,7 @@ export default {
       edit: false,
       leftId: "",
       leftName: "",
-      leftAction: ""
+      leftAction: "",
     };
   },
   components: { RenderRecord },
@@ -71,21 +72,33 @@ export default {
             "/profiles/" +
             this.$route.params.profileId,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
+          const dataSingleTemp = JSON.parse(JSON.stringify(res.data.data));
           this.dataSingle = res.data.data;
+          this.$store.commit("setProfileRecord", dataSingleTemp);
           this.refactorRecordJSON(res.data.data);
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
           this.loader = false;
         });
-    }
-  }
+    },
+    editData(formId) {
+      this.$router.push({
+        name: "founder-team-profile-form-edit",
+        params: {
+          teamId: this.$route.params.teamId,
+          formId: formId,
+          profileId: formId,
+        },
+      });
+    },
+  },
 };
 </script>
 <style scoped>
@@ -101,7 +114,7 @@ export default {
   opacity: 0;
 }
 .topaccentform {
-  background: #249c90;
+  background: var(--v-primary-base);
   color: #fff;
   margin-bottom: 18px;
   width: 95%;
