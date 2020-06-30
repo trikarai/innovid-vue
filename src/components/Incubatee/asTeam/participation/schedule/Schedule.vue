@@ -17,14 +17,14 @@
           <v-icon left>add</v-icon>Propose New Mentoring Schedule to Mentor
         </v-btn>
       </v-col>
-      <v-col md="1">
+      <!-- <v-col md="1">
         or
       </v-col>
       <v-col md="3">
         <v-btn small color="primary" @click="openIncidental()">
           <v-icon left>add</v-icon>Add Schedule that Mentor have Agreed
         </v-btn>
-      </v-col>
+      </v-col> -->
     </v-row>
     <v-row>
       <v-col
