@@ -294,18 +294,13 @@
                 <v-card>
                   <v-img src="/img/hero-program.jpg"></v-img>
                   <v-card-title class="subheading font-weight-bold">
-                    {{ item.name }}
+                    {{item.name}}                    
                   </v-card-title>
-                  <v-btn
-                    v-if="item.name == 'MIKTI Start 2020'"
-                    class="ml-4 mb-4"
-                    small
-                    :to="{ name: 'info-program' }"
-                    ><v-icon class="black--text" small left
-                      >mdi-alert-circle-outline</v-icon
-                    >
-                    Info Program
-                  </v-btn>
+                  <v-btn 
+                      class="ml-4 mb-4" 
+                      small                     
+                      href="../info-program/"><v-icon class="black--text" small left>mdi-alert-circle-outline</v-icon> Info Program
+                  </v-btn>  
                   <v-divider></v-divider>
                   <v-list dense>
                     <v-list-item>
