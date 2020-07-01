@@ -297,7 +297,7 @@
                     {{ item.name }}
                   </v-card-title>
                   <v-btn
-                    v-show="item.name === 'MIKTI Start 2020'"
+                    v-if="checkName(item.name)"
                     class="ml-4 mb-4"
                     small
                     :to="{ name: 'info-program' }"
@@ -476,6 +476,13 @@ export default {
     }
   },
   methods: {
+    checkName(name) {
+      if (name === "MIKTI Start 2020") {
+        return true;
+      } else {
+        return false;
+      }
+    },
     getFounderProgram() {
       this.founderprogramLoad = true;
       this.axios
