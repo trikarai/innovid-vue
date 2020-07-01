@@ -463,7 +463,7 @@ export default {
       notificationList: { total: 0, list: [] },
       participationList: { total: 0, list: [] },
       participationLoad: false,
-      participation: {},
+      participation: { program: { name: "" } },
       participationId: "",
       links: [
         {
