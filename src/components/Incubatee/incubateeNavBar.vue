@@ -95,7 +95,7 @@
             v-if="!miniVariant"
             label="Program"
             :loading="participationLoad"
-            :items="filterActiveParticipation(participationList.list)"
+            :items="participationList.list"
             item-text="program.name"
             item-value="id"
             v-model="participation"
@@ -117,6 +117,7 @@
           ></v-select>
         </v-list-item>
       </v-list>
+
       <v-list class="pb-0">
         <!--sub list other-->
         <v-list-item
@@ -136,9 +137,9 @@
           </v-list-item-content>
         </v-list-item>
         <v-list-item
+          v-if="participation.program.name == 'MIKTI Start 2020'"
           router
           :to="{ name: 'info-program' }"
-          v-if="participation.program.name == 'MIKTI Start 2020'"
         >
           <v-list-item-action>
             <v-icon>mdi-information-variant</v-icon>
@@ -463,7 +464,7 @@ export default {
       notificationList: { total: 0, list: [] },
       participationList: { total: 0, list: [] },
       participationLoad: false,
-      participation: { program: { name: "" } },
+      participation: { id: "", program: { name: "" } },
       participationId: "",
       links: [
         {
@@ -633,7 +634,9 @@ export default {
             this.participationList.list = this.filterActiveParticipation(
               res.data.data.list
             );
-            this.participation = this.participationList.list[0];
+            if (this.participationList.list.length !== 0) {
+              this.participation = this.participationList.list[0];
+            }
             localStorage.setItem(
               "DashboardParticipantId",
               this.participation.id
