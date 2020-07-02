@@ -209,6 +209,10 @@ export default {
             this.params.incubatorIdentifier
           );
 
+          this.$analytics.logEvent("login", {
+            user_id: authUser.id,
+          });
+
           this.$router.replace("/incubatee/dashboard");
         })
         .catch((res) => {

@@ -56,6 +56,7 @@ export default {
         singleSelectFields: [],
         multiSelectFields: [],
       },
+      user: {},
     };
   },
   created() {
@@ -63,6 +64,7 @@ export default {
     if (this.$route.params.profileId) {
       this.isEdit = true;
     }
+    this.user = JSON.parse(auth.getAuthData());
   },
   components: {
     RenderForm,
@@ -78,6 +80,7 @@ export default {
           headers: auth.getAuthHeader(),
         })
         .then((res) => {
+          this.formTemplate = res.data.data;
           this.dataList.worksheetForm = res.data.data;
           this.pairFieldValue(this.$store.getters.getProfileRecord);
         })
@@ -96,6 +99,10 @@ export default {
           headers: auth.getAuthHeader(),
         })
         .then(() => {
+          this.$analytics.logEvent("profile_form", {
+            user_id: this.user.data.id,
+            form_type: this.formTemplate.name,
+          });
           bus.$emit("callNotif", "success", "Form Data Uploaded");
           this.$router.go(-2);
         })

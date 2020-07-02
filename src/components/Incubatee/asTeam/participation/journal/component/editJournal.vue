@@ -48,9 +48,11 @@ export default {
   data() {
     return {
       worksheetName: "",
+      user: {},
     };
   },
   created() {
+    this.user = JSON.parse(auth.getAuthData());
     this.worksheetName = this.name;
   },
   methods: {
@@ -72,6 +74,13 @@ export default {
           }
         )
         .then(() => {
+          this.$analytics.logEvent("edit_worksheet", {
+            user_id: this.user.data.id,
+            team_id: this.$route.params.teamId,
+            worksheet_id: this.worksheetId,
+            form_type: this.worksheetForm.name,
+            page: "mission"
+          });
           bus.$emit("callNotif", "success", "Worksheet Data Updated");
           this.$router.go(-1);
         })
