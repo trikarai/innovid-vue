@@ -156,11 +156,11 @@
           :to="{ name: 'pastevent' }"
         >
           <v-list-item-action>
-            <v-icon>mdi-calendar-check</v-icon>
+            <v-img class="etalk" src="/img/account-tie-voice.png"></v-img>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title class="grey--text">
-              Past Event</v-list-item-title
+              Expert Talk</v-list-item-title
             >
           </v-list-item-content>
         </v-list-item>
@@ -182,7 +182,7 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title class="grey--text"
-              >Program Mission</v-list-item-title
+              >Learn & Implement</v-list-item-title
             >
           </v-list-item-content>
         </v-list-item>
@@ -231,12 +231,12 @@
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title class="grey--text"
-                  >Program Mission</v-list-item-title
+                  >Learn & Implement</v-list-item-title
                 >
               </v-list-item-content>
             </v-list-item>
           </template>
-          <span>You must join a program to access program mission</span>
+          <span>You must join a program to access Learn & Implement</span>
         </v-tooltip>
         <v-tooltip right color="warning">
           <template v-slot:activator="{ on }">
@@ -669,6 +669,13 @@ export default {
 };
 </script>
 <style scoped>
+.etalk {
+  -webkit-filter: brightness(0.38);
+  filter: brightness(0.38);
+  position: relative;
+  left: 3px;
+}
+
 .logoinc {
   margin: 0 auto;
   margin-top: 20px;
