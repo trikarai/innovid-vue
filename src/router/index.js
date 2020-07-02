@@ -472,7 +472,7 @@ const routes = [
         component: CohortMission,
         name: "program-mission-list",
         meta: {
-          text: "Program Mission",
+          text: "Learn & Implement",
           level: 2,
           requiredAuth: true,
           personnelAuth: true,
@@ -793,7 +793,7 @@ const routes = [
         name: "pastevent",
         component: PastEvent,
         meta: {
-          text: "Past Event",
+          text: "Expert Talk",
           level: 0,
         },
       },
@@ -1076,7 +1076,7 @@ const routes = [
         component: TeamMemberMission,
         name: "team-mission",
         meta: {
-          text: "Mission",
+          text: "Learn & Implement",
           level: 3,
           requiredAuth: true,
           incubateeAuth: true,
