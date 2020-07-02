@@ -104,6 +104,8 @@ import MentorDashboardParticipantJournal from "../components/personnel/asMentor/
 import MentorDashboardMentoringSchedule from "../components/personnel/asMentor/mentoringschedule/MentoringSchedule";
 import MentorIntroduction from "../components/personnel/asMentor/introduction/Introduction";
 
+import PastEvent from "../components/PastEvent"
+
 import ConferenceComponent from "../components/Conference";
 
 import InfoProgram from "../components/InfoProgram";
@@ -783,6 +785,15 @@ const routes = [
         component: InfoProgram,
         meta: {
           text: "Info Program",
+          level: 0,
+        },
+      },
+      {
+        path: "/PastEvent",
+        name: "pastevent",
+        component: PastEvent,
+        meta: {
+          text: "Past Event",
           level: 0,
         },
       },
