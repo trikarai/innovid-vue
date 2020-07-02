@@ -211,7 +211,11 @@ export default {
       date: "",
       time: "",
       today: "",
+      user: {},
     };
+  },
+  created() {
+    this.user = JSON.parse(auth.getAuthData());
   },
   watch: {
     date: "setDateTime",
@@ -306,6 +310,11 @@ export default {
           }
         )
         .then(() => {
+          this.$analytics.logEvent("propose_mentoring", {
+            user_id: this.user.data.id,
+            mentor_id: this.params.mentorId,
+            mentoring_id: this.params.mentoringId,
+          });
           this.$router.replace({
             path:
               "/incubatee/team/" +

@@ -1,7 +1,7 @@
 <template>
   <v-container extend grid-list-xs>
     <v-row>
-      <v-col cols="12"  lg="12" md="6" xs="12" v-if="dataLoad">
+      <v-col cols="12" lg="12" md="6" xs="12" v-if="dataLoad">
         <v-skeleton-loader
           type="card-heading, card-heading, card-heading, list-item-avatar-two-line@3"
         ></v-skeleton-loader>
@@ -249,10 +249,12 @@ export default {
       leftName: "",
       leftAction: "",
       params: "",
+      user: {},
     };
   },
   components: { RenderForm, RenderRecord, CommentModule },
   created: function() {
+    this.user = JSON.parse(auth.getAuthData());
     window.sessionStorage.setItem("uploadMode", "team");
     this.getMissionDetail();
   },
@@ -274,6 +276,12 @@ export default {
           }
         )
         .then((res) => {
+          this.$analytics.logEvent("view_worksheet", {
+            user_id: this.user.data.id,
+            team_id: this.$route.params.teamId,
+            worksheet_id: this.$route.params.worksheetId,
+            page: "journal",
+          });
           this.dataSingle = res.data.data;
           this.worksheetData = res.data.data;
           this.refactorRecordJSON(res.data.data);
@@ -386,6 +394,13 @@ export default {
           }
         )
         .then(() => {
+          this.$analytics.logEvent("edit_worksheet", {
+            user_id: this.user.data.id,
+            team_id: this.$route.params.teamId,
+            worksheet_id: this.$route.params.worksheetId,
+            form_type: this.dataList.worksheetForm.name,
+            page: "journal",
+          });
           this.refreshData();
         })
         .catch(() => {})

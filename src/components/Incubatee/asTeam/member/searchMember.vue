@@ -1,10 +1,13 @@
 <template>
   <v-container extend grid-list-xs>
     <v-row>
-      <h5 class="container">*Ask your partners to sign up first, then add them to this startup using this form</h5>
+      <h5 class="container">
+        *Ask your partners to sign up first, then add them to this startup using
+        this form
+      </h5>
     </v-row>
     <v-row>
-      <v-col md="4" xs="12">    
+      <v-col md="4" xs="12">
         <v-text-field
           autocomplete="email"
           v-model="search"
@@ -12,7 +15,7 @@
           label="Search by email"
           outlined
           :rules="rulesEmail"
-        ></v-text-field>     
+        ></v-text-field>
         <br />
         <v-btn small @click="getTalent">search</v-btn>
       </v-col>
@@ -23,13 +26,25 @@
           color="warning"
           dark
           small
-        >No talent found</v-chip>
-        <v-chip v-show="incubatee != null" class="caption" color="accent" dark small>Talent found</v-chip>
+          >No talent found</v-chip
+        >
+        <v-chip
+          v-show="incubatee != null"
+          class="caption"
+          color="accent"
+          dark
+          small
+          >Talent found</v-chip
+        >
       </v-col>
     </v-row>
     <v-row v-if="async">
       <v-col>
-        <v-progress-circular indeterminate color="primary" size="100"></v-progress-circular>
+        <v-progress-circular
+          indeterminate
+          color="primary"
+          size="100"
+        ></v-progress-circular>
       </v-col>
     </v-row>
     <v-row v-if="incubatee !== null">
@@ -39,12 +54,12 @@
             <p>
               <b>Name</b>
               <br />
-              {{incubatee.name}}
+              {{ incubatee.name }}
             </p>
             <p>
               <b>Email</b>
               <br />
-              {{incubatee.email}}
+              {{ incubatee.email }}
             </p>
           </v-card-text>
           <v-card-text>
@@ -62,7 +77,7 @@
             <v-btn
               block
               @click="validate"
-              :class=" { 'primary white--text' : valid}"
+              :class="{ 'primary white--text': valid }"
               :disabled="!valid"
               max-width="350"
             >
@@ -103,7 +118,8 @@ export default {
       edit: false,
       leftId: "",
       leftName: "",
-      leftAction: ""
+      leftAction: "",
+      user: {},
     };
   },
   watch: {
@@ -116,7 +132,9 @@ export default {
     //   }
     // }
   },
-  created() {},
+  created() {
+    this.user = JSON.parse(auth.getAuthData());
+  },
   mounted() {},
   methods: {
     validate: function() {
@@ -130,17 +148,17 @@ export default {
         .get(
           config.baseUri + "/founder/founders?email=" + encodeURI(this.search),
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data) {
             this.incubatee = res.data.data;
           } else {
             this.incubatee = null;
           }
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -159,18 +177,21 @@ export default {
           { headers: auth.getAuthHeader() }
         )
         .then(() => {
+          this.$analytics.logEvent("invite_member", {
+            user_id: this.user.data.id,
+            invited_id: this.incubatee.id,
+          });
           bus.$emit("callNotif", "info", "Invitation Sent");
           this.$router.got(-1);
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
           this.loader = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>

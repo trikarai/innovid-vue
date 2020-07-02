@@ -51,12 +51,18 @@ export default {
       loadingLearning: false,
       learnings: { total: 0, list: [] },
       learning: { name: "", content: null },
+      user: {},
     };
+  },
+  created() {
+    this.user = JSON.parse(auth.getAuthData());
   },
   watch: {
     missionId: "getLearningMaterial",
     learning() {
       this.$analytics.logEvent("learning_view", {
+        user_id: this.user.data.id,
+        team_id: this.$route.params.teamId,
         name: this.learning.name,
       });
     },

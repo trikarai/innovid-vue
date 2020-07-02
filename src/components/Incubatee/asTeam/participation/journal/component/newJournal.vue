@@ -156,9 +156,11 @@ export default {
       parentJournalId: "",
       parentJournals: { total: 0, list: [] },
       parentUri: "",
+      user: {},
     };
   },
   created() {
+    this.user = JSON.parse(auth.getAuthData());
     this.dataList = JSON.parse(JSON.stringify(this.dataListTemp));
     if (this.dataList.previousMission !== null) {
       this.parentUri = "/" + this.parentJournalId;
@@ -293,6 +295,11 @@ export default {
           }
         )
         .then(() => {
+          this.$analytics.logEvent("create_worksheet", {
+            user_id: this.user.data.id,
+            team_id: this.$route.params.teamId,
+            form_type: this.dataList.worksheetForm.name,
+          });
           bus.$emit("callNotif", "success", "Worksheet Data Uploaded");
           this.$router.go(-1);
         })
