@@ -105,6 +105,7 @@ export default {
       dataList: {},
       dataListTemp: {},
       viewAble: false,
+      user: {},
     };
   },
   watch: {
@@ -112,6 +113,7 @@ export default {
     missionId: "getJournals",
   },
   created() {
+    this.user = JSON.parse(auth.getAuthData());
     this.dataList = JSON.parse(JSON.stringify(this.dataMission));
     this.dataListTemp = JSON.parse(JSON.stringify(this.dataMission));
     this.checkRenderMode();
@@ -177,6 +179,12 @@ export default {
           }
         )
         .then((res) => {
+          this.$analytics.logEvent("view_worksheet", {
+            user_id: this.user.data.id,
+            team_id: this.$route.params.teamId,
+            worksheet_id: this.worksheetId,
+            page: "mission",
+          });
           this.worksheet = res.data.data;
           this.pairFieldValue(this.worksheet);
           this.refactorRecordJSON(res.data.data);

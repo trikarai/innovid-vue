@@ -189,6 +189,7 @@ export default {
         id: "",
         name: "",
       },
+      user: {},
     };
   },
   components: {
@@ -197,6 +198,7 @@ export default {
     NewJournal,
   },
   created() {
+    this.user = JSON.parse(auth.getAuthData());
     window.sessionStorage.setItem("uploadMode", "team");
     if (this.$store.getters.getMissionList.length == 0) {
       this.$router.replace({ name: "team-mission" });
@@ -249,6 +251,8 @@ export default {
         .then((res) => {
           this.dataList = res.data.data;
           this.$analytics.logEvent("mission_view", {
+            user_id: this.user.data.id,
+            team_id: this.$route.params.teamId,
             name: this.dataList.name,
           });
           Object.assign(this.dataListTemp, this.dataList);
@@ -277,6 +281,8 @@ export default {
         .then((res) => {
           this.dataList = res.data.data;
           this.$analytics.logEvent("mission_view", {
+            user_id: this.user.data.id,
+            team_id: this.$route.params.teamId,
             name: this.dataList.name,
           });
           Object.assign(this.dataListTemp, this.dataList);

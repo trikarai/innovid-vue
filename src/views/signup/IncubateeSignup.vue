@@ -7,7 +7,11 @@
             <v-toolbar-title class="white--text ml-2">
               <h4>
                 Registration
-                <v-chip v-if="!isMain" color="#fafafa"><span style="color:#777777;">{{signup.incubatorIdentifier}}</span></v-chip>
+                <v-chip v-if="!isMain" color="#fafafa"
+                  ><span style="color:#777777;">{{
+                    signup.incubatorIdentifier
+                  }}</span></v-chip
+                >
               </h4>
             </v-toolbar-title>
             <v-toolbar-title class="ml-auto">
@@ -16,69 +20,73 @@
               </router-link>
             </v-toolbar-title>
           </v-toolbar>
-          <v-card id="accentlg" style="padding:20px 30px 30px 30px;" class="text-center elevation-0">
+          <v-card
+            id="accentlg"
+            style="padding:20px 30px 30px 30px;"
+            class="text-center elevation-0"
+          >
             <v-card-text style="pa-4" v-if="!issuccess">
               <div>
                 <v-form v-model="valid" ref="form">
                   <v-row v-if="isMain">
-                      <v-text-field
-                        outlined
-                        label="Incubator Identifier"
-                        v-model="signup.incubatorIdentifier"
-                        :rules="rulesName"
-                        required
-                      ></v-text-field>
+                    <v-text-field
+                      outlined
+                      label="Incubator Identifier"
+                      v-model="signup.incubatorIdentifier"
+                      :rules="rulesName"
+                      required
+                    ></v-text-field>
                   </v-row>
                   <v-row>
-                      <v-text-field
-                        outlined
-                        label="Name"
-                        autocomplete="name"
-                        v-model="signup.name"
-                        :rules="rulesName"
-                        autofocus
-                        required
-                      ></v-text-field>
+                    <v-text-field
+                      outlined
+                      label="Name"
+                      autocomplete="name"
+                      v-model="signup.name"
+                      :rules="rulesName"
+                      autofocus
+                      required
+                    ></v-text-field>
                   </v-row>
                   <v-row>
-                      <v-text-field
-                        outlined
-                        autocomplete="new-password"
-                        label="Password"
-                        v-model="signup.password"
-                        :rules="rulesPassword"
-                        min="8"
-                        :append-icon="e1 ? 'visibility' : 'visibility_off'"
-                        :type="e1 ? 'password' : 'text'"
-                        counter
-                        required
-                        @click:append="e1 = !e1"
-                      ></v-text-field>
+                    <v-text-field
+                      outlined
+                      autocomplete="new-password"
+                      label="Password"
+                      v-model="signup.password"
+                      :rules="rulesPassword"
+                      min="8"
+                      :append-icon="e1 ? 'visibility' : 'visibility_off'"
+                      :type="e1 ? 'password' : 'text'"
+                      counter
+                      required
+                      @click:append="e1 = !e1"
+                    ></v-text-field>
                   </v-row>
                   <v-row>
-                      <v-text-field
-                        outlined
-                        autocomplete="confirm-password"
-                        label="Confirm Password"
-                        v-model="cpassword"
-                        :rules="rulesPasswordConfirmation"
-                        min="8"
-                        :append-icon="e2 ? 'visibility' : 'visibility_off'"
-                        :type="e2 ? 'password' : 'text'"
-                        counter
-                        required
-                        @click:append="e2 = !e2"
-                      ></v-text-field>
+                    <v-text-field
+                      outlined
+                      autocomplete="confirm-password"
+                      label="Confirm Password"
+                      v-model="cpassword"
+                      :rules="rulesPasswordConfirmation"
+                      min="8"
+                      :append-icon="e2 ? 'visibility' : 'visibility_off'"
+                      :type="e2 ? 'password' : 'text'"
+                      counter
+                      required
+                      @click:append="e2 = !e2"
+                    ></v-text-field>
                   </v-row>
                   <v-row>
-                      <v-text-field
-                        outlined
-                        label="Email"
-                        autocomplete="email"
-                        v-model="signup.email"
-                        :rules="rulesEmail"
-                        required
-                      ></v-text-field>
+                    <v-text-field
+                      outlined
+                      label="Email"
+                      autocomplete="email"
+                      v-model="signup.email"
+                      :rules="rulesEmail"
+                      required
+                    ></v-text-field>
                   </v-row>
 
                   <v-row justify-end class="mt-2">
@@ -104,18 +112,26 @@
                 <v-col md="12">
                   <v-icon color="primary" size="150">mood</v-icon>
                 </v-col>
-                <v-col md="12" class="title">Registration Completed Successfully</v-col>
+                <v-col md="12" class="title"
+                  >Registration Completed Successfully</v-col
+                >
                 <v-col md="12">
                   <p>
-                    Before you can login, you must active your account with the code sent to your email address.
+                    Before you can login, you must active your account with the
+                    code sent to your email address.
                     <i>(take a few minutes)</i>
                   </p>
                   <p>
-                    If you did not receive this email, please check your junk/spam folder.
-                    Click
+                    If you did not receive this email, please check your
+                    junk/spam folder. Click
                     <router-link
-                      :to="{ path: '/request-activation/' + signup.incubatorIdentifier }"
-                    >here</router-link> to resend the activation email.
+                      :to="{
+                        path:
+                          '/request-activation/' + signup.incubatorIdentifier,
+                      }"
+                      >here</router-link
+                    >
+                    to resend the activation email.
                   </p>
                 </v-col>
               </v-row>
@@ -151,12 +167,12 @@ export default {
         password: "",
         incubatorIdentifier: this.$route.params.incubatorIdentifier,
         name: "",
-        email: ""
+        email: "",
       },
       params: {
-        incubatorIdentifier: ""
+        incubatorIdentifier: "",
       },
-      issuccess: false
+      issuccess: false,
     };
   },
   watch: {
@@ -193,9 +209,12 @@ export default {
         .post(config.baseUri + "/founder-signup", this.signup)
         .then(() => {
           // this.$router.push({ path: "/login", query: { activate: true } });
+          this.$analytics.logEvent("sign_up", {
+            incubator: this.signup.incubatorIdentifier,
+          });
           this.issuccess = true;
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -204,8 +223,8 @@ export default {
     },
     clear() {
       this.$refs.form.reset();
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -222,7 +241,7 @@ export default {
 }
 
 #accentlg:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;

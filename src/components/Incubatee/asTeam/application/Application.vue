@@ -12,7 +12,10 @@
           :items="dataList.list"
           class="elevation-1"
         >
-          <template v-slot:no-data>No Program Available / Already Participate one of the program</template>
+          <template v-slot:no-data
+            >No Program Available / Already Participate one of the
+            program</template
+          >
           <!-- <template v-slot:item.name="{item}">
             <v-btn
               class="elevation-0 mr-2"
@@ -25,7 +28,7 @@
             </v-btn>
             {{item.name}}
           </template>-->
-          <template v-slot:item.action="{item}">
+          <template v-slot:item.action="{ item }">
             <v-btn small color="primary" class="mr-2" @click="leftApply(item)">
               <v-icon left>check</v-icon>Register
             </v-btn>
@@ -49,7 +52,7 @@
           :items="filterRegistration(dataList2.list)"
           class="elevation-1"
         >
-          <template v-slot:item.name="{item}">
+          <template v-slot:item.name="{ item }">
             <!-- <v-btn
               class="elevation-0 mr-2"
               fab
@@ -59,11 +62,16 @@
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>-->
-            {{item.program.name}}
+            {{ item.program.name }}
           </template>
 
-          <template v-slot:item.action="{item}">
-            <v-btn small color="warning" class="mr-2" @click="leftAct(item, 'Cancel')">
+          <template v-slot:item.action="{ item }">
+            <v-btn
+              small
+              color="warning"
+              class="mr-2"
+              @click="leftAct(item, 'Cancel')"
+            >
               <v-icon left>cancel</v-icon>Cancel Registration
             </v-btn>
           </template>
@@ -76,7 +84,7 @@
         <v-card-title>
           <p class="text-capitalize">Apply Program</p>
         </v-card-title>
-        <v-card-text>{{leftName}}</v-card-text>
+        <v-card-text>{{ leftName }}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn text color="red" @click="applyCohort()">Yes</v-btn>
@@ -88,13 +96,19 @@
     <v-dialog v-model="dialogDelete" width="300" :persistent="true">
       <v-card :loading="loader">
         <v-card-title>
-          <p class="text-capitalize">{{leftAction}}</p>
+          <p class="text-capitalize">{{ leftAction }}</p>
         </v-card-title>
-        <v-card-text>{{leftName}}</v-card-text>
+        <v-card-text>{{ leftName }}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <!-- <v-btn v-if="leftAction == 'Cancel'" text color="red" @click="deleteAccount(leftId)">Yes</v-btn> -->
-          <v-btn v-if="leftAction == 'Cancel'" text color="red" @click="cancelProgram(leftId)">Yes</v-btn>
+          <v-btn
+            v-if="leftAction == 'Cancel'"
+            text
+            color="red"
+            @click="cancelProgram(leftId)"
+            >Yes</v-btn
+          >
           <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
@@ -113,11 +127,14 @@
           <p class="text-capitalize"></p>
         </v-card-title>
         <v-card-text v-if="loader">
-          <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
+          <v-progress-linear
+            :indeterminate="true"
+            color="primary"
+          ></v-progress-linear>
         </v-card-text>
         <transition name="slide-fade" mode="out-in">
           <v-card-text :key="dataSingle.name">
-            <p>{{dataSingle.name}}</p>
+            <p>{{ dataSingle.name }}</p>
           </v-card-text>
         </transition>
         <v-card-actions>
@@ -139,7 +156,7 @@ import { programMixins } from "@/mixins/programMixins";
 import { teamWatcherMixins } from "@/mixins/teamWatcherMixins";
 
 export default {
-  mixins: [programMixins,teamWatcherMixins],
+  mixins: [programMixins, teamWatcherMixins],
   data() {
     return {
       search: "",
@@ -152,12 +169,12 @@ export default {
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
         { text: "Description", value: "description", sortable: false },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
       tableHeaders2: [
         { text: "Name", value: "name", sortable: false },
         { text: "", value: "sub", sortable: false, align: "left" },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
       dialog: false,
       dialogForm: false,
@@ -169,9 +186,13 @@ export default {
       leftName: "",
       leftAction: "",
       params: {
-        programId: ""
-      }
+        programId: "",
+      },
+      user: {},
     };
+  },
+  created() {
+    this.user = JSON.parse(auth.getAuthData());
   },
   mounted() {
     this.getDataList();
@@ -180,12 +201,12 @@ export default {
   watch: {
     teamId() {
       this.$router.replace({
-        path: "/incubatee/team/" + this.teamId + "/application"
+        path: "/incubatee/team/" + this.teamId + "/application",
       });
     },
     $route() {
       this.getDataList();
-    }
+    },
   },
   methods: {
     getDataList() {
@@ -197,10 +218,10 @@ export default {
             this.$route.params.teamId +
             "/programs",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.dataList = res.data.data;
           } else {
@@ -221,10 +242,10 @@ export default {
             this.$route.params.teamId +
             "/program-registrations",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.dataList2 = res.data.data;
           } else {
@@ -246,13 +267,13 @@ export default {
             "/programs/" +
             id,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.dataSingle = res.data.data;
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -284,14 +305,19 @@ export default {
             "/program-registrations",
           this.params,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
+          this.$analytics.logEvent("register_program", {
+            user_id: this.user.data.id,
+            team_id: this.$route.params.teamId,
+            program_id: this.params.programId,
+          });
           bus.$emit("callNotif", "info", "Successfully Apply");
           this.refresh();
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -308,14 +334,14 @@ export default {
             "/programs/" +
             id,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
           bus.$emit("callNotif", "info", "Successfully Cancel");
           this.refresh();
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -329,9 +355,8 @@ export default {
       this.dialogDetail = false;
       this.getDataList();
       this.getDataList2();
-    }
-  }
+    },
+  },
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>
