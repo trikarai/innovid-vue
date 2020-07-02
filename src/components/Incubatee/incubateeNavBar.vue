@@ -150,6 +150,20 @@
             >
           </v-list-item-content>
         </v-list-item>
+        <v-list-item
+          v-if="participation.program.name == 'MIKTI Start 2020'"
+          router
+          :to="{ name: 'pastevent' }"
+        >
+          <v-list-item-action>
+            <v-icon>mdi-calendar-check</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="grey--text">
+              Past Event</v-list-item-title
+            >
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
 
       <v-list class="pt-0" v-if="participation.id != ''">
