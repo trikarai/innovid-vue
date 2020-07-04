@@ -2,7 +2,11 @@
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper" @click="$emit('close')">
-        <div class="modal-container"  style="width:400px !important;"  @click.stop>
+        <div
+          class="modal-container"
+          style="width:400px !important;"
+          @click.stop
+        >
           <v-card elevation="0" :loading="loader">
             <v-card-title class="topaccent" primary-title>
               <div>
@@ -39,7 +43,8 @@
                       :loading="loader"
                       color="primary"
                       :disabled="!valid"
-                    >{{$vuetify.lang.t('$vuetify.action.add')}}</v-btn>
+                      >{{ $vuetify.lang.t("$vuetify.action.add") }}</v-btn
+                    >
                   </v-layout>
                 </v-form>
               </div>
@@ -67,12 +72,15 @@ export default {
       show1: false,
       params: {
         name: "",
-        memberPosition: ""
-      }
+        memberPosition: "",
+      },
+      user: {},
     };
   },
   components: {},
-  created: function() {},
+  created: function() {
+    this.user = JSON.parse(auth.getAuthData());
+  },
   mounted: function() {
     if (this.edit) {
       this.getSingleData(this.data.id);
@@ -93,13 +101,17 @@ export default {
       this.loader = true;
       this.axios
         .post(config.baseUri + "/founder/teams", this.params, {
-          headers: auth.getAuthHeader()
+          headers: auth.getAuthHeader(),
         })
-        .then(() => {
+        .then((res) => {
+          this.$analytics.logEvent("create_team", {
+            user_id: this.user.data.id,
+            team_id: res.data.data.id,
+          });
           this.$emit("refresh");
           bus.$emit("reloadNavTeamMembership");
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -107,8 +119,8 @@ export default {
         });
     },
     updateData: function() {},
-    getSingleData: function() {}
-  }
+    getSingleData: function() {},
+  },
 };
 </script>
 <style scoped>
