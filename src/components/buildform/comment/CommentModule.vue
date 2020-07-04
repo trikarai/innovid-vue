@@ -15,7 +15,12 @@
             ></v-switch>
           </v-col>
           <v-col>
-            <v-btn class="mt-4" v-if="!hideComment" icon @click="hideComment = true">
+            <v-btn
+              class="mt-4"
+              v-if="!hideComment"
+              icon
+              @click="hideComment = true"
+            >
               <v-icon>visibility</v-icon>
             </v-btn>
             <v-btn v-else icon @click="hideComment = false">
@@ -26,29 +31,41 @@
       </v-col>
       <template v-if="!hideComment">
         <v-col md="12" v-if="loadComment">
-          <v-skeleton-loader type="list-item-avatar-two-line@3"></v-skeleton-loader>
+          <v-skeleton-loader
+            type="list-item-avatar-two-line@3"
+          ></v-skeleton-loader>
         </v-col>
         <v-col md="12" v-else>
           <template v-if="comments.total == 0">
             <v-chip small color="warning">No Comment Yet</v-chip>
           </template>
-          <v-list three-line>
+          <v-list three-line v-if="comments.total !== 0">
             <template v-for="(item, index) in comments.list">
               <v-list-item :key="item.id">
                 <v-list-item-avatar>
                   <v-icon>face</v-icon>
                 </v-list-item-avatar>
                 <v-list-item-content>
-                  <v-list-item-title v-if="item.member != null">{{item.member.founder.name}}</v-list-item-title>
-                  <v-list-item-title v-if="item.mentor != null">{{item.mentor.personnel.name}}</v-list-item-title>
+                  <v-list-item-title v-if="item.member != null">{{
+                    item.member.founder.name
+                  }}</v-list-item-title>
+                  <v-list-item-title v-if="item.mentor != null">{{
+                    item.mentor.personnel.name
+                  }}</v-list-item-title>
                   <v-list-item-subtitle
                     v-if="item.parent !== null"
                     class="font-italic font-weight-light"
                   >
                     <v-card>
                       <v-card-text>
-                        <div style="padding-bottom: 1px !important;" class="panel">
-                          <div class="panel-heading" v-html="marked(item.parent.message)"></div>
+                        <div
+                          style="padding-bottom: 1px !important;"
+                          class="panel"
+                        >
+                          <div
+                            class="panel-heading"
+                            v-html="marked(item.parent.message)"
+                          ></div>
                         </div>
 
                         <!-- {{item.parent.message}} -->
@@ -71,7 +88,14 @@
                   >
                     <v-icon>reply</v-icon>
                   </v-btn>
-                  <v-btn disabled color="primary" small icon class="mr-2 mb-2" v-else>
+                  <v-btn
+                    disabled
+                    color="primary"
+                    small
+                    icon
+                    class="mr-2 mb-2"
+                    v-else
+                  >
                     <v-icon>reply</v-icon>
                   </v-btn>
                   <template v-if="item.mentor !== null">
@@ -105,13 +129,21 @@
       </template>
       <template v-if="!hideComment">
         <v-col md="6" v-if="!switchMode">
-          <v-btn color="primary" small class="mr-2" @click="openDialog()" v-if="!loadComment">
+          <v-btn
+            color="primary"
+            small
+            class="mr-2"
+            @click="openDialog()"
+            v-if="!loadComment"
+          >
             <v-icon small left>add_comment</v-icon>Add Comment
           </v-btn>
         </v-col>
         <v-col md="12" v-else>
           <vue-simplemde v-model="params.message" ref="markdownEditor" />
-          <v-btn :disabled="isEmpty" color="primary" @click="postComment()">Post</v-btn>
+          <v-btn :disabled="isEmpty" color="primary" @click="postComment()"
+            >Post</v-btn
+          >
           <!-- <v-btn color="red" text @click.native="dialog = false">Cancel</v-btn> -->
         </v-col>
       </template>
@@ -132,23 +164,34 @@
               color="primary"
               @click="replyComment()"
               v-if="isReply"
-            >Reply</v-btn>
-            <v-btn :disabled="isEmpty" color="primary" @click="postComment()" v-else>Post</v-btn>
+              >Reply</v-btn
+            >
+            <v-btn
+              :disabled="isEmpty"
+              color="primary"
+              @click="postComment()"
+              v-else
+              >Post</v-btn
+            >
 
-            <v-btn color="grey" text @click.native="dialog = false">Cancel</v-btn>
+            <v-btn color="grey" text @click.native="dialog = false"
+              >Cancel</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
       <v-dialog v-model="dialogDelete" width="300" :persistent="true">
         <v-card :loading="loaderDelete">
           <v-card-title>
-            <p class="text-capitalize">{{leftAction}}</p>
+            <p class="text-capitalize">{{ leftAction }}</p>
           </v-card-title>
-          <v-card-text>{{leftName}}</v-card-text>
+          <v-card-text>{{ leftName }}</v-card-text>
           <v-card-actions>
             <div class="flex-grow-1"></div>
             <v-btn text color="red" @click="deleteComment(leftId)">Yes</v-btn>
-            <v-btn text color="grey" @click="dialogDelete = false">Cancel</v-btn>
+            <v-btn text color="grey" @click="dialogDelete = false"
+              >Cancel</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -162,6 +205,12 @@ import * as config from "@/config/config";
 import auth from "@/config/auth";
 
 export default {
+  props: {
+    journalId: {
+      type: String,
+      required: false,
+    },
+  },
   data() {
     return {
       hideComment: false,
@@ -181,19 +230,19 @@ export default {
       leftAction: "",
       params: {
         participantId: this.$route.params.cohortId,
-        journalId: this.$route.params.journalId,
-        message: ""
+        journalId: "",
+        message: "",
       },
       isReply: false,
       isEmpty: true,
       user: {
         role: "",
-        data: { id: "" }
+        data: { id: "" },
       },
       mdeConfig: {
         placeholder: "Type here...",
-        spellChecker: false
-      }
+        spellChecker: false,
+      },
     };
   },
   watch: {
@@ -210,25 +259,41 @@ export default {
       } else {
         this.isEmpty = false;
       }
-    }
+    },
+    journalId: "getComment",
   },
   created() {
     this.user = JSON.parse(auth.getAuthData());
     if (this.user.role != "PERSONNEL") {
       this.membershipId = localStorage.getItem("MembershipTeamId");
     }
+    // if (this.$route.params.journalId) {
+    //   this.params.journalId = this.$route.params.journalId;
+    // } else {
+    //   this.params.journalId = this.journalId;
+    // }
   },
   mounted() {
-    if (this.user.role == "PERSONNEL") {
-      this.getPersonnelCommentList();
-    } else {
-      this.getCommentList();
-    }
+    this.getComment();
   },
   components: {
-    VueSimplemde
+    VueSimplemde,
   },
   methods: {
+    getComment() {
+      if (this.$route.params.journalId) {
+        this.params.journalId = this.$route.params.journalId;
+      } else {
+        this.params.journalId = this.journalId;
+      }
+
+      this.comments = { total: 0, list: [] };
+      if (this.user.role == "PERSONNEL") {
+        this.getPersonnelCommentList();
+      } else {
+        this.getCommentList();
+      }
+    },
     getCommentList() {
       this.loadComment = true;
       this.axios
@@ -239,16 +304,16 @@ export default {
             "/program-participations/" +
             this.$route.params.cohortId +
             "/journals/" +
-            this.$route.params.journalId +
+            this.params.journalId +
             "/comments",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.comments = res.data.data;
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -265,16 +330,16 @@ export default {
             "/participants/" +
             this.$route.params.cohortId +
             "/journals/" +
-            this.$route.params.journalId +
+            this.params.journalId +
             "/comments",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.comments = res.data.data;
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -292,7 +357,7 @@ export default {
               "/comments",
             this.params,
             {
-              headers: auth.getAuthHeader()
+              headers: auth.getAuthHeader(),
             }
           )
           .then(() => {
@@ -311,7 +376,7 @@ export default {
               "/comments",
             this.params,
             {
-              headers: auth.getAuthHeader()
+              headers: auth.getAuthHeader(),
             }
           )
           .then(() => {
@@ -336,7 +401,7 @@ export default {
               this.parentId,
             this.params,
             {
-              headers: auth.getAuthHeader()
+              headers: auth.getAuthHeader(),
             }
           )
           .then(() => {
@@ -356,7 +421,7 @@ export default {
               this.parentId,
             this.params,
             {
-              headers: auth.getAuthHeader()
+              headers: auth.getAuthHeader(),
             }
           )
           .then(() => {
@@ -395,14 +460,14 @@ export default {
               "/comments/" +
               id,
             {
-              headers: auth.getAuthHeader()
+              headers: auth.getAuthHeader(),
             }
           )
           .then(() => {
             bus.$emit("callNotif", "info", "Comment Deleted");
             this.refreshData();
           })
-          .catch(res => {
+          .catch((res) => {
             bus.$emit("callNotif", "error", res);
           })
           .finally(() => {
@@ -417,14 +482,14 @@ export default {
               "/comments/" +
               id,
             {
-              headers: auth.getAuthHeader()
+              headers: auth.getAuthHeader(),
             }
           )
           .then(() => {
             bus.$emit("callNotif", "info", "Comment Deleted");
             this.refreshData();
           })
-          .catch(res => {
+          .catch((res) => {
             bus.$emit("callNotif", "error", res);
           })
           .finally(() => {
@@ -441,8 +506,8 @@ export default {
       this.dialog = false;
       this.dialogDelete = false;
       this.params.message = "";
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -481,7 +546,7 @@ export default {
 }
 .panel > .panel-heading:after {
   border-width: 7px;
-  border-right-color:#aaa;
+  border-right-color: #aaa;
   margin-top: 1px;
   margin-left: 2px;
 }

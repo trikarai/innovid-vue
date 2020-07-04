@@ -58,6 +58,9 @@
         </template>
       </v-card-text>
     </v-col>
+    <v-col cols="12" xl="12" lg="12" md="12" sm="12" v-if="worksheetId !== ''">
+      <comment-module :journalId="journal.id"></comment-module>
+    </v-col>
   </v-row>
 </template>
 
@@ -67,6 +70,8 @@ import * as config from "@/config/config";
 
 import RenderRecord from "@/components/buildform/incubatee/renderRecord";
 import EditJournal from "../../journal/component/editJournal";
+import CommentModule from "@/components/buildform/comment/CommentModule";
+
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
 export default {
@@ -74,6 +79,7 @@ export default {
   components: {
     RenderRecord,
     EditJournal,
+    CommentModule,
   },
   props: {
     dataMission: {
