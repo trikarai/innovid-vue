@@ -1,5 +1,6 @@
 <template>
   <v-container fluid>
+    {{ user.data.id }}
     <v-row>
       <v-col class="pl-0" cols="12" xl="12" lg="12" md="12">
         <div
@@ -250,11 +251,14 @@ export default {
         )
         .then((res) => {
           this.dataList = res.data.data;
+          // eslint-disable-next-line no-console
+          // console.log("user_id " + this.user.data.id);
           this.$analytics.logEvent("mission_view", {
-            user_id: this.user.data.id,
             team_id: this.$route.params.teamId,
+            user_id: this.user.data.id,
             name: this.dataList.name,
           });
+
           Object.assign(this.dataListTemp, this.dataList);
           this.previousMission = res.data.data.previousMission;
         })
@@ -280,11 +284,14 @@ export default {
         )
         .then((res) => {
           this.dataList = res.data.data;
+          // eslint-disable-next-line no-console
+          // console.log("user_id " + this.user.data.id);
           this.$analytics.logEvent("mission_view", {
-            user_id: this.user.data.id,
             team_id: this.$route.params.teamId,
+            user_id: this.user.data.id,
             name: this.dataList.name,
           });
+
           Object.assign(this.dataListTemp, this.dataList);
           this.previousMission = res.data.data.previousMission;
         })
