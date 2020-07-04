@@ -190,7 +190,7 @@ export default {
         id: "",
         name: "",
       },
-      user: {},
+      user: "",
     };
   },
   components: {
