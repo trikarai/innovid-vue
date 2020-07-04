@@ -1,6 +1,5 @@
 <template>
   <v-container fluid>
-    {{ user.data.id }}
     <v-row>
       <v-col class="pl-0" cols="12" xl="12" lg="12" md="12">
         <div
