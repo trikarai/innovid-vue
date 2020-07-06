@@ -210,7 +210,7 @@ export default {
           );
 
           this.$analytics.logEvent("login", {
-            user_id: authUser.data.id,
+            founder_id: authUser.data.id,
           });
           // eslint-disable-next-line no-console
           // console.log("login :" + authUser.data.id);

@@ -186,7 +186,7 @@ export default {
         )
         .then((res) => {
           this.$analytics.logEvent("view_worksheet", {
-            user_id: this.user.data.id,
+            founder_id: this.user.data.id,
             team_id: this.$route.params.teamId,
             worksheet_id: this.worksheetId,
             page: "mission",

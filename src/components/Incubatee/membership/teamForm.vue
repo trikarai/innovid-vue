@@ -105,7 +105,7 @@ export default {
         })
         .then((res) => {
           this.$analytics.logEvent("create_team", {
-            user_id: this.user.data.id,
+            founder_id: this.user.data.id,
             team_id: res.data.data.id,
           });
           this.$emit("refresh");

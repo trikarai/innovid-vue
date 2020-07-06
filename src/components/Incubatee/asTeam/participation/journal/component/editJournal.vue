@@ -75,7 +75,7 @@ export default {
         )
         .then(() => {
           this.$analytics.logEvent("edit_worksheet", {
-            user_id: this.user.data.id,
+            founder_id: this.user.data.id,
             team_id: this.$route.params.teamId,
             worksheet_id: this.worksheetId,
             form_type: this.worksheetForm.name,

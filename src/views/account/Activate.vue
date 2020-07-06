@@ -111,7 +111,7 @@ export default {
           this.iserror = true;
           this.$analytics.logEvent("activation", {
             success: this.issuccess,
-            user_id: this.params.email,
+            founder_id: this.params.email,
           });
           this.err_msg = res;
           bus.$emit("callNotif", "error", res);

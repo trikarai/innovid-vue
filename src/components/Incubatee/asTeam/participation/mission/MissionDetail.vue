@@ -251,10 +251,10 @@ export default {
         .then((res) => {
           this.dataList = res.data.data;
           // eslint-disable-next-line no-console
-          console.log("mission_view -> user_id " + this.user.data.id);
+          console.log("mission_view -> founder_id " + this.user.data.id);
           this.$analytics.logEvent("mission_view", {
             team_id: this.$route.params.teamId,
-            user_id: this.user.data.id,
+            founder_id: this.user.data.id,
             name: this.dataList.name,
           });
 
@@ -284,10 +284,10 @@ export default {
         .then((res) => {
           this.dataList = res.data.data;
           // eslint-disable-next-line no-console
-          console.log("mission_view -> user_id " + this.user.data.id);
+          console.log("mission_view -> founder_id " + this.user.data.id);
           this.$analytics.logEvent("mission_view", {
             team_id: this.$route.params.teamId,
-            user_id: this.user.data.id,
+            founder_id: this.user.data.id,
             name: this.dataList.name,
           });
 

@@ -178,7 +178,7 @@ export default {
         )
         .then(() => {
           this.$analytics.logEvent("invite_member", {
-            user_id: this.user.data.id,
+            founder_id: this.user.data.id,
             invited_id: this.incubatee.id,
           });
           bus.$emit("callNotif", "info", "Invitation Sent");

@@ -296,7 +296,7 @@ export default {
         )
         .then(() => {
           this.$analytics.logEvent("create_worksheet", {
-            user_id: this.user.data.id,
+            founder_id: this.user.data.id,
             team_id: this.$route.params.teamId,
             form_type: this.dataList.worksheetForm.name,
           });
