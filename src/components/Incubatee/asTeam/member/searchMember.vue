@@ -186,7 +186,7 @@ export default {
             invited_id: this.incubatee.id,
           });
           bus.$emit("callNotif", "info", "Invitation Sent");
-          this.$router.got(-1);
+          this.$router.go(-1);
         })
         .catch((res) => {
           bus.$emit("callNotif", "error", res);
