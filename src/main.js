@@ -28,6 +28,12 @@ firebase.analytics();
 // firebase alias
 Vue.prototype.$analytics = firebase.analytics();
 
+// Mix Panel
+import mixpanel from "mixpanel-browser";
+// var mixpanel = require("mixpanel-browser");
+mixpanel.init("6467c859ee7e17ea5e1c96e0d86125e0");
+Vue.prototype.$mixpanel = mixpanel;
+
 //global component
 import Notification from "@/components/Notification";
 Vue.component("notification", Notification);
