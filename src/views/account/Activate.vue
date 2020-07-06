@@ -104,17 +104,18 @@ export default {
           this.$mixpanel.track("activation", {
             success: this.issuccess,
             incubator: this.$route.params.incubatorIdentifier,
-            founder_email: this.params.email,
+            founder_email: this.$route.params.email,
           });
           this.$analytics.logEvent("activation", {
             success: this.issuccess,
             incubator: this.$route.params.incubatorIdentifier,
-            userId: this.params.email,
+            founder_email: this.$route.params.email,
           });
         })
         .catch((res) => {
           this.issuccess = false;
           this.iserror = true;
+          
           this.$analytics.logEvent("activation", {
             success: this.issuccess,
             incubator: this.$route.params.incubatorIdentifier,
