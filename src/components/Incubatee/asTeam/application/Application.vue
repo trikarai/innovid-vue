@@ -309,6 +309,11 @@ export default {
           }
         )
         .then(() => {
+          this.$mixpanel.track("register_program", {
+            founder_id: this.user.data.id,
+            team_id: this.$route.params.teamId,
+            program_id: this.params.programId,
+          });
           this.$analytics.logEvent("register_program", {
             founder_id: this.user.data.id,
             team_id: this.$route.params.teamId,

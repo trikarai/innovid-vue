@@ -113,6 +113,11 @@ export default {
           }
         )
         .then(() => {
+          this.$mixpanel.track("team_profile_form", {
+            founder_id: this.user.data.id,
+            team_id: this.teamId,
+            form_type: this.formTemplate.name,
+          });
           this.$analytics.logEvent("team_profile_form", {
             founder_id: this.user.data.id,
             team_id: this.teamId,

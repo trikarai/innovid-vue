@@ -185,6 +185,12 @@ export default {
           }
         )
         .then((res) => {
+          this.$mixpanel.track("view_worksheet", {
+            founder_id: this.user.data.id,
+            team_id: this.$route.params.teamId,
+            worksheet_id: this.worksheetId,
+            page: "mission",
+          });
           this.$analytics.logEvent("view_worksheet", {
             founder_id: this.user.data.id,
             team_id: this.$route.params.teamId,

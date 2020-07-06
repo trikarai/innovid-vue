@@ -60,6 +60,11 @@ export default {
   watch: {
     missionId: "getLearningMaterial",
     learning() {
+      this.$mixpanel.track("learning_view", {
+        founder_id: this.user.data.id,
+        team_id: this.$route.params.teamId,
+        name: this.learning.name,
+      });
       this.$analytics.logEvent("learning_view", {
         founder_id: this.user.data.id,
         team_id: this.$route.params.teamId,

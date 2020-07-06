@@ -74,7 +74,7 @@ export default {
           }
         )
         .then(() => {
-          this.$analytics.logEvent("edit_worksheet", {
+          this.$mixpanel.track("edit_worksheet", {
             founder_id: this.user.data.id,
             team_id: this.$route.params.teamId,
             worksheet_id: this.worksheetId,
