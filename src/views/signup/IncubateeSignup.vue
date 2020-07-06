@@ -207,7 +207,7 @@ export default {
       this.signupLoader = true;
       this.axios
         .post(config.baseUri + "/founder-signup", this.signup)
-        .then((res) => {
+        .then(() => {
           // this.$router.push({ path: "/login", query: { activate: true } });
           this.$analytics.logEvent("sign_up", {
             incubator: this.signup.incubatorIdentifier,
@@ -215,7 +215,7 @@ export default {
 
           this.$mixpanel.people.set({
             $email: this.signup.email,
-            founder_id: res.data.data.id,
+            incubator: this.signup.incubatorIdentifier,
           });
 
           this.issuccess = true;
