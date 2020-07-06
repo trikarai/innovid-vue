@@ -61,7 +61,7 @@ export default {
     missionId: "getLearningMaterial",
     learning() {
       this.$analytics.logEvent("learning_view", {
-        user_id: this.user.data.id,
+        founder_id: this.user.data.id,
         team_id: this.$route.params.teamId,
         name: this.learning.name,
       });

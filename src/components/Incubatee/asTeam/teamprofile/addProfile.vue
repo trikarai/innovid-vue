@@ -114,7 +114,7 @@ export default {
         )
         .then(() => {
           this.$analytics.logEvent("team_profile_form", {
-            user_id: this.user.data.id,
+            founder_id: this.user.data.id,
             team_id: this.teamId,
             form_type: this.formTemplate.name,
           });

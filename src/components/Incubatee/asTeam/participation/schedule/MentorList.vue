@@ -311,7 +311,7 @@ export default {
         )
         .then(() => {
           this.$analytics.logEvent("propose_mentoring", {
-            user_id: this.user.data.id,
+            founder_id: this.user.data.id,
             mentor_id: this.params.mentorId,
             mentoring_id: this.params.mentoringId,
           });

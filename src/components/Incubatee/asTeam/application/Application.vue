@@ -310,7 +310,7 @@ export default {
         )
         .then(() => {
           this.$analytics.logEvent("register_program", {
-            user_id: this.user.data.id,
+            founder_id: this.user.data.id,
             team_id: this.$route.params.teamId,
             program_id: this.params.programId,
           });

@@ -277,7 +277,7 @@ export default {
         )
         .then((res) => {
           this.$analytics.logEvent("view_worksheet", {
-            user_id: this.user.data.id,
+            founder_id: this.user.data.id,
             team_id: this.$route.params.teamId,
             worksheet_id: this.$route.params.worksheetId,
             page: "journal",
@@ -395,7 +395,7 @@ export default {
         )
         .then(() => {
           this.$analytics.logEvent("edit_worksheet", {
-            user_id: this.user.data.id,
+            founder_id: this.user.data.id,
             team_id: this.$route.params.teamId,
             worksheet_id: this.$route.params.worksheetId,
             form_type: this.dataList.worksheetForm.name,
