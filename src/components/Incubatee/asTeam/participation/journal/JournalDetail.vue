@@ -394,6 +394,13 @@ export default {
           }
         )
         .then(() => {
+          this.$mixpanel.track("edit_worksheet", {
+            founder_id: this.user.data.id,
+            team_id: this.$route.params.teamId,
+            worksheet_id: this.$route.params.worksheetId,
+            form_type: this.dataList.worksheetForm.name,
+            page: "journal",
+          });
           this.$analytics.logEvent("edit_worksheet", {
             founder_id: this.user.data.id,
             team_id: this.$route.params.teamId,

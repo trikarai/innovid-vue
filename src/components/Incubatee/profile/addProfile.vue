@@ -103,6 +103,10 @@ export default {
             founder_id: this.user.data.id,
             form_type: this.formTemplate.name,
           });
+          this.$mixpanel.track("profile_form", {
+            founder_id: this.user.data.id,
+            form_type: this.formTemplate.name,
+          });
           bus.$emit("callNotif", "success", "Form Data Uploaded");
           this.$router.go(-2);
         })

@@ -8,6 +8,13 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import VueSanitize from "vue-sanitize";
 
+// Mix Panel
+var mixpanel = require("mixpanel-browser");
+mixpanel.init("6467c859ee7e17ea5e1c96e0d86125e0", {
+  debug: true,
+});
+Vue.prototype.$mixpanel = mixpanel;
+
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import * as firebase from "firebase/app";
 // If you enabled Analytics in your project, add the Firebase SDK for Analytics
@@ -27,12 +34,6 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 // firebase alias
 Vue.prototype.$analytics = firebase.analytics();
-
-// Mix Panel
-import mixpanel from "mixpanel-browser";
-// var mixpanel = require("mixpanel-browser");
-mixpanel.init("6467c859ee7e17ea5e1c96e0d86125e0");
-Vue.prototype.$mixpanel = mixpanel;
 
 //global component
 import Notification from "@/components/Notification";

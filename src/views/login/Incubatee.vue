@@ -220,17 +220,16 @@ export default {
             "incubator",
             this.params.incubatorIdentifier
           );
-
-          this.$analytics.logEvent("login", {
-            founder_id: authUser.data.id,
-          });
-          this.$mixpanel.identify(authUser.data.id);
-          this.$mixpanel.track("Login", {
+          this.$mixpanel.track("login", {
             founder_id: authUser.data.id,
             incubator: this.params.incubatorIdentifier,
           });
-          // eslint-disable-next-line no-console
-          console.log("login :" + authUser.data.id);
+          this.$mixpanel.identify(authUser.data.id);
+          
+          this.$analytics.logEvent("login", {
+            founder_id: authUser.data.id,
+          });
+
           this.$router.replace("/incubatee/dashboard");
         })
         .catch((res) => {

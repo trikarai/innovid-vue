@@ -295,6 +295,11 @@ export default {
           }
         )
         .then(() => {
+          this.$mixpanel.track("create_worksheet", {
+            founder_id: this.user.data.id,
+            team_id: this.$route.params.teamId,
+            form_type: this.dataList.worksheetForm.name,
+          });
           this.$analytics.logEvent("create_worksheet", {
             founder_id: this.user.data.id,
             team_id: this.$route.params.teamId,

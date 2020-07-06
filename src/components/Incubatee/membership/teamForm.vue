@@ -104,6 +104,10 @@ export default {
           headers: auth.getAuthHeader(),
         })
         .then((res) => {
+          this.$mixpanel.track("create_team", {
+            founder_id: this.user.data.id,
+            team_id: res.data.data.id,
+          });
           this.$analytics.logEvent("create_team", {
             founder_id: this.user.data.id,
             team_id: res.data.data.id,

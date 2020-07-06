@@ -177,6 +177,10 @@ export default {
           { headers: auth.getAuthHeader() }
         )
         .then(() => {
+          this.$mixpanel.track("invite_member", {
+            founder_id: this.user.data.id,
+            invited_id: this.incubatee.id,
+          });
           this.$analytics.logEvent("invite_member", {
             founder_id: this.user.data.id,
             invited_id: this.incubatee.id,

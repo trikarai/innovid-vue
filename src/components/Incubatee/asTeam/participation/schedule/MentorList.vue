@@ -310,6 +310,11 @@ export default {
           }
         )
         .then(() => {
+          this.$mixpanel.track("propose_mentoring", {
+            founder_id: this.user.data.id,
+            mentor_id: this.params.mentorId,
+            mentoring_id: this.params.mentoringId,
+          });
           this.$analytics.logEvent("propose_mentoring", {
             founder_id: this.user.data.id,
             mentor_id: this.params.mentorId,
