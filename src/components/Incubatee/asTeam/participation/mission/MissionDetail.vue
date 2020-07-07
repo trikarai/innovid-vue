@@ -250,14 +250,16 @@ export default {
         )
         .then((res) => {
           this.dataList = res.data.data;
-          // eslint-disable-next-line no-console
-          console.log("mission_view -> founder_id " + this.user.data.id);
           this.$analytics.logEvent("mission_view", {
             team_id: this.$route.params.teamId,
             founder_id: this.user.data.id,
             name: this.dataList.name,
           });
-
+          this.$mixpanel.track("mission_view", {
+            team_id: this.$route.params.teamId,
+            founder_id: this.user.data.id,
+            name: this.dataList.name,
+          });
           Object.assign(this.dataListTemp, this.dataList);
           this.previousMission = res.data.data.previousMission;
         })
