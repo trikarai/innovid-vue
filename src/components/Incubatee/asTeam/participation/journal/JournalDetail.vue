@@ -280,7 +280,15 @@ export default {
             founder_id: this.user.data.id,
             team_id: this.$route.params.teamId,
             worksheet_id: this.$route.params.worksheetId,
+            form_type: this.dataList.worksheetForm.name,
             page: "journal",
+          });
+          this.$mixpanel.track("view_worksheet", {
+            founder_id: this.user.data.id,
+            team_id: this.$route.params.teamId,
+            worksheet_id: this.worksheetId,
+            form_type: this.dataList.worksheetForm.name,
+            page: "mission",
           });
           this.dataSingle = res.data.data;
           this.worksheetData = res.data.data;

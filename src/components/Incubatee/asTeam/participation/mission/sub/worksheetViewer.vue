@@ -189,12 +189,14 @@ export default {
             founder_id: this.user.data.id,
             team_id: this.$route.params.teamId,
             worksheet_id: this.worksheetId,
+            form_type: this.dataList.worksheetForm.name,
             page: "mission",
           });
           this.$analytics.logEvent("view_worksheet", {
             founder_id: this.user.data.id,
             team_id: this.$route.params.teamId,
             worksheet_id: this.worksheetId,
+            form_type: this.dataList.worksheetForm.name,
             page: "mission",
           });
           this.worksheet = res.data.data;
