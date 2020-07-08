@@ -100,6 +100,7 @@ import MentorScheduleDetail from "../components/personnel/asMentor/schedule/Sche
 import MentorScheduleReport from "../components/personnel/asMentor/schedule/Report";
 import MentorScheduleNegotiate from "../components/personnel/asMentor/schedule/NegotiateSchedule";
 
+import MentorDashboardParticipant from "../components/personnel/asMentor/participant/participant";
 import MentorDashboardParticipantJournal from "../components/personnel/asMentor/participantjournal/ParticipantJournal";
 import MentorDashboardMentoringSchedule from "../components/personnel/asMentor/mentoringschedule/MentoringSchedule";
 import MentorIntroduction from "../components/personnel/asMentor/introduction/Introduction";
@@ -632,6 +633,18 @@ const routes = [
         name: "mentor-introduction",
         meta: {
           text: "Selt Introduction",
+          level: 1,
+          requiredAuth: true,
+          personnelAuth: true,
+          sysadminAuth: false,
+        },
+      },
+      {
+        path: "/personnel/mentor/participant",
+        component: MentorDashboardParticipant,
+        name: "mentor-dashboard-participant",
+        meta: {
+          text: "Participants",
           level: 1,
           requiredAuth: true,
           personnelAuth: true,
