@@ -36,10 +36,9 @@
                 },
               }"
             >
-              <v-icon small>zoom_in</v-icon>
+              <v-icon small left>zoom_in</v-icon> Team Profile
             </v-btn>
-          </template>
-          <!-- <v-btn
+            <v-btn
               class="ml-2"
               small
               color="primary"
@@ -47,7 +46,7 @@
             >
               <v-icon small left>assignment</v-icon>Journal
             </v-btn>
-          </template> -->
+          </template>
         </v-data-table>
       </v-col>
     </v-row>
@@ -135,18 +134,18 @@ export default {
           this.participantLoad = false;
         });
     },
-    // gotoJournal(id) {
-    //   this.$router.push({
-    //     path:
-    //       "/personnel/mentor/" +
-    //       this.$route.params.mentorId +
-    //       "/" +
-    //       this.$route.params.programId +
-    //       "/participant/" +
-    //       id +
-    //       "/journal",
-    //   });
-    // },
+    gotoJournal(id) {
+      this.$router.push({
+        path:
+          "/personnel/mentor/" +
+          this.selectedCohort.id +
+          "/" +
+          this.selectedCohort.program.id +
+          "/participant/" +
+          id +
+          "/journal",
+      });
+    },
   },
 };
 </script>
