@@ -127,7 +127,6 @@ export default {
         .then((res) => {
           this.dataMentorships = res.data.data;
           this.selectedCohort = res.data.data.list[0];
-          this.getParticipantJournal();
         })
         .catch(() => {})
         .finally(() => {
