@@ -22,8 +22,24 @@
           :options.sync="options"
           class="elevation-1"
         >
-          <!-- <template v-slot:item.action="{ item }">
+          <template v-slot:item.action="{ item }">
             <v-btn
+              v-if="selectedCohort.id !== ''"
+              class="ml-2"
+              small
+              color="primary"
+              :to="{
+                name: 'mentor-dashboard-participant-detail',
+                params: {
+                  programId: selectedCohort.program.id,
+                  participantId: item.id,
+                },
+              }"
+            >
+              <v-icon small>zoom_in</v-icon>
+            </v-btn>
+          </template>
+          <!-- <v-btn
               class="ml-2"
               small
               color="primary"
