@@ -444,10 +444,6 @@ export default {
       this.scheduleLoad = true;
       this.axios
         .get(config.baseUri + "/personnel/mentorships", {
-          params: {
-            page: this.optionsApproved.page,
-            pageSize: this.optionsApproved.itemsPerPage,
-          },
           headers: auth.getAuthHeader(),
         })
         .then((res) => {
@@ -472,7 +468,11 @@ export default {
             this.selectedCohort.id +
             "/schedules",
           {
-            params: { minStartTime: this.today },
+            params: {
+              minStartTime: this.today,
+              page: this.optionsApproved.page,
+              pageSize: this.optionsApproved.itemsPerPage,
+            },
             headers: auth.getAuthHeader(),
           }
         )
