@@ -1,19 +1,6 @@
 <template>
   <v-container grid-list-xs>
     <v-row>
-      <v-col md="6">
-        <v-select
-          :loading="cohortLoad"
-          v-model="selectedCohort"
-          label="Program"
-          :items="dataMentorships.list"
-          item-text="program.name"
-          return-object
-          outlined
-        ></v-select>
-      </v-col>
-    </v-row>
-    <v-row>
       <v-col cols="12" xl="8" lg="10" md="12">
         <v-data-table
           :loading="participantLoad"
@@ -24,14 +11,14 @@
         >
           <template v-slot:item.action="{ item }">
             <v-btn
-              v-if="selectedCohort.id !== ''"
+              v-if="$store.state.mentorship.id !== ''"
               class="ml-2"
               small
               color="primary"
               :to="{
                 name: 'mentor-dashboard-participant-detail',
                 params: {
-                  programId: selectedCohort.program.id,
+                  programId: $store.getters.getMentorship.program.id,
                   participantId: item.id,
                 },
               }"
@@ -61,13 +48,6 @@ export default {
   data() {
     return {
       cohortLoad: false,
-      selectedCohort: {
-        id: "",
-        program: {
-          id: "",
-          name: "",
-        },
-      },
       dataMentorships: { total: 0, list: [] },
       participantLoad: false,
       participantList: { total: 0, list: [] },
@@ -81,36 +61,19 @@ export default {
       },
     };
   },
-  mounted() {
-    this.getMentorship();
-  },
+  mounted() {},
   watch: {
-    selectedCohort: "getParticipant",
+    "$store.state.mentorship": "getParticipant",
     options: "getParticipant",
   },
   methods: {
-    getMentorship() {
-      this.cohortLoad = true;
-      this.axios
-        .get(config.baseUri + "/personnel/mentorships", {
-          headers: auth.getAuthHeader(),
-        })
-        .then((res) => {
-          this.dataMentorships = res.data.data;
-          this.selectedCohort = res.data.data.list[0];
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.cohortLoad = false;
-        });
-    },
     getParticipant() {
       this.participantLoad = true;
       this.axios
         .get(
           config.baseUri +
             "/personnel/as-mentor/" +
-            this.selectedCohort.program.id +
+            this.$store.getters.getMentorship.program.id +
             "/participants",
           {
             params: {
@@ -138,9 +101,9 @@ export default {
       this.$router.push({
         path:
           "/personnel/mentor/" +
-          this.selectedCohort.id +
+          this.$store.getters.getMentorship.id +
           "/" +
-          this.selectedCohort.program.id +
+          this.$store.getters.getMentorship.program.id +
           "/participant/" +
           id +
           "/journal",

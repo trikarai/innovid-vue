@@ -19,7 +19,7 @@ export const participantjournalMixins = {
         .get(
           config.baseUri +
             "/personnel/as-mentor/" +
-            this.selectedCohort.program.id +
+            this.$store.getters.getMentorship.program.id +
             "/participants/include-journals",
           {
             params: {
@@ -44,9 +44,9 @@ export const participantjournalMixins = {
       this.$router.push({
         path:
           "/personnel/mentor/" +
-          this.selectedCohort.id +
+          this.$store.getters.getMentorship.id +
           "/" +
-          this.selectedCohort.program.id +
+          this.$store.getters.getMentorship.program.id +
           "/participant/" +
           participantId +
           "/journal/" +

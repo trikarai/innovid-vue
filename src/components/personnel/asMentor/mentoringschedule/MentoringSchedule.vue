@@ -2,17 +2,6 @@
   <v-container extend grid-list-xs>
     <v-row>
       <v-col md="6">
-        <v-select
-          :loading="scheduleLoad"
-          v-model="selectedCohort"
-          label="Program"
-          :items="dataMentorships.list"
-          item-text="program.name"
-          return-object
-          outlined
-        ></v-select>
-      </v-col>
-      <v-col md="6">
         <v-btn
           v-if="dataMentorships.total != 0"
           color="primary"
@@ -65,7 +54,7 @@
                   :headers="negotiatescheduleHeaders"
                   :items="negotiateschedulementorings.list"
                   :options.sync="optionsNego"
-                  class="elevation-1"
+                  class="elevation-1 ml-2 mr-2"
                 >
                   <template v-slot:item.name="{ item }">{{
                     item.mentoring.name
@@ -134,7 +123,7 @@
                   :headers="scheduleHeaders"
                   :items="schedulementorings.list"
                   :options.sync="optionsApproved"
-                  class="elevation-1"
+                  class="elevation-1 ml-2 mr-2"
                 >
                   <template v-slot:item.name="{ item }">
                     {{ item.mentoring.name }}
@@ -177,7 +166,7 @@
                     <template v-else>
                       <v-chip small>Report Submitted</v-chip>
                     </template>
-                     <v-btn
+                    <v-btn
                       class="ml-2"
                       color="primary"
                       small
@@ -198,7 +187,7 @@
                   :headers="scheduleHeaders"
                   :items="schedulementoringspast.list"
                   :options.sync="optionsPast"
-                  class="elevation-1"
+                  class="elevation-1 ml-2 mr-2"
                 >
                   <template v-slot:item.name="{ item }">
                     {{ item.mentoring.name }}
@@ -263,7 +252,7 @@
                   :headers="scheduleHeaders"
                   :items="schedulementoringsfinish.list"
                   :options.sync="optionsFinish"
-                  class="elevation-1"
+                  class="elevation-1 ml-2 mr-2"
                 >
                   <template v-slot:item.name="{ item }">
                     {{ item.mentoring.name }}
@@ -419,7 +408,7 @@ export default {
   watch: {
     date: "setDateTime",
     time: "setDateTime",
-    selectedCohort() {
+    "$store.state.mentorship"() {
       this.getScheduleMentorings();
       this.getScheduleMentoringsPast();
       this.getScheduleMentoringsFinish();
@@ -430,31 +419,10 @@ export default {
     optionsFinish: "getScheduleMentoringsFinish",
     optionsNego: "getNegotiateScheduleMentorings",
   },
-  mounted() {
-    this.getMentorship();
-  },
+  mounted() {},
   methods: {
     setDateTime: function() {
       this.incidentalParams.startTime = this.date + " " + this.time;
-    },
-    getMentorship() {
-      this.scheduleLoad = true;
-      this.axios
-        .get(config.baseUri + "/personnel/mentorships", {
-          headers: auth.getAuthHeader(),
-        })
-        .then((res) => {
-          this.dataMentorships = res.data.data;
-          this.selectedCohort = res.data.data.list[0];
-          this.getScheduleMentorings();
-          this.getScheduleMentoringsPast();
-          this.getScheduleMentoringsFinish();
-          this.getNegotiateScheduleMentorings();
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.scheduleLoad = false;
-        });
     },
     getScheduleMentorings() {
       this.scheduleLoad = true;
@@ -462,7 +430,7 @@ export default {
         .get(
           config.baseUri +
             "/personnel/mentorships/" +
-            this.selectedCohort.id +
+            this.$store.getters.getMentorship.id +
             "/schedules",
           {
             params: {
@@ -487,7 +455,7 @@ export default {
         .get(
           config.baseUri +
             "/personnel/mentorships/" +
-            this.selectedCohort.id +
+            this.$store.getters.getMentorship.id +
             "/schedules",
           {
             params: {
@@ -513,7 +481,7 @@ export default {
         .get(
           config.baseUri +
             "/personnel/mentorships/" +
-            this.selectedCohort.id +
+            this.$store.getters.getMentorship.id +
             "/schedules",
           {
             params: {
@@ -539,7 +507,7 @@ export default {
         .get(
           config.baseUri +
             "/personnel/mentorships/" +
-            this.selectedCohort.id +
+            this.$store.getters.getMentorship.id +
             "/negotiate-schedules",
           {
             params: {
@@ -562,7 +530,11 @@ export default {
     },
     openDetail(id) {
       this.$router.push({
-        path: "/personnel/mentor/" + this.selectedCohort.id + "/schedule/" + id,
+        path:
+          "/personnel/mentor/" +
+          this.$store.getters.getMentorship.id +
+          "/schedule/" +
+          id,
       });
     },
     leftAct(item, action) {
@@ -577,7 +549,7 @@ export default {
         .patch(
           config.baseUri +
             "/personnel/mentorships/" +
-            this.selectedCohort.id +
+            this.$store.getters.getMentorship.id +
             "/negotiate-schedules/" +
             id +
             "/" +
