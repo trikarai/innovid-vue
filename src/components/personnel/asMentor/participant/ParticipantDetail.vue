@@ -20,7 +20,7 @@
                     profile.form.name
                   }}</v-expansion-panel-header>
                   <v-expansion-panel-content>
-                    {{ profile }}
+                    <profile-record :profile="profile" />
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
@@ -51,7 +51,7 @@
                     {{ profile.form.name }}</v-expansion-panel-header
                   >
                   <v-expansion-panel-content>
-                    {{ profile }}
+                    <profile-record :profile="profile" />
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
@@ -67,13 +67,17 @@ import bus from "@/config/bus";
 import * as config from "@/config/config";
 import auth from "@/config/auth";
 
+import ProfileRecord from "./ProfileRecord";
+
 export default {
   data() {
     return {
       participantLoad: false,
       participant: {},
+      fields: [],
     };
   },
+  components: { ProfileRecord },
   mounted() {
     this.getParticipant();
   },
