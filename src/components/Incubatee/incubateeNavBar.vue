@@ -131,7 +131,7 @@
             <v-icon color="#676767">{{ link.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text">{{
+            <v-list-item-title class="grey--text text--darken-1">{{
               link.text
             }}</v-list-item-title>
           </v-list-item-content>
@@ -145,7 +145,7 @@
             <v-icon>mdi-information-variant</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text">
+            <v-list-item-title class="grey--text text--darken-1">
               Info Program</v-list-item-title
             >
           </v-list-item-content>
@@ -159,7 +159,7 @@
             <v-img class="etalk" src="/img/account-tie-voice.png"></v-img>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text">
+            <v-list-item-title class="grey--text text--darken-1">
               Expert Talk</v-list-item-title
             >
           </v-list-item-content>
@@ -181,7 +181,7 @@
             <v-icon>emoji_objects</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text"
+            <v-list-item-title class="grey--text text--darken-1"
               >Learn & Implement</v-list-item-title
             >
           </v-list-item-content>
@@ -200,7 +200,7 @@
             <v-icon>today</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text">Mentoring</v-list-item-title>
+            <v-list-item-title class="grey--text text--darken-1">Mentoring</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item
@@ -217,7 +217,7 @@
             <v-icon>assignment</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text">Journal</v-list-item-title>
+            <v-list-item-title class="grey--text text--darken-1">Journal</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -230,7 +230,7 @@
                 <v-icon>emoji_objects</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title class="grey--text"
+                <v-list-item-title class="grey--text text--darken-1"
                   >Learn & Implement</v-list-item-title
                 >
               </v-list-item-content>
@@ -245,7 +245,7 @@
                 <v-icon>today</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title class="grey--text"
+                <v-list-item-title class="grey--text text--darken-1"
                   >Mentoring</v-list-item-title
                 >
               </v-list-item-content>
@@ -260,7 +260,7 @@
                 <v-icon>assignment</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title class="grey--text"
+                <v-list-item-title class="grey--text text--darken-1"
                   >Journal</v-list-item-title
                 >
               </v-list-item-content>
@@ -276,7 +276,7 @@
             <v-icon color="#676767">group</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text"
+            <v-list-item-title class="grey--text text--darken-1"
               >Team Management</v-list-item-title
             >
           </v-list-item-content>
@@ -287,7 +287,7 @@
           router
           :to="'/incubatee/team/' + teamId + '/profile'"
         >
-          <v-list-item-title class="grey--text">Team Profile</v-list-item-title>
+          <v-list-item-title class="grey--text text--darken-1">Team Profile</v-list-item-title>
           <v-list-item-icon>
             <!-- <v-icon>group_work</v-icon> -->
           </v-list-item-icon>
@@ -298,7 +298,7 @@
           router
           :to="'/incubatee/team/' + teamId + '/member'"
         >
-          <v-list-item-title class="grey--text">Members</v-list-item-title>
+          <v-list-item-title class="grey--text text--darken-1">Members</v-list-item-title>
           <v-list-item-icon>
             <!-- <v-icon>group</v-icon> -->
           </v-list-item-icon>
@@ -309,7 +309,7 @@
           router
           :to="'/incubatee/team/' + teamId + '/worksheet'"
         >
-          <v-list-item-title class="grey--text">Worksheet</v-list-item-title>
+          <v-list-item-title class="grey--text text--darken-1">Worksheet</v-list-item-title>
           <v-list-item-icon>
             <!-- <v-icon>assignments</v-icon> -->
           </v-list-item-icon>
@@ -320,7 +320,7 @@
           router
           :to="'/incubatee/team/' + teamId + '/participation'"
         >
-          <v-list-item-title class="grey--text"
+          <v-list-item-title class="grey--text text--darken-1"
             >Participation</v-list-item-title
           >
           <v-list-item-icon>
@@ -336,7 +336,7 @@
                 <v-icon>group</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title class="grey--text"
+                <v-list-item-title class="grey--text text--darken-1"
                   >Team Management</v-list-item-title
                 >
               </v-list-item-content>
@@ -352,7 +352,7 @@
             <v-icon color="#676767">account_circle</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text">My Profile</v-list-item-title>
+            <v-list-item-title class="grey--text text--darken-1">My Profile</v-list-item-title>
           </v-list-item-content>
         </template>
 
@@ -369,7 +369,7 @@
             <v-icon color="#676767">{{link.icon}}</v-icon>
           </v-list-item-action>-->
           <v-list-item-content>
-            <v-list-item-title class="grey--text">{{
+            <v-list-item-title class="grey--text text--darken-1">{{
               link.text
             }}</v-list-item-title>
           </v-list-item-content>
