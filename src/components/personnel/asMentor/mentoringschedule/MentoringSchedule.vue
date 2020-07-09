@@ -59,6 +59,20 @@
                   <template v-slot:item.name="{ item }">{{
                     item.mentoring.name
                   }}</template>
+                  <template v-slot:item.teamname="{ item }">
+                    <v-btn
+                      text
+                      :to="{
+                        name: 'mentor-dashboard-participant-detail',
+                        params: {
+                          programId: $store.getters.getMentorship.program.id,
+                          participantId: item.participant.id,
+                        },
+                      }"
+                    >
+                      {{ item.participant.team.name }}
+                    </v-btn>
+                  </template>
                   <template v-slot:item.startTime="{ item }">
                     <v-row class="my-3">
                       <!-- <v-icon left color="primary">calendar_today</v-icon> -->
@@ -128,6 +142,20 @@
                   <template v-slot:item.name="{ item }">
                     {{ item.mentoring.name }}
                   </template>
+                  <template v-slot:item.teamname="{ item }">
+                    <v-btn
+                      text
+                      :to="{
+                        name: 'mentor-dashboard-participant-detail',
+                        params: {
+                          programId: $store.getters.getMentorship.program.id,
+                          participantId: item.participant.id,
+                        },
+                      }"
+                    >
+                      {{ item.participant.team.name }}
+                    </v-btn>
+                  </template>
                   <template v-slot:item.startTime="{ item }">
                     <v-row class="my-3">
                       <!-- <v-icon left color="primary">calendar_today</v-icon> -->
@@ -191,6 +219,20 @@
                 >
                   <template v-slot:item.name="{ item }">
                     {{ item.mentoring.name }}
+                  </template>
+                  <template v-slot:item.teamname="{ item }">
+                    <v-btn
+                      text
+                      :to="{
+                        name: 'mentor-dashboard-participant-detail',
+                        params: {
+                          programId: $store.getters.getMentorship.program.id,
+                          participantId: item.participant.id,
+                        },
+                      }"
+                    >
+                      {{ item.participant.team.name }}
+                    </v-btn>
                   </template>
                   <template v-slot:item.startTime="{ item }">
                     <v-row class="my-3">
@@ -267,6 +309,20 @@
                       {{ item.startTime | moment("h:mm a") }} -
                       {{ item.endTime | moment("h:mm a") }}
                     </v-row>
+                  </template>
+                  <template v-slot:item.teamname="{ item }">
+                    <v-btn
+                      text
+                      :to="{
+                        name: 'mentor-dashboard-participant-detail',
+                        params: {
+                          programId: $store.getters.getMentorship.program.id,
+                          participantId: item.participant.id,
+                        },
+                      }"
+                    >
+                      {{ item.participant.team.name }}
+                    </v-btn>
                   </template>
                   <template v-slot:item.action="{ item }">
                     <v-btn
@@ -368,14 +424,14 @@ export default {
       scheduleHeaders: [
         { text: "Time", value: "startTime", sortable: false },
         { text: "Mentoring", value: "name", sortable: false },
-        { text: "Team", value: "participant.team.name", sortable: false },
+        { text: "Team", value: "teamname", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" },
       ],
       negotiateschedulementorings: { total: 0, list: [] },
       negotiatescheduleHeaders: [
         { text: "Time", value: "startTime", sortable: false },
         { text: "Mentoring", value: "name", sortable: false },
-        { text: "Team", value: "participant.team.name", sortable: false },
+        { text: "Team", value: "teamname", sortable: false },
         { text: "status", value: "status", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" },
       ],
