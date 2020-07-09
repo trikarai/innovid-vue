@@ -72,11 +72,11 @@
                   }}</template>
                   <template v-slot:item.startTime="{ item }">
                     <v-row class="my-3">
-                      <v-icon left color="primary">calendar_today</v-icon>
+                      <!-- <v-icon left color="primary">calendar_today</v-icon> -->
                       {{ item.startTime | moment("dddd, Do MMM YYYY") }}
                     </v-row>
                     <v-row class="my-3">
-                      <v-icon left color="primary">access_time</v-icon>
+                      <!-- <v-icon left color="primary">access_time</v-icon> -->
                       {{ item.startTime | moment("h:mm a") }} -
                       {{ item.endTime | moment("h:mm a") }}
                     </v-row>
@@ -137,24 +137,15 @@
                   class="elevation-1"
                 >
                   <template v-slot:item.name="{ item }">
-                    <v-btn
-                      class="elevation-0 mr-2"
-                      fab
-                      x-small
-                      color="primary"
-                      @click="openDetail(item.id)"
-                    >
-                      <v-icon>zoom_in</v-icon>
-                    </v-btn>
                     {{ item.mentoring.name }}
                   </template>
                   <template v-slot:item.startTime="{ item }">
                     <v-row class="my-3">
-                      <v-icon left color="primary">calendar_today</v-icon>
+                      <!-- <v-icon left color="primary">calendar_today</v-icon> -->
                       {{ item.startTime | moment("dddd, Do MMM YYYY") }}
                     </v-row>
                     <v-row class="my-3">
-                      <v-icon left color="primary">access_time</v-icon>
+                      <!-- <v-icon left color="primary">access_time</v-icon> -->
                       {{ item.startTime | moment("h:mm a") }} -
                       {{ item.endTime | moment("h:mm a") }}
                     </v-row>
@@ -186,6 +177,14 @@
                     <template v-else>
                       <v-chip small>Report Submitted</v-chip>
                     </template>
+                     <v-btn
+                      class="ml-2"
+                      color="primary"
+                      small
+                      @click="openDetail(item.id)"
+                    >
+                      <v-icon small left>zoom_in</v-icon> View
+                    </v-btn>
                   </template>
                 </v-data-table>
               </v-col>
@@ -202,24 +201,15 @@
                   class="elevation-1"
                 >
                   <template v-slot:item.name="{ item }">
-                    <v-btn
-                      class="elevation-0 mr-2"
-                      fab
-                      x-small
-                      color="primary"
-                      @click="openDetail(item.id)"
-                    >
-                      <v-icon>zoom_in</v-icon>
-                    </v-btn>
                     {{ item.mentoring.name }}
                   </template>
                   <template v-slot:item.startTime="{ item }">
                     <v-row class="my-3">
-                      <v-icon left color="primary">calendar_today</v-icon>
+                      <!-- <v-icon left color="primary">calendar_today</v-icon> -->
                       {{ item.startTime | moment("dddd, Do MMM YYYY") }}
                     </v-row>
                     <v-row class="my-3">
-                      <v-icon left color="primary">access_time</v-icon>
+                      <!-- <v-icon left color="primary">access_time</v-icon> -->
                       {{ item.startTime | moment("h:mm a") }} -
                       {{ item.endTime | moment("h:mm a") }}
                     </v-row>
@@ -252,6 +242,14 @@
                     <template v-else>
                       <v-chip small>Report Submitted</v-chip>
                     </template>
+                    <v-btn
+                      class="ml-2"
+                      color="primary"
+                      small
+                      @click="openDetail(item.id)"
+                    >
+                      <v-icon small left>zoom_in</v-icon> View
+                    </v-btn>
                   </template>
                 </v-data-table>
               </v-col>
@@ -268,24 +266,15 @@
                   class="elevation-1"
                 >
                   <template v-slot:item.name="{ item }">
-                    <v-btn
-                      class="elevation-0 mr-2"
-                      fab
-                      x-small
-                      color="primary"
-                      @click="openDetail(item.id)"
-                    >
-                      <v-icon>zoom_in</v-icon>
-                    </v-btn>
                     {{ item.mentoring.name }}
                   </template>
                   <template v-slot:item.startTime="{ item }">
                     <v-row class="my-3">
-                      <v-icon left color="primary">calendar_today</v-icon>
+                      <!-- <v-icon left color="primary">calendar_today</v-icon> -->
                       {{ item.startTime | moment("MMMM Do YYYY") }}
                     </v-row>
                     <v-row class="my-3">
-                      <v-icon left color="primary">access_time</v-icon>
+                      <!-- <v-icon left color="primary">access_time</v-icon> -->
                       {{ item.startTime | moment("h:mm a") }} -
                       {{ item.endTime | moment("h:mm a") }}
                     </v-row>
@@ -303,6 +292,14 @@
                     <template v-else>
                       <v-chip small>Report Submitted</v-chip>
                     </template>
+                    <v-btn
+                      class="ml-2"
+                      color="primary"
+                      small
+                      @click="openDetail(item.id)"
+                    >
+                      <v-icon small left>zoom_in</v-icon> View
+                    </v-btn>
                   </template>
                 </v-data-table>
               </v-col>
@@ -380,15 +377,15 @@ export default {
       schedulementoringspast: { total: 0, list: [] },
       schedulementoringsfinish: { total: 0, list: [] },
       scheduleHeaders: [
-        { text: "startTime", value: "startTime", sortable: false },
-        { text: "Name", value: "name", sortable: false },
+        { text: "Time", value: "startTime", sortable: false },
+        { text: "Mentoring", value: "name", sortable: false },
         { text: "Team", value: "participant.team.name", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" },
       ],
       negotiateschedulementorings: { total: 0, list: [] },
       negotiatescheduleHeaders: [
-        { text: "startTime", value: "startTime", sortable: false },
-        { text: "Name", value: "name", sortable: false },
+        { text: "Time", value: "startTime", sortable: false },
+        { text: "Mentoring", value: "name", sortable: false },
         { text: "Team", value: "participant.team.name", sortable: false },
         { text: "status", value: "status", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" },
