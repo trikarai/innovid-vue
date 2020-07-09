@@ -7,18 +7,19 @@
       <template v-for="(data, index) in reOrderRecord(fields)">
         <v-row :key="index">
           <v-col
-            style="word-break: break-word"
+            style="word-break: break-word;background:#ecfbff"
             class="tabel-left"
             md="4"
             lg="4"
             xs="12"
           >
             <span class="subtitle-2 font-weight-black">
-              <span class="left-accent"></span>
+              <span class="left-accent2"></span>
               {{ data.field.name }}
             </span>
           </v-col>
           <v-col
+            style="background:#fff;"
             class="tabel-right"
             md="8"
             lg="8"
@@ -28,6 +29,7 @@
             >{{ data.value }}</v-col
           >
           <v-col
+            style="background:#fff;"
             class="tabel-right"
             md="8"
             lg="8"
@@ -37,6 +39,7 @@
             >{{ data.value }}</v-col
           >
           <v-col
+            style="background:#fff;"
             class="tabel-right"
             md="8"
             lg="8"
@@ -46,6 +49,7 @@
             >{{ data.value }}</v-col
           >
           <v-col
+            style="background:#fff;"
             class="tabel-right"
             md="8"
             lg="8"
@@ -59,6 +63,7 @@
             <template v-else>-</template>
           </v-col>
           <v-col
+            style="background:#fff;"
             class="tabel-right"
             md="8"
             lg="8"
@@ -72,6 +77,7 @@
             >
           </v-col>
           <v-col
+            style="background:#fff;"
             class="tabel-right"
             md="8"
             lg="8"
@@ -131,7 +137,10 @@
             elevation="2"
             outlined
           >
-            <v-card-title><span class="taitel">{{ data.field.name }}</span></v-card-title>
+            <v-card-title>
+              <span class="left-accent"></span>
+              <span class="subtitle">{{ data.field.name }}</span>
+            </v-card-title>
             <v-card-text v-if="data.type == 'textarea'">{{
               data.value
             }}</v-card-text>
@@ -410,7 +419,7 @@ export default {
         this.keyState = null;
       }
       /*
-			How we respond depends on our state. If keyState is null, 
+			How we respond depends on our state. If keyState is null,
 			it meand we aren't doing anything, so BSM are valid.
 			*/
     },
@@ -442,12 +451,21 @@ export default {
   border-bottom: solid 2px #d2d2d2;
 }
 .left-accent {
-  background: #249c90;
+  background: #00667f;
+  width: 4px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 6px;
+  /* top: 2px; */
+  position: relative;
+}
+.left-accent2 {
+  background: #00667f;
   width: 4px;
   height: 16px;
   display: inline-block;
   margin-right: 6px;
-  top: 2px;
+  top: 3px;
   position: relative;
 }
 .taitel {
