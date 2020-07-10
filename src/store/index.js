@@ -8,6 +8,14 @@ export default new Vuex.Store({
     missionsLength: "",
     missionsList: [],
     profileRecord: {},
+    mentorship: {
+      id: "",
+      program: {
+        id: "",
+        name: "",
+      },
+      introduction: null,
+    },
   },
   getters: {
     getMissionLength: (state) => {
@@ -19,6 +27,9 @@ export default new Vuex.Store({
     getProfileRecord: (state) => {
       return state.profileRecord;
     },
+    getMentorship: (state) => {
+      return state.mentorship;
+    },
   },
   mutations: {
     setProfileRecord: (state, payload) => {
@@ -29,6 +40,9 @@ export default new Vuex.Store({
     },
     setMissionList: (state, payload) => {
       state.missionsList = payload;
+    },
+    setMentorship: (state, payload) => {
+      state.mentorship = payload;
     },
   },
   actions: {},

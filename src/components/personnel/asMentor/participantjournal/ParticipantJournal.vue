@@ -1,17 +1,6 @@
 <template>
   <v-container extend grid-list-xs>
     <v-row>
-      <v-col md="6">
-        <v-select
-          :loading="tableLoad"
-          v-model="selectedCohort"
-          label="Program"
-          :items="dataMentorships.list"
-          item-text="program.name"
-          return-object
-          outlined
-        ></v-select>
-      </v-col>
       <v-col md="2">
         <v-switch v-model="modeJournal" label="Group by Mission"></v-switch>
       </v-col>
@@ -78,9 +67,7 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import bus from "@/config/bus";
-import * as config from "@/config/config";
-import auth from "@/config/auth";
-
+  
 import { participantjournalMixins } from "@/mixins/participantjournalMixins";
 
 export default {
@@ -107,7 +94,7 @@ export default {
     };
   },
   watch: {
-    selectedCohort() {
+    "$store.state.mentorship"() {
       this.getParticipantJournal();
     },
     options() {
@@ -117,24 +104,7 @@ export default {
   mounted() {
     this.getMentorship();
   },
-  methods: {
-    getMentorship() {
-      this.tableLoad = true;
-      this.axios
-        .get(config.baseUri + "/personnel/mentorships", {
-          headers: auth.getAuthHeader(),
-        })
-        .then((res) => {
-          this.dataMentorships = res.data.data;
-          this.selectedCohort = res.data.data.list[0];
-          this.getParticipantJournal();
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.tableLoad = false;
-        });
-    },
-  },
+  methods: {},
 };
 </script>
 <style scoped></style>
