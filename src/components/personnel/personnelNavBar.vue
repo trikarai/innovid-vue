@@ -2,9 +2,7 @@
   <nav>
     <v-app-bar dense dark text app color="black">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title class="text-uppercase black--text">
-        <!-- <span class="font-weight-light">Inovide</span> -->
-      </v-toolbar-title>
+      <v-toolbar-title class="text-uppercase black--text"> </v-toolbar-title>
       <v-spacer></v-spacer>
       <!--- notification start-->
       <personnel-notification />
@@ -13,11 +11,6 @@
         <v-icon>settings</v-icon>
       </v-btn>
     </v-app-bar>
-
-    <!-- <v-btn class="ml-3 mt-2 bm-2" text @click="goback()">
-      <v-icon left>keyboard_backspace</v-icon>Back
-    </v-btn>-->
-
     <v-btn
       class="ml-3 mt-5"
       icon
@@ -26,15 +19,10 @@
     >
       <v-icon>arrow_back</v-icon>
     </v-btn>
-    <!-- <v-btn class="ml-3 mt-5" icon v-if="$route.meta.level == 0" @click="$router.go(-1) ">
-      <v-icon></v-icon>
-    </v-btn>-->
     <div class="container extend mt-4">
       <h2 class="mb-2">{{ $route.meta.text }}</h2>
       <div class="garis"></div>
     </div>
-    <!-- <p class="ml-3 mb-2">{{$route.name}}</p> -->
-
     <v-navigation-drawer
       app
       v-model="drawer"
@@ -120,23 +108,23 @@
       </v-list>
       <v-divider></v-divider>
       <!--mentor menu-->
-      <!-- <v-list>
-        <v-list-item
-          v-for="link in mentors"
-          :key="link.text"
-          router
-          :to="link.route"
-          :disabled="link.disabled"
-        >
-          <v-list-item-action>
-            <v-icon color="#676767">{{link.icon}}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title class="grey--text">{{link.text}}</v-list-item-title>
-          </v-list-item-content>
+      <v-list>
+        <v-list-item>
+          <v-select
+            label="Mentorship"
+            :items="mentorships.list"
+            item-text="program.name"
+            :loading="mentorshipLoading"
+            v-model="mentorship"
+            return-object
+          ></v-select>
         </v-list-item>
-      </v-list>-->
-      <v-list-group :value="true" no-action>
+      </v-list>
+      <v-list-group
+        :value="haveMentorship"
+        no-action
+        :disabled="mentorships.list.length == 0"
+      >
         <template v-slot:activator>
           <v-list-item-action>
             <v-icon color="#676767">dashboard</v-icon>
@@ -145,13 +133,12 @@
             <v-list-item-title class="grey--text">as Mentor</v-list-item-title>
           </v-list-item-content>
         </template>
-
-        <!-- <v-list-item class="ml-5" router :to="'/personnel/mentor/dashboard' ">
-          <v-list-item-title class="grey--text">Dashboard</v-list-item-title>
+        <v-list-item router :to="'/personnel/mentor/participant'">
+          <v-list-item-title class="grey--text">Participant</v-list-item-title>
           <v-list-item-icon>
-             <v-icon>group_work</v-icon> 
+            <!-- <v-icon>group_work</v-icon> -->
           </v-list-item-icon>
-        </v-list-item>-->
+        </v-list-item>
         <v-list-item router :to="'/personnel/mentor/participant-journal'">
           <v-list-item-title class="grey--text">Journal</v-list-item-title>
           <v-list-item-icon>
@@ -210,6 +197,7 @@
   </nav>
 </template>
 <script>
+import * as config from "@/config/config";
 import auth from "@/config/auth";
 
 import PersonnelNotification from "./personnelNotification";
@@ -296,30 +284,23 @@ export default {
         //   disabled: true
         // }
       ],
-      mentors: [
-        {
-          icon: "dashboard",
-          text: "as Mentor",
-          route: "/personnel/mentor/dashboard",
-          disabled: false,
-        },
-        // {
-        //   icon: "schedule",
-        //   text: "Schedules",
-        //   route: "/personnel/mentor/schedules",
-        //   disabled: true
-        // },
-        // {
-        //   icon: "event_available",
-        //   text: " Negotiate Schedules ",
-        //   route: "/personnel/mentor/negotiate-schedules",
-        //   disabled: true
-        // }
-      ],
+      mentorshipLoading: false,
+      mentorships: { total: 0, list: [] },
+      mentorship: {},
+      haveMentorship: false,
     };
+  },
+
+  watch: {
+    mentorship() {
+      this.$store.commit("setMentorship", this.mentorship);
+    },
   },
   created() {
     this.user = JSON.parse(auth.getAuthData());
+  },
+  mounted() {
+    this.getMentorship();
   },
   methods: {
     goback: function() {
@@ -332,6 +313,24 @@ export default {
       this.$vuetify.theme.dark = false;
       localStorage.clear();
       this.$router.replace({ path: "/" });
+    },
+    getMentorship() {
+      this.mentorshipLoading = true;
+      this.axios
+        .get(config.baseUri + "/personnel/mentorships", {
+          headers: auth.getAuthHeader(),
+        })
+        .then((res) => {
+          this.mentorships = res.data.data;
+          this.mentorship = res.data.data.list[0];
+          if (this.mentorships.list.length > 0) {
+            this.haveMentorship = true;
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.mentorshipLoading = false;
+        });
     },
   },
 };

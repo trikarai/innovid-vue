@@ -98,24 +98,26 @@ export default {
       this.loader = true;
       this.axios
         .patch(config.baseUri + "/founder-account/activate", this.params)
-        .then(() => {
+        .then((res) => {
           this.issuccess = true;
           this.iserror = false;
           this.$mixpanel.track("activation", {
             success: this.issuccess,
             incubator: this.$route.params.incubatorIdentifier,
             founder_email: this.$route.params.email,
+            founder_id: res.data.data.id,
           });
           this.$analytics.logEvent("activation", {
             success: this.issuccess,
             incubator: this.$route.params.incubatorIdentifier,
             founder_email: this.$route.params.email,
+            founder_id: res.data.data.id,
           });
         })
         .catch((res) => {
           this.issuccess = false;
           this.iserror = true;
-          
+
           this.$analytics.logEvent("activation", {
             success: this.issuccess,
             incubator: this.$route.params.incubatorIdentifier,
