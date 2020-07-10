@@ -10,7 +10,15 @@ import VueSanitize from "vue-sanitize";
 
 // Mix Panel
 var mixpanel = require("mixpanel-browser");
-mixpanel.init("6467c859ee7e17ea5e1c96e0d86125e0", {
+var mixpanel_key = "";
+if (process.env.NODE_ENV === "production") {
+  mixpanel_key = "6467c859ee7e17ea5e1c96e0d86125e0";
+} else {
+  mixpanel_key = "2566de67cfe5089985881fe889622a4a";
+}
+// eslint-disable-next-line no-console
+// console.log("mixpanel: " + mixpanel_key);
+mixpanel.init(mixpanel_key, {
   debug: true,
 });
 Vue.prototype.$mixpanel = mixpanel;
