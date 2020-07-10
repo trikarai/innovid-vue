@@ -135,7 +135,7 @@ export default {
   },
   mounted() {
     this.getParticipantJournal();
-    this.getParticipantJournalBranches();
+    // this.getParticipantJournalBranches();
   },
   methods: {
     getParticipantJournal() {
