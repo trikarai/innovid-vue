@@ -18,6 +18,7 @@
               :to="{
                 name: 'mentor-dashboard-participant-detail',
                 params: {
+                  mentorId: $store.getters.getMentorship.id,
                   programId: $store.getters.getMentorship.program.id,
                   participantId: item.id,
                 },

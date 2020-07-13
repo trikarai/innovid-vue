@@ -6,9 +6,29 @@
       </v-col>
       <template v-else>
         <v-col cols="12" xl="8" lg="12" md="12">
-          <v-card-title>
-            {{ participant.team.name }}
-          </v-card-title>
+          <v-row>
+            <v-col cols="12" lg="6" md="8">
+              <span class="title">
+                {{ participant.team.name }}
+              </span>
+            </v-col>
+            <v-col>
+              <v-btn
+                small
+                color="primary"
+                :to="{
+                  name: 'mentor-program-participant-journal',
+                  params: {
+                    mentorId: $route.params.mentorId,
+                    programId: $route.params.programId,
+                    participantId: $route.params.participantId,
+                  },
+                }"
+              >
+                <v-icon left small>zoom_in</v-icon> View team's journal
+              </v-btn>
+            </v-col>
+          </v-row>
           <v-row>
             <v-col>
               <v-expansion-panels>
@@ -28,9 +48,13 @@
           </v-row>
         </v-col>
         <v-col cols="12" xl="12" lg="12">
-          <v-card-text class="title">
-            Team's members
-          </v-card-text>
+          <v-row>
+            <v-col cols="12" lg="6" md="8">
+              <span class="subtitle">
+                Team's members
+              </span>
+            </v-col>
+          </v-row>
           <v-row>
             <v-col
               cols="12"
