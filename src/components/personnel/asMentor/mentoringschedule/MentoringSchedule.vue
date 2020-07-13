@@ -92,13 +92,15 @@
                       <v-row>
                         <v-col>
                           <v-row>
-                            <v-btn
-                              small
-                              color="primary"
-                              @click="leftAct(item, 'accept')"
-                            >
-                              <v-icon small left>check</v-icon>Accept
-                            </v-btn>
+                            <template v-if="item.status !== 'offered'">
+                              <v-btn
+                                small
+                                color="primary"
+                                @click="leftAct(item, 'accept')"
+                              >
+                                <v-icon small left>check</v-icon>Accept
+                              </v-btn>
+                            </template>
                           </v-row>
                         </v-col>
                         <v-col>

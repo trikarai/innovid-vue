@@ -657,7 +657,7 @@ const routes = [
         },
       },
       {
-        path: "/personnel/mentor/:programId/participant/:participantId",
+        path: "/personnel/mentor/:mentorId/:programId/participant/:participantId",
         component: MentorDashboardParticipantDetail,
         name: "mentor-dashboard-participant-detail",
         meta: {

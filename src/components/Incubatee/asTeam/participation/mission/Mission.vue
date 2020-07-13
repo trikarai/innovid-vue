@@ -37,7 +37,7 @@
                     md="7"
                     >{{ data.name }}</v-col
                   >
-                  <v-col
+                  <!-- <v-col
                     style="text-align:end;"
                     md="5"
                     v-if="data.previousMission != null"
@@ -60,7 +60,7 @@
                       </v-avatar>
                       <span style="color:#999">Main Mission</span>
                     </v-chip>
-                  </v-col>
+                  </v-col> -->
                 </v-row>
               </v-card-title>
 
