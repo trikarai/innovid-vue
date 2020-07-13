@@ -355,15 +355,17 @@
     </v-row>
 
     <incidental-mentoring
-      :mentorshipId="selectedCohort.id"
-      :programId="selectedCohort.program.id"
+      :mentorshipId="$store.getters.getMentorship.id"
+      :programId="$store.getters.getMentorship.program.id"
       :show.sync="dialogIncidental"
+      @refresh="refresh"
     />
 
     <offer-mentoring
-      :mentorshipId="selectedCohort.id"
+      :mentorshipId="$store.getters.getMentorship.id"
       :dataSingle="dataOffer"
       :showOffer.sync="dialogOffer"
+      @refresh="refresh"
     />
 
     <v-dialog v-model="dialogAction" width="300" :persistent="true">
