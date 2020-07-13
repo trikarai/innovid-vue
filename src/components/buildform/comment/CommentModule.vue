@@ -39,7 +39,7 @@
           <template v-if="comments.total == 0">
             <v-chip small color="warning">No Comment Yet</v-chip>
           </template>
-          <v-list three-line v-if="comments.total !== 0">
+          <v-list three-line="false" v-if="comments.total !== 0">
             <template v-for="(item, index) in comments.list">
               <v-list-item :key="item.id">
                 <v-list-item-avatar>
@@ -553,5 +553,8 @@ export default {
 .panel > .panel-heading:before {
   border-right-color: #ddd;
   border-width: 8px;
+}
+.v-list-item__subtitle {
+    -webkit-line-clamp: inherit !important;
 }
 </style>
