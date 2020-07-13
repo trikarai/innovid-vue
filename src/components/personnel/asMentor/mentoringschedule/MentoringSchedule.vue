@@ -355,13 +355,13 @@
     </v-row>
 
     <incidental-mentoring
-      :mentorshipId="this.$store.getters.getMentorship.id"
-      :programId="this.$store.getters.getMentorship.program.id"
+      :mentorshipId="$store.getters.getMentorship.id"
+      :programId="$store.getters.getMentorship.program.id"
       :show.sync="dialogIncidental"
     />
 
     <offer-mentoring
-      :mentorshipId="this.$store.getters.getMentorship.id"
+      :mentorshipId="$store.getters.getMentorship.id"
       :dataSingle="dataOffer"
       :showOffer.sync="dialogOffer"
     />
