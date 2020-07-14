@@ -479,7 +479,12 @@ export default {
     optionsFinish: "getScheduleMentoringsFinish",
     optionsNego: "getNegotiateScheduleMentorings",
   },
-  mounted() {},
+  mounted() {
+    this.getScheduleMentorings();
+    this.getScheduleMentoringsPast();
+    this.getScheduleMentoringsFinish();
+    this.getNegotiateScheduleMentorings();
+  },
   methods: {
     setDateTime: function() {
       this.incidentalParams.startTime = this.date + " " + this.time;
