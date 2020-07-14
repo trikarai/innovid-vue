@@ -83,11 +83,11 @@ export default {
   },
   data() {
     return {
-      journal: {},
+      journal: { id: ""},
       loadJournal: false,
-      worksheet: { name: "" },
+      worksheet: { id: "", name: "" },
       loadWorksheet: false,
-      mission: { name: "", worksheetForm: { name: "" } },
+      mission: { id: "", name: "", worksheetForm: { name: "" } },
       loadMission: false,
       fields: [],
       highlight: null,
