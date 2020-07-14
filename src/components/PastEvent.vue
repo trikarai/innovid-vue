@@ -26,7 +26,23 @@
                 <iframe id="kaltura_player_1593668594" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1593668594&entry_id=0_sptxb70h" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
               </v-expansion-panel-content>
             </v-expansion-panel>
-           
+            <v-expansion-panel>
+              <v-expansion-panel-header
+                ><b>Bagaimana Pandemi Mengubah Sektor Personal Health? Peluang Inovasi Apa Yang Muncul? - Ade Rai</b>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <iframe id="kaltura_player_1594718521" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1594718521&entry_id=0_m6g2g37e" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header
+                ><b>Bagaimana Pandemi Mengubah Sektor Industri Olahraga? Peluang Inovasi Apa Yang Muncul? - Chaidir Akbar</b>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <iframe id="kaltura_player_1594718611" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1594718611&entry_id=0_olag9bo2" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+
           </v-expansion-panels>
         </v-card>
       </v-col>
@@ -36,6 +52,6 @@
 
 <script>
 export default {
- 
+
 }
 </script>
