@@ -12,9 +12,10 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-tabs v-model="tab" background-color="primary" dark grow>
+      <v-tabs v-model="tab" background-color="transparent" color="#fff" grow>
         <v-tab key="1"
           ><v-badge
+            offset-y="9"
             :value="negotiateschedulementorings.total !== 0"
             color="error"
             :content="negotiateschedulementorings.total"
@@ -23,6 +24,7 @@
         >
         <v-tab key="2"
           ><v-badge
+            offset-y="9"
             :value="schedulementorings.total !== 0"
             color="error"
             :content="schedulementorings.total"
@@ -31,6 +33,7 @@
         </v-tab>
         <v-tab key="3"
           ><v-badge
+            offset-y="9"
             :value="schedulementoringspast.total !== 0"
             color="error"
             :content="schedulementoringspast.total"
@@ -39,6 +42,7 @@
         </v-tab>
         <v-tab key="4">
           <v-badge
+            offset-y="9"
             :value="schedulementoringsfinish.total !== 0"
             color="error"
             :content="schedulementoringsfinish.total"
@@ -653,4 +657,11 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.v-tab.v-tab--active {
+    background: #b4b4b4;
+}
+.theme--light.v-tabs-items {
+    background-color: #b4b4b4;
+}
+</style>
