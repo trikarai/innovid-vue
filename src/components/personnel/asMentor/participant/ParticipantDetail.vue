@@ -5,8 +5,10 @@
         <v-skeleton-loader type="card" />
       </v-col>
       <template v-else>
+      <v-card width="800">
         <v-col cols="12" xl="8" lg="12" md="12">
           <v-row>
+          <v-card class="ma-3 pa-3" width="100%" flat dark>
             <v-col cols="12" lg="6" md="8">
               <span class="title">
                 {{ participant.team.name }}
@@ -28,6 +30,7 @@
                 <v-icon left small>zoom_in</v-icon> View team's journal
               </v-btn>
             </v-col>
+          </v-card>
           </v-row>
           <v-row>
             <v-col>
@@ -82,6 +85,7 @@
             </v-col>
           </v-row>
         </v-col>
+      </v-card>
       </template>
     </v-row>
   </v-container>
