@@ -257,9 +257,9 @@ export default {
             {
               id: "116",
               name: "M Aditya Arief Nugraha",
-              role: "President Director at PT Gametechno Indonesia",
+              role: "President Director at PT Gamatechno Indonesia",
               bio:
-                "M. Aditya Arif Nugraha adalah pegiat bisnis dan teknologi. Ia aktif berperan sebagai Presiden Direktur PT Gametechno Indonesia. Ia juga merupakan Komisioner PT AINO Indonesia.",
+                "M. Aditya Arif Nugraha adalah pegiat bisnis dan teknologi. Ia aktif berperan sebagai Presiden Direktur PT Gamatechno Indonesia. Ia juga merupakan Komisioner PT AINO Indonesia.",
               photo: "/img/aditya.png",
             },
             {
@@ -311,9 +311,9 @@ export default {
             {
               id: "116",
               name: "M Aditya Arief Nugraha",
-              role: "President Director at PT Gametechno Indonesia",
+              role: "President Director at PT Gamatechno Indonesia",
               bio:
-                "M Aditya Arief Nugraha is Technology & Business Enthusiast. Actively working as President Director at PT Gametechno Indonesia. Also involved in PT AINO Indonesia as Comissioner.",
+                "M Aditya Arief Nugraha is Technology & Business Enthusiast. Actively working as President Director at PT Gamatechno Indonesia. Also involved in PT AINO Indonesia as Comissioner.",
               photo: "/img/aditya.png",
             },
             {
