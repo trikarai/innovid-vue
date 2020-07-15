@@ -653,4 +653,13 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.v-tab.v-tab--active {
+    background: #b4b4b4;
+}
+.theme--light.v-tabs-items {
+    border-top-style: solid;
+    border-top-color: #b4b4b4;
+    border-top-width: thick;
+}
+</style>
