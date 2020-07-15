@@ -44,6 +44,7 @@ import TeamMemberMentor from "../components/Incubatee/asTeam/participation/sched
 import TeamMemberJournal from "../components/Incubatee/asTeam/participation/journal/Journal";
 import TeamMemberJournalDetail from "../components/Incubatee/asTeam/participation/journal/JournalDetail";
 import TeamMemberJournalDetail2 from "../components/Incubatee/asTeam/participation/journal/JournalDetail2";
+import TeamMemberJournalComment from "../components/Incubatee/asTeam/participation/journal/shorcut/JournalShotcut";
 import AddAtomicJournal from "../components/Incubatee/asTeam/participation/atomic/AddAtomicJournal";
 
 import AccountMain from "../views/account/AccountMain";
@@ -657,7 +658,8 @@ const routes = [
         },
       },
       {
-        path: "/personnel/mentor/:mentorId/:programId/participant/:participantId",
+        path:
+          "/personnel/mentor/:mentorId/:programId/participant/:participantId",
         component: MentorDashboardParticipantDetail,
         name: "mentor-dashboard-participant-detail",
         meta: {
@@ -994,7 +996,8 @@ const routes = [
         },
       },
       {
-        path: "/incubatee/team/:teamId/team-profile-form/:formId/edit/:profileId",
+        path:
+          "/incubatee/team/:teamId/team-profile-form/:formId/edit/:profileId",
         component: IncubateeTeamProfilesAdd,
         name: "founder-team-profile-form-edit",
         meta: {
@@ -1200,6 +1203,20 @@ const routes = [
         name: "journal-detail-tab",
         meta: {
           text: "Journal Detail",
+          level: 4,
+          requiredAuth: true,
+          incubateeAuth: true,
+          personnelAuth: false,
+          sysadminAuth: false,
+        },
+      },
+      {
+        path:
+          "/incubatee/team/:teamId/participation/:cohortId/journal/:journalId/comment/:commentId?",
+        component: TeamMemberJournalComment,
+        name: "journal-detail-comment",
+        meta: {
+          text: "New Comment from Mentor",
           level: 4,
           requiredAuth: true,
           incubateeAuth: true,
