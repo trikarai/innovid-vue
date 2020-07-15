@@ -117,6 +117,7 @@
             :loading="mentorshipLoading"
             v-model="mentorship"
             return-object
+            :readonly="$route.meta.level > 1"
           ></v-select>
         </v-list-item>
       </v-list>
