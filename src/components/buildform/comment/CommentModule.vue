@@ -39,7 +39,7 @@
           <template v-if="comments.total == 0">
             <v-chip small color="warning">No Comment Yet</v-chip>
           </template>
-          <v-list :three-line="false" v-if="comments.total !== 0">
+          <v-list :three-line="true" v-if="comments.total !== 0">
             <template v-for="(item, index) in comments.list">
               <v-list-item
                 :id="item.id"
