@@ -39,9 +39,13 @@
           <template v-if="comments.total == 0">
             <v-chip small color="warning">No Comment Yet</v-chip>
           </template>
-          <v-list three-line="false" v-if="comments.total !== 0">
+          <v-list :three-line="true" v-if="comments.total !== 0">
             <template v-for="(item, index) in comments.list">
-              <v-list-item :key="item.id">
+              <v-list-item
+                :id="item.id"
+                :key="item.id"
+                :class="{ highlight: item.id == highlight }"
+              >
                 <v-list-item-avatar>
                   <v-icon>face</v-icon>
                 </v-list-item-avatar>
@@ -210,6 +214,11 @@ export default {
       type: String,
       required: false,
     },
+    highlight: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
   data() {
     return {
@@ -312,6 +321,9 @@ export default {
         )
         .then((res) => {
           this.comments = res.data.data;
+          if (this.highlight !== null) {
+            this.$emit("gotoHighlight", this.highlight);
+          }
         })
         .catch((res) => {
           bus.$emit("callNotif", "error", res);
@@ -555,6 +567,10 @@ export default {
   border-width: 8px;
 }
 .v-list-item__subtitle {
-    -webkit-line-clamp: inherit !important;
+  -webkit-line-clamp: inherit !important;
+}
+
+.highlight {
+  background-color: var(--v-warning-lighten4);
 }
 </style>

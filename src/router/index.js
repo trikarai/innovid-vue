@@ -44,6 +44,7 @@ import TeamMemberMentor from "../components/Incubatee/asTeam/participation/sched
 import TeamMemberJournal from "../components/Incubatee/asTeam/participation/journal/Journal";
 import TeamMemberJournalDetail from "../components/Incubatee/asTeam/participation/journal/JournalDetail";
 import TeamMemberJournalDetail2 from "../components/Incubatee/asTeam/participation/journal/JournalDetail2";
+import TeamMemberJournalComment from "../components/Incubatee/asTeam/participation/journal/shorcut/JournalShotcut";
 import AddAtomicJournal from "../components/Incubatee/asTeam/participation/atomic/AddAtomicJournal";
 
 import AccountMain from "../views/account/AccountMain";
@@ -657,7 +658,8 @@ const routes = [
         },
       },
       {
-        path: "/personnel/mentor/:mentorId/:programId/participant/:participantId",
+        path:
+          "/personnel/mentor/:mentorId/:programId/participant/:participantId",
         component: MentorDashboardParticipantDetail,
         name: "mentor-dashboard-participant-detail",
         meta: {
@@ -994,7 +996,8 @@ const routes = [
         },
       },
       {
-        path: "/incubatee/team/:teamId/team-profile-form/:formId/edit/:profileId",
+        path:
+          "/incubatee/team/:teamId/team-profile-form/:formId/edit/:profileId",
         component: IncubateeTeamProfilesAdd,
         name: "founder-team-profile-form-edit",
         meta: {
@@ -1208,6 +1211,20 @@ const routes = [
         },
       },
       {
+        path:
+          "/incubatee/team/:teamId/participation/:cohortId/journal/:journalId/comment/:commentId?",
+        component: TeamMemberJournalComment,
+        name: "journal-detail-comment",
+        meta: {
+          text: "New Comment from Mentor",
+          level: 4,
+          requiredAuth: true,
+          incubateeAuth: true,
+          personnelAuth: false,
+          sysadminAuth: false,
+        },
+      },
+      {
         path: "/incubatee/team/:teamId/participation/:cohortId/schedule",
         component: TeamMemberSchedules,
         name: "team-mentoring-schedule",
@@ -1312,12 +1329,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.requiredAuth) {
     const authUser = JSON.parse(window.localStorage.getItem("lbUser"));
-    if (authUser.valid_until < Math.round(new Date().getTime() / 1000)) {
-      localStorage.clear();
-      next("/");
-    }
     if (!authUser || !authUser.token) {
-      next({ path: "/login" });
+      next({ path: "/login", query: { redirect: to.fullPath } });
     } else if (to.meta.sysadminAuth) {
       const authUser = JSON.parse(window.localStorage.getItem("lbUser"));
       if (authUser.role === "SYSADMIN") {
@@ -1334,6 +1347,10 @@ router.beforeEach((to, from, next) => {
       }
     } else if (to.meta.incubateeAuth) {
       const authUser = JSON.parse(window.localStorage.getItem("lbUser"));
+      if (authUser.valid_until < Math.round(new Date().getTime() / 1000)) {
+        localStorage.clear();
+        next("/");
+      }
       if (authUser.role === "INCUBATEE") {
         next();
       } else {
