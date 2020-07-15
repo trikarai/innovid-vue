@@ -1329,12 +1329,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.requiredAuth) {
     const authUser = JSON.parse(window.localStorage.getItem("lbUser"));
-    if (authUser.valid_until < Math.round(new Date().getTime() / 1000)) {
-      localStorage.clear();
-      next("/");
-    }
     if (!authUser || !authUser.token) {
-      next({ path: "/login" });
+      next({ path: "/login", query: { redirect: to.fullPath } });
     } else if (to.meta.sysadminAuth) {
       const authUser = JSON.parse(window.localStorage.getItem("lbUser"));
       if (authUser.role === "SYSADMIN") {
@@ -1351,6 +1347,10 @@ router.beforeEach((to, from, next) => {
       }
     } else if (to.meta.incubateeAuth) {
       const authUser = JSON.parse(window.localStorage.getItem("lbUser"));
+      if (authUser.valid_until < Math.round(new Date().getTime() / 1000)) {
+        localStorage.clear();
+        next("/");
+      }
       if (authUser.role === "INCUBATEE") {
         next();
       } else {

@@ -225,12 +225,15 @@ export default {
             incubator: this.params.incubatorIdentifier,
           });
           this.$mixpanel.identify(authUser.data.id);
-          
+
           this.$analytics.logEvent("login", {
             founder_id: authUser.data.id,
           });
-
-          this.$router.replace("/incubatee/dashboard");
+          if (this.$route.query.redirect) {
+            this.$router.replace(this.$route.query.redirect);
+          } else {
+            this.$router.replace("/incubatee/dashboard");
+          }
         })
         .catch((res) => {
           bus.$emit("callNotif", "error", res);
