@@ -5,10 +5,12 @@
         <v-skeleton-loader type="card" />
       </v-col>
       <template v-else>
+      <v-card class="px-3" width="100%">
         <v-col cols="12" xl="8" lg="12" md="12">
           <v-row>
+          <v-card class="ma-3 pa-3 mb-0 pb-0" width="100%" flat style="background: #000000;">
             <v-col cols="12" lg="6" md="8">
-              <span class="title">
+              <span style="color:#fff" class="title">
                 {{ participant.team.name }}
               </span>
             </v-col>
@@ -27,9 +29,22 @@
               >
                 <v-icon left small>zoom_in</v-icon> View team's journal
               </v-btn>
+              <v-expansion-panels class="mt-3 mb-4">
+                <v-expansion-panel
+                  v-for="profile in participant.team.profiles"
+                  :key="profile.id"
+                >
+                  <v-expansion-panel-header>{{
+                    profile.form.name
+                  }}</v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <profile-record :profile="profile" />
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+              </v-expansion-panels>
             </v-col>
           </v-row>
-          <v-row>
+          <!-- <v-row>
             <v-col>
               <v-expansion-panels>
                 <v-expansion-panel
@@ -45,28 +60,29 @@
                 </v-expansion-panel>
               </v-expansion-panels>
             </v-col>
-          </v-row>
+          </v-row> -->
         </v-col>
         <v-col cols="12" xl="12" lg="12">
           <v-row>
-            <v-col cols="12" lg="6" md="8">
-              <span class="subtitle">
+            <v-col class="mb-0 pb-0" cols="12" lg="6" md="8">
+              <span class="title">
                 Team's members
               </span>
             </v-col>
           </v-row>
           <v-row>
             <v-col
+               class="mt-0 pt-0"
               cols="12"
               lg="12"
               v-for="(member, index) in participant.team.members"
               :key="member.id"
             >
-              <v-card-title>
+              <v-card-title style="font-size:14px;">
                 {{ index + 1 }} -
                 {{ member.founder.name }}
               </v-card-title>
-              <v-expansion-panels>
+              <v-expansion-panels class="px-9">
                 <v-expansion-panel
                   v-for="profile in member.founder.profiles"
                   :key="profile.id"
