@@ -662,6 +662,8 @@ export default {
     background: #b4b4b4;
 }
 .theme--light.v-tabs-items {
-    background-color: #b4b4b4;
+    border-top-style: solid;
+    border-top-color: #b4b4b4;
+    border-top-width: thick;
 }
 </style>
