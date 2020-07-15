@@ -226,7 +226,7 @@
                   <v-icon>zoom_in</v-icon> View
                 </v-btn>
                 <v-btn
-                  v-if="item.containParticipantMentoringReport"
+                  v-if="!item.containParticipantMentoringReport"
                   class="ml-2"
                   small
                   color="primary"
@@ -628,6 +628,7 @@ export default {
         { text: "Date/Time", value: "startTime", sortable: false },
         { text: "Mentoring", value: "name", sortable: false },
         { text: "Mentor", value: "mentor.personnel.name", sortable: false },
+        { text: "", value: "status", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" },
       ],
       dialogForm: false,
