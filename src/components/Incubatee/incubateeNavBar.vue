@@ -103,6 +103,7 @@
             @change="changeParticipant()"
             append-outer-icon="refresh"
             @click:append-outer="getParticipations"
+            :readonly="$route.meta.level > 3"
           >
           </v-select>
         </v-list-item>

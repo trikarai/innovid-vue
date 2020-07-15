@@ -1,5 +1,5 @@
 <template>
-  <v-container extend grid-list-xs>
+  <v-container fluid grid-list-xs>
     <v-row>
       <v-col md="5">
         <v-btn
@@ -27,174 +27,266 @@
       </v-col> -->
     </v-row>
     <v-row>
-      <v-col
-        ><span class="title">Mentoring Agenda: Approved Schedule </span></v-col
-      >
-      <!-- <v-col><pre>{{dataList.list}}</pre></v-col> -->
-    </v-row>
-    <v-row>
-      <v-col>
-        <v-data-table
-          :search="search"
-          :loading="tableLoad"
-          :headers="tableHeaders"
-          :items="dataList.list"
-          class="elevation-1"
+      <v-tabs v-model="tab" background-color="primary" dark grow>
+        <v-tab key="1"
+          ><v-badge
+            :value="negotiateschedulementorings.total !== 0"
+            color="error"
+            :content="negotiateschedulementorings.total"
+            >Session Request
+          </v-badge></v-tab
         >
-          <template v-slot:item.name="{ item }">
-            <v-btn
-              class="elevation-0 mr-2"
-              fab
-              x-small
-              color="primary"
-              @click="openDetail(item.id)"
-            >
-              <v-icon>zoom_in</v-icon>
-            </v-btn>
-            {{ item.mentoring.name }}
-          </template>
-          <template v-slot:item.startTime="{ item }">
-            <v-row class="my-3">
-              <v-icon left color="primary">calendar_today</v-icon>
-              {{ item.startTime | moment("MMMM Do YYYY") }}
-            </v-row>
-            <v-row class="my-3">
-              <v-icon left color="primary">access_time</v-icon>
-              {{ item.startTime | moment("h:mm a") }}
-            </v-row>
-          </template>
-          <template v-slot:item.endTime="{ item }">
-            <v-row class="my-3">
-              <v-icon left color="primary">calendar_today</v-icon>
-              {{ item.endTime | moment("MMMM Do YYYY") }}
-            </v-row>
-            <v-row class="my-3">
-              <v-icon left color="primary">access_time</v-icon>
-              {{ item.endTime | moment("h:mm a") }}
-            </v-row>
-          </template>
-          <template v-slot:item.action="{ item }">
-            <v-btn
-              class="mr-2"
-              small
-              color="primary"
-              :to="{
-                name: 'team-mentoring-conference',
-                params: {
-                  teamId: $route.params.teamId,
-                  cohortId: $route.params.cohortId,
-                  scheduleId: item.id,
-                },
-              }"
-            >
-              <v-icon>mdi-message-video</v-icon>
-            </v-btn>
-            <v-btn
-              v-if="item.participantMentoringReport == null"
-              class="ml-2"
-              small
-              color="primary"
-              @click="openDetail(item.id)"
-            >
-              <v-icon small left>assignment</v-icon>Submit Report
-            </v-btn>
-            <template v-else>
-              <v-chip small>Report Submitted</v-chip>
-            </template>
-          </template>
-        </v-data-table>
-      </v-col>
-    </v-row>
-
-    <!-- <v-divider></v-divider> -->
-
-    <v-row>
-      <v-col
-        ><span class="title"
-          >Mentoring Agenda: Waiting for Schedule Approval</span
-        ></v-col
-      >
-    </v-row>
-    <v-row>
-      <v-col>
-        <!-- {{dataList2}} -->
-        <v-data-table
-          :search="search"
-          :loading="tableLoad2"
-          :headers="tableHeaders"
-          :items="dataList2.list"
-          class="elevation-1"
+        <v-tab key="2"
+          ><v-badge
+            :value="schedulementorings.total !== 0"
+            color="error"
+            :content="schedulementorings.total"
+            >Approved Session
+          </v-badge>
+        </v-tab>
+        <v-tab key="3"
+          ><v-badge
+            :value="schedulementoringspast.total !== 0"
+            color="error"
+            :content="schedulementoringspast.total"
+            >Past Session
+          </v-badge>
+        </v-tab>
+        <v-tab key="4">
+          <v-badge
+            :value="schedulementoringsfinish.total !== 0"
+            color="error"
+            :content="schedulementoringsfinish.total"
+            >Finish Session
+          </v-badge></v-tab
         >
-          <template v-slot:item.name="{ item }">
-            <!-- <v-btn
-              class="elevation-0 mr-2"
-              fab
-              x-small
-              color="primary"
-              @click="openNegoDetail(item.id)"
+        <v-tabs-items v-model="tab">
+          <v-tab-item key="1">
+            <v-row>
+              <v-col cols="12" xl="12" lg="12">
+                <v-data-table
+                  :loading="negotiateLoad"
+                  :headers="tableHeaders"
+                  :items="negotiateschedulementorings.list"
+                  :options.sync="optionsNego"
+                  class="elevation-1"
+                >
+                  <template v-slot:item.name="{ item }">
+                    {{ item.mentoring.name }}
+                  </template>
+                  <template v-slot:item.startTime="{ item }">
+                    <v-row class="ma-2">
+                      <!-- <v-icon left color="primary">calendar_today</v-icon> -->
+                      {{ item.startTime | moment("MMMM Do YYYY") }}
+                    </v-row>
+                    <v-row class="ma-2">
+                      <!-- <v-icon left color="primary">access_time</v-icon> -->
+                      {{ item.startTime | moment("h:mm a") }} -
+                      {{ item.endTime | moment("h:mm a") }}
+                    </v-row>
+                  </template>
+                  <template v-slot:item.status="{ item }">
+                    <v-chip small>{{ item.status }}</v-chip>
+                  </template>
+                  <template v-slot:item.action="{ item }">
+                    <template v-if="item.status != 'scheduled'">
+                      <template v-if="item.status !== 'proposed'">
+                        <template v-if="item.status !== 'cancelled'">
+                          <v-btn
+                            class="ml-2"
+                            small
+                            color="primary"
+                            @click="leftAct(item, 'accept')"
+                          >
+                            <v-icon small left>check</v-icon>Accept
+                          </v-btn>
+                        </template>
+                        <v-btn
+                          class="ml-2"
+                          small
+                          color="primary"
+                          @click="reproposeAct(item)"
+                        >
+                          <v-icon small left>update</v-icon>Re-schedule
+                        </v-btn>
+                      </template>
+                      <v-btn
+                        v-if="item.status !== 'cancelled'"
+                        class="ml-2"
+                        small
+                        color="warning"
+                        @click="leftAct(item, 'cancel')"
+                      >
+                        <v-icon small left>block</v-icon>Cancel
+                      </v-btn>
+                    </template>
+                  </template>
+                </v-data-table>
+              </v-col>
+            </v-row>
+          </v-tab-item>
+          <v-tab-item key="2">
+            <v-data-table
+              :loading="scheduleLoad"
+              :headers="tableHeaders"
+              :items="schedulementorings.list"
+              :options.sync="optionsApproved"
+              class="elevation-1"
             >
-              <v-icon>zoom_in</v-icon>
-            </v-btn>-->
-            {{ item.mentoring.name }}
-          </template>
-          <template v-slot:item.startTime="{ item }">
-            <v-row class="my-3">
-              <v-icon left color="primary">calendar_today</v-icon>
-              {{ item.startTime | moment("MMMM Do YYYY") }}
-            </v-row>
-            <v-row class="my-3">
-              <v-icon left color="primary">access_time</v-icon>
-              {{ item.startTime | moment("h:mm a") }}
-            </v-row>
-          </template>
-          <template v-slot:item.endTime="{ item }">
-            <v-row class="my-3">
-              <v-icon left color="primary">calendar_today</v-icon>
-              {{ item.endTime | moment("MMMM Do YYYY") }}
-            </v-row>
-            <v-row class="my-3">
-              <v-icon left color="primary">access_time</v-icon>
-              {{ item.endTime | moment("h:mm a") }}
-            </v-row>
-          </template>
-          <template v-slot:item.status="{ item }">
-            <v-chip small>{{ item.status }}</v-chip>
-          </template>
-          <template v-slot:item.action="{ item }">
-            <template v-if="item.status != 'scheduled'">
-              <template v-if="item.status !== 'proposed'">
-                <template v-if="item.status !== 'cancelled'">
-                  <v-btn
-                    class="ml-2"
-                    small
-                    color="primary"
-                    @click="leftAct(item, 'accept')"
-                  >
-                    <v-icon small left>check</v-icon>Accept
-                  </v-btn>
-                </template>
+              <template v-slot:item.name="{ item }">
                 <v-btn
+                  class="elevation-0 mr-2"
+                  fab
+                  x-small
+                  color="primary"
+                  @click="openDetail(item.id)"
+                >
+                  <v-icon>zoom_in</v-icon>
+                </v-btn>
+                {{ item.mentoring.name }}
+              </template>
+              <template v-slot:item.startTime="{ item }">
+                <v-row class="ma-2">
+                  {{ item.startTime | moment("MMMM Do YYYY") }}
+                </v-row>
+                <v-row class="ma-2">
+                  {{ item.startTime | moment("h:mm a") }} -
+                  {{ item.endTime | moment("h:mm a") }}
+                </v-row>
+              </template>
+
+              <template v-slot:item.action="{ item }">
+                <v-btn
+                  class="mr-2"
+                  small
+                  color="primary"
+                  :to="{
+                    name: 'team-mentoring-conference',
+                    params: {
+                      teamId: $route.params.teamId,
+                      cohortId: $route.params.cohortId,
+                      scheduleId: item.id,
+                    },
+                  }"
+                >
+                  <v-icon>mdi-message-video</v-icon>
+                </v-btn>
+                <v-btn
+                  v-if="item.participantMentoringReport == null"
                   class="ml-2"
                   small
                   color="primary"
-                  @click="reproposeAct(item)"
+                  @click="openDetail(item.id)"
                 >
-                  <v-icon small left>update</v-icon>Re-schedule
+                  <v-icon small left>assignment</v-icon>Submit Report
                 </v-btn>
+                <template v-else>
+                  <v-chip small>Report Submitted</v-chip>
+                </template>
               </template>
-              <v-btn
-                v-if="item.status !== 'cancelled'"
-                class="ml-2"
-                small
-                color="warning"
-                @click="leftAct(item, 'cancel')"
-              >
-                <v-icon small left>block</v-icon>Cancel
-              </v-btn>
-            </template>
-          </template>
-        </v-data-table>
-      </v-col>
+            </v-data-table>
+          </v-tab-item>
+          <v-tab-item key="3">
+            <v-data-table
+              :loading="schedulepastLoad"
+              :headers="tableHeaders"
+              :items="schedulementoringspast.list"
+              :options.sync="optionsPast"
+              class="elevation-1"
+            >
+              <template v-slot:item.name="{ item }">
+                <v-btn
+                  class="elevation-0 mr-2"
+                  fab
+                  x-small
+                  color="primary"
+                  @click="openDetail(item.id)"
+                >
+                  <v-icon>zoom_in</v-icon>
+                </v-btn>
+                {{ item.mentoring.name }}
+              </template>
+              <template v-slot:item.startTime="{ item }">
+                <v-row class="ma-2">
+                  {{ item.startTime | moment("MMMM Do YYYY") }}
+                </v-row>
+                <v-row class="ma-2">
+                  {{ item.startTime | moment("h:mm a") }} -
+                  {{ item.endTime | moment("h:mm a") }}
+                </v-row>
+              </template>
+
+              <template v-slot:item.action="{ item }">
+                <v-btn
+                  class="elevation-0 mr-2"
+                  small
+                  color="primary"
+                  @click="openDetail(item.id)"
+                >
+                  <v-icon>zoom_in</v-icon> View
+                </v-btn>
+                <v-btn
+                  v-if="item.containParticipantMentoringReport"
+                  class="ml-2"
+                  small
+                  color="primary"
+                  @click="openDetail(item.id)"
+                >
+                  <v-icon small left>assignment</v-icon>Submit Report
+                </v-btn>
+                <template v-else>
+                  <v-chip small>Report Submitted</v-chip>
+                </template>
+              </template>
+            </v-data-table>
+          </v-tab-item>
+          <v-tab-item key="4">
+            <v-data-table
+              :loading="schedulefinishLoad"
+              :headers="tableHeaders"
+              :items="schedulementoringsfinish.list"
+              :options.sync="optionsFinish"
+              class="elevation-1"
+            >
+              <template v-slot:item.name="{ item }">
+                {{ item.mentoring.name }}
+              </template>
+              <template v-slot:item.startTime="{ item }">
+                <v-row class="ma-2">
+                  {{ item.startTime | moment("MMMM Do YYYY") }}
+                </v-row>
+                <v-row class="ma-2">
+                  {{ item.startTime | moment("h:mm a") }} -
+                  {{ item.endTime | moment("h:mm a") }}
+                </v-row>
+              </template>
+
+              <template v-slot:item.action="{ item }">
+                <v-btn
+                  class="elevation-0 mr-2"
+                  small
+                  color="primary"
+                  @click="openDetail(item.id)"
+                >
+                  <v-icon>zoom_in</v-icon> View
+                </v-btn>
+                <v-btn
+                  v-if="!item.containParticipantMentoringReport"
+                  class="ml-2"
+                  small
+                  color="primary"
+                  @click="openDetail(item.id)"
+                >
+                  <v-icon small left>assignment</v-icon>Submit Report
+                </v-btn>
+                <template v-else>
+                  <v-chip small>Report Submitted</v-chip>
+                </template>
+              </template>
+            </v-data-table>
+          </v-tab-item>
+        </v-tabs-items>
+      </v-tabs>
     </v-row>
 
     <v-dialog
@@ -510,13 +602,16 @@ export default {
   mixins: [validationMixins, participationWatcherMixins],
   data() {
     return {
+      tab: "2",
       menu: false,
       menu2: false,
       authData: "",
       search: "",
       valid: false,
-      dataList: { total: 0, list: [] },
-      dataList2: { total: 0, list: [] },
+      negotiateschedulementorings: { total: 0, list: [] },
+      schedulementorings: { total: 0, list: [] },
+      schedulementoringspast: { total: 0, list: [] },
+      schedulementoringsfinish: { total: 0, list: [] },
       dataSingle: {
         mentoring: { name: "" },
         mentor: {
@@ -528,13 +623,11 @@ export default {
         endTime: "",
       },
       tableLoad: false,
-      tableLoad2: false,
       loader: false,
       tableHeaders: [
-        { text: "Name", value: "name", sortable: false },
+        { text: "Date/Time", value: "startTime", sortable: false },
+        { text: "Mentoring", value: "name", sortable: false },
         { text: "Mentor", value: "mentor.personnel.name", sortable: false },
-        { text: "startTime", value: "startTime", sortable: false },
-        { text: "endTime", value: "endTime", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" },
       ],
       dialogForm: false,
@@ -560,14 +653,24 @@ export default {
       date: "",
       time: "",
       nowDate: new Date().toISOString().slice(0, 10),
+      optionsApproved: { page: 1, itemsPerPage: 15 },
+      optionsPast: { page: 1, itemsPerPage: 15 },
+      optionsFinish: { page: 1, itemsPerPage: 15 },
+      optionsNego: { page: 1, itemsPerPage: 15 },
+      scheduleLoad: false,
+      schedulepastLoad: false,
+      schedulefinishLoad: false,
+      negotiateLoad: false,
     };
   },
   watch: {
     date: "setDateTime",
     time: "setDateTime",
     $route() {
-      this.getDataList();
-      this.getDataList2();
+      this.getScheduleMentorings();
+      this.getNegotiateScheduleMentorings();
+      this.getScheduleMentoringsPast();
+      this.getScheduleMentoringsFinish();
     },
     participationId() {
       this.$router.replace({
@@ -579,18 +682,28 @@ export default {
           "/schedule",
       });
     },
+    optionsApproved: "getScheduleMentorings",
+    optionsNego: "getNegotiateScheduleMentorings",
+    optionsPast: "getScheduleMentoringsPast",
+    optionsFinish: "getScheduleMentoringsFinish",
+  },
+  created() {
+    var today = new Date().toLocaleString();
+    this.today = this.$moment(today).format("YYYY/MM/DD");
   },
   mounted: function() {
-    this.getDataList();
-    this.getDataList2();
+    this.getScheduleMentorings();
+    this.getNegotiateScheduleMentorings();
+    this.getScheduleMentoringsPast();
+    this.getScheduleMentoringsFinish();
   },
   methods: {
     setDateTime: function() {
       this.params.startTime = this.date + " " + this.time;
       this.incidentalParams.startTime = this.date + " " + this.time;
     },
-    getDataList() {
-      this.tableLoad = true;
+    getScheduleMentorings() {
+      this.scheduleLoad = true;
       this.axios
         .get(
           config.baseUri +
@@ -600,23 +713,92 @@ export default {
             this.$route.params.cohortId +
             "/mentoring-schedules",
           {
+            params: {
+              minStartTime: this.today,
+              page: this.optionsApproved.page,
+              pageSize: this.optionsApproved.itemsPerPage,
+            },
             headers: auth.getAuthHeader(),
           }
         )
         .then((res) => {
           if (res.data.data) {
-            this.dataList = res.data.data;
+            this.schedulementorings = res.data.data;
           } else {
-            this.dataList = { total: 0, list: [] };
+            this.schedulementorings = { total: 0, list: [] };
           }
         })
         .catch(() => {})
         .finally(() => {
-          this.tableLoad = false;
+          this.scheduleLoad = false;
         });
     },
-    getDataList2() {
-      this.tableLoad2 = true;
+    getScheduleMentoringsPast() {
+      this.schedulepastLoad = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/mentoring-schedules",
+          {
+            params: {
+              maxStartTime: this.today,
+              containParticipantReport: false,
+              page: this.optionsApproved.page,
+              pageSize: this.optionsApproved.itemsPerPage,
+            },
+            headers: auth.getAuthHeader(),
+          }
+        )
+        .then((res) => {
+          if (res.data.data) {
+            this.schedulementoringspast = res.data.data;
+          } else {
+            this.schedulementoringspast = { total: 0, list: [] };
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.schedulepastLoad = false;
+        });
+    },
+    getScheduleMentoringsFinish() {
+      this.schedulefinishLoad = true;
+      this.axios
+        .get(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/program-participations/" +
+            this.$route.params.cohortId +
+            "/mentoring-schedules",
+          {
+            params: {
+              maxStartTime: this.today,
+              containParticipantReport: true,
+              page: this.optionsApproved.page,
+              pageSize: this.optionsApproved.itemsPerPage,
+            },
+            headers: auth.getAuthHeader(),
+          }
+        )
+        .then((res) => {
+          if (res.data.data) {
+            this.schedulementoringsfinish = res.data.data;
+          } else {
+            this.schedulementoringsfinish = { total: 0, list: [] };
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.schedulefinishLoad = false;
+        });
+    },
+    getNegotiateScheduleMentorings() {
+      this.negotiateLoad = true;
       this.axios
         .get(
           config.baseUri +
@@ -631,14 +813,14 @@ export default {
         )
         .then((res) => {
           if (res.data.data) {
-            this.dataList2 = res.data.data;
+            this.negotiateschedulementorings = res.data.data;
           } else {
-            this.dataList2 = { total: 0, list: [] };
+            this.negotiateschedulementorings = { total: 0, list: [] };
           }
         })
         .catch(() => {})
         .finally(() => {
-          this.tableLoad2 = false;
+          this.negotiateLoad = false;
         });
     },
     openDetail(id) {
@@ -872,9 +1054,19 @@ export default {
       this.dialogForm = false;
       this.dialogDelete = false;
       this.dialogDetail = false;
-      this.getDataList();
-      this.getDataList2();
+      this.getScheduleMentorings();
+      this.getNegotiateScheduleMentorings();
     },
   },
 };
 </script>
+<style scoped>
+.v-tab.v-tab--active {
+  background: #b4b4b4;
+}
+.theme--light.v-tabs-items {
+  border-top-style: solid;
+  border-top-color: #b4b4b4;
+  border-top-width: thick;
+}
+</style>

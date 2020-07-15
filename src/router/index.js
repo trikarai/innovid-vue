@@ -103,7 +103,8 @@ import MentorScheduleNegotiate from "../components/personnel/asMentor/schedule/N
 
 import MentorDashboardParticipant from "../components/personnel/asMentor/participant/participant";
 import MentorDashboardParticipantDetail from "../components/personnel/asMentor/participant/ParticipantDetail";
-import MentorDashboardParticipantJournal from "../components/personnel/asMentor/participantjournal/ParticipantJournal";
+// import MentorDashboardParticipantJournal from "../components/personnel/asMentor/participantjournal/ParticipantJournal";
+import MentorDashboardParticipantJournal from "../components/personnel/asMentor/participantjournal/JournalTask";
 import MentorDashboardMentoringSchedule from "../components/personnel/asMentor/mentoringschedule/MentoringSchedule";
 import MentorIntroduction from "../components/personnel/asMentor/introduction/Introduction";
 
