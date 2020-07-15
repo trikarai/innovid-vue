@@ -1,5 +1,5 @@
 <template>
-  <v-container extend grid-list-xs>
+  <v-container fluid grid-list-xs>
     <v-row>
       <v-col md="6">
         <v-btn
