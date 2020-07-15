@@ -703,7 +703,7 @@ export default {
       this.incidentalParams.startTime = this.date + " " + this.time;
     },
     getScheduleMentorings() {
-      this.tableLoad = true;
+      this.scheduleLoad = true;
       this.axios
         .get(
           config.baseUri +
@@ -730,7 +730,7 @@ export default {
         })
         .catch(() => {})
         .finally(() => {
-          this.tableLoad = false;
+          this.scheduleLoad = false;
         });
     },
     getScheduleMentoringsPast() {
