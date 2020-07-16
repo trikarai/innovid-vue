@@ -1,6 +1,6 @@
 {
   "name": "inovasi-web-v3",
-  "version": "2.3.200715-start",
+  "version": "2.3.200716-start",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
