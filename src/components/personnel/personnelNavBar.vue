@@ -134,12 +134,12 @@
             <v-list-item-title class="grey--text">as Mentor</v-list-item-title>
           </v-list-item-content>
         </template>
-        <v-list-item router :to="'/personnel/mentor/participant'">
+        <!-- <v-list-item router :to="'/personnel/mentor/participant'">
           <v-list-item-title class="grey--text">Participant</v-list-item-title>
           <v-list-item-icon>
-            <!-- <v-icon>group_work</v-icon> -->
+            <v-icon>group_work</v-icon>
           </v-list-item-icon>
-        </v-list-item>
+        </v-list-item> -->
         <v-list-item router :to="'/personnel/mentor/participant-journal'">
           <v-list-item-title class="grey--text">Journal</v-list-item-title>
           <v-list-item-icon>
