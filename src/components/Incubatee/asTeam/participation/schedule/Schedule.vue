@@ -134,7 +134,7 @@
               class="elevation-1"
             >
               <template v-slot:item.name="{ item }">
-                <v-btn
+                <!-- <v-btn
                   class="elevation-0 mr-2"
                   fab
                   x-small
@@ -142,7 +142,7 @@
                   @click="openDetail(item.id)"
                 >
                   <v-icon>zoom_in</v-icon>
-                </v-btn>
+                </v-btn> -->
                 {{ item.mentoring.name }}
               </template>
               <template v-slot:item.startTime="{ item }">
@@ -195,7 +195,7 @@
               class="elevation-1"
             >
               <template v-slot:item.name="{ item }">
-                <v-btn
+                <!-- <v-btn
                   class="elevation-0 mr-2"
                   fab
                   x-small
@@ -203,7 +203,7 @@
                   @click="openDetail(item.id)"
                 >
                   <v-icon>zoom_in</v-icon>
-                </v-btn>
+                </v-btn> -->
                 {{ item.mentoring.name }}
               </template>
               <template v-slot:item.startTime="{ item }">
