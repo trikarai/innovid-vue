@@ -7,10 +7,22 @@
           :headers="tableHeaders"
           :items="journals.list"
           :options.sync="options"
-          :footer-props="{
-            'items-per-page-options': [10],
-          }"
+          hide-default-footer
         >
+          <template v-slot:item.teamname="{ item }">
+            <v-btn 
+              text
+              :to="{
+                name: 'mentor-dashboard-participant-detail',
+                params: {
+                  programId: $store.getters.getMentorship.program.id,
+                  participantId: item.participant.id,
+                },
+              }"
+            >
+              {{ item.participant.team.name }}
+            </v-btn>
+          </template>
           <template v-slot:item.action="{ item }">
             <v-btn
               :key="item.id"
@@ -38,13 +50,18 @@ export default {
       loadJournal: false,
       journals: { total: 0, list: [] },
       tableHeaders: [
-        { text: "Team", value: "participant.team.name", sortable: false },
+        { text: "Team", value: "teamname", sortable: false },
+        {
+          text: "Form",
+          value: "worksheet.worksheetForm.name",
+          sortable: false,
+        },
         { text: "Worksheet", value: "worksheet.name", sortable: false },
         { text: "", value: "action", sortable: false, align: "right" },
       ],
       options: {
         page: 1,
-        itemsPerPage: 15,
+        itemsPerPage: 100,
       },
     };
   },
@@ -65,10 +82,10 @@ export default {
             this.$store.getters.getMentorship.program.id +
             "/journals",
           {
-            params: {
-              page: this.options.page,
-              pageSize: this.options.itemsPerPage,
-            },
+            // params: {
+            //   page: this.options.page,
+            //   pageSize: this.options.itemsPerPage,
+            // },
             headers: auth.getAuthHeader(),
           }
         )
