@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col md="6">
         <v-btn
@@ -58,6 +58,9 @@
                   :headers="negotiatescheduleHeaders"
                   :items="negotiateschedulementorings.list"
                   :options.sync="optionsNego"
+                  :footer-props="{
+                    'items-per-page-options': [5, 15, 25],
+                  }"
                   class="elevation-1 ml-2 mr-2"
                 >
                   <template v-slot:item.name="{ item }">{{
@@ -69,6 +72,7 @@
                       :to="{
                         name: 'mentor-dashboard-participant-detail',
                         params: {
+                          mentorId: $store.getters.getMentorship.id,
                           programId: $store.getters.getMentorship.program.id,
                           participantId: item.participant.id,
                         },
@@ -154,6 +158,7 @@
                       :to="{
                         name: 'mentor-dashboard-participant-detail',
                         params: {
+                          mentorId: $store.getters.getMentorship.id,
                           programId: $store.getters.getMentorship.program.id,
                           participantId: item.participant.id,
                         },
@@ -232,6 +237,7 @@
                       :to="{
                         name: 'mentor-dashboard-participant-detail',
                         params: {
+                          mentorId: $store.getters.getMentorship.id,
                           programId: $store.getters.getMentorship.program.id,
                           participantId: item.participant.id,
                         },
@@ -322,6 +328,7 @@
                       :to="{
                         name: 'mentor-dashboard-participant-detail',
                         params: {
+                          mentorId: $store.getters.getMentorship.id,
                           programId: $store.getters.getMentorship.program.id,
                           participantId: item.participant.id,
                         },
@@ -659,11 +666,11 @@ export default {
 </script>
 <style scoped>
 .v-tab.v-tab--active {
-    background: #b4b4b4;
+  background: #b4b4b4;
 }
 .theme--light.v-tabs-items {
-    border-top-style: solid;
-    border-top-color: #b4b4b4;
-    border-top-width: thick;
+  border-top-style: solid;
+  border-top-color: #b4b4b4;
+  border-top-width: thick;
 }
 </style>

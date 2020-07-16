@@ -21,6 +21,9 @@
           :items="dataList.list"
           :options.sync="options"
           :server-items-length="dataList.total"
+          :footer-props="{
+            'items-per-page-options': [5, 15, 25],
+          }"
           class="elevation-1"
         >
           <template v-slot:item.name="{ item }">

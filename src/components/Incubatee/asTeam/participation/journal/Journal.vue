@@ -7,9 +7,14 @@
           :loading="tableLoad"
           :headers="tableHeaders"
           :items="dataList.list"
+          :options.sync="options"
+          :server-items-length="dataList.total"
+          :footer-props="{
+            'items-per-page-options': [5, 15, 25],
+          }"
           class="elevation-1"
         >
-          <template v-slot:item.worksheet="{item}">
+          <template v-slot:item.worksheet="{ item }">
             <!-- <v-btn
               class="elevation-0 mr-2"
               fab
@@ -19,10 +24,10 @@
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>-->
-            {{item.worksheet.name}}
+            {{ item.worksheet.name }}
           </template>
 
-          <template v-slot:item.action="{item}">
+          <template v-slot:item.action="{ item }">
             <v-btn
               class="elevation-0 mr-2"
               color="primary"
@@ -42,9 +47,9 @@
     <v-dialog v-model="dialogDelete" width="300" :persistent="true">
       <v-card :loading="tableLoad">
         <v-card-title>
-          <p class="text-capitalize">{{leftAction}}</p>
+          <p class="text-capitalize">{{ leftAction }}</p>
         </v-card-title>
-        <v-card-text>{{leftName}}</v-card-text>
+        <v-card-text>{{ leftName }}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
@@ -73,8 +78,9 @@ export default {
         { text: "Mission", value: "mission.name", sortable: false },
         { text: "Worksheet", value: "worksheet", sortable: false },
         { text: "", value: "sub", sortable: false, align: "left" },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
+      options: { page: 1, itemsPerPage: 15 },
       dialog: false,
       dialogForm: false,
       dialogApply: false,
@@ -83,10 +89,11 @@ export default {
       edit: false,
       leftId: "",
       leftName: "",
-      leftAction: ""
+      leftAction: "",
     };
   },
   watch: {
+    options: "getDataList",
     $route() {
       this.getDataList();
     },
@@ -97,9 +104,9 @@ export default {
           this.$route.params.teamId +
           "/participation/" +
           this.participationId +
-          "/journal"
+          "/journal",
       });
-    }
+    },
   },
   mounted() {
     this.getDataList();
@@ -116,10 +123,14 @@ export default {
             this.$route.params.cohortId +
             "/journals",
           {
-            headers: auth.getAuthHeader()
+            params: {
+              page: this.options.page,
+              pageSize: this.options.itemsPerPage,
+            },
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.dataList = res.data.data;
           } else {
@@ -149,7 +160,7 @@ export default {
             "/journals/" +
             id,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
@@ -160,7 +171,7 @@ export default {
           );
           this.refresh();
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -179,9 +190,9 @@ export default {
           "/journal/" +
           journalId +
           "/worksheet/" +
-          worksheetId
+          worksheetId,
       });
-    }
-  }
+    },
+  },
 };
 </script>
