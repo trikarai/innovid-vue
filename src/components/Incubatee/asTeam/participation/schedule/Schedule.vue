@@ -68,7 +68,11 @@
                   :loading="negotiateLoad"
                   :headers="tableHeaders"
                   :items="negotiateschedulementorings.list"
+                  :server-items-length="negotiateschedulementorings.total"
                   :options.sync="optionsNego"
+                  :footer-props="{
+                    'items-per-page-options': [5, 15, 25],
+                  }"
                   class="elevation-1"
                 >
                   <template v-slot:item.name="{ item }">
@@ -130,7 +134,11 @@
               :loading="scheduleLoad"
               :headers="tableHeaders"
               :items="schedulementorings.list"
+              :server-items-length="schedulementorings.total"
               :options.sync="optionsApproved"
+              :footer-props="{
+                'items-per-page-options': [5, 15, 25],
+              }"
               class="elevation-1"
             >
               <template v-slot:item.name="{ item }">
@@ -191,7 +199,11 @@
               :loading="schedulepastLoad"
               :headers="tableHeaders"
               :items="schedulementoringspast.list"
+              :server-items-length="schedulementoringspast.total"
               :options.sync="optionsPast"
+              :footer-props="{
+                'items-per-page-options': [5, 15, 25],
+              }"
               class="elevation-1"
             >
               <template v-slot:item.name="{ item }">
@@ -245,7 +257,11 @@
               :loading="schedulefinishLoad"
               :headers="tableHeaders"
               :items="schedulementoringsfinish.list"
+              :server-items-length="schedulementoringsfinish.total"
               :options.sync="optionsFinish"
+              :footer-props="{
+                'items-per-page-options': [5, 15, 25],
+              }"
               class="elevation-1"
             >
               <template v-slot:item.name="{ item }">
