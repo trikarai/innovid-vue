@@ -27,9 +27,14 @@
           :loading="tableLoad"
           :headers="tableHeaders"
           :items="dataList.list"
+          :options.sync="options"
+          :server-items-length="dataList.total"
+          :footer-props="{
+            'items-per-page-options': [5, 15, 25],
+          }"
           class="elevation-1"
         >
-          <template v-slot:item.name="{item}">
+          <template v-slot:item.name="{ item }">
             <v-btn
               class="elevation-0 mr-2"
               fab
@@ -39,13 +44,15 @@
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>
-            {{item.name}}
+            {{ item.name }}
           </template>
-          <template v-slot:item.published="{item}">
-            <v-icon large v-if="item.published" color="green darken-1">check</v-icon>
+          <template v-slot:item.published="{ item }">
+            <v-icon large v-if="item.published" color="green darken-1"
+              >check</v-icon
+            >
             <v-icon large v-else color="red darken-1">remove</v-icon>
           </template>
-          <template v-slot:item.action="{item}">
+          <template v-slot:item.action="{ item }">
             <v-btn
               dark
               small
@@ -56,50 +63,80 @@
             >
               <v-icon left small>check</v-icon>Publish
             </v-btn>
-            <v-btn v-if="!item.published" small color="warning" @click="leftAct(item, 'Delete')">
+            <v-btn
+              v-if="!item.published"
+              small
+              color="warning"
+              @click="leftAct(item, 'Delete')"
+            >
               <v-icon small>delete</v-icon>
             </v-btn>
           </template>
-          <template v-slot:item.personnel="{item}">
+          <template v-slot:item.personnel="{ item }">
             <v-row>
-            <v-btn small color="primary" class="my-2" @click="gotoMentor(item.id)">
-              <!-- <v-icon left small>person</v-icon> -->
-              Mentor
-            </v-btn>
+              <v-btn
+                small
+                color="primary"
+                class="my-2"
+                @click="gotoMentor(item.id)"
+              >
+                <!-- <v-icon left small>person</v-icon> -->
+                Mentor
+              </v-btn>
             </v-row>
             <v-row>
-            <v-btn small color="primary" class="my-2 mt-0" @click="gotoCoordinator(item.id)">
-              <!-- <v-icon left small>person</v-icon> -->
-              Coordinator
-            </v-btn>
+              <v-btn
+                small
+                color="primary"
+                class="my-2 mt-0"
+                @click="gotoCoordinator(item.id)"
+              >
+                <!-- <v-icon left small>person</v-icon> -->
+                Coordinator
+              </v-btn>
             </v-row>
           </template>
-          <template v-slot:item.sub="{item}">
+          <template v-slot:item.sub="{ item }">
             <v-row>
-            <v-btn small color="primary" class="my-2" @click="gotoMission(item.id)">
-              <!-- <v-icon left small>flag</v-icon> -->
-              Mission
-            </v-btn>
+              <v-btn
+                small
+                color="primary"
+                class="my-2"
+                @click="gotoMission(item.id)"
+              >
+                <!-- <v-icon left small>flag</v-icon> -->
+                Mission
+              </v-btn>
             </v-row>
             <v-row>
-            <v-btn small color="primary" class="my-2 mt-0" @click="gotoMentoring(item.id)">
-              <!-- <v-icon left small>forum</v-icon> -->
-              Mentoring
-            </v-btn>
+              <v-btn
+                small
+                color="primary"
+                class="my-2 mt-0"
+                @click="gotoMentoring(item.id)"
+              >
+                <!-- <v-icon left small>forum</v-icon> -->
+                Mentoring
+              </v-btn>
             </v-row>
           </template>
         </v-data-table>
       </v-col>
     </v-row>
 
-    <add-form v-if="dialogForm" :edit="edit" @close="dialogForm = false" @refresh="refresh" />
+    <add-form
+      v-if="dialogForm"
+      :edit="edit"
+      @close="dialogForm = false"
+      @refresh="refresh"
+    />
 
     <v-dialog v-model="dialogDelete" width="300" :persistent="true">
       <v-card :loading="tableLoad">
         <v-card-title>
-          <p class="text-capitalize">{{leftAction}}</p>
+          <p class="text-capitalize">{{ leftAction }}</p>
         </v-card-title>
-        <v-card-text>{{leftName}}</v-card-text>
+        <v-card-text>{{ leftName }}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
@@ -120,23 +157,33 @@
           <p class="text-capitalize">Program Detail</p>
         </v-card-title>
         <v-card-text v-if="loader">
-          <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
+          <v-progress-linear
+            :indeterminate="true"
+            color="primary"
+          ></v-progress-linear>
         </v-card-text>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.name"><b>Name</b><br>{{dataSingle.name}}</v-card-text>
+          <v-card-text :key="dataSingle.name"
+            ><b>Name</b><br />{{ dataSingle.name }}</v-card-text
+          >
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.description"><b>Description</b><br>{{dataSingle.description}}</v-card-text>
+          <v-card-text :key="dataSingle.description"
+            ><b>Description</b><br />{{ dataSingle.description }}</v-card-text
+          >
         </transition>
         <transition name="slide-fade" mode="out-in">
           <v-card-text :key="dataSingle.startDate">
             <!-- <v-icon left color="primary">calendar_today</v-icon> -->
-              <b>Time Range</b><br>
-              {{ dataSingle.startDate | moment("MMMM Do YYYY") }} - {{ dataSingle.endDate | moment("MMMM Do YYYY") }}
+            <b>Time Range</b><br />
+            {{ dataSingle.startDate | moment("MMMM Do YYYY") }} -
+            {{ dataSingle.endDate | moment("MMMM Do YYYY") }}
           </v-card-text>
         </transition>
         <transition name="slide-fade" mode="out-in">
-          <v-card-text :key="dataSingle.published"><b>Status Publish</b><br>{{dataSingle.published}}</v-card-text>
+          <v-card-text :key="dataSingle.published"
+            ><b>Status Publish</b><br />{{ dataSingle.published }}</v-card-text
+          >
         </transition>
         <!-- <v-card-actions>
           <div class="flex-grow-1"></div>
@@ -173,21 +220,22 @@ export default {
           text: "Published",
           value: "published",
           sortable: false,
-          align: "right"
+          align: "right",
         },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
+      options: { page: 1, itemsPerPage: 15 },
       dialogForm: false,
       dialogDelete: false,
       dialogDetail: false,
       edit: false,
       leftId: "",
       leftName: "",
-      leftAction: ""
+      leftAction: "",
     };
   },
   components: {
-    AddForm
+    AddForm,
   },
   created: function() {
     this.authData = JSON.parse(auth.getAuthData());
@@ -200,9 +248,13 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(config.baseUri + "/personnel/as-admin/programs", {
-          headers: auth.getAuthHeader()
+          params: {
+            page: this.options.page,
+            pageSize: this.options.itemsPerPage,
+          },
+          headers: auth.getAuthHeader(),
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.dataList = res.data.data;
           } else {
@@ -219,9 +271,9 @@ export default {
       this.loader = true;
       this.axios
         .get(config.baseUri + "/personnel/as-admin/programs/" + id, {
-          headers: auth.getAuthHeader()
+          headers: auth.getAuthHeader(),
         })
-        .then(res => {
+        .then((res) => {
           this.dataSingle = res.data.data;
         })
         .catch(() => {})
@@ -247,12 +299,12 @@ export default {
       this.tableLoad = true;
       this.axios
         .delete(config.baseUri + "/personnel/as-admin/programs/" + id, {
-          headers: auth.getAuthHeader()
+          headers: auth.getAuthHeader(),
         })
         .then(() => {
           this.refresh();
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -266,13 +318,13 @@ export default {
           config.baseUri + "/personnel/as-admin/programs/" + id + "/publish",
           {},
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
           this.refresh();
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -286,25 +338,25 @@ export default {
     },
     gotoCoordinator(id) {
       this.$router.push({
-        path: "/personnel/program/" + id + "/coordinator"
+        path: "/personnel/program/" + id + "/coordinator",
       });
     },
     gotoMentor(id) {
       this.$router.push({
-        path: "/personnel/program/" + id + "/mentor"
+        path: "/personnel/program/" + id + "/mentor",
       });
     },
     gotoMission(id) {
       this.$router.push({
-        path: "/personnel/program/" + id + "/mission"
+        path: "/personnel/program/" + id + "/mission",
       });
     },
     gotoMentoring(id) {
       this.$router.push({
-        path: "/personnel/program/" + id + "/mentoring"
+        path: "/personnel/program/" + id + "/mentoring",
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

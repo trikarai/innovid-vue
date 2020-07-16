@@ -18,7 +18,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col>{{selectedCohort.program.name}}</v-col>
+        <v-col>{{ selectedCohort.program.name }}</v-col>
       </v-row>
       <v-row>
         <v-col md="6" sm="12">
@@ -30,7 +30,11 @@
                 block
                 color="primary"
                 router
-                :to="'/personnel/coordinator/program/' + selectedCohort.program.id + '/participant'"
+                :to="
+                  '/personnel/coordinator/program/' +
+                    selectedCohort.program.id +
+                    '/participant'
+                "
               >
                 <v-icon>group</v-icon>
               </v-btn>
@@ -45,7 +49,11 @@
                 depressed
                 block
                 color="primary"
-                :to="'/personnel/coordinator/program/' + selectedCohort.program.id + '/applicant'"
+                :to="
+                  '/personnel/coordinator/program/' +
+                    selectedCohort.program.id +
+                    '/applicant'
+                "
               >
                 <v-icon>how_to_vote</v-icon>
               </v-btn>
@@ -60,7 +68,11 @@
                 depressed
                 block
                 color="primary"
-                :to="'/personnel/coordinator/program/' + selectedCohort.program.id + '/phase'"
+                :to="
+                  '/personnel/coordinator/program/' +
+                    selectedCohort.program.id +
+                    '/phase'
+                "
               >
                 <v-icon>today</v-icon>
               </v-btn>
@@ -76,38 +88,59 @@
             :loading="tableLoad"
             :headers="tableHeaders"
             :items="dataList.list"
+            :options.sync="options"
+            :server-items-length="dataList.total"
+            :footer-props="{
+              'items-per-page-options': [5, 15, 25],
+            }"
             class="elevation-1"
           >
-            <template v-slot:item.action="{item}">
+            <template v-slot:item.action="{ item }">
               <template v-if="item.program.removed">
-                <v-chip>Program Removed</v-chip>
+                <v-chip color="warning">Program Removed</v-chip>
               </template>
               <template v-else>
                 <v-btn
                   class="mr-2"
                   color="primary"
-                  :to="'/personnel/coordinator/program/' + item.program.id + '/participant'"
+                  :to="
+                    '/personnel/coordinator/program/' +
+                      item.program.id +
+                      '/participant'
+                  "
                 >
                   <v-icon left>group</v-icon>Participant
                 </v-btn>
                 <v-btn
                   class="mr-2"
                   color="primary"
-                  :to="'/personnel/coordinator/program/' + item.program.id + '/applicant'"
+                  :to="
+                    '/personnel/coordinator/program/' +
+                      item.program.id +
+                      '/applicant'
+                  "
                 >
                   <v-icon left>how_to_vote</v-icon>Applicant
                 </v-btn>
                 <v-btn
                   class="mr-2"
                   color="primary"
-                  :to="'/personnel/coordinator/program/' + item.program.id + '/phase'"
+                  :to="
+                    '/personnel/coordinator/program/' +
+                      item.program.id +
+                      '/phase'
+                  "
                 >
                   <v-icon left>today</v-icon>Registration Phase
                 </v-btn>
                 <v-btn
                   class="mr-2"
                   color="primary"
-                  :to="'/personnel/coordinator/program/' + item.program.id + '/mentoring'"
+                  :to="
+                    '/personnel/coordinator/program/' +
+                      item.program.id +
+                      '/mentoring'
+                  "
                 >
                   <v-icon left>assignment</v-icon>Mentoring
                 </v-btn>
@@ -131,18 +164,22 @@ export default {
         id: "",
         program: {
           id: "",
-          name: ""
-        }
+          name: "",
+        },
       },
       dataList: { total: 0, list: [] },
       dataSingle: { name: "", email: "" },
       tableHeaders: [
         { text: "Program Name", value: "program.name", sortable: false },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
       tableLoad: false,
-      loader: false
+      options: { page: 1, itemsPerPage: 15 },
+      loader: false,
     };
+  },
+  watch: {
+    options: "getDataList",
   },
   mounted() {
     this.getDataList();
@@ -152,9 +189,13 @@ export default {
       this.tableLoad = true;
       this.axios
         .get(config.baseUri + "/personnel/coordinatorships", {
-          headers: auth.getAuthHeader()
+          params: {
+            page: this.options.page,
+            pageSize: this.options.itemsPerPage,
+          },
+          headers: auth.getAuthHeader(),
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.dataList = res.data.data;
           } else {
@@ -165,7 +206,7 @@ export default {
         .finally(() => {
           this.tableLoad = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
