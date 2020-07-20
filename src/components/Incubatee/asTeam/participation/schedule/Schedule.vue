@@ -94,7 +94,16 @@
                     </v-row>
                   </template>
                   <template v-slot:item.status="{ item }">
-                    <v-chip small>{{ item.status }}</v-chip>
+                    <v-chip color="info" small v-if="item.status == 'proposed'"
+                      >Waiting for mentor’s confirmation</v-chip
+                    >
+                    <v-chip
+                      color="warning"
+                      small
+                      v-if="item.status == 'offered'"
+                      >Mentor has proposed new schedule</v-chip
+                    >
+                    <v-chip small v-else> {{ item.status }} </v-chip>
                   </template>
                   <template v-slot:item.action="{ item }">
                     <template v-if="item.status != 'scheduled'">
