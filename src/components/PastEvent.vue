@@ -11,11 +11,21 @@
             <v-expansion-panel>
               <v-expansion-panel-header
                 ><b
-                  >Strategi Kolaborasi Startup dgn Korporat - Arief Yahya (Didahului dgn Penjelasan MIKTI Start)</b
+                  >Penjelasan Program MIKTI Start</b
                 ></v-expansion-panel-header
               >
               <v-expansion-panel-content>
-                <iframe id="kaltura_player_1593668489" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1593668489&entry_id=0_ab43sift" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
+                <iframe id="kaltura_player_1595232635" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1595232635&entry_id=0_7wpash8o" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header
+                ><b
+                  >Strategi Kolaborasi Startup dgn Korporat - Arief Yahya</b
+                ></v-expansion-panel-header
+              >
+              <v-expansion-panel-content>
+                <iframe id="kaltura_player_1595232923" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1595232923&entry_id=0_kef6wshj" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
               </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel>
