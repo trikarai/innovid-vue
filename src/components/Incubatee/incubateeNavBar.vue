@@ -183,7 +183,7 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title class="grey--text text--darken-1"
-              >Learn & Implement</v-list-item-title
+              ><b>Learn & Implement</b></v-list-item-title
             >
           </v-list-item-content>
         </v-list-item>
@@ -232,7 +232,7 @@
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title class="grey--text text--darken-1"
-                  >Learn & Implement</v-list-item-title
+                  ><b>Learn & Implement</b></v-list-item-title
                 >
               </v-list-item-content>
             </v-list-item>
