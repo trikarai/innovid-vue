@@ -32,7 +32,7 @@
           ><v-badge
             :value="negotiateschedulementorings.total !== 0"
             color="error"
-            :content="negotiateschedulementorings.total"
+            :content="filterSchedule(negotiateschedulementorings.list).length"
             >Session Request
           </v-badge></v-tab
         >
@@ -63,13 +63,17 @@
         <v-tabs-items v-model="tab">
           <v-tab-item key="1">
             <v-row>
+              <!-- <v-col cols="12" xl="12" lg="12">
+                <pre> {{ negotiateschedulementorings }} </pre>
+              </v-col> -->
               <v-col cols="12" xl="12" lg="12">
                 <v-data-table
                   :loading="negotiateLoad"
                   :headers="tableHeaders"
-                  :items="negotiateschedulementorings.list"
+                  :items="filterSchedule(negotiateschedulementorings.list)"
                   :server-items-length="negotiateschedulementorings.total"
                   :options.sync="optionsNego"
+                  :search="search"
                   :footer-props="{
                     'items-per-page-options': [5, 15, 25],
                   }"
@@ -90,7 +94,16 @@
                     </v-row>
                   </template>
                   <template v-slot:item.status="{ item }">
-                    <v-chip small>{{ item.status }}</v-chip>
+                    <v-chip color="info" small v-if="item.status == 'proposed'"
+                      >Waiting for mentor’s confirmation</v-chip
+                    >
+                    <v-chip
+                      color="warning"
+                      small
+                      v-if="item.status == 'offered'"
+                      >Mentor has proposed new schedule</v-chip
+                    >
+                    <v-chip small v-else> {{ item.status }} </v-chip>
                   </template>
                   <template v-slot:item.action="{ item }">
                     <template v-if="item.status != 'scheduled'">
@@ -104,15 +117,15 @@
                           >
                             <v-icon small left>check</v-icon>Accept
                           </v-btn>
+                          <v-btn
+                            class="ml-2"
+                            small
+                            color="primary"
+                            @click="reproposeAct(item)"
+                          >
+                            <v-icon small left>update</v-icon>Re-schedule
+                          </v-btn>
                         </template>
-                        <v-btn
-                          class="ml-2"
-                          small
-                          color="primary"
-                          @click="reproposeAct(item)"
-                        >
-                          <v-icon small left>update</v-icon>Re-schedule
-                        </v-btn>
                       </template>
                       <v-btn
                         v-if="item.status !== 'cancelled'"
@@ -608,6 +621,10 @@
   </v-container>
 </template>
 <script>
+import Vue from "vue";
+import lodash from "lodash";
+Vue.prototype._ = lodash;
+
 import bus from "@/config/bus";
 import * as config from "@/config/config";
 import auth from "@/config/auth";
@@ -644,7 +661,14 @@ export default {
         { text: "Date/Time", value: "startTime", sortable: false },
         { text: "Mentoring", value: "name", sortable: false },
         { text: "Mentor", value: "mentor.personnel.name", sortable: false },
-        { text: "", value: "status", sortable: false },
+        {
+          text: "",
+          value: "status",
+          sortable: false,
+          filter: (value) => {
+            return value !== "offered";
+          },
+        },
         { text: "", value: "action", sortable: false, align: "right" },
       ],
       dialogForm: false,
@@ -715,6 +739,11 @@ export default {
     this.getScheduleMentoringsFinish();
   },
   methods: {
+    filterSchedule(params) {
+      return this._.filter(params, (item) => {
+        return item.status == "offered" || item.status == "proposed";
+      });
+    },
     setDateTime: function() {
       this.params.startTime = this.date + " " + this.time;
       this.incidentalParams.startTime = this.date + " " + this.time;
@@ -1074,6 +1103,9 @@ export default {
       this.getScheduleMentorings();
       this.getNegotiateScheduleMentorings();
     },
+    // eslint-disable-next-line no-unused-vars
+    // filterConcluded(value, search, item) {
+    // },
   },
 };
 </script>

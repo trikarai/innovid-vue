@@ -10,8 +10,9 @@
           hide-default-footer
         >
           <template v-slot:item.teamname="{ item }">
-            <v-btn 
-              text
+            <v-btn
+              depressed
+              color="primary"
               :to="{
                 name: 'mentor-dashboard-participant-detail',
                 params: {
