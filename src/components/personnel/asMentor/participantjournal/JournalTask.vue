@@ -77,13 +77,13 @@ export default {
       loadJournal: false,
       journals: { total: 0, list: [] },
       tableHeaders: [
-        { text: "Team", value: "participant.team.name", sortable: false },
+        { text: "Team ", value: "participant.team.name", sortable: false },
         {
-          text: "Form",
+          text: "Form ",
           value: "worksheet.worksheetForm.name",
           sortable: false,
         },
-        { text: "Worksheet", value: "worksheet.name", sortable: false },
+        { text: "Worksheet ", value: "worksheet.name", sortable: false, groupable: false, },
         {
           text: "",
           value: "action",
