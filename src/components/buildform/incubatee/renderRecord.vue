@@ -144,6 +144,9 @@
             <v-card-text v-if="data.type == 'textarea'">{{
               data.value
             }}</v-card-text>
+            <v-card-text v-if="data.type == 'string'">{{
+              data.value
+            }}</v-card-text>
             <v-card-text v-if="data.type == 'attachment'">
               <template v-if="data.attachedFiles.length == 0">-</template>
               <template v-else>
