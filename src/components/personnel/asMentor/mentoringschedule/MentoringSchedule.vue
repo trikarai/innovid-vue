@@ -18,7 +18,7 @@
             offset-y="9"
             :value="negotiateschedulementorings.total !== 0"
             color="error"
-            :content="negotiateschedulementorings.total"
+            :content="filterSchedule(negotiateschedulementorings.list).length"
             >Session Request
           </v-badge></v-tab
         >
@@ -56,7 +56,7 @@
                 <v-data-table
                   :loading="negotiateLoad"
                   :headers="negotiatescheduleHeaders"
-                  :items="negotiateschedulementorings.list"
+                  :items="filterSchedule(negotiateschedulementorings.list)"
                   :options.sync="optionsNego"
                   :footer-props="{
                     'items-per-page-options': [5, 15, 25],
@@ -93,7 +93,16 @@
                     </v-row>
                   </template>
                   <template v-slot:item.status="{ item }">
-                    <v-chip x-small>{{ item.status }}</v-chip>
+                    <v-chip color="info" small v-if="item.status == 'proposed'"
+                      >Incubatee has proposed new schedule 
+                    </v-chip>
+                    <v-chip
+                      color="warning"
+                      small
+                      v-if="item.status == 'offered'"
+                      >waiting for incubatee’s confirmation</v-chip
+                    >
+                    <v-chip small v-else> {{ item.status }} </v-chip>
                   </template>
                   <template v-slot:item.action="{ item }">
                     <template v-if="!item.concluded">
@@ -397,6 +406,9 @@
   </v-container>
 </template>
 <script>
+import Vue from "vue";
+import lodash from "lodash";
+Vue.prototype._ = lodash;
 // eslint-disable-next-line no-unused-vars
 import bus from "@/config/bus";
 import * as config from "@/config/config";
@@ -497,6 +509,11 @@ export default {
     this.getNegotiateScheduleMentorings();
   },
   methods: {
+    filterSchedule(params) {
+      return this._.filter(params, (item) => {
+        return item.status == "offered" || item.status == "proposed";
+      });
+    },
     setDateTime: function() {
       this.incidentalParams.startTime = this.date + " " + this.time;
     },
