@@ -47,10 +47,7 @@
           </v-card-actions>
           <v-card-text class="pt-0 mt-2">
             <template v-if="!editWS">
-              <render-record
-                :fields="fields"
-                :canvasMode="mission.worksheetForm.description"
-              />
+              <render-record :fields="fields" :canvasMode="desc.renderAs" />
             </template>
             <template v-else>
               <render-form
@@ -135,6 +132,10 @@ export default {
       updateJ: false,
       worksheetDataLoad: false,
       user: {},
+      desc: {
+        renderAs: false,
+        description: "",
+      },
     };
   },
   created() {
@@ -144,8 +145,8 @@ export default {
   },
   watch: {
     journal() {
-      this.getWorksheet();
       this.getMission();
+      this.getWorksheet();
     },
     highlight() {
       this.$vuetify.goTo("#comment-module", {
@@ -155,6 +156,14 @@ export default {
   },
   mounted() {},
   methods: {
+    checkRenderMode() {
+      let tempObj = JSON.parse(this.missionTemp.worksheetForm.description);
+      if (tempObj.hasOwnProperty("renderAs")) {
+        this.desc = JSON.parse(this.missionTemp.worksheetForm.description);
+      } else {
+        this.desc.renderAs = false;
+      }
+    },
     getJournal() {
       this.loadJournal = true;
       this.axios
@@ -221,6 +230,7 @@ export default {
           this.mission = res.data.data;
           this.missionTemp = JSON.parse(JSON.stringify(res.data.data));
           this.dataList = JSON.parse(JSON.stringify(res.data.data));
+          this.checkRenderMode();
         })
         .catch(() => {})
         .finally(() => {
