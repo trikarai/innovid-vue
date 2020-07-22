@@ -43,7 +43,7 @@
             >
               <v-icon left>book</v-icon>Journals
             </v-btn>-->
-            <!-- <v-btn
+            <v-btn
               small
               color="primary"
               class="mr-2"
@@ -51,7 +51,7 @@
               :to="'/incubatee/team/' + $route.params.teamId + '/participation/' + item.id + '/mission'"
             >
               <v-icon left>emoji_objects</v-icon>Missions
-            </v-btn>-->
+            </v-btn>
           </template>
           <template v-slot:item.note="{item}">
             <template v-if="!item.program.removed">
@@ -183,7 +183,7 @@ export default {
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
         { text: "", value: "sub", sortable: false, align: "left" },
-        { text: "Status", value: "note", sortable: false, align: "left" },
+        { text: "", value: "note", sortable: false, align: "left" },
         { text: "", value: "action", sortable: false, align: "right" }
       ],
       tableHeaders2: [
@@ -214,7 +214,7 @@ export default {
   },
   mounted() {
     this.getDataList();
-    this.getDataList2();
+    // this.getDataList2();
   },
   methods: {
     getDataList() {
@@ -333,7 +333,7 @@ export default {
       this.dialogDelete = false;
       this.dialogDetail = false;
       this.getDataList();
-      this.getDataList2();
+      // this.getDataList2();
     }
   }
 };
