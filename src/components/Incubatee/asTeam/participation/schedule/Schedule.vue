@@ -107,7 +107,7 @@
                     >
                   </template>
                   <template v-slot:item.action="{ item }">
-                    <v-btn
+                    <!-- <v-btn
                       small
                       :to="{
                         name: 'team-mentoring-nego-detail',
@@ -119,7 +119,7 @@
                       }"
                     >
                       View
-                    </v-btn>
+                    </v-btn> -->
                     <template v-if="item.status != 'scheduled'">
                       <template v-if="item.status !== 'proposed'">
                         <template v-if="item.status !== 'cancelled'">
