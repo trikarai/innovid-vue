@@ -258,6 +258,17 @@ export default {
         moderator: "Rahmadayu",
         profilm: "Journey Manager Angel.ID",
       },
+      {
+        tanggal: "Selasa, 21 Juli 2020",
+        waktu: "19.00 - 20.30 WIB",
+        narasumber: "Indra Utoyo",
+        profil: "Managing Director of Digital Banking and IT of BRI",
+        topik:
+          "New Normal: Perubahan & Peluang Inovasi Pada Sektor Industri Perbankan",
+        // linkGoogleMeet: 'Diinformasikan ke email peserta yang terdaftar',
+        moderator: "Arief Widhiyasa",
+        profilm: "CEO Agate",
+      },
     ],
   }),
 };
