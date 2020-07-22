@@ -36,6 +36,7 @@ import TeamMemberWorksheetDetail from "../components/Incubatee/asTeam/worksheet/
 import TeamMemberMission from "../components/Incubatee/asTeam/participation/mission/Mission";
 import TeamMemberMissionDetail from "../components/Incubatee/asTeam/participation/mission/MissionDetail";
 import TeamMemberSchedules from "../components/Incubatee/asTeam/participation/schedule/Schedule";
+import TeamMemberNegoSchedulesDetail from "../components/Incubatee/asTeam/participation/schedule/NegoScheduleDetail";
 import TeamMemberSchedulesDetail from "../components/Incubatee/asTeam/participation/schedule/ScheduleDetail";
 import TeamMemberSchedulesReport from "../components/Incubatee/asTeam/participation/schedule/Report";
 import TeamMemberMentoring from "../components/Incubatee/asTeam/participation/schedule/MentoringList";
@@ -1223,6 +1224,20 @@ const routes = [
         name: "team-mentoring-report",
         meta: {
           text: "Mentoring Report",
+          level: 4,
+          requiredAuth: true,
+          incubateeAuth: true,
+          personnelAuth: false,
+          sysadminAuth: false,
+        },
+      },
+      {
+        path:
+          "/incubatee/team/:teamId/participation/:cohortId/negotiate-schedule/:scheduleId",
+        component: TeamMemberNegoSchedulesDetail,
+        name: "team-mentoring-nego-detail",
+        meta: {
+          text: "Proposed Schedule",
           level: 4,
           requiredAuth: true,
           incubateeAuth: true,
