@@ -23,6 +23,9 @@
       </v-col>
     </v-row> -->
     <v-row>
+      <v-col cols="12" xl="6" lg="6">
+        <v-alert type="info"> Click Arrow to expand sub journal </v-alert>
+      </v-col>
       <v-col cols="12" xl="12" lg="12">
         <v-treeview
           :active.sync="active"
@@ -35,8 +38,13 @@
         >
           <template #label="{item}">
             <template v-if="item.id !== null">
-              <v-btn color="primary" small icon @click="gotoJournal(item.id)">
-                <v-icon>zoom_in</v-icon> </v-btn
+              <v-btn
+                class="ma-2"
+                color="primary"
+                small
+                @click="gotoJournal(item.id)"
+              >
+                <v-icon small left>zoom_in</v-icon> View </v-btn
               >{{ item.mission.worksheetForm.name }} -
               {{ item.worksheet.name }}
             </template>
