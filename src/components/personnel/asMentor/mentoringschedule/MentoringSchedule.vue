@@ -15,7 +15,9 @@
       <v-tabs v-model="tab" background-color="primary" dark grow>
         <v-tab key="1"
           ><v-badge
-            :value="filterSchedule(negotiateschedulementorings.list).length !== 0"
+            :value="
+              filterSchedule(negotiateschedulementorings.list).length !== 0
+            "
             color="error"
             :content="filterSchedule(negotiateschedulementorings.list).length"
             >Session Request
@@ -90,7 +92,7 @@
                   </template>
                   <template v-slot:item.status="{ item }">
                     <v-chip color="info" small v-if="item.status == 'proposed'"
-                      >Incubatee has proposed new schedule 
+                      >Incubatee has proposed new schedule
                     </v-chip>
                     <v-chip
                       color="warning"
@@ -653,7 +655,8 @@ export default {
             "info",
             "Successfully " + this.leftAction + " Schedule"
           );
-          this.$emit("refresh");
+          // this.$emit("refresh");
+          this.refresh();
         })
         .catch((res) => {
           bus.$emit("callNotif", "error", res);
