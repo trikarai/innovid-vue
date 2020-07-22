@@ -15,7 +15,7 @@
       <v-tabs v-model="tab" background-color="primary" dark grow>
         <v-tab key="1"
           ><v-badge
-            :value="negotiateschedulementorings.total !== 0"
+            :value="filterSchedule(negotiateschedulementorings.list).length !== 0"
             color="error"
             :content="filterSchedule(negotiateschedulementorings.list).length"
             >Session Request
@@ -98,7 +98,6 @@
                       v-if="item.status == 'offered'"
                       >waiting for incubatee’s confirmation</v-chip
                     >
-                    <v-chip small v-else> {{ item.status }} </v-chip>
                   </template>
                   <template v-slot:item.action="{ item }">
                     <template v-if="!item.concluded">
