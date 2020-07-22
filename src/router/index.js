@@ -108,6 +108,8 @@ import MentorDashboardParticipantJournal from "../components/personnel/asMentor/
 import MentorDashboardMentoringSchedule from "../components/personnel/asMentor/mentoringschedule/MentoringSchedule";
 import MentorIntroduction from "../components/personnel/asMentor/introduction/Introduction";
 
+import MentorLearningMaterial from "../components/personnel/asMentor/learningMaterial";
+
 import PastEvent from "../components/PastEvent"
 
 import ConferenceComponent from "../components/Conference";
@@ -684,6 +686,18 @@ const routes = [
         },
       },
       {
+      path: "/personnel/mentor/learning-material",
+          component: MentorLearningMaterial,
+          name: "mentor-learning-material",
+          meta: {
+            text: "Mentor Learning Material",
+            level: 1,
+            requiredAuth: true,
+            personnelAuth: true,
+            sysadminAuth: false,
+          },
+      },
+      {
         path: "/personnel/mentor/mentoring-schedule",
         component: MentorDashboardMentoringSchedule,
         name: "mentor-dashboard-mentoring-schedule",
@@ -792,6 +806,7 @@ const routes = [
           personnelAuth: true,
           sysadminAuth: false,
         },
+
       },
     ],
   },
