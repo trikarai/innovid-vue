@@ -30,7 +30,9 @@
       <v-tabs v-model="tab" background-color="primary" dark grow>
         <v-tab key="1"
           ><v-badge
-            :value="negotiateschedulementorings.total !== 0"
+            :value="
+              filterSchedule(negotiateschedulementorings.list).length !== 0
+            "
             color="error"
             :content="filterSchedule(negotiateschedulementorings.list).length"
             >Session Request
@@ -103,9 +105,21 @@
                       v-if="item.status == 'offered'"
                       >Mentor has proposed new schedule</v-chip
                     >
-                    <v-chip small v-else> {{ item.status }} </v-chip>
                   </template>
                   <template v-slot:item.action="{ item }">
+                    <!-- <v-btn
+                      small
+                      :to="{
+                        name: 'team-mentoring-nego-detail',
+                        params: {
+                          scheduleId: item.id,
+                          teamId: $route.params.teamId,
+                          cohortId: $route.params.cohortId,
+                        },
+                      }"
+                    >
+                      View
+                    </v-btn> -->
                     <template v-if="item.status != 'scheduled'">
                       <template v-if="item.status !== 'proposed'">
                         <template v-if="item.status !== 'cancelled'">
