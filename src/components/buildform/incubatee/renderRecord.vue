@@ -139,7 +139,7 @@
           >
             <v-card-title>
               <span class="left-accent"></span>
-              <span class="subtitle">{{ data.field.name }}</span>
+              <span style="font-size:12px;" class="subtitle lbltaitel">{{ data.field.name }}</span>
             </v-card-title>
             <v-card-text v-if="data.type == 'textarea'">{{
               data.value
@@ -456,9 +456,9 @@ export default {
 .left-accent {
   background: #00667f;
   width: 4px;
-  height: 20px;
+  height: 28px;
   display: inline-block;
-  margin-right: 6px;
+  /* margin-right: 6px; */
   /* top: 2px; */
   position: relative;
 }
@@ -482,5 +482,12 @@ export default {
   border-left-color: black;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+}
+.lbltaitel {
+  font-size: 12px;
+  background: #c1f3ff;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 0px;
 }
 </style>
