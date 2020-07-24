@@ -8,7 +8,18 @@
           </v-card-title>
           <v-expansion-panels>
             <v-card class="container mb-5">
-            <v-card-title>1. Superhero of Me</v-card-title>
+            <v-card-title style="font-size: 14px;word-break: break-word;"><b class="misi mb-3">Misi 1</b> Pada tahap ini, setiap founder diminta untuk mengenali visi hidupnya. Harapannya, founder dapat menyelaraskan aktivitas bisnis yang dipilihnya dengan visi hidupnya.</v-card-title>
+            <v-expansion-panel>
+              <v-expansion-panel-header class="grey--text text--darken-1"
+                ><b
+                  >Objective & Worksheet</b
+                ></v-expansion-panel-header
+              >
+              <v-expansion-panel-content>
+                <v-img src="/img/Mission1.png"></v-img>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-card-title class="pidio">Video</v-card-title>
             <v-expansion-panel>
               <v-expansion-panel-header class="grey--text text--darken-1"
                 ><b
@@ -21,7 +32,18 @@
             </v-expansion-panel>
              </v-card>
              <v-card class="container mb-5">
-            <v-card-title>2. Area Inovasi</v-card-title>
+            <v-card-title style="font-size: 14px;word-break: break-word;"><b class="misi mb-3">Misi 2</b> Pada tahap ini, startup diminta untuk menjelaskan area inovasi yang dipiihnya, beserta analisa singkat mengenai ekosistem industri eksisting pada area yang dipilih. Analisa ekosistem industri bertujuan untuk mengidentifikasi stakeholder yang ada beserta kebutuhan dari masing-masing stakeholder tersebut. Tujuannya agar startup memiliki wawasan yang lengkap terhadap sektor yang dimasukinya, dan terbuka atas adanya peluang lain di sektor itu, selain dari ide awal yang sudah ada di benaknya.</v-card-title>
+            <v-expansion-panel>
+              <v-expansion-panel-header class="grey--text text--darken-1"
+                ><b
+                  >Objective & Worksheet</b
+                ></v-expansion-panel-header
+              >
+              <v-expansion-panel-content>
+                <v-img src="/img/Mission2.png"></v-img>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-card-title class="pidio">Video</v-card-title>
             <v-expansion-panel>
               <v-expansion-panel-header class="grey--text text--darken-1"
                 ><b
@@ -42,7 +64,19 @@
             </v-expansion-panel>
              </v-card>
              <v-card class="container mb-5">
-            <v-card-title>3. Explorasi Peluang Bisnis</v-card-title>
+            <v-card-title style="font-size: 14px;word-break: break-word;"><b class="misi mb-3">Misi 3</b> Pada tahap ini, startup diminta untuk mengeksplor peluang-peluang bisnis yang dapat tercipta dengan masing-masing stakeholder yang sudah teridentifikasi di misi sebelumnya.</v-card-title>
+            <v-expansion-panel>
+              <v-expansion-panel-header class="grey--text text--darken-1"
+                ><b
+                  >Objective & Worksheet</b
+                ></v-expansion-panel-header
+              >
+              <v-expansion-panel-content>
+                <v-img src="/img/Mission3A.png"></v-img>
+                <v-img src="/img/Mission3B.png"></v-img>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-card-title class="pidio">Video</v-card-title>
             <v-expansion-panel>
               <v-expansion-panel-header class="grey--text text--darken-1"
                 ><b>Inovasi Solusi dengan SCAMPER</b>
@@ -69,7 +103,18 @@
             </v-expansion-panel>
              </v-card>
              <v-card class="container mb-5">
-            <v-card-title>4. Solusi Existing</v-card-title>
+            <v-card-title style="font-size: 14px;word-break: break-word;"><b class="misi mb-3">Misi 4</b>Pada tahap ini, startup diminta untuk mengidentifikasi dan analisa solusi-solusi eksisting yang terkait dengan ide solusi yang sudah terpikirkan dari misi ke-3. Analisa ini akan bermanfaat untuk melengkapi pemahaman atas permasalahan yang dialami calon pelanggan selain juga untuk membantu startup menetapkan keunikan produknya.</v-card-title>
+            <v-expansion-panel>
+              <v-expansion-panel-header class="grey--text text--darken-1"
+                ><b
+                  >Objective & Worksheet</b
+                ></v-expansion-panel-header
+              >
+              <v-expansion-panel-content>
+                <v-img src="/img/Mission4.png"></v-img>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-card-title class="pidio">Video</v-card-title>
             <v-expansion-panel>
               <v-expansion-panel-header class="grey--text text--darken-1"
                 ><b>Analisa Solusi Existing</b>
@@ -80,7 +125,18 @@
             </v-expansion-panel>
              </v-card>
               <v-card class="container mb-5">
-            <v-card-title>5. Segmen & Persona Pengguna</v-card-title>
+            <v-card-title style="font-size: 14px;word-break: break-word;"><b class="misi mb-3">Misi 5</b>Pada tahap ini, startup diminta untuk membuat hipotesa mengenai kriteria dan persona dari calon pelanggan yang dituju untuk konsep solusi yang sudah diidentifikasi pada misi ke-3.</v-card-title>
+            <v-expansion-panel>
+              <v-expansion-panel-header class="grey--text text--darken-1"
+                ><b
+                  >Objective & Worksheet</b
+                ></v-expansion-panel-header
+              >
+              <v-expansion-panel-content>
+                <v-img src="/img/Mission5.png"></v-img>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-card-title class="pidio">Video</v-card-title>
             <v-expansion-panel>
               <v-expansion-panel-header class="grey--text text--darken-1"
                 ><b>Segmen Pengguna</b>
@@ -111,3 +167,16 @@ export default {
 
 }
 </script>
+
+<style scoped>
+.misi {
+  background: #00667f;
+  color: #fff;
+  padding: 0px 10px 0px 10px;
+}
+.pidio {
+  font-size: 14px;
+  word-break: break-word;
+  margin-left:8px;
+}
+</style>
