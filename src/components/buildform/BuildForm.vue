@@ -102,7 +102,6 @@
                   fab
                   color="primary"
                   @click="addRadio"
-                  :disabled="desc.renderAs"
                 >
                   <v-icon small>add</v-icon>
                 </v-btn>
@@ -125,7 +124,6 @@
                   fab
                   color="primary"
                   @click="addSelectMulti"
-                  :disabled="desc.renderAs"
                 >
                   <v-icon small>add</v-icon>
                 </v-btn>
@@ -262,9 +260,8 @@
             <v-card-text style="text-align:center;">
               <template v-if="fields.length == 0">
                 <v-chip color="warning">
-                  <v-avatar left>
-                    <v-icon>post_add</v-icon> </v-avatar
-                  >No Fields Added
+                  <v-avatar left> <v-icon>post_add</v-icon> </v-avatar>No Fields
+                  Added
                 </v-chip>
               </template>
               <template v-else>
