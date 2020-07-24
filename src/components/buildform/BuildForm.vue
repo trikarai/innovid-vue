@@ -4,9 +4,9 @@
       <v-col md="4" v-show="leftmenu">
         <v-card min-height="100%">
           <v-card-title primary-title>Field Properties</v-card-title>
-          <v-card-text>{{field}}</v-card-text>
+          <v-card-text>{{ field }}</v-card-text>
           <v-card-actions>
-            <v-btn color="success" @click="leftmenu = !leftmenu ">close</v-btn>
+            <v-btn color="success" @click="leftmenu = !leftmenu">close</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -20,7 +20,13 @@
           <v-card-text>
             <v-row>
               <v-col class="my-0 py-0" md="9">
-                <v-text-field disabled dense label="String" outlined clearable></v-text-field>
+                <v-text-field
+                  disabled
+                  dense
+                  label="String"
+                  outlined
+                  clearable
+                ></v-text-field>
               </v-col>
               <v-col class="my-0 py-0" md="3" v-if="field">
                 <v-btn
@@ -29,7 +35,6 @@
                   fab
                   color="primary"
                   @click="addString"
-                  :disabled="desc.renderAs"
                 >
                   <v-icon small>add</v-icon>
                 </v-btn>
@@ -47,13 +52,26 @@
                 ></v-textarea>
               </v-col>
               <v-col class="my-0 py-0" md="3">
-                <v-btn class="mt-1" x-small fab color="primary" @click="addTextarea">
+                <v-btn
+                  class="mt-1"
+                  x-small
+                  fab
+                  color="primary"
+                  @click="addTextarea"
+                >
                   <v-icon small>add</v-icon>
                 </v-btn>
               </v-col>
               <!-- <v-divider></v-divider> -->
               <v-col class="my-0 py-0" md="9">
-                <v-text-field disabled dense label="Integer" type="number" outlined clearable></v-text-field>
+                <v-text-field
+                  disabled
+                  dense
+                  label="Integer"
+                  type="number"
+                  outlined
+                  clearable
+                ></v-text-field>
               </v-col>
               <v-col class="my-0 py-0" md="3">
                 <v-btn
@@ -62,14 +80,19 @@
                   fab
                   color="primary"
                   @click="addInteger"
-                  :disabled="desc.renderAs"
                 >
                   <v-icon small>add</v-icon>
                 </v-btn>
               </v-col>
               <v-col class="my-0 py-0" md="9">
                 <v-radio-group>
-                  <v-radio disabled v-for="n in 2" :key="n" :label="`Radio ${n}`" :value="n"></v-radio>
+                  <v-radio
+                    disabled
+                    v-for="n in 2"
+                    :key="n"
+                    :label="`Radio ${n}`"
+                    :value="n"
+                  ></v-radio>
                 </v-radio-group>
               </v-col>
               <v-col class="my-0 py-0" md="3">
@@ -108,10 +131,22 @@
                 </v-btn>
               </v-col>
               <v-col class="my-0 py-0" md="9">
-                <v-file-input disabled dense label="File input" clearable outlined></v-file-input>
+                <v-file-input
+                  disabled
+                  dense
+                  label="File input"
+                  clearable
+                  outlined
+                ></v-file-input>
               </v-col>
               <v-col class="my-0 py-0" md="3">
-                <v-btn class="mt-1" x-small fab color="primary" @click="addAttachment">
+                <v-btn
+                  class="mt-1"
+                  x-small
+                  fab
+                  color="primary"
+                  @click="addAttachment"
+                >
                   <v-icon small>add</v-icon>
                 </v-btn>
               </v-col>
@@ -150,7 +185,13 @@
           <v-card-text>
             <v-row>
               <v-col md="12">
-                <v-text-field counter="25" maxlength="25" label="name" v-model="params.name" filled></v-text-field>
+                <v-text-field
+                  counter="25"
+                  maxlength="25"
+                  label="name"
+                  v-model="params.name"
+                  filled
+                ></v-text-field>
               </v-col>
               <v-col md="12">
                 <v-textarea
@@ -164,7 +205,11 @@
               </v-col>
               <v-col v-if="canvasMode">
                 <template v-if="fields.length == 0">
-                  <v-radio-group v-model="desc.renderAs" row :disabled="desc.renderAs">
+                  <v-radio-group
+                    v-model="desc.renderAs"
+                    row
+                    :disabled="desc.renderAs"
+                  >
                     <v-radio color="primary" :value="false">
                       <template v-slot:label>
                         <div>
@@ -205,13 +250,10 @@
                 </template>
               </v-col>
               <v-col md="12" v-if="desc.renderAs">
-                <v-alert
-                  text
-                  prominent
-                  type="error"
-                  icon="warning"
-                  dismissible
-                >Canvas is Experimental Feature, please use with cautious</v-alert>
+                <v-alert text prominent type="error" icon="warning" dismissible
+                  >Canvas is Experimental Feature, please use with
+                  cautious</v-alert
+                >
               </v-col>
             </v-row>
           </v-card-text>
@@ -221,28 +263,41 @@
               <template v-if="fields.length == 0">
                 <v-chip color="warning">
                   <v-avatar left>
-                    <v-icon>post_add</v-icon>
-                  </v-avatar>No Fields Added
+                    <v-icon>post_add</v-icon> </v-avatar
+                  >No Fields Added
                 </v-chip>
               </template>
               <template v-else>
                 <v-divider></v-divider>
               </template>
             </v-card-text>
-            <v-progress-circular indeterminate color="primary" v-if="loader"></v-progress-circular>
+            <v-progress-circular
+              indeterminate
+              color="primary"
+              v-if="loader"
+            ></v-progress-circular>
             <transition-group name="slide-fade">
               <template v-for="(field, index) in fields">
                 <v-row :key="index" class="my-0 py-0">
                   <v-col class="my-0 py-0" md="8">
                     <v-row>
                       <v-col class="mt-4" md="2">
-                        <v-btn fab x-small color="primary" @click="openProperties(index, field)">
+                        <v-btn
+                          fab
+                          x-small
+                          color="primary"
+                          @click="openProperties(index, field)"
+                        >
                           <v-icon small>build</v-icon>
                         </v-btn>
                       </v-col>
                       <v-col md="10">
                         <!-- Order : {{field.position}} -->
-                        <field-module :field="field" :index="index" :build="buildmode" />
+                        <field-module
+                          :field="field"
+                          :index="index"
+                          :build="buildmode"
+                        />
                       </v-col>
                     </v-row>
                   </v-col>
@@ -304,7 +359,11 @@
             >
               <v-icon left>view_quilt</v-icon>Canvas Preview
             </v-btn>
-            <v-btn color="primary" @click="buildFormJSON()" :loading="loadBuild">
+            <v-btn
+              color="primary"
+              @click="buildFormJSON()"
+              :loading="loadBuild"
+            >
               <v-icon left>save</v-icon>Save
             </v-btn>
             <v-btn @click="resetField" color="warning">reset</v-btn>
@@ -313,7 +372,7 @@
             <v-row>
               <v-col md="6">
                 <!-- <pre>{{params}}</pre> -->
-                <pre>{{fields}}</pre>
+                <pre>{{ fields }}</pre>
               </v-col>
               <v-col md="6">
                 <!-- <pre>{{fields}}</pre> -->
@@ -336,25 +395,35 @@
           <template v-slot:activator="{ on }">
             <span v-on="on">grid-row-start</span>
           </template>
-          <span>Specifies on which row to start displaying the item.</span>
-        </v-tooltip>/
+          <span
+            >Specifies on which row to start displaying the item.</span
+          > </v-tooltip
+        >/
         <v-tooltip top>
           <template v-slot:activator="{ on }">
             <span v-on="on">grid-column-start</span>
           </template>
-          <span>Specifies on which column to start displaying the item.</span>
-        </v-tooltip>/
+          <span
+            >Specifies on which column to start displaying the item.</span
+          > </v-tooltip
+        >/
         <v-tooltip top>
           <template v-slot:activator="{ on }">
             <span v-on="on">grid-row-end</span>
           </template>
-          <span>Specifies on which row-line to stop displaying the item, or how many rows to span.</span>
-        </v-tooltip>/
+          <span
+            >Specifies on which row-line to stop displaying the item, or how
+            many rows to span.</span
+          > </v-tooltip
+        >/
         <v-tooltip top>
           <template v-slot:activator="{ on }">
             <span v-on="on">grid-column-end</span>
           </template>
-          <span>Specifies on which column-line to stop displaying the item, or how many columns to span.</span>
+          <span
+            >Specifies on which column-line to stop displaying the item, or how
+            many columns to span.</span
+          >
         </v-tooltip>
       </v-col>
       <v-col md="12" lg="12">
@@ -367,8 +436,8 @@
               elevation="2"
               outlined
             >
-              <v-card-title>{{field.name}}</v-card-title>
-              <v-card-text>{{field.position}}</v-card-text>
+              <v-card-title>{{ field.name }}</v-card-title>
+              <v-card-text>{{ field.position }}</v-card-text>
             </v-card>
           </template>
         </div>
@@ -379,12 +448,19 @@
       <v-dialog v-model="dialogPreview" :width="desc.renderAs ? '1000' : '500'">
         <v-card class="pa-5">
           <v-card-title>
-            <span class="headline">{{params.name}} {{desc.renderAs ? 'Canvas' : 'From'}} Preview</span>
+            <span class="headline"
+              >{{ params.name }}
+              {{ desc.renderAs ? "Canvas" : "From" }} Preview</span
+            >
           </v-card-title>
           <v-card-text v-if="!desc.renderAs">
             <template v-for="(field, index) in reOrderField(fields)">
               <v-row :key="index">
-                <field-module :field="field" :index="index" :build="buildmode" />
+                <field-module
+                  :field="field"
+                  :index="index"
+                  :build="buildmode"
+                />
               </v-row>
             </template>
           </v-card-text>
@@ -420,11 +496,21 @@
       <v-dialog v-model="dialogPropesties" width="500px">
         <v-card>
           <v-card-text>
-            <props-module :index="indexPropesties" :field="field" :canvasMode="desc.renderAs" />
+            <props-module
+              :index="indexPropesties"
+              :field="field"
+              :canvasMode="desc.renderAs"
+            />
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn class="mb-5" color="primary" text @click="dialogPropesties = false">Done</v-btn>
+            <v-btn
+              class="mb-5"
+              color="primary"
+              text
+              @click="dialogPropesties = false"
+              >Done</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -468,7 +554,7 @@ export default {
         integerFields: [],
         attachmentFields: [],
         singleSelectFields: [],
-        multiSelectFields: []
+        multiSelectFields: [],
       },
       fields: [],
       fieldsOrdered: [],
@@ -478,12 +564,12 @@ export default {
       loadBuild: false,
       dataSingle: "",
       position: { scrollTop: 0, scrollLeft: 0 },
-      desc: { renderAs: false, description: "" }
+      desc: { renderAs: false, description: "" },
     };
   },
   components: {
     FieldModule,
-    PropsModule
+    PropsModule,
   },
 
   watch: {
@@ -493,8 +579,8 @@ export default {
       // eslint-disable-next-line no-unused-vars
       handler(newValue, oldValue) {
         this.params.description = JSON.stringify(this.desc);
-      }
-    }
+      },
+    },
   },
   created() {
     bus.$on("resetField", () => {
@@ -541,7 +627,7 @@ export default {
         minValue: 3,
         maxValue: 150,
         placeholder: "",
-        type: "string"
+        type: "string",
       });
       field.position = this.getLastOrder();
       this.fields.push(field);
@@ -558,7 +644,7 @@ export default {
         minValue: 10,
         maxValue: 350,
         placeholder: "",
-        type: "textarea"
+        type: "textarea",
       });
 
       this.desc.renderAs
@@ -580,7 +666,7 @@ export default {
         minValue: 0,
         maxValue: 20,
         placeholder: "",
-        type: "integer"
+        type: "integer",
       });
       field.position = this.getLastOrder();
       this.fields.push(field);
@@ -600,16 +686,16 @@ export default {
             id: "",
             name: "selection 1",
             description: "",
-            position: 1
+            position: 1,
           },
           {
             id: "",
             name: "selection 2",
             description: "",
-            position: 2
-          }
+            position: 2,
+          },
         ],
-        type: "radio"
+        type: "radio",
       });
       field.position = this.getLastOrder();
       this.fields.push(field);
@@ -631,10 +717,10 @@ export default {
             id: "",
             name: "selection 1",
             description: "",
-            position: 1
-          }
+            position: 1,
+          },
         ],
-        type: "select"
+        type: "select",
       });
       field.position = this.getLastOrder();
       this.fields.push(field);
@@ -652,7 +738,7 @@ export default {
         maxValue: 1,
         minSize: 0,
         maxSize: 10,
-        type: "attachment"
+        type: "attachment",
       });
       this.desc.renderAs
         ? (field.position = "")
@@ -743,10 +829,10 @@ export default {
             "/" +
             this.$route.params.formId,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.dataSingle = res.data.data;
           this.params.name = this.dataSingle.name;
           this.desc.renderAs = false;
@@ -777,8 +863,8 @@ export default {
       // More information about these options
       // is located here: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
       this.isIntersecting = false;
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
