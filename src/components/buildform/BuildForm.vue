@@ -102,7 +102,6 @@
                   fab
                   color="primary"
                   @click="addRadio"
-                  :disabled="desc.renderAs"
                 >
                   <v-icon small>add</v-icon>
                 </v-btn>
@@ -125,7 +124,6 @@
                   fab
                   color="primary"
                   @click="addSelectMulti"
-                  :disabled="desc.renderAs"
                 >
                   <v-icon small>add</v-icon>
                 </v-btn>
