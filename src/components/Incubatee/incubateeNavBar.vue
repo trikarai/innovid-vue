@@ -201,9 +201,7 @@
             <v-icon>today</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text text--darken-1"
-              >Mentoring</v-list-item-title
-            >
+            <v-list-item-title class="grey--text text--darken-1">Mentoring</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item
@@ -220,9 +218,7 @@
             <v-icon>assignment</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text text--darken-1"
-              >Journal</v-list-item-title
-            >
+            <v-list-item-title class="grey--text text--darken-1">Journal</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -292,9 +288,7 @@
           router
           :to="'/incubatee/team/' + teamId + '/profile'"
         >
-          <v-list-item-title class="grey--text text--darken-1"
-            >Team Profile</v-list-item-title
-          >
+          <v-list-item-title class="grey--text text--darken-1">Team Profile</v-list-item-title>
           <v-list-item-icon>
             <!-- <v-icon>group_work</v-icon> -->
           </v-list-item-icon>
@@ -305,9 +299,7 @@
           router
           :to="'/incubatee/team/' + teamId + '/member'"
         >
-          <v-list-item-title class="grey--text text--darken-1"
-            >Members</v-list-item-title
-          >
+          <v-list-item-title class="grey--text text--darken-1">Members</v-list-item-title>
           <v-list-item-icon>
             <!-- <v-icon>group</v-icon> -->
           </v-list-item-icon>
@@ -318,9 +310,7 @@
           router
           :to="'/incubatee/team/' + teamId + '/worksheet'"
         >
-          <v-list-item-title class="grey--text text--darken-1"
-            >Worksheet</v-list-item-title
-          >
+          <v-list-item-title class="grey--text text--darken-1">Worksheet</v-list-item-title>
           <v-list-item-icon>
             <!-- <v-icon>assignments</v-icon> -->
           </v-list-item-icon>
@@ -363,9 +353,7 @@
             <v-icon color="#676767">account_circle</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="grey--text text--darken-1"
-              >My Profile</v-list-item-title
-            >
+            <v-list-item-title class="grey--text text--darken-1">My Profile</v-list-item-title>
           </v-list-item-content>
         </template>
 
@@ -583,16 +571,6 @@ export default {
   watch: {
     selectedMembership() {
       this.getParticipations();
-    },
-    participation() {
-      this.$router.push({
-        path:
-          "/incubatee/team/" +
-          this.teamId +
-          "/participation/" +
-          this.participation.id +
-          "/mission",
-      });
     },
   },
   mounted() {
