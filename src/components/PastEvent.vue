@@ -60,6 +60,22 @@
                 <iframe id="kaltura_player_1595579997" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1595579997&entry_id=0_2g4q7qgg" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
               </v-expansion-panel-content>
             </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header
+                ><b>Perubahan & Peluang Inovasi Pada Sektor Industri Manufaktur - Salman Subakat</b>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <iframe id="kaltura_player_1596342206" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1596342206&entry_id=0_axafc2ew" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header
+                ><b>Mengubah Permasalahan Menjadi Peluang Bisnis - Sugianto Halim</b>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <iframe id="kaltura_player_1596342564" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1596342564&entry_id=0_dsqb9irn" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
 
           </v-expansion-panels>
         </v-card>
