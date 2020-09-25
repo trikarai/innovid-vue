@@ -1,7 +1,6 @@
 <template>
   <!-- <v-container> -->
   <!-- <v-row>Reload : {{modeReload}}</v-row> -->
-
   <v-row>
     <v-col class="mt-0 pt-0">
       <v-card class="pa-5 mt-6" :loading="loader">
@@ -120,6 +119,9 @@ export default {
   },
   mounted() {
     this.refactorJSON(this.formTemplate);
+    for (let index = 0; index < this.fields.length - 1; index++) {
+      this.params.splice(index, 1, {});
+    }
   },
   updated() {
     this.formName = this.formTemplate.name;
