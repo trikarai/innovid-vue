@@ -443,6 +443,10 @@ export default {
     bus.$on("changeDashboardParticipant", (participationId) => {
       this.participationId = participationId;
     });
+    bus.$on("getAvailProgram", (teamId) => {
+      this.teamId = teamId;
+      this.getAvailablePrograms();
+    });
     if (localStorage.getItem("DashboardTeamId")) {
       this.teamId = localStorage.getItem("DashboardTeamId");
     }
@@ -458,12 +462,12 @@ export default {
     },
   },
   mounted() {
-    this.user = JSON.parse(auth.getAuthData());
-    if (!localStorage.getItem("DashboardTeamId")) {
-      this.getFounderProgram();
-    } else {
-      this.showFounderProgram = false;
-    }
+    // this.user = JSON.parse(auth.getAuthData());
+    // if (!localStorage.getItem("DashboardTeamId")) {
+    this.getFounderProgram();
+    // } else {
+    //   this.showFounderProgram = false;
+    // }
   },
   methods: {
     getFounderProgram() {
@@ -525,6 +529,7 @@ export default {
         .then((res) => {
           if (res.data.data) {
             this.availablePrograms = res.data.data;
+            this.showFounderProgram = false;
           } else {
             this.availablePrograms = { total: 0, list: [] };
           }

@@ -4,6 +4,7 @@ if (process.env.NODE_ENV === "production") {
   // baseUrl = 'https://innov.id/bara-inovasi/public/api';
 } else {
   var localhost = "http://localhost";
+  // var localhost = "https://innov.id";
   baseUrl = localhost + "/bara-inovasi/public/api";
 }
 export const baseUri = baseUrl;
