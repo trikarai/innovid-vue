@@ -13,7 +13,7 @@
       outlined
     >
       <template v-slot:label>
-        <div :class="{required : field.required}">{{field.name}}</div>
+        <div :class="{ required: field.required }">{{ field.name }}</div>
       </template>
     </v-select>
 
@@ -35,10 +35,12 @@
       @change="checkMinMax()"
     >
       <template v-slot:label>
-        <div :class="{required : field.required}">{{field.name}}</div>
+        <div :class="{ required: field.required }">{{ field.name }}</div>
       </template>
     </v-select>
-    <template v-if="field.required">Min:{{field.minValue}} Max:{{field.maxValue}}</template>
+    <template v-if="field.required"
+      >Min:{{ field.minValue }} Max:{{ field.maxValue }}</template
+    >
   </v-col>
 </template>
 <script>
@@ -55,12 +57,12 @@ export default {
       clearable: false,
       errorMessages: [],
       optionList: [],
-      isError: false
+      isError: false,
     };
   },
   created() {
     if (this.modeReload) {
-      this.field.selectedOptions.forEach(element => {
+      this.field.selectedOptions.forEach((element) => {
         this.optionList.push(element.option.id);
       });
       // this.optionList = this.field.selectedOption.id;
@@ -81,17 +83,17 @@ export default {
         params = {
           fieldId: this.field.multiSelectField.id,
           selectedOptionIdList: this.optionList,
-          type: this.field.type
+          type: this.field.type,
         };
       } else {
         params = {
           fieldId: this.field.id,
           selectedOptionIdList: this.optionList,
-          type: this.field.type
+          type: this.field.type,
         };
       }
       bus.$emit("getValue", params, this.index);
-    }
+    },
   },
   methods: {
     checkMinMax() {
@@ -109,11 +111,9 @@ export default {
           this.isError = false;
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped>
-</style>
-
+<style scoped></style>

@@ -13,7 +13,7 @@
       v-model="value"
     >
       <template v-slot:label>
-        <div :class="{required : field.required}">{{field.name}}</div>
+        <div :class="{ required: field.required }">{{ field.name }}</div>
       </template>
     </v-textarea>
   </v-col>
@@ -29,7 +29,7 @@ export default {
   data: function() {
     return {
       clearable: true,
-      value: ""
+      value: "",
     };
   },
   watch: {},
@@ -37,10 +37,8 @@ export default {
     if (this.modeReload) {
       this.value = this.field.value;
     }
-  }
+  },
 };
 </script>
 
-<style scoped>
-</style>
-
+<style scoped></style>
