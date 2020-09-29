@@ -126,6 +126,11 @@ const routes = [
     component: Home,
   },
   {
+    path: "/mikti",
+    name: "Start MIKTI",
+    component: Home,
+  },
+  {
     path: "/signup/:incubatorIdentifier?",
     name: "incubateesignup",
     component: IncubateeSignup,
