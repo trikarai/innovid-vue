@@ -164,7 +164,40 @@
 
       <section id="accent3" style="background: #fff !important;"></section>
 
-      <section style="min-height:400px;" class="mt-12">
+      <section class="pt-10">
+        <v-row class="pa-5">
+          <v-col cols="12">
+            <div class="text-center">
+              <h2 class="mb-1 headline">Community Partner</h2>
+            </div>
+          </v-col>
+          <v-col
+            v-for="com in community"
+            :key="com.id"
+            class="d-flex child-flex"
+            cols="12"
+            lg="2"
+          >
+            <v-img
+              :src="com.logo"
+              :lazy-src="com.logo"
+              aspect-ratio="1"
+              contain
+            >
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
+          </v-col>
+        </v-row>
+      </section>
+
+      <section style="min-height:400px;">
         <v-container grid-list-xl>
           <v-layout row wrap justify-center class="my-12 text-center">
             <v-flex class="my-11">
@@ -222,6 +255,14 @@ export default {
       title: "Home",
       dialogMentor: false,
       mentor: {},
+      community: [
+        { id: "1", name: "", logo: "/img/community/logo_malang.png" },
+        { id: "2", name: "", logo: "/img/community/logo_startup_borneo.png" },
+        { id: "3", name: "", logo: "/img/community/logo_sub.png" },
+        { id: "4", name: "", logo: "/img/community/logo_subali.png" },
+        { id: "5", name: "", logo: "/img/community/logo_suwec.jpg" },
+        { id: "6", name: "", logo: "/img/community/logo_uxid.png" },
+      ],
       carousels: [
         {
           mentors: [
