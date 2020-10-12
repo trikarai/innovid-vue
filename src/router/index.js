@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import StartMikti from "../views/StartMikti.vue";
 import NotFoundComponent from "../views/404.vue";
 
 import IncubateeSignup from "../views/signup/IncubateeSignup";
@@ -111,7 +112,7 @@ import MentorIntroduction from "../components/personnel/asMentor/introduction/In
 
 import MentorLearningMaterial from "../components/personnel/asMentor/learningMaterial";
 
-import PastEvent from "../components/PastEvent"
+import PastEvent from "../components/PastEvent";
 
 import ConferenceComponent from "../components/Conference";
 
@@ -127,8 +128,8 @@ const routes = [
   },
   {
     path: "/mikti",
-    name: "Start MIKTI",
-    component: Home,
+    name: "mikti-home",
+    component: StartMikti,
   },
   {
     path: "/signup/:incubatorIdentifier?",
@@ -692,16 +693,16 @@ const routes = [
         },
       },
       {
-      path: "/personnel/mentor/learning-material",
-          component: MentorLearningMaterial,
-          name: "mentor-learning-material",
-          meta: {
-            text: "Mentor Learning Material",
-            level: 1,
-            requiredAuth: true,
-            personnelAuth: true,
-            sysadminAuth: false,
-          },
+        path: "/personnel/mentor/learning-material",
+        component: MentorLearningMaterial,
+        name: "mentor-learning-material",
+        meta: {
+          text: "Mentor Learning Material",
+          level: 1,
+          requiredAuth: true,
+          personnelAuth: true,
+          sysadminAuth: false,
+        },
       },
       {
         path: "/personnel/mentor/mentoring-schedule",
@@ -812,7 +813,6 @@ const routes = [
           personnelAuth: true,
           sysadminAuth: false,
         },
-
       },
     ],
   },
