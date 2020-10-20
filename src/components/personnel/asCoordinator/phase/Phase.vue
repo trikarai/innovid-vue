@@ -26,9 +26,14 @@
           :loading="tableLoad"
           :headers="tableHeaders"
           :items="dataList.list"
+          :options.sync="options"
+          :server-items-length="dataList.total"
+          :footer-props="{
+            'items-per-page-options': [5, 15, 25],
+          }"
           class="elevation-1"
         >
-          <template v-slot:item.name="{item}">
+          <template v-slot:item.name="{ item }">
             <v-btn
               class="elevation-0 mr-2"
               fab
@@ -38,13 +43,18 @@
             >
               <v-icon>zoom_in</v-icon>
             </v-btn>
-            {{item.name}}
+            {{ item.name }}
           </template>
-          <template v-slot:item.action="{item}">
+          <template v-slot:item.action="{ item }">
             <v-btn class="ml-2" small color="primary" @click="openEdit(item)">
               <v-icon small left>edit</v-icon>Edit
             </v-btn>
-            <v-btn class="ml-2" small color="warning" @click="leftAct(item, 'Remove')">
+            <v-btn
+              class="ml-2"
+              small
+              color="warning"
+              @click="leftAct(item, 'Remove')"
+            >
               <v-icon small>delete</v-icon>
             </v-btn>
           </template>
@@ -55,9 +65,9 @@
     <v-dialog v-model="dialogDelete" width="300" :persistent="true">
       <v-card :loading="tableLoad">
         <v-card-title>
-          <p class="text-capitalize">{{leftAction}}</p>
+          <p class="text-capitalize">{{ leftAction }}</p>
         </v-card-title>
-        <v-card-text>{{leftName}}</v-card-text>
+        <v-card-text>{{ leftName }}</v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn text color="red" @click="deleteAccount(leftId)">Yes</v-btn>
@@ -78,12 +88,15 @@
           <p class="text-capitalize">Registration Phase Detail</p>
         </v-card-title>
         <v-card-text v-if="loader">
-          <v-progress-linear :indeterminate="true" color="primary"></v-progress-linear>
+          <v-progress-linear
+            :indeterminate="true"
+            color="primary"
+          ></v-progress-linear>
         </v-card-text>
         <v-card-text>
           <b>Name</b>
           <br />
-          {{dataSingle.name}}
+          {{ dataSingle.name }}
         </v-card-text>
         <v-card-text>
           <b>Start Date</b>
@@ -108,9 +121,12 @@
 
     <v-layout row justify-center>
       <v-dialog v-model="dialogForm" persistent max-width="500px">
-        <v-progress-linear style="position:relative; top:4px;z-index:9;" :indeterminate="true" v-if="loader"></v-progress-linear>
+        <v-progress-linear
+          style="position:relative; top:4px;z-index:9;"
+          :indeterminate="true"
+          v-if="loader"
+        ></v-progress-linear>
         <v-card class="pa-3">
-          
           <v-card-title>
             <span class="headline">Registration Phase</span>
           </v-card-title>
@@ -151,8 +167,15 @@
                       </template>
                       <v-date-picker v-model="params.startDate" scrollable>
                         <v-spacer></v-spacer>
-                        <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                        <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                        <v-btn text color="primary" @click="menu = false"
+                          >Cancel</v-btn
+                        >
+                        <v-btn
+                          text
+                          color="primary"
+                          @click="$refs.menu.save(date)"
+                          >OK</v-btn
+                        >
                       </v-date-picker>
                     </v-menu>
                   </v-col>
@@ -179,10 +202,21 @@
                           :rules="rulesRequired"
                         ></v-text-field>
                       </template>
-                      <v-date-picker v-model="params.endDate" :min="params.startDate" scrollable>
+                      <v-date-picker
+                        v-model="params.endDate"
+                        :min="params.startDate"
+                        scrollable
+                      >
                         <v-spacer></v-spacer>
-                        <v-btn text color="primary" @click="menu2 = false">Cancel</v-btn>
-                        <v-btn text color="primary" @click="$refs.menu2.save(date2)">OK</v-btn>
+                        <v-btn text color="primary" @click="menu2 = false"
+                          >Cancel</v-btn
+                        >
+                        <v-btn
+                          text
+                          color="primary"
+                          @click="$refs.menu2.save(date2)"
+                          >OK</v-btn
+                        >
                       </v-date-picker>
                     </v-menu>
                   </v-col>
@@ -192,21 +226,25 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn text color="grey" @click.native="dialogForm = false">Close</v-btn>
+            <v-btn text color="grey" @click.native="dialogForm = false"
+              >Close</v-btn
+            >
             <v-btn
               v-if="!edit"
               :disabled="!valid"
               color="primary"
               :loading="loader"
               @click="createPhase()"
-            >Save</v-btn>
+              >Save</v-btn
+            >
             <v-btn
               v-else
               :loading="loader"
               :disabled="!valid"
               color="primary"
               @click="editPhase()"
-            >edit</v-btn>
+              >edit</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -236,8 +274,9 @@ export default {
       loader: false,
       tableHeaders: [
         { text: "Name", value: "name", sortable: false },
-        { text: "", value: "action", sortable: false, align: "right" }
+        { text: "", value: "action", sortable: false, align: "right" },
       ],
+      options: { page: 1, itemsPerPage: 15 },
       dialogForm: false,
       dialogDelete: false,
       dialogDetail: false,
@@ -248,9 +287,12 @@ export default {
       params: {
         name: "",
         startDate: "",
-        endDate: ""
-      }
+        endDate: "",
+      },
     };
+  },
+  watch: {
+    options: "getDataList",
   },
   mounted: function() {
     this.getDataList();
@@ -265,10 +307,14 @@ export default {
             this.$route.params.programId +
             "/registration-phases",
           {
-            headers: auth.getAuthHeader()
+            params: {
+              page: this.options.page,
+              pageSize: this.options.itemsPerPage,
+            },
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.data) {
             this.dataList = res.data.data;
           } else {
@@ -290,7 +336,7 @@ export default {
       this.params = {
         name: "",
         startDate: "",
-        endDate: ""
+        endDate: "",
       };
     },
     openEdit(item) {
@@ -300,7 +346,7 @@ export default {
       this.params = {
         name: item.name,
         startDate: "",
-        endDate: ""
+        endDate: "",
       };
     },
     createPhase() {
@@ -313,13 +359,13 @@ export default {
             "/registration-phases",
           this.params,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
           this.refresh();
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -337,13 +383,13 @@ export default {
             this.leftId,
           this.params,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
           this.refresh();
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -360,13 +406,13 @@ export default {
             "/registration-phases/" +
             id,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.dataSingle = res.data.data;
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -389,14 +435,14 @@ export default {
             "/registration-phases/" +
             id,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
         .then(() => {
           bus.$emit("callNotif", "info", "Successfully Remove Phase");
           this.refresh();
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -407,9 +453,8 @@ export default {
       this.dialogForm = false;
       this.dialogDelete = false;
       this.getDataList();
-    }
-  }
+    },
+  },
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>

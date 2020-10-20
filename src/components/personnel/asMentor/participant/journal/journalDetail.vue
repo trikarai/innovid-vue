@@ -2,26 +2,28 @@
   <v-container extend grid-list-xs>
     <v-row>
       <!-- col 1 record -->
-      <v-col cols="12" md="6" lg="6" xs="12" v-if="dataLoad">
-        <v-skeleton-loader type="card-heading, card-heading, list-item-avatar-two-line@3"></v-skeleton-loader>
+      <v-col cols="12" md="12" lg="12" xs="12" v-if="dataLoad">
+        <v-skeleton-loader
+          type="card-heading, card-heading, list-item-avatar-two-line@3"
+        ></v-skeleton-loader>
       </v-col>
-      <v-col cols="12" md="6" lg="6" xs="12" v-if="!dataLoad">
+      <v-col cols="12" md="12" lg="12" xs="12" v-if="!dataLoad">
         <v-card class="pa-3 pb-0">
           <v-card-title primary-title>
-            <b>{{journalDetail.mission.name}}</b>
+            <b>{{ journalDetail.mission.name }}</b>
           </v-card-title>
           <v-card-text class="subtitle-1">
-            <b>Worksheet Form</b><br>
-            {{journalDetail.worksheet.worksheetForm.name}}
+            <b>Worksheet Form</b><br />
+            {{ journalDetail.worksheet.worksheetForm.name }}
           </v-card-text>
           <!-- <v-divider></v-divider> -->
           <v-card-text class="pt-7 pt-0">
-            <render-record :fields="fields" />
+            <render-record :fields="fields" :canvasMode="desc.renderAs" />
           </v-card-text>
         </v-card>
       </v-col>
       <!-- col 2 comment -->
-      <v-col md="6">
+      <v-col cols="12" md="12" lg="12" xs="12">
         <comment-module></comment-module>
       </v-col>
     </v-row>
@@ -42,17 +44,30 @@ export default {
     return {
       dataLoad: false,
       journalDetail: {},
-      fields: []
+      fields: [],
+      desc: { renderAs: false, description: "" },
     };
   },
   components: {
     RenderRecord,
-    CommentModule
+    CommentModule,
   },
   mounted() {
     this.getJournalDetail();
   },
   methods: {
+    checkRenderMode() {
+      let tempObj = JSON.parse(
+        this.journalDetail.worksheet.worksheetForm.description
+      );
+      if (tempObj.hasOwnProperty("renderAs")) {
+        this.desc = JSON.parse(
+          this.journalDetail.worksheet.worksheetForm.description
+        );
+      } else {
+        this.desc.renderAs = false;
+      }
+    },
     getJournalDetail() {
       this.dataLoad = true;
       this.axios
@@ -65,20 +80,21 @@ export default {
             "/journals/" +
             this.$route.params.journalId,
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.journalDetail = res.data.data;
+          this.checkRenderMode();
           this.refactorRecordJSON(res.data.data.worksheet);
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
           this.dataLoad = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid grid-list-xs>
+  <v-container extend grid-list-xs>
     <v-row>
       <v-col md="6">
         <v-btn
@@ -15,10 +15,11 @@
       <v-tabs v-model="tab" background-color="transparent" color="#fff" grow>
         <v-tab key="1"
           ><v-badge
-            offset-y="9"
-            :value="negotiateschedulementorings.total !== 0"
+            :value="
+              filterSchedule(negotiateschedulementorings.list).length !== 0
+            "
             color="error"
-            :content="negotiateschedulementorings.total"
+            :content="filterSchedule(negotiateschedulementorings.list).length"
             >Session Request
           </v-badge></v-tab
         >
@@ -56,8 +57,11 @@
                 <v-data-table
                   :loading="negotiateLoad"
                   :headers="negotiatescheduleHeaders"
-                  :items="negotiateschedulementorings.list"
+                  :items="filterSchedule(negotiateschedulementorings.list)"
                   :options.sync="optionsNego"
+                  :footer-props="{
+                    'items-per-page-options': [5, 15, 25],
+                  }"
                   class="elevation-1 ml-2 mr-2"
                 >
                   <template v-slot:item.name="{ item }">{{
@@ -69,6 +73,7 @@
                       :to="{
                         name: 'mentor-dashboard-participant-detail',
                         params: {
+                          mentorId: $store.getters.getMentorship.id,
                           programId: $store.getters.getMentorship.program.id,
                           participantId: item.participant.id,
                         },
@@ -89,7 +94,15 @@
                     </v-row>
                   </template>
                   <template v-slot:item.status="{ item }">
-                    <v-chip x-small>{{ item.status }}</v-chip>
+                    <v-chip color="info" small v-if="item.status == 'proposed'"
+                      >Incubatee has proposed new schedule
+                    </v-chip>
+                    <v-chip
+                      color="warning"
+                      small
+                      v-if="item.status == 'offered'"
+                      >waiting for incubatee’s confirmation</v-chip
+                    >
                   </template>
                   <template v-slot:item.action="{ item }">
                     <template v-if="!item.concluded">
@@ -154,6 +167,7 @@
                       :to="{
                         name: 'mentor-dashboard-participant-detail',
                         params: {
+                          mentorId: $store.getters.getMentorship.id,
                           programId: $store.getters.getMentorship.program.id,
                           participantId: item.participant.id,
                         },
@@ -232,6 +246,7 @@
                       :to="{
                         name: 'mentor-dashboard-participant-detail',
                         params: {
+                          mentorId: $store.getters.getMentorship.id,
                           programId: $store.getters.getMentorship.program.id,
                           participantId: item.participant.id,
                         },
@@ -322,6 +337,7 @@
                       :to="{
                         name: 'mentor-dashboard-participant-detail',
                         params: {
+                          mentorId: $store.getters.getMentorship.id,
                           programId: $store.getters.getMentorship.program.id,
                           participantId: item.participant.id,
                         },
@@ -390,6 +406,9 @@
   </v-container>
 </template>
 <script>
+import Vue from "vue";
+import lodash from "lodash";
+Vue.prototype._ = lodash;
 // eslint-disable-next-line no-unused-vars
 import bus from "@/config/bus";
 import * as config from "@/config/config";
@@ -490,6 +509,11 @@ export default {
     this.getNegotiateScheduleMentorings();
   },
   methods: {
+    filterSchedule(params) {
+      return this._.filter(params, (item) => {
+        return item.status == "offered" || item.status == "proposed";
+      });
+    },
     setDateTime: function() {
       this.incidentalParams.startTime = this.date + " " + this.time;
     },
@@ -634,7 +658,8 @@ export default {
             "info",
             "Successfully " + this.leftAction + " Schedule"
           );
-          this.$emit("refresh");
+          // this.$emit("refresh");
+          this.refresh();
         })
         .catch((res) => {
           bus.$emit("callNotif", "error", res);
@@ -659,11 +684,11 @@ export default {
 </script>
 <style scoped>
 .v-tab.v-tab--active {
-    background: #b4b4b4;
+  background: #b4b4b4;
 }
 .theme--light.v-tabs-items {
-    border-top-style: solid;
-    border-top-color: #b4b4b4;
-    border-top-width: thick;
+  border-top-style: solid;
+  border-top-color: #b4b4b4;
+  border-top-width: thick;
 }
 </style>

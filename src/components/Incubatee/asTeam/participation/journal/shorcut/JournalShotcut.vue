@@ -15,6 +15,10 @@
             <v-skeleton-loader type="heading" v-if="loadMission" />
             <template v-else>
               {{ mission.name }}
+              <br />
+              <b>Description</b>
+              <br />
+              {{ mission.description }}
             </template>
             <br />
           </v-card-text>
@@ -26,30 +30,33 @@
               {{ mission.worksheetForm.name }}
             </template>
           </v-card-text>
-          <v-card-text class="pt-0 mt-2">
-            <render-record
-              :fields="fields"
-              :canvasMode="mission.worksheetForm.description"
-            />
-          </v-card-text>
           <v-card-actions>
-            <v-btn
-              small
-              color="primary"
-              :to="{
-                name: 'journal-detail-1',
-                params: {
-                  teamId: $route.params.teamId,
-                  cohortId: $route.params.cohortId,
-                  missionId: mission.id,
-                  journalId: journal.id,
-                  worksheetId: worksheet.id,
-                },
-              }"
-            >
-              <v-icon small left>edit</v-icon>Make change ?</v-btn
-            >
+            <template v-if="!updateJ">
+              <v-btn
+                color="primary"
+                small
+                v-if="!editWS"
+                @click="editWorksheet"
+              >
+                <v-icon small left>edit</v-icon>Edit Worksheet Record
+              </v-btn>
+              <v-btn color="warning" small @click="editWS = !editWS" v-else>
+                <v-icon small left>cancel</v-icon>Cancel Edit
+              </v-btn>
+            </template>
           </v-card-actions>
+          <v-card-text class="pt-0 mt-2">
+            <template v-if="!editWS">
+              <render-record :fields="fields" :canvasMode="desc.renderAs" />
+            </template>
+            <template v-else>
+              <render-form
+                :modeReload="true"
+                :formTemplate="dataList.worksheetForm"
+                @submit-form="submitForm"
+              />
+            </template>
+          </v-card-text>
         </v-card>
       </v-col>
       <v-col cols="12" lg="12">
@@ -62,6 +69,13 @@
         <div id="comment-module"></div>
       </v-col>
     </v-row>
+    <v-overlay :value="worksheetDataLoad">
+      <v-progress-circular
+        color="primary"
+        indeterminate
+        size="64"
+      ></v-progress-circular>
+    </v-overlay>
   </v-container>
 </template>
 
@@ -71,6 +85,7 @@ import * as config from "@/config/config";
 import auth from "@/config/auth";
 import { formDynamicMixins } from "@/mixins/formDynamicMixins";
 
+import RenderForm from "@/components/buildform/incubatee/renderForm";
 import RenderRecord from "@/components/buildform/incubatee/renderRecord";
 import CommentModule from "@/components/buildform/comment/CommentModule";
 
@@ -79,27 +94,59 @@ export default {
   mixins: [formDynamicMixins],
   components: {
     RenderRecord,
+    RenderForm,
     CommentModule,
   },
   data() {
     return {
-      journal: { id: ""},
+      journal: { id: "" },
       loadJournal: false,
       worksheet: { id: "", name: "" },
+      worksheetData: { id: "", name: "" },
       loadWorksheet: false,
-      mission: { id: "", name: "", worksheetForm: { name: "" } },
+      mission: {
+        id: "",
+        name: "",
+        description: "",
+        worksheetForm: { name: "" },
+      },
+      dataList: {
+        id: "",
+        name: "",
+        description: "",
+        nextMission: { id: "" },
+        worksheetForm: {
+          name: "",
+        },
+      },
+      dataListTemp: {
+        id: "",
+        name: "",
+        description: "",
+        nextMission: { id: "" },
+      },
       loadMission: false,
       fields: [],
       highlight: null,
+      editWS: false,
+      updateJ: false,
+      worksheetDataLoad: false,
+      user: {},
+      desc: {
+        renderAs: false,
+        description: "",
+      },
     };
   },
   created() {
+    this.user = JSON.parse(auth.getAuthData());
+    window.sessionStorage.setItem("uploadMode", "team");
     this.getJournal();
   },
   watch: {
     journal() {
-      this.getWorksheet();
       this.getMission();
+      this.getWorksheet();
     },
     highlight() {
       this.$vuetify.goTo("#comment-module", {
@@ -109,6 +156,14 @@ export default {
   },
   mounted() {},
   methods: {
+    checkRenderMode() {
+      let tempObj = JSON.parse(this.missionTemp.worksheetForm.description);
+      if (tempObj.hasOwnProperty("renderAs")) {
+        this.desc = JSON.parse(this.missionTemp.worksheetForm.description);
+      } else {
+        this.desc.renderAs = false;
+      }
+    },
     getJournal() {
       this.loadJournal = true;
       this.axios
@@ -147,7 +202,9 @@ export default {
         )
         .then((res) => {
           this.worksheet = res.data.data;
+          this.worksheetData = JSON.parse(JSON.stringify(res.data.data));
           this.refactorRecordJSON(res.data.data);
+          // this.pairFieldValue(res.data.data);
         })
         .catch(() => {})
         .finally(() => {
@@ -172,6 +229,8 @@ export default {
         .then((res) => {
           this.mission = res.data.data;
           this.missionTemp = JSON.parse(JSON.stringify(res.data.data));
+          this.dataList = JSON.parse(JSON.stringify(res.data.data));
+          this.checkRenderMode();
         })
         .catch(() => {})
         .finally(() => {
@@ -180,6 +239,54 @@ export default {
     },
     gotoHighlight(highlight) {
       this.highlight = highlight;
+    },
+    editWorksheet() {
+      this.editWS = true;
+      this.updateJ = false;
+      this.pairFieldValue(this.worksheetData);
+    },
+    submitForm(params) {
+      this.worksheetDataLoad = true;
+      params["name"] = this.worksheet.name;
+      this.axios
+        .patch(
+          config.baseUri +
+            "/founder/as-team-member/" +
+            this.$route.params.teamId +
+            "/worksheets/" +
+            this.worksheet.id,
+          params,
+          {
+            headers: auth.getAuthHeader(),
+          }
+        )
+        .then(() => {
+          this.$mixpanel.track("edit_worksheet", {
+            founder_id: this.user.data.id,
+            team_id: this.$route.params.teamId,
+            worksheet_id: this.journal.worksheet.id,
+            form_type: this.dataList.worksheetForm.name,
+            page: "commment",
+          });
+          this.$analytics.logEvent("edit_worksheet", {
+            founder_id: this.user.data.id,
+            team_id: this.$route.params.teamId,
+            worksheet_id: this.journal.worksheet.id,
+            form_type: this.dataList.worksheetForm.name,
+            page: "comment",
+          });
+          this.refreshData();
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.worksheetDataLoad = false;
+        });
+    },
+    refreshData() {
+      this.fields = [];
+      this.editWS = false;
+      this.updateJ = false;
+      this.getWorksheet();
     },
   },
 };

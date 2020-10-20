@@ -11,11 +11,21 @@
             <v-expansion-panel>
               <v-expansion-panel-header
                 ><b
-                  >Strategi Kolaborasi Startup dgn Korporat - Arief Yahya (Didahului dgn Penjelasan MIKTI Start)</b
+                  >Penjelasan Program MIKTI Start</b
                 ></v-expansion-panel-header
               >
               <v-expansion-panel-content>
-                <iframe id="kaltura_player_1593668489" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1593668489&entry_id=0_ab43sift" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
+                <iframe id="kaltura_player_1595232635" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1595232635&entry_id=0_7wpash8o" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header
+                ><b
+                  >Strategi Kolaborasi Startup dgn Korporat - Arief Yahya</b
+                ></v-expansion-panel-header
+              >
+              <v-expansion-panel-content>
+                <iframe id="kaltura_player_1595232923" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1595232923&entry_id=0_kef6wshj" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
               </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel>
@@ -31,7 +41,7 @@
                 ><b>Bagaimana Pandemi Mengubah Sektor Personal Health? Peluang Inovasi Apa Yang Muncul? - Ade Rai</b>
               </v-expansion-panel-header>
               <v-expansion-panel-content>
-                <iframe id="kaltura_player_1594785891" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1594785891&entry_id=0_m6g2g37e" width="400" height="333" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
+                <iframe id="kaltura_player_1594973212" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1594973212&entry_id=0_mfevtvc1" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
               </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel>
@@ -40,6 +50,30 @@
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <iframe id="kaltura_player_1594718611" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1594718611&entry_id=0_olag9bo2" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header
+                ><b>Perubahan & Peluang Inovasi Pada Sektor Industri Perbankan - Indra Utoyo</b>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <iframe id="kaltura_player_1595579997" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1595579997&entry_id=0_2g4q7qgg" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header
+                ><b>Perubahan & Peluang Inovasi Pada Sektor Industri Manufaktur - Salman Subakat</b>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <iframe id="kaltura_player_1596342206" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1596342206&entry_id=0_axafc2ew" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header
+                ><b>Mengubah Permasalahan Menjadi Peluang Bisnis - Sugianto Halim</b>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <iframe id="kaltura_player_1596342564" src="https://cdnapisec.kaltura.com/p/2920711/sp/292071100/embedIframeJs/uiconf_id/45996371/partner_id/2920711?iframeembed=true&playerId=kaltura_player_1596342564&entry_id=0_dsqb9irn" width="100%" height="500" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0"></iframe>
               </v-expansion-panel-content>
             </v-expansion-panel>
 

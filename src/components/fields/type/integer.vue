@@ -15,7 +15,7 @@
       :error="isError"
     >
       <template v-slot:label>
-        <div :class="{required : field.required}">{{field.name}}</div>
+        <div :class="{ required: field.required }">{{ field.name }}</div>
       </template>
     </v-text-field>
     <v-text-field
@@ -29,10 +29,13 @@
       v-model="value"
     >
       <template v-slot:label>
-        <div :class="{required : field.required}">{{field.name}}</div>
+        <div :class="{ required: field.required }">{{ field.name }}</div>
       </template>
     </v-text-field>
-    <template v-if="field.required">Min Value: {{field.minValue}} - Max Value: {{field.maxValue}}</template>
+    <template v-if="field.required"
+      >Min Value: {{ field.minValue }} - Max Value:
+      {{ field.maxValue }}</template
+    >
   </v-col>
 </template>
 <script>
@@ -47,13 +50,11 @@ export default {
     return {
       clearable: true,
       isError: true,
-      value: null
+      value: null,
     };
   },
-  watch: {
-    
-  },
-  mounted () {
+  watch: {},
+  mounted() {
     if (this.field.required) {
       this.isError = true;
     } else {
@@ -64,10 +65,8 @@ export default {
     if (this.modeReload) {
       this.value = this.field.value;
     }
-  }
+  },
 };
 </script>
 
-<style scoped>
-</style>
-
+<style scoped></style>

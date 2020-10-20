@@ -21,7 +21,11 @@
               v-on="on"
             ></v-text-field>
           </template>
-          <v-date-picker v-model="startDate" scrollable @change="menu1 = false"></v-date-picker>
+          <v-date-picker
+            v-model="startDate"
+            scrollable
+            @change="menu1 = false"
+          ></v-date-picker>
         </v-menu>
       </v-col>
       <v-col md="3">
@@ -45,7 +49,12 @@
               v-on="on"
             ></v-text-field>
           </template>
-          <v-date-picker :min="startDate" v-model="endDate" @change="menu2 = false" scrollable></v-date-picker>
+          <v-date-picker
+            :min="startDate"
+            v-model="endDate"
+            @change="menu2 = false"
+            scrollable
+          ></v-date-picker>
         </v-menu>
       </v-col>
       <v-col md="6">
@@ -62,7 +71,7 @@
         >
           <template v-slot:append-outer>
             <v-btn icon color="primary" @click="getMentoringEventData()">
-              <v-icon :class="{rotating : mentoringEventLoad}">sync</v-icon>
+              <v-icon :class="{ rotating: mentoringEventLoad }">sync</v-icon>
             </v-btn>
           </template>
         </v-autocomplete>
@@ -83,7 +92,7 @@
         >
           <template v-slot:append-outer>
             <v-btn icon color="primary" @click="getMentorData()">
-              <v-icon :class="{rotating : mentorLoad}">sync</v-icon>
+              <v-icon :class="{ rotating: mentorLoad }">sync</v-icon>
             </v-btn>
           </template>
         </v-autocomplete>
@@ -102,7 +111,7 @@
         >
           <template v-slot:append-outer>
             <v-btn icon color="primary" @click="getParticipantData()">
-              <v-icon :class="{rotating : participantLoad}">sync</v-icon>
+              <v-icon :class="{ rotating: participantLoad }">sync</v-icon>
             </v-btn>
           </template>
         </v-autocomplete>
@@ -116,16 +125,26 @@
           class="elevation-1"
           select-all
           :loading="mentoringLoad"
+          :options.sync="options"
+          :server-items-length="mentorings.total"
+          :footer-props="{
+            'items-per-page-options': [5, 15, 25],
+          }"
         >
-          <template v-slot:item.time="{item}">
-            {{item.startTime | moment("dddd, D MMM YYYY") }} -
-            {{item.endTime | moment("dddd, D MMM YYYY") }}
+          <template v-slot:item.time="{ item }">
+            {{ item.startTime | moment("dddd, D MMM YYYY") }} -
+            {{ item.endTime | moment("dddd, D MMM YYYY") }}
           </template>
-          <template v-slot:item.action="{item}">
+          <template v-slot:item.action="{ item }">
             <v-btn
               color="primary"
               router
-              :to="'/personnel/coordinator/program/'+ $route.params.programId +'/mentoring/' + item.id"
+              :to="
+                '/personnel/coordinator/program/' +
+                  $route.params.programId +
+                  '/mentoring/' +
+                  item.id
+              "
             >
               <v-icon left>assignment</v-icon>Report
             </v-btn>
@@ -164,8 +183,9 @@ export default {
         { text: "Startup", value: "participant.team.name", sortable: false },
         { text: "Mentor", value: "mentor.personnel.name", sortable: false },
         { text: "Time", value: "time", sortable: false },
-        { text: "", value: "action", sortable: false, align: "right" }
-      ]
+        { text: "", value: "action", sortable: false, align: "right" },
+      ],
+      options: { page: 1, itemsPerPage: 15 },
     };
   },
   watch: {
@@ -173,7 +193,8 @@ export default {
     endDate: "filterByDate",
     mentorId: "filterByMentor",
     participantId: "filterByParticipant",
-    mentoringEventId: "filterByEvent"
+    mentoringEventId: "filterByEvent",
+    options: "getMentoringList",
   },
   mounted() {
     this.getMentoringList();
@@ -253,13 +274,17 @@ export default {
             "/mentoring-schedules" +
             this.filterUri,
           {
-            headers: auth.getAuthHeader()
+            params: {
+              page: this.options.page,
+              pageSize: this.options.itemsPerPage,
+            },
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.mentorings = res.data.data;
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -275,13 +300,13 @@ export default {
             this.$route.params.programId +
             "/mentors",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.mentors = res.data.data;
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -297,13 +322,13 @@ export default {
             this.$route.params.programId +
             "/participants",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.participants = res.data.data;
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
@@ -319,20 +344,20 @@ export default {
             this.$route.params.programId +
             "/mentorings",
           {
-            headers: auth.getAuthHeader()
+            headers: auth.getAuthHeader(),
           }
         )
-        .then(res => {
+        .then((res) => {
           this.mentoringEvents = res.data.data;
         })
-        .catch(res => {
+        .catch((res) => {
           bus.$emit("callNotif", "error", res);
         })
         .finally(() => {
           this.mentoringEventLoad = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

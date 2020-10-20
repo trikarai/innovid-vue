@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import StartMikti from "../views/StartMikti.vue";
 import NotFoundComponent from "../views/404.vue";
 
 import IncubateeSignup from "../views/signup/IncubateeSignup";
@@ -36,6 +37,7 @@ import TeamMemberWorksheetDetail from "../components/Incubatee/asTeam/worksheet/
 import TeamMemberMission from "../components/Incubatee/asTeam/participation/mission/Mission";
 import TeamMemberMissionDetail from "../components/Incubatee/asTeam/participation/mission/MissionDetail";
 import TeamMemberSchedules from "../components/Incubatee/asTeam/participation/schedule/Schedule";
+import TeamMemberNegoSchedulesDetail from "../components/Incubatee/asTeam/participation/schedule/NegoScheduleDetail";
 import TeamMemberSchedulesDetail from "../components/Incubatee/asTeam/participation/schedule/ScheduleDetail";
 import TeamMemberSchedulesReport from "../components/Incubatee/asTeam/participation/schedule/Report";
 import TeamMemberMentoring from "../components/Incubatee/asTeam/participation/schedule/MentoringList";
@@ -108,7 +110,9 @@ import MentorDashboardParticipantJournal from "../components/personnel/asMentor/
 import MentorDashboardMentoringSchedule from "../components/personnel/asMentor/mentoringschedule/MentoringSchedule";
 import MentorIntroduction from "../components/personnel/asMentor/introduction/Introduction";
 
-import PastEvent from "../components/PastEvent"
+import MentorLearningMaterial from "../components/personnel/asMentor/learningMaterial";
+
+import PastEvent from "../components/PastEvent";
 
 import ConferenceComponent from "../components/Conference";
 
@@ -121,6 +125,11 @@ const routes = [
     path: "/",
     name: "home",
     component: Home,
+  },
+  {
+    path: "/mikti",
+    name: "mikti-home",
+    component: StartMikti,
   },
   {
     path: "/signup/:incubatorIdentifier?",
@@ -677,6 +686,18 @@ const routes = [
         name: "mentor-dashboard-participant-journal",
         meta: {
           text: "Participant Journal",
+          level: 1,
+          requiredAuth: true,
+          personnelAuth: true,
+          sysadminAuth: false,
+        },
+      },
+      {
+        path: "/personnel/mentor/learning-material",
+        component: MentorLearningMaterial,
+        name: "mentor-learning-material",
+        meta: {
+          text: "Mentor Learning Material",
           level: 1,
           requiredAuth: true,
           personnelAuth: true,
@@ -1245,6 +1266,20 @@ const routes = [
         name: "team-mentoring-report",
         meta: {
           text: "Mentoring Report",
+          level: 4,
+          requiredAuth: true,
+          incubateeAuth: true,
+          personnelAuth: false,
+          sysadminAuth: false,
+        },
+      },
+      {
+        path:
+          "/incubatee/team/:teamId/participation/:cohortId/negotiate-schedule/:scheduleId",
+        component: TeamMemberNegoSchedulesDetail,
+        name: "team-mentoring-nego-detail",
+        meta: {
+          text: "Proposed Schedule",
           level: 4,
           requiredAuth: true,
           incubateeAuth: true,

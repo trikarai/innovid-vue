@@ -3,9 +3,11 @@
     <v-row>
       <v-col md="12">
         <v-row>
-          <h3>Comment</h3>
+          <v-col>
+            <h3>Comments</h3>
+          </v-col>
         </v-row>
-        <v-row>
+        <!-- <v-row>
           <v-col md="10">
             <v-switch
               class="font-weight-light"
@@ -27,7 +29,7 @@
               <v-icon>visibility_off</v-icon>
             </v-btn>
           </v-col>
-        </v-row>
+        </v-row> -->
       </v-col>
       <template v-if="!hideComment">
         <v-col md="12" v-if="loadComment">

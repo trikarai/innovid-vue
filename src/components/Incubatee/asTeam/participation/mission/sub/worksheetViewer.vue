@@ -122,7 +122,7 @@ export default {
     this.user = JSON.parse(auth.getAuthData());
     this.dataList = JSON.parse(JSON.stringify(this.dataMission));
     this.dataListTemp = JSON.parse(JSON.stringify(this.dataMission));
-    this.checkRenderMode();
+    // this.checkRenderMode();
   },
   mounted() {
     this.getJournals();
@@ -137,6 +137,7 @@ export default {
       }
     },
     getJournals() {
+      this.checkRenderMode();
       this.editWS = false;
       this.fields = [];
       this.worksheetId = "";

@@ -59,10 +59,7 @@
           </v-card-actions>
           <template v-if="!updateJ">
             <v-card-text class="pt-0 mt-2" v-if="!editWS">
-              <render-record
-                :fields="fields"
-                :canvasMode="dataList.worksheetForm.description"
-              />
+              <render-record :fields="fields" :canvasMode="desc.renderAs" />
             </v-card-text>
           </template>
           <!--edit worksheet jurnal start-->
@@ -250,6 +247,10 @@ export default {
       leftAction: "",
       params: "",
       user: {},
+      desc: {
+        renderAs: false,
+        description: "",
+      },
     };
   },
   components: { RenderForm, RenderRecord, CommentModule },
@@ -262,7 +263,16 @@ export default {
     this.getDataSingle();
   },
   methods: {
+    checkRenderMode() {
+      let tempObj = JSON.parse(this.dataListTemp.worksheetForm.description);
+      if (tempObj.hasOwnProperty("renderAs")) {
+        this.desc = JSON.parse(this.dataListTemp.worksheetForm.description);
+      } else {
+        this.desc.renderAs = false;
+      }
+    },
     getDataSingle() {
+      // this.checkRenderMode();
       this.dataLoad = true;
       this.axios
         .get(
@@ -363,6 +373,7 @@ export default {
           this.dataList = res.data.data;
           // Object.assign(this.dataListTemp, this.dataList);
           this.dataListTemp = JSON.parse(JSON.stringify(res.data.data));
+          this.checkRenderMode();
         })
         .catch(() => {})
         .finally(() => {

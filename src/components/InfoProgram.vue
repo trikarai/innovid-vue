@@ -192,7 +192,7 @@ export default {
   data: () => ({
     dense: false,
     fixedHeader: false,
-    height: 400,
+    height: 500,
     desserts: [
       {
         tanggal: "Selasa, 30 Juni 2020",
@@ -238,7 +238,7 @@ export default {
       },
       {
         tanggal: "Jumat, 10 Juli 2020",
-        waktu: "19.00 - 20.30 WIB",
+        waktu: "19.30 - 20.45 WIB",
         narasumber: "Chaidir Akbar",
         profil: "Triathlete, Training & Racing Advisory",
         topik:
@@ -249,7 +249,7 @@ export default {
       },
       {
         tanggal: "Jumat, 10 Juli 2020",
-        waktu: "dalam konfirmasi",
+        waktu: "18.30 - 19.30 WIB",
         narasumber: "Ade Rai",
         profil: "Fitness Expert, Founder Rai Fitness",
         topik:
@@ -257,6 +257,28 @@ export default {
         // linkGoogleMeet: 'Diinformasikan ke email peserta yang terdaftar',
         moderator: "Rahmadayu",
         profilm: "Journey Manager Angel.ID",
+      },
+      {
+        tanggal: "Selasa, 21 Juli 2020",
+        waktu: "19.00 - 20.30 WIB",
+        narasumber: "Indra Utoyo",
+        profil: "Managing Director of Digital Banking and IT of BRI",
+        topik:
+          "Perubahan & Peluang Inovasi Pada Sektor Industri Perbankan",
+        // linkGoogleMeet: 'Diinformasikan ke email peserta yang terdaftar',
+        moderator: "Arief Widhiyasa",
+        profilm: "CEO Agate",
+      },
+      {
+        tanggal: "Selasa, 28 Juli 2020",
+        waktu: "19.00 - 20.30 WIB",
+        narasumber: "Salman Subakat",
+        profil: "CEO of Paragon Technology & Innovation, Wardah Cosmetics",
+        topik:
+          "Perubahan & Peluang Inovasi Pada Sektor Industri Manufaktur",
+        // linkGoogleMeet: 'Diinformasikan ke email peserta yang terdaftar',
+        moderator: "Dina Dellyana",
+        profilm: "Director, Bussiness Incubator at SBM ITB",
       },
     ],
   }),

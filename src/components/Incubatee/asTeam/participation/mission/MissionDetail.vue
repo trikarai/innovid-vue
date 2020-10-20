@@ -79,7 +79,7 @@
             </v-row>
           </v-card-title>
           <v-card-text style="position:relative;bottom:20px;">
-            <div class="subtitle">
+            <div style="font-size:15px;">
               {{ dataList.description }}
             </div>
           </v-card-text>

@@ -65,7 +65,7 @@
               </v-card-title>
 
               <v-card-text class="subtitle" style="text-align:justify;">
-                <span class="">{{ data.description }}</span>
+                <span style="font-size:15px;">{{ data.description }}</span>
               </v-card-text>
 
               <v-card-actions class="pt-0">

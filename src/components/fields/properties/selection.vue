@@ -8,25 +8,43 @@
       <!-- <v-col md="12">
       <v-text-field label="Description" v-model="field.description"></v-text-field>
       </v-col>-->
-      <v-col md="6">
+      <v-col md="6" v-if="!canvasMode">
         <v-text-field label="Position" v-model="field.position" disabled></v-text-field>
       </v-col>
-      <v-col md="6">
-        <v-text-field label="Grid Position" disabled></v-text-field>
+      <v-col md="12" v-else>
+        <v-text-field
+          hint="row-start / column-start / row-end / column-end"
+          persistent-hint
+          label="Grid Position"
+          v-model="field.position"
+          v-mask="gridMask"
+          :rules="gridRules"
+        ></v-text-field>
       </v-col>
       <!-- <v-col md="12">
       <v-text-field label="Default Value" v-model="field.defaultValue" disabled></v-text-field>
       </v-col>-->
       <template v-if="field.type == 'select'">
         <v-col md="6">
-          <v-text-field label="Min Selection" v-model="field.minValue" type="number"></v-text-field>
+          <v-text-field
+            label="Min Selection"
+            v-model="field.minValue"
+            type="number"
+          ></v-text-field>
         </v-col>
         <v-col md="6">
-          <v-text-field label="Max Selection" v-model="field.maxValue" type="number"></v-text-field>
+          <v-text-field
+            label="Max Selection"
+            v-model="field.maxValue"
+            type="number"
+          ></v-text-field>
         </v-col>
       </template>
       <v-col md="12">
-        <v-checkbox v-model="field.required" :label="`Required : ${field.required.toString()}`"></v-checkbox>
+        <v-checkbox
+          v-model="field.required"
+          :label="`Required : ${field.required.toString()}`"
+        ></v-checkbox>
       </v-col>
       <v-col md="12">
         <v-form ref="formoption" v-model="validoption">
@@ -37,12 +55,18 @@
                 label="Options List"
                 maxlength="50"
                 counter="50"
-                :rules="[v => !!v || 'Option Name Required.']"
+                :rules="[(v) => !!v || 'Option Name Required.']"
                 @keydown.enter.prevent="addOption()"
               ></v-text-field>
             </v-col>
             <v-col md="4">
-              <v-btn small fab color="primary" @click="addOption" :disabled="!validoption">
+              <v-btn
+                small
+                fab
+                color="primary"
+                @click="addOption"
+                :disabled="!validoption"
+              >
                 <v-icon small>add</v-icon>
               </v-btn>
             </v-col>
@@ -55,7 +79,9 @@
               <v-list-item-avatar></v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title v-text="opt.name"></v-list-item-title>
-                <v-list-item-subtitle>Order: {{opt.position}}</v-list-item-subtitle>
+                <v-list-item-subtitle
+                  >Order: {{ opt.position }}</v-list-item-subtitle
+                >
               </v-list-item-content>
               <v-list-item-action>
                 <v-btn icon @click="deleteOption(index)">
@@ -70,15 +96,24 @@
   </div>
 </template>
 <script>
+import { mask } from "@rj-pkgs/vue-the-mask";
+
 export default {
-  props: ["field", "index"],
+  props: ["field", "index", "canvasMode"],
+  directives: { mask },
   components: {},
   data: function() {
     return {
       validoption: false,
       clearable: true,
       value: "",
-      optionAdd: ""
+      optionAdd: "",
+      gridMask: "# / # / # / #",
+      gridRules: [
+        (v) =>
+          v.length == 13 ||
+          "Grid Position must valid : row-start / column-start / row-end / column-end",
+      ],
     };
   },
   methods: {
@@ -95,7 +130,7 @@ export default {
           id: "",
           name: this.optionAdd,
           description: "",
-          position: lastPost
+          position: lastPost,
         });
         this.field.options.push(opt);
         this.$refs.formoption.reset();
@@ -104,9 +139,9 @@ export default {
     },
     deleteOption(index) {
       this.$delete(this.field.options, index);
-    }
+    },
   },
-  watch: {}
+  watch: {},
 };
 </script>
 <style scoped>

@@ -30,9 +30,11 @@
       <v-tabs v-model="tab" background-color="primary" dark grow>
         <v-tab key="1"
           ><v-badge
-            :value="negotiateschedulementorings.total !== 0"
+            :value="
+              filterSchedule(negotiateschedulementorings.list).length !== 0
+            "
             color="error"
-            :content="negotiateschedulementorings.total"
+            :content="filterSchedule(negotiateschedulementorings.list).length"
             >Session Request
           </v-badge></v-tab
         >
@@ -63,12 +65,20 @@
         <v-tabs-items v-model="tab">
           <v-tab-item key="1">
             <v-row>
+              <!-- <v-col cols="12" xl="12" lg="12">
+                <pre> {{ negotiateschedulementorings }} </pre>
+              </v-col> -->
               <v-col cols="12" xl="12" lg="12">
                 <v-data-table
                   :loading="negotiateLoad"
                   :headers="tableHeaders"
-                  :items="negotiateschedulementorings.list"
+                  :items="filterSchedule(negotiateschedulementorings.list)"
+                  :server-items-length="negotiateschedulementorings.total"
                   :options.sync="optionsNego"
+                  :search="search"
+                  :footer-props="{
+                    'items-per-page-options': [5, 15, 25],
+                  }"
                   class="elevation-1"
                 >
                   <template v-slot:item.name="{ item }">
@@ -86,9 +96,30 @@
                     </v-row>
                   </template>
                   <template v-slot:item.status="{ item }">
-                    <v-chip small>{{ item.status }}</v-chip>
+                    <v-chip color="info" small v-if="item.status == 'proposed'"
+                      >Waiting for mentor’s confirmation</v-chip
+                    >
+                    <v-chip
+                      color="warning"
+                      small
+                      v-if="item.status == 'offered'"
+                      >Mentor has proposed new schedule</v-chip
+                    >
                   </template>
                   <template v-slot:item.action="{ item }">
+                    <!-- <v-btn
+                      small
+                      :to="{
+                        name: 'team-mentoring-nego-detail',
+                        params: {
+                          scheduleId: item.id,
+                          teamId: $route.params.teamId,
+                          cohortId: $route.params.cohortId,
+                        },
+                      }"
+                    >
+                      View
+                    </v-btn> -->
                     <template v-if="item.status != 'scheduled'">
                       <template v-if="item.status !== 'proposed'">
                         <template v-if="item.status !== 'cancelled'">
@@ -100,15 +131,15 @@
                           >
                             <v-icon small left>check</v-icon>Accept
                           </v-btn>
+                          <v-btn
+                            class="ml-2"
+                            small
+                            color="primary"
+                            @click="reproposeAct(item)"
+                          >
+                            <v-icon small left>update</v-icon>Re-schedule
+                          </v-btn>
                         </template>
-                        <v-btn
-                          class="ml-2"
-                          small
-                          color="primary"
-                          @click="reproposeAct(item)"
-                        >
-                          <v-icon small left>update</v-icon>Re-schedule
-                        </v-btn>
                       </template>
                       <v-btn
                         v-if="item.status !== 'cancelled'"
@@ -130,11 +161,15 @@
               :loading="scheduleLoad"
               :headers="tableHeaders"
               :items="schedulementorings.list"
+              :server-items-length="schedulementorings.total"
               :options.sync="optionsApproved"
+              :footer-props="{
+                'items-per-page-options': [5, 15, 25],
+              }"
               class="elevation-1"
             >
               <template v-slot:item.name="{ item }">
-                <v-btn
+                <!-- <v-btn
                   class="elevation-0 mr-2"
                   fab
                   x-small
@@ -142,7 +177,7 @@
                   @click="openDetail(item.id)"
                 >
                   <v-icon>zoom_in</v-icon>
-                </v-btn>
+                </v-btn> -->
                 {{ item.mentoring.name }}
               </template>
               <template v-slot:item.startTime="{ item }">
@@ -191,11 +226,15 @@
               :loading="schedulepastLoad"
               :headers="tableHeaders"
               :items="schedulementoringspast.list"
+              :server-items-length="schedulementoringspast.total"
               :options.sync="optionsPast"
+              :footer-props="{
+                'items-per-page-options': [5, 15, 25],
+              }"
               class="elevation-1"
             >
               <template v-slot:item.name="{ item }">
-                <v-btn
+                <!-- <v-btn
                   class="elevation-0 mr-2"
                   fab
                   x-small
@@ -203,7 +242,7 @@
                   @click="openDetail(item.id)"
                 >
                   <v-icon>zoom_in</v-icon>
-                </v-btn>
+                </v-btn> -->
                 {{ item.mentoring.name }}
               </template>
               <template v-slot:item.startTime="{ item }">
@@ -245,7 +284,11 @@
               :loading="schedulefinishLoad"
               :headers="tableHeaders"
               :items="schedulementoringsfinish.list"
+              :server-items-length="schedulementoringsfinish.total"
               :options.sync="optionsFinish"
+              :footer-props="{
+                'items-per-page-options': [5, 15, 25],
+              }"
               class="elevation-1"
             >
               <template v-slot:item.name="{ item }">
@@ -592,6 +635,10 @@
   </v-container>
 </template>
 <script>
+import Vue from "vue";
+import lodash from "lodash";
+Vue.prototype._ = lodash;
+
 import bus from "@/config/bus";
 import * as config from "@/config/config";
 import auth from "@/config/auth";
@@ -628,7 +675,14 @@ export default {
         { text: "Date/Time", value: "startTime", sortable: false },
         { text: "Mentoring", value: "name", sortable: false },
         { text: "Mentor", value: "mentor.personnel.name", sortable: false },
-        { text: "", value: "status", sortable: false },
+        {
+          text: "",
+          value: "status",
+          sortable: false,
+          filter: (value) => {
+            return value !== "offered";
+          },
+        },
         { text: "", value: "action", sortable: false, align: "right" },
       ],
       dialogForm: false,
@@ -699,6 +753,11 @@ export default {
     this.getScheduleMentoringsFinish();
   },
   methods: {
+    filterSchedule(params) {
+      return this._.filter(params, (item) => {
+        return item.status == "offered" || item.status == "proposed";
+      });
+    },
     setDateTime: function() {
       this.params.startTime = this.date + " " + this.time;
       this.incidentalParams.startTime = this.date + " " + this.time;
@@ -1058,6 +1117,9 @@ export default {
       this.getScheduleMentorings();
       this.getNegotiateScheduleMentorings();
     },
+    // eslint-disable-next-line no-unused-vars
+    // filterConcluded(value, search, item) {
+    // },
   },
 };
 </script>
