@@ -262,6 +262,8 @@ export default {
         { id: "4", name: "", logo: "/img/community/logo_subali.png" },
         { id: "5", name: "", logo: "/img/community/logo_suwec.jpg" },
         { id: "6", name: "", logo: "/img/community/logo_uxid.png" },
+        { id: "7", name: "", logo: "/img/community/logo_mediastartup.png" },
+        { id: "8", name: "", logo: "/img/community/logo_teknoevent.png" },
       ],
       carousels: [
         {
