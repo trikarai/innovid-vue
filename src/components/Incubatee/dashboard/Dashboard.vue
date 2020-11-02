@@ -1,5 +1,10 @@
 <template>
   <v-container fluid>
+    <v-row>
+      <v-card class="pa-5 ml-3 mb-3">
+        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/R8S2WgHjheE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </v-card>
+    </v-row>
     <v-row name="one">
       <v-col cols="12" sm="4" md="5" xs="12">
         <v-card @click="$router.push({ path: '/incubatee/profile' })">
