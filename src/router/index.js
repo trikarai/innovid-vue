@@ -122,12 +122,12 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/inovide",
+    path: "/",
     name: "home",
     component: Home,
   },
   {
-    path: "/",
+    path: "/mikti",
     name: "mikti-home",
     component: StartMikti,
   },
