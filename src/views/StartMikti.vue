@@ -167,11 +167,13 @@
       <section class="pt-10">
         <v-row class="pa-5">
           <v-col cols="12">
-            <div class="text-center">
+            <div class="text-center mt-10">
               <h2 class="mb-1 headline">Community Partner</h2>
             </div>
+            <div style="margin:0 auto;" class="garis mb-5"></div>
           </v-col>
           <v-col
+            style="padding:0 50px 0 50px;"
             v-for="com in community"
             :key="com.id"
             class="d-flex child-flex"
