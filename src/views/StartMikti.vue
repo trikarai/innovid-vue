@@ -176,14 +176,15 @@
             style="padding:0 50px 0 50px;"
             v-for="com in community"
             :key="com.id"
-            class="d-flex child-flex"
+            class="d-flex child-flex mb-4"
             cols="12"
             lg="2"
-          >
+           >
             <v-img
               :src="com.logo"
               :lazy-src="com.logo"
               aspect-ratio="1"
+              height="80"
               contain
             >
               <template v-slot:placeholder>
@@ -258,13 +259,14 @@ export default {
       dialogMentor: false,
       mentor: {},
       community: [
+        { id: "7", name: "", logo: "/img/community/logo_mediastartup.png" },
         { id: "1", name: "", logo: "/img/community/logo_malang.png" },
         { id: "2", name: "", logo: "/img/community/logo_startup_borneo.png" },
         { id: "3", name: "", logo: "/img/community/logo_sub.png" },
         { id: "4", name: "", logo: "/img/community/logo_subali.png" },
         { id: "5", name: "", logo: "/img/community/logo_suwec.jpg" },
         { id: "6", name: "", logo: "/img/community/logo_uxid.png" },
-        { id: "7", name: "", logo: "/img/community/logo_mediastartup.png" },
+        { id: "9", name: "", logo: "/img/community/logo_idsf.png" },
         { id: "8", name: "", logo: "/img/community/logo_teknoevent.png" },
       ],
       carousels: [
