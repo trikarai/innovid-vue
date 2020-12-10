@@ -1,18 +1,25 @@
 <template>
   <v-app light>
-    <v-app-bar class="px-lg-12 pt-lg-5 elevation-0 toolbarcustom">
+    <v-app-bar 
+      style="z-index:9;"
+      color="white"
+      absolute
+      transparent
+      elevate-on-scroll 
+      scroll-target="#scrolling-techniques-7"
+      class="">
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
-
-      <v-toolbar-title>
-        <v-img class="mt-2" max-width="110" src="/img/logo.png"></v-img>
+      
+      <v-toolbar-title class="">
+        <v-img class="" max-width="80" src="/img/logo.png"></v-img>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <v-toolbar-items class="d-none d-md-flex d-lg-flex">
-        <v-btn dark text>Home</v-btn>
-        <v-btn dark to="/signup" text>Registration</v-btn>
-        <v-btn style=" border-radius: 28px !important;height: 34px !important;position: relative;top: 16px;" dark color="primary" to="/login">Login</v-btn>
+        <v-btn text>Home</v-btn>
+        <v-btn href="http://blog.innov.id" text>Blog</v-btn>
+        <v-btn style="border-radius: 28px !important;height: 34px !important;position: relative;top: 16px;" dark color="primary" to="/login">Login</v-btn>
       </v-toolbar-items>
 
       <v-menu left bottom>
@@ -32,7 +39,7 @@
             <v-btn block text>Home</v-btn>
           </v-list-item>
           <v-list-item>
-            <v-btn block to="/signup" text>Registration</v-btn>
+            <v-btn block to="/signup" text>Blog</v-btn>
           </v-list-item>
           <v-list-item>
             <v-btn block to="/login" text>Login</v-btn>
@@ -40,69 +47,78 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-main>
+    <v-sheet 
+      id="scrolling-techniques-7"
+      class="overflow-y-auto"
+      max-height="750"
+    >
+    <v-container fluid class="ml-0 pl-0 mr-0 pr-0" style="height: 1500px;">
       <section>
-        <v-img class="imgkastem" src="/img/mainbanner.jpg">
-        <div class="container" style="margin-top:190px;">
+        <v-img max-height="750" class="imgkastem" src="/img/background.jpg">
+        <v-container style="margin-top:190px;">       
           <v-row>
               <v-col cols="12" xs="6" sm="6">
-                <h1>Can you effectively track & manage all innovation innitiatives inside your organization?</h1>
+                <h1 class="d-none d-md-flex d-lg-flex">Platform Kolaborasi Proses Inovasi & Pendampingan Bisnis</h1>
+                <h3 class="grey--text d-none d-md-flex d-lg-flex">untuk Inkubator, Akselerator & Perusahaan</h3>
+                <div class="garis d-none d-md-flex d-lg-flex"></div>
+                <div class="d-none d-md-flex d-lg-flex" style="margin-top:40px;"></div>
+                <p class="d-none d-md-flex d-lg-flex" style="text-align: justify !important;">
+                  Lebih berorientasi hasil dan lebih mudah dalam menyelenggarakan program inkubasi, akselerasi, atau program inovasi dan pendampingan bisnis lainnya 
+                </p>
+                <v-btn width="200" class="d-none d-md-flex d-lg-flex" color="primary" to="/signup" large>
+                  Registration
+                </v-btn>
+              <v-card class="pa-5 d-sm-none" elevation="0" style="opacity:0.8;">
+                <h1>Platform Kolaborasi Proses Inovasi & Pendampingan Bisnis</h1>
+                <h3 class="grey--text">untuk Inkubator, Akselerator & Perusahaan</h3>
                 <div class="garis"></div>
                 <div style="margin-top:40px;"></div>
                 <p style="text-align: justify !important;">
-                  Innov.ID is an innovation management system. By leveraging this solution, 
-organization (enterprise, incubators, accelerators, etc) can easily track 
-progress and issues of each innovation innitiatives being concurrently 
-conducted by different innovator teams, and finally decide the right support for each of them. 
+                  Lebih berorientasi hasil dan lebih mudah dalam menyelenggarakan program inkubasi, akselerasi, atau program inovasi dan pendampingan bisnis lainnya 
                 </p>
-                <v-btn to="/signup" large>
+                <v-btn color="primary" to="/signup" large>
                   Registration
                 </v-btn>
-                
+              </v-card>
               </v-col>
               <v-col cols="12" xs="6" sm="6">
                 
               </v-col>
           </v-row>
-        </div>
+        </v-container>
         </v-img>
       </section>
 
       <section>
-        <v-layout column wrap class="py-12" align-center>
-          <!-- <v-flex xs12 sm4 class="my-4">
-            <div class="text-center">
-              <h2 class="headline">The best way to start developing</h2>
-              <span class="subheading">Cras facilisis mi vitae nunc</span>
-            </div>
-          </v-flex> -->
-          <v-flex xs12>
-            <v-container grid-list-xl>
-              <v-layout row wrap align-center>
-                <v-flex xs12 md6>
-                  <v-card flat class="transparent">
-                    <v-img style="margin: 0 auto !important;" src="/img/automate.png"></v-img> 
-                  </v-card>
-                </v-flex>
-                <v-flex xs12 md6>
-                  <v-card flat class="transparent">
-                    <!-- <v-card-text class="text-center">
-                      <v-icon x-large class="primary--text text--darken-2">mdi-flash</v-icon>
-                    </v-card-text> -->
-                    <v-card-title style="display: block" primary-title>
-                      <div class="headline">Automate some activities, then focus on key issue</div>
-                      <div class="garis"></div>
-                    </v-card-title>
-                    <v-card-text style="text-align:justify;">
-                      Innov.ID is an innovation management system. By leveraging this solution, organization (enterprise, incubators, accelerators, etc) can easily track progress and issues of each innovation innitiatives being concurrently 
-conducted by different innovator teams, and finally decide the right support for each of them. 
-                    </v-card-text>
-                  </v-card>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-flex>
-        </v-layout>
+        <v-container class="py-10 my-10">
+        <v-row>
+          <v-col cols="12" md="4" lg="4" sm="12">
+            <v-card height="260" class="pa-2 leftbrd"  color="primary" dark>
+              <v-card-title>Kelola Proses Lebih Mudah</v-card-title>
+              <v-card-text>
+                Aktivitas dan proses yang selama ini harus dikelola secara langsung dan intensif, akan lebih mudah dikelola dengan menggunakan innov.id. Mulai dari pelatihan, dokumentasi hasil kerja, monitoring, pendampingan, mentoring, evaluasi hingga aktivitas sinergi dengan pihak eksternal. 
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col cols="12" md="4" lg="4" sm="12">
+            <v-card height="260" class="pa-2 leftbrd"  color="primary" dark>
+              <v-card-title>Informasi Holistik Mengenai <br>Perkembangan Startup / Inovator</v-card-title>
+              <v-card-text>
+                Lembar kerja, data & laporan aktivitas, data capaian metric / KPI, catatan mentoring dan laporan evaluasi yang tersimpan secara digital dan terpusat akan memberikan informasi yang lengkap mengenai perkembangan, isu dan permasalahan dari setiap startup / inovator yang dapat ditindaklanjuti oleh pengelola program.
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col cols="12" md="4" lg="4" sm="12">
+            <v-card height="260" class="pa-2 leftbrd"  color="primary" dark>
+              <v-card-title>Kelola Sejumlah Program Simultan</v-card-title>
+              <v-card-text>
+                Bidang industri, teknologi atau fase perkembangan yang berbeda terkadang membutuhkan pendekatan yang berbeda pula. Dengan innov.id, penyelenggaraan sejumlah program yang berbeda dalam waktu yang bersamaan akan jauh lebih mudah untuk dikelola.
+              </v-card-text>
+            </v-card>
+          </v-col>
+
+        </v-row>
+        </v-container>
       </section>
 
       <section id="accent2" style="background:#e8e8e8 !important;">
@@ -113,104 +129,233 @@ conducted by different innovator teams, and finally decide the right support for
               <span class="subheading">Cras facilisis mi vitae nunc</span>
             </div>
           </v-flex> -->
-          <v-flex xs12>
             <v-container grid-list-xl>
-              <v-layout row wrap align-center>
-                <v-flex xs12 md6>
-                  <v-card flat class="transparent">
-                    <!-- <v-card-text class="text-center">
-                      <v-icon x-large class="primary--text text--darken-2">mdi-flash</v-icon>
-                    </v-card-text> -->
-                    <v-card-title style="display: block" primary-title>
-                      <div class="headline">Collaborative Innovation Process</div>
-                      <div class="garis"></div>
-                    </v-card-title>
-                    
-                    <v-card-text style="text-align:justify;">
-                      Managing innovation across organization means doing many tasks repetitively. Sometimes relatively unimportant tasks require more time and resources to accomplish. With Innov.ID, most of repetitive task such as give training on innovation methodology to new innovators and routine monitoring / reporting can be done independently by innovators without needed any direct support from management or mentors. Therefore, management and mentors can focus more on most important issues such as discussing strategy and challenge of most strategic innovation with the innovator. 
-                    </v-card-text>
-                  </v-card>                 
-                </v-flex>
-                <v-flex xs12 md6>
-                  <v-card flat class="transparent">
-                    <v-img style="margin: 0 auto !important;position:relative;top:30px;" max-width="481px" src="/img/colaborate.png"></v-img> 
-                  </v-card>        
-                </v-flex>
-              </v-layout>
+              <v-row>
+                <v-col cols="12" xs="12" md="6" lg="6">                    
+                      <v-img style="margin: 0 auto !important;position:relative;top:19px;background-size: 519px !important;" max-width="481px" src="/img/illustration-2.png"></v-img>                 
+                </v-col>
+                <v-col class="mt-6" cols="12" xs="12" md="6" lg="6">
+                  <div class="headline mt-10">Mengapa Perlu Innov.id ?</div>
+                  <div class="garis"></div>           
+                  <template>
+                    <v-expansion-panels class="mt-10" focusable>
+                      <v-expansion-panel>
+                        <v-expansion-panel-header>Fokus Pada Isu Strategis</v-expansion-panel-header>
+                        <v-expansion-panel-content class="pt-4">
+                          Dengan semakin sederhananya pengelolaan proses dan aktivitas serta semakin lengkapnya informasi yang dapat diakses, maka pengelola dan mentor dapat lebih mengalokasikan waktu dan pikirannya pada aspek dan dukungan yang lebih strategis dan tepat sasaran untuk masing-masing startup / inovator.
+                        </v-expansion-panel-content>
+                      </v-expansion-panel>
+                      <v-expansion-panel>
+                        <v-expansion-panel-header>Jangkau Peserta & Mentor Lebih Luas</v-expansion-panel-header>
+                        <v-expansion-panel-content class="pt-4">
+                          Tatap muka langsung memang lebih baik. Tapi jangan sampai perbedaan kota domisili menjadi kendala dalam menerima startup / inovator yang potensial dan merekrut mentor yang berkualitas. Dengan innov.id, startup / innovator dapat terfasilitasi dan mentor dapat berkontribusi tanpa batasan wilayah.
+                        </v-expansion-panel-content>
+                      </v-expansion-panel>
+                      <v-expansion-panel>
+                        <v-expansion-panel-header>Proses Inovasi yang Kolaboratif</v-expansion-panel-header>
+                        <v-expansion-panel-content class="pt-4">
+                          Interaksi antara tim startup / innovator, mentor dan pengelola program akan lebih intensif dan cepat. Seluruh pihak tersebut dapat mengakses informasi yang sama untuk dijadikan referensi atas setiap aksi yang dilakukan.
+                        </v-expansion-panel-content>
+                      </v-expansion-panel>
+                      <v-expansion-panel>
+                        <v-expansion-panel-header>Alur & Materi Pembelajaran</v-expansion-panel-header>
+                        <v-expansion-panel-content class="pt-4">
+                         Sajikan materi yang perlu dipelari oleh startup / inovator dalam alur yang sesuai, sehingga mereka dapat mempelajarinya secara mandiri
+                        </v-expansion-panel-content>
+                      </v-expansion-panel>
+                      <v-expansion-panel>
+                        <v-expansion-panel-header>Lembar Kerja / Canvas</v-expansion-panel-header>
+                        <v-expansion-panel-content class="pt-4">
+                          Dipermudah proses implementasi & eksekusi oleh setiap startup / inovator dengan lembar kerja / canvas yang dapat dirancang dan disesuaikan dengan mudah.
+                        </v-expansion-panel-content>
+                      </v-expansion-panel>
+                      <v-expansion-panel>
+                        <v-expansion-panel-header>Monitor & Feedback</v-expansion-panel-header>
+                        <v-expansion-panel-content class="pt-4">
+                          Analisa perkembangan & kualitas implementasi dari masing-masing startup / inovator, dan berikan masukan sesuai kebutuhan.
+                        </v-expansion-panel-content>
+                      </v-expansion-panel>
+                      <v-expansion-panel>
+                        <v-expansion-panel-header>Mentoring & Pelaporan</v-expansion-panel-header>
+                        <v-expansion-panel-content class="pt-4">
+                          Permudah startup / inovator dalam mengajukan jadwal konsultasi dengan mentor pilihannya. Fasilitasi meeting room virtual khusus untuk sesi tersebut, lalu kumpulkan & kelola laporan sesi mentoring dari startup / inovator & mentor secara terpusat.
+                        </v-expansion-panel-content>
+                      </v-expansion-panel>
+                      <v-expansion-panel>
+                        <v-expansion-panel-header>Target & Capaian</v-expansion-panel-header>
+                        <v-expansion-panel-content class="pt-4">
+                          Definisikan dan alokasikan target (KPI / metric) yang berbeda untuk masing-masing startup / inovator, dan lihat hasil capaiannya dari waktu ke waktu.
+                        </v-expansion-panel-content>
+                      </v-expansion-panel>
+                      <v-expansion-panel>
+                        <v-expansion-panel-header>Evaluasi</v-expansion-panel-header>
+                        <v-expansion-panel-content class="pt-4">
+                          Rencanakan tahapan evaluasi kepada setiap startup / inovator, serta kelola laporan dan hasil keputusannya secara terpusat.
+                        </v-expansion-panel-content>
+                      </v-expansion-panel>
+                    </v-expansion-panels>
+                  </template>        
+                </v-col>
+              </v-row>
             </v-container>
-          </v-flex>
         </v-layout>
       </section>
 
       <section id="accent3" style="background: #fff !important;">
-        <v-layout column wrap class="py-12" align-center>
-          <!-- <v-flex xs12 sm4 class="my-4">
-            <div class="text-center">
-              <h2 class="headline">The best way to start developing</h2>
-              <span class="subheading">Cras facilisis mi vitae nunc</span>
-            </div>
-          </v-flex> -->
-          <v-flex xs12>
-            <v-container grid-list-xl>
-              <v-layout row wrap align-center>
-                <v-flex xs12 md6>
-                  <v-card flat class="transparent">
-                    <v-img style="margin: 0 auto !important;" max-width="363px" src="/img/i-organitation.png"></v-img> 
-                  </v-card>
-                </v-flex>
-                <v-flex xs12 md6>
-                  <v-card flat class="transparent">
-                    <!-- <v-card-text class="text-center">
-                      <v-icon x-large class="primary--text text--darken-2">mdi-flash</v-icon>
-                    </v-card-text> -->
-                    <v-card-title style="display: block" primary-title>
-                      <div class="headline">Managing Multi Stream Innovation Programs</div>
-                      <div class="garis"></div>
-                    </v-card-title>
-                    <v-card-text style="text-align:justify;">
-                      Innovation in different verticals and phases requires different approach, process, methodology, focus and action. Innov.ID enables organization to set different programs -from short event like innovation sprint, medium term program like incubation and acceleration, to long term continues 
-improvement innovation program. For each program, organization can set different milestones and objectives, including to macth the requirements of verticals and phase of innovation related to that program.  
-                    </v-card-text>
-                  </v-card>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-flex>
-        </v-layout>
+      <v-container>
+        <v-row justify="center">
+          <div class="mt-12 pt-12 mb-12 text-center">
+              <h2 class="mb-1 headline">Fitur Innov.ID</h2>
+              <div style="margin:0 auto;" class="garis mb-5"></div>
+                <!-- <span class="subheading">Thank you for visiting our website, if there any questions that will be submitted, press the button below</span>           -->
+          </div>
+        </v-row>
+        <v-row>
+          <v-col cols="12" sm="12" md="6">
+            <template>
+                <v-card
+                  justify-center
+                  class="mx-auto text-center"
+                  max-width="344"
+                >
+                  <div class="pa-4">
+                    <v-img
+                      class="pa-5"
+                      src="/img/setup_wizard.svg"
+                      height="200px"
+                    ></v-img>
+                  </div>
+
+                  <v-chip
+                    class="mt-8"
+                    color="primary"
+                    text-color="white"
+                  >
+                    <v-avatar left>
+                      <v-icon>mdi-checkbox-marked-circle</v-icon>
+                    </v-avatar>
+                    <h3>
+                      Pengelolaan Aktivitas
+                    </h3>
+                  </v-chip>
+
+                  <v-card-subtitle>
+                    Rencanakan, kelola dan laporkan seluruh aktivitas yang berkaitan dengan program, baik yang hanya dilaksanakan oleh satu startup / inovator saja maupun yang bersifat lintas peran & pemangku kepentingan.
+                  </v-card-subtitle>
+
+                  <v-card-actions>
+                    <!-- <v-btn
+                      color="orange lighten-2"
+                      text
+                    >
+                      More Info
+                    </v-btn>
+
+                    <v-spacer></v-spacer>
+
+                    <v-btn
+                      icon
+                      @click="show = !show"
+                    >
+                      <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                    </v-btn> -->
+                  </v-card-actions>
+
+                  <v-expand-transition>
+                    <div v-show="show">
+                      <v-divider></v-divider>
+
+                      <v-card-text>
+                        
+                      </v-card-text>
+                    </div>
+                  </v-expand-transition>
+                </v-card>
+            </template>
+          </v-col>
+          <v-col cols="12" sm="12" md="6">
+            <template>
+                <v-card
+                  class="mx-auto text-center"
+                  max-width="344"
+                >
+                  <div class="pa-4">
+                    <v-img                    
+                      src="/img/setup.svg"
+                      height="200px"
+                    ></v-img>
+                  </div>
+
+                  <v-chip
+                    class="mt-8"
+                    color="primary"
+                    text-color="white"
+                  >
+                    <v-avatar left>
+                      <v-icon>mdi-checkbox-marked-circle</v-icon>
+                    </v-avatar>
+                    <h3>
+                      White-Labelling
+                    </h3>
+                  </v-chip>
+                  
+
+                  <v-card-subtitle>
+                    Hilangkan identitas solusi ini di mata peserta dan pemangku kepentingan lainnya. <br>Gunakan alamat web, logo dan warna tema sesuai organisasi. 
+                  </v-card-subtitle>
+
+                  <v-card-actions>
+                    <!-- <v-btn
+                      color="orange lighten-2"
+                      text
+                    >
+                      More Info
+                    </v-btn>
+
+                    <v-spacer></v-spacer>
+
+                    <v-btn
+                      icon
+                      @click="show = !show"
+                    >
+                      <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                    </v-btn> -->
+                  </v-card-actions>
+
+                  <v-expand-transition>
+                    <div v-show="show">
+                      <v-divider></v-divider>
+
+                      <v-card-text>
+                        
+                      </v-card-text>
+                    </div>
+                  </v-expand-transition>
+                </v-card>
+            </template>
+
+          </v-col>
+        </v-row>
+      </v-container>
       </section>
-
-      <!-- <section>
-        <v-parallax dark src="https://picsum.photos/1920/1080?grayscale">
-          <v-layout column align-center justify-center>
-            <div class="headline white--text mb-4 text-center">Web development has never been easier</div>
-            <em>Kick-start your application today</em>
-            <v-btn
-              class="mt-12"
-              color="primary--text text--darken-2"
-              dark
-              large
-              router
-              to="/personnel"
-            >Personnel</v-btn>
-          </v-layout>
-        </v-parallax>
-      </section> -->
-
       <section style="min-height:400px;" class="backcu mt-12">
         <v-container grid-list-xl>
           <v-layout row wrap justify-center class="my-12 text-center">
             
             <v-flex class="my-11">
               <div class="text-center">
-              <h2 class="mb-1 headline">Contact Us</h2>
-              <div style="margin:0 auto;" class="garis mb-5"></div>
-              <span class="subheading">
-Thank you for visiting our website, if there any questions that will be submitted, press the button below</span>
-               
+                <h2 class="mb-1 headline">Hubungi Kami</h2>
+                <div style="margin:0 auto;" class="garis mb-5"></div>
+                <span class="subheading">Terima kasih telah mengunjungi website kami, jika ada pertanyaan yang ingin diajukan, kirim melalui e-mail dibawah ini</span>   
               </div>
-              <v-btn class="mt-5 text-center">
-                 contact form
-               </v-btn>
+              <v-row justify="center">
+              <v-card class="pa-5 px-7 mt-5" dark>
+              <div class="mx-auto" style="display:inline-flex;">
+              <v-img width="50" src="/img/email.png"/>
+              <h1 class="mt-2 ml-5" color="primary">info@innov.id</h1>
+              </div>
+              </v-card>
+              </v-row>
             </v-flex>
             
           </v-layout>
@@ -220,11 +365,12 @@ Thank you for visiting our website, if there any questions that will be submitte
       <v-footer color="primary darken-2">
         <v-layout row wrap align-center>
           <v-flex class="text-center" xs12>
-            <div class="white--text ml-4">@2020, innov.id</div>
+            <div class="white--text ml-4">@2021, innov.id</div>
           </v-flex>
         </v-layout>
       </v-footer>
-    </v-main>
+    </v-container>
+    </v-sheet>
   </v-app>
 </template>
 
@@ -250,8 +396,8 @@ export default {
   color: white;
 }
 .toolbarcustom {
-  position:absolute;
-  z-index:1;
+  /* position:absolute; */
+  /* z-index:1; */
   background-color: transparent !important;
   border-color:transparent !important;
 }
@@ -290,6 +436,11 @@ export default {
   border-top: 40px solid rgb(232, 232, 232);
   border-left: 40px solid #fff;
   width: 50%;
+}
+.leftbrd {
+  border-left-color: white;
+  border-left-width: thick;
+  border-left-style: inset;
 }
 
 </style>
