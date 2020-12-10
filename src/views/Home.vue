@@ -221,7 +221,7 @@
                   <div class="pa-4">
                     <v-img
                       class="pa-5"
-                      src="/img/setup_wizard.svg"
+                      src="/img/setup_wizard.png"
                       height="200px"
                     ></v-img>
                   </div>
@@ -281,7 +281,7 @@
                 >
                   <div class="pa-4">
                     <v-img                    
-                      src="/img/setup.svg"
+                      src="/img/setup.png"
                       height="200px"
                     ></v-img>
                   </div>
