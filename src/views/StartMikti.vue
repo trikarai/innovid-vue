@@ -44,7 +44,7 @@
 
     <v-main>
       <section style="max-height:590px">
-        <v-img class="imgkastem" src="/img/mainbanner.jpg">
+        <v-img class="imgkastem" src="/img/mainbanner-sm.jpg">
           <div class="container" style="margin-top:190px;">
             <v-row>
               <v-col cols="12" xs="6" sm="6">
