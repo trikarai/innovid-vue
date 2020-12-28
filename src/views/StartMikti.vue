@@ -4,7 +4,7 @@
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
       <v-toolbar-title>
-        <v-img class="mt-2" max-width="110" src="/img/logo.png"></v-img>
+        <v-img class="mt-2" max-width="110" src="/img/logo-1.png"></v-img>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
