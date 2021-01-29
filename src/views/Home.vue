@@ -18,8 +18,10 @@
 
       <v-toolbar-items class="d-none d-md-flex d-lg-flex">
         <v-btn text>Home</v-btn>
+        <v-btn text>Fitur</v-btn>
+        <v-btn text>harga</v-btn>
         <v-btn href="http://blog.innov.id" text>Blog</v-btn>
-        <v-btn style="border-radius: 28px !important;height: 34px !important;position: relative;top: 16px;" dark color="primary" to="/login">Login</v-btn>
+        <!-- <v-btn style="border-radius: 28px !important;height: 34px !important;position: relative;top: 16px;" dark color="primary" to="/login">Login</v-btn> -->
       </v-toolbar-items>
 
       <v-menu left bottom>
@@ -39,10 +41,13 @@
             <v-btn block text>Home</v-btn>
           </v-list-item>
           <v-list-item>
-            <v-btn block to="/signup" text>Blog</v-btn>
+            <v-btn block to="#" text>Fitur</v-btn>
           </v-list-item>
           <v-list-item>
-            <v-btn block to="/login" text>Login</v-btn>
+            <v-btn block to="#" text>Harga</v-btn>
+          </v-list-item>
+          <v-list-item>
+            <v-btn block to="#" text>Blog</v-btn>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -54,22 +59,24 @@
     >
     <v-container fluid class="ml-0 pl-0 mr-0 pr-0" style="height: 1500px;padding-top:0px">
       <section>
-        <v-img max-height="750" class="imgkastem" src="/img/hero.jpg">
-        <v-container style="margin-top:250px;">       
+        <v-img min-height="750" aspect-ratio="1.9" class="imgkastem" src="/img/backbanner.jpg">
+        <v-container>      
           <v-row>
-              <v-col cols="12" xs="6" sm="6">
-                <h1 class="d-none d-md-flex d-lg-flex">Platform Kolaborasi Proses Inovasi & Pendampingan Bisnis</h1>
+              <v-col cols="12" md="5">
+                <h1 class="d-none d-md-flex d-lg-flex typing"  style="margin-top:250px;max-width: 280px;">     
+                  Platform Inovasi Kolaboratif
+                </h1>
                 <h3 class="grey--text d-none d-md-flex d-lg-flex">untuk Inkubator, Akselerator & Perusahaan</h3>
                 <div class="garis d-none d-md-flex d-lg-flex"></div>
                 <div class="d-none d-md-flex d-lg-flex" style="margin-top:40px;"></div>
                 <p class="d-none d-md-flex d-lg-flex" style="text-align: justify !important;">
-                  Lebih berorientasi hasil dan lebih mudah dalam menyelenggarakan program inkubasi, akselerasi, atau program inovasi dan pendampingan bisnis lainnya 
+                  Lebih fokus pada aspek strategis dan dukungan tepat sasaran untuk setiap startup / inovasi
                 </p>
                 <v-btn width="200" class="d-none d-md-flex d-lg-flex" color="primary" to="/signup" large>
-                  Registration
+                  Demo Solusi
                 </v-btn>
-              <v-card class="pa-5 d-sm-none" elevation="0" style="opacity:0.8;">
-                <h1>Platform Kolaborasi Proses Inovasi & Pendampingan Bisnis</h1>
+              <v-card class="pa-5 d-sm-none mt-14" elevation="0" style="opacity:0.8;">
+                <h1 class="typing">Platform Inovasi Kolaboratif</h1>
                 <h3 class="grey--text">untuk Inkubator, Akselerator & Perusahaan</h3>
                 <div class="garis"></div>
                 <div style="margin-top:40px;"></div>
@@ -81,8 +88,25 @@
                 </v-btn>
               </v-card>
               </v-col>
-              <v-col cols="12" xs="6" sm="6">
-                
+              <v-col cols="12" md="7">
+                <div class="css-f0zq8q">
+                  <h1 style="transform: translate3d(0px, -15px, 0px);" role="text" class="css-6l4p0r">
+                  <span class="css-rz4lf6"><span style="border: 3px solid transparent;" class="css-nfnndr typing2">Innovation</span>
+                  <div class="css-1net4kr" style="transform: translate3d(-130px, -30px, 0px);" aria-hidden="true"><svg viewBox="0 0 22 24" fill="none" class="css-7s1cgq"><g filter="url(#filter0_d)"><path d="M7.5 17L5 4l11 6.5-5.5 1.5-3 5z" fill="currentColor"></path><path d="M7 17.1l.26 1.28.67-1.12 2.9-4.83 5.3-1.45 1.14-.3-1.02-.61-11-6.5-.95-.56.2 1.08 2.5 13z" stroke="#fff" stroke-linecap="square"></path></g><defs><filter id="filter0_d" x="0.6" y="0.01" width="20.95" height="23.75" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="x"></feFlood><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"></feColorMatrix><feOffset dy="1"></feOffset><feGaussianBlur stdDeviation="1.5"></feGaussianBlur><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.35 0"></feColorMatrix><feBlend in2="x" result="y"></feBlend><feBlend in="SourceGraphic" in2="y" result="shape"></feBlend></filter></defs></svg><div class="css-1msqe2r">Startup / Inovator</div></div></span> <span style="transform: none;" class="css-79elbk"><div class="css-csv9hp" style="transform: translate3d(270px, -60px, 0px);" aria-hidden="true"><svg viewBox="0 0 22 24" fill="none" class="css-1jnkkb5"><g filter="url(#filter0_d)"><path d="M7.5 17L5 4l11 6.5-5.5 1.5-3 5z" fill="currentColor"></path><path d="M7 17.1l.26 1.28.67-1.12 2.9-4.83 5.3-1.45 1.14-.3-1.02-.61-11-6.5-.95-.56.2 1.08 2.5 13z" stroke="#fff" stroke-linecap="square"></path></g><defs><filter id="filter0_d" x="0.6" y="0.01" width="20.95" height="23.75" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="x"></feFlood><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"></feColorMatrix><feOffset dy="1"></feOffset><feGaussianBlur stdDeviation="1.5"></feGaussianBlur><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.35 0"></feColorMatrix><feBlend in2="x" result="y"></feBlend><feBlend in="SourceGraphic" in2="y" result="shape"></feBlend></filter></defs></svg>
+                  <!-- <div class="css-36d1ie">Mae</div> -->
+                  </div></span><br>
+                  <span style="transform: none;" class="css-79elbk">
+                    <div id=flip>
+                      <div><div style="color:#fff;">Journey</div></div>
+                      <div><div>Journey</div></div>
+                      <!-- <div><div>Journey</div></div> -->
+                    </div>
+                    <div class="css-mtg5mp" style="transform: translate3d(-240px, 70px, 0px);" aria-hidden="true">
+                    <svg viewBox="0 0 22 24" fill="none" class="css-1uk24sa"><g filter="url(#filter0_d)"><path d="M7.5 17L5 4l11 6.5-5.5 1.5-3 5z" fill="currentColor"></path><path d="M7 17.1l.26 1.28.67-1.12 2.9-4.83 5.3-1.45 1.14-.3-1.02-.61-11-6.5-.95-.56.2 1.08 2.5 13z" stroke="#fff" stroke-linecap="square"></path></g><defs><filter id="filter0_d" x="0.6" y="0.01" width="20.95" height="23.75" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="x"></feFlood><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"></feColorMatrix><feOffset dy="1"></feOffset><feGaussianBlur stdDeviation="1.5"></feGaussianBlur><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.35 0"></feColorMatrix><feBlend in2="x" result="y"></feBlend><feBlend in="SourceGraphic" in2="y" result="shape"></feBlend></filter></defs></svg><div class="css-11kesv5">Mentor / Pendamping</div></div></span> <span style="transform: none;" class="css-79elbk"><div class="css-1up6dgi" style="transform: translate3d(180px, 80px, 0px);" aria-hidden="true"><svg viewBox="0 0 22 24" fill="none" class="css-aermcn"><g filter="url(#filter0_d)"><path d="M7.5 17L5 4l11 6.5-5.5 1.5-3 5z" fill="currentColor"></path><path d="M7 17.1l.26 1.28.67-1.12 2.9-4.83 5.3-1.45 1.14-.3-1.02-.61-11-6.5-.95-.56.2 1.08 2.5 13z" stroke="#fff" stroke-linecap="square"></path></g><defs><filter id="filter0_d" x="0.6" y="0.01" width="20.95" height="23.75" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="x"></feFlood><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"></feColorMatrix><feOffset dy="1"></feOffset><feGaussianBlur stdDeviation="1.5"></feGaussianBlur><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.35 0"></feColorMatrix><feBlend in2="x" result="y"></feBlend><feBlend in="SourceGraphic" in2="y" result="shape"></feBlend></filter></defs></svg><div class="css-1kyh9wu">Manajemen</div></div></span></h1>
+                  <!-- <div class="css-1c72cp7">
+                    <button class="css-1luajct">Try Figma for free</button>
+                  </div> -->
+                </div>      
               </v-col>
           </v-row>
         </v-container>
@@ -93,26 +117,26 @@
         <v-container class="py-10 my-10">
         <v-row>
           <v-col cols="12" md="4" lg="4" sm="12">
-            <v-card height="260" class="pa-2 leftbrd"  color="primary" dark>
-              <v-card-title>Easy to Use</v-card-title>
+            <v-card height="140" class="pa-2 leftbrd"  color="primary" dark>
+              <v-card-title>Informasi holistik</v-card-title>
               <v-card-text>
-                Aktivitas dan proses yang selama ini harus dikelola secara langsung dan intensif, akan lebih mudah dikelola dengan menggunakan innov.id. Mulai dari pelatihan, dokumentasi hasil kerja, monitoring, pendampingan, mentoring, evaluasi hingga aktivitas sinergi dengan pihak eksternal. 
+                Mengenai perkembangan dan isu dari setiap startup / inovasi
               </v-card-text>
             </v-card>
           </v-col>
           <v-col cols="12" md="4" lg="4" sm="12">
-            <v-card height="260" class="pa-2 leftbrd"  color="primary" dark>
-              <v-card-title>Human Centered Design</v-card-title>
+            <v-card height="140" class="pa-2 leftbrd"  color="primary" dark>
+              <v-card-title>Penyederhanaan operasional</v-card-title>
               <v-card-text>
-                Lembar kerja, data & laporan aktivitas, data capaian metric / KPI, catatan mentoring dan laporan evaluasi yang tersimpan secara digital dan terpusat akan memberikan informasi yang lengkap mengenai perkembangan, isu dan permasalahan dari setiap startup / inovator yang dapat ditindaklanjuti oleh pengelola program.
+                Termasuk pada pelaksanaan sejumlah program simultan 
               </v-card-text>
             </v-card>
           </v-col>
           <v-col cols="12" md="4" lg="4" sm="12">
-            <v-card height="260" class="pa-2 leftbrd"  color="primary" dark>
-              <v-card-title>Startup Friendly</v-card-title>
+            <v-card height="140" class="pa-2 leftbrd"  color="primary" dark>
+              <v-card-title>Jangkau lebih luas</v-card-title>
               <v-card-text>
-                Bidang industri, teknologi atau fase perkembangan yang berbeda terkadang membutuhkan pendekatan yang berbeda pula. Dengan innov.id, penyelenggaraan sejumlah program yang berbeda dalam waktu yang bersamaan akan jauh lebih mudah untuk dikelola.
+                Startup, inovator dan mentor berkualitas, di manapun mereka berada
               </v-card-text>
             </v-card>
           </v-col>
@@ -633,44 +657,19 @@
 <script>
 export default {
   name: "App",
-  created() {
-    document.title = "Innov.ID";
-    var s = location.hostname;
-    this.getDomain(s);
-  },
-  mounted() {
-    if (!this.isMain) {
-      this.$router.replace({ name: "mikti-home" });
-    }
-  },
-  data() {
+  data: function() {
     return {
-      mainDomain: "",
-      isMain: false,
-      title: "Home",
+      title: "Home"
     };
-  },
-  methods: {
-    getDomain(s) {
-      //s = start.mikti.id
-      s = s.replace(/^www\./, "");
-      var parts = s.split(".");
-      // ['start',''mikti, 'id']
-      // eslint-disable-next-line no-console
-      console.log("Domain parts", parts);
-      if (parts.length >= 3) {
-        this.mainDomain = parts[1];
-        this.isMain = false;
-      } else {
-        this.mainDomain = parts[0];
-        this.isMain = true;
-      }
-      //   return parts.join(".");
-      //   this.mainDomain = parts.join(".");
-    },
-  },
+  }
 };
 </script>
+
+<style>
+/* .v-responsive__sizer {
+    padding-bottom: 0px !important;
+} */
+</style>
 
 <style scoped>
 header.v-sheet.theme--light.v-toolbar.v-toolbar--absolute.v-app-bar.v-app-bar--elevate-on-scroll.v-app-bar--hide-shadow.white {
@@ -734,5 +733,143 @@ header.v-sheet.theme--light.v-toolbar.v-toolbar--absolute.v-app-bar.v-app-bar--e
   border-left-width: thick;
   border-left-style: inset;
 }
+.css-f0zq8q{
+  width:100%;
+  margin-top: 70px;
+  background: url(/img/monitor-ij.png);
+  background-size: cover;
+  background-position-y: 72px;
+  text-align:center;
+  /* padding:70px 32px; */
+  min-height:calc(100vh - 200px);display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;}
+.css-6l4p0r{font-family:'Whyte Inktrap',Whyte,sans-serif;font-size:60px;line-height:1;max-width:900px;margin:0 auto;-webkit-letter-spacing:-0.03em;-moz-letter-spacing:-0.03em;-ms-letter-spacing:-0.03em;letter-spacing:-0.03em;color:#000000;}.css-6l4p0r span{display:inline-block;}@media (max-width:960px){.css-6l4p0r{font-size:72px;}}@media (max-width:540px){.css-6l4p0r{font-size:64px;}}
+.css-1net4kr{position:relative;position:absolute;top:0;left:-1px;z-index:3;}
+.css-7s1cgq{color:#5551FF;width:22px;}
+.css-nfnndr{border:3px solid #5551FF;}
+.css-rz4lf6{width:3.2em;text-align:left;position:relative;}
+.css-1msqe2r{position:absolute;top:18px;left:14px;background-color:#5551FF;color:#fff;font-size:11px;font-weight:700;-webkit-letter-spacing:0;-moz-letter-spacing:0;-ms-letter-spacing:0;letter-spacing:0;width:110px;text-align:center;padding:5px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+.css-79elbk{position:relative;}
+.css-csv9hp{position:relative;position:absolute;z-index:3;top:20%;left:15%;}
+.css-36d1ie{position:absolute;top:18px;left:14px;background-color:#0FA958;color:#fff;font-size:11px;font-weight:700;-webkit-letter-spacing:0;-moz-letter-spacing:0;-ms-letter-spacing:0;letter-spacing:0;width:110px;text-align:center;padding:5px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+.css-1jnkkb5{color:#0FA958;width:22px;}
+.css-mtg5mp{position:relative;position:absolute;z-index:3;top:54%;left:60%;}
+.css-1uk24sa{color:#F24E1E;width:22px;}
+.css-11kesv5{position:absolute;top:18px;left:14px;background-color:#F24E1E;color:#fff;font-size:11px;font-weight:700;-webkit-letter-spacing:0;-moz-letter-spacing:0;-ms-letter-spacing:0;letter-spacing:0;width:135px;text-align:center;padding:5px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+.css-79elbk{position:relative;}
+.css-1up6dgi{position:relative;position:absolute;z-index:3;top:50%;left:57%;}
+.css-aermcn{color:#A259FF;width:22px;}
+.css-1kyh9wu{position:absolute;top:18px;left:14px;background-color:#A259FF;color:#fff;font-size:11px;font-weight:700;-webkit-letter-spacing:0;-moz-letter-spacing:0;-ms-letter-spacing:0;letter-spacing:0;width:110px;text-align:center;padding:5px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+.css-q04hp6{font-size:var(--t1);line-height:1.3;-webkit-letter-spacing:0.01em;-moz-letter-spacing:0.01em;-ms-letter-spacing:0.01em;letter-spacing:0.01em;max-width:528px;margin:40px auto;}@media (max-width:800px){.css-q04hp6{line-height:1.5;}}
+.css-1c72cp7{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;}@media (max-width:540px){.css-1c72cp7{-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}}
+.css-1luajct{background:#000000;color:#FFFFFF;display:inline-block;border-radius:8px;padding:14px 24px 16px;font-size:18px;font-weight:700;line-height:1;border:0;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-transition:-webkit-transform 200ms,background 200ms;-webkit-transition:transform 200ms,background 200ms;transition:transform 200ms,background 200ms;}.css-1luajct:hover{-webkit-transform:translateY(-2px);-ms-transform:translateY(-2px);transform:translateY(-2px);-webkit-text-decoration:none;text-decoration:none;}.css-1luajct:active{-webkit-transform:translateY(1px);-ms-transform:translateY(1px);transform:translateY(1px);}.css-1luajct:disabled{pointer-events:none;}
 
+.typing {
+  position: relative;
+}
+.typing::after {
+  content: "|";
+  position: absolute;
+  right: 0;
+  width: 100%;
+  color: #1d1f20;
+  background: #ededed;
+  -webkit-animation: typing 4s steps(28) forwards, caret 1s infinite;
+          animation: typing 4s steps(28) forwards, caret 1s infinite;
+}
+
+@-webkit-keyframes typing {
+  to {
+    width: 0;
+  }
+}
+
+@keyframes typing {
+  to {
+    width: 0;
+  }
+}
+
+.typing2 {
+  position: relative;
+}
+.typing2::after {
+  content: "|";
+  position: absolute;
+  right: 0;
+  width: 100%;
+  color: #1d1f20;
+  background: #6ebec5;
+  -webkit-animation: typing 4s steps(10) forwards, caret 1s infinite;
+          animation: typing 4s steps(10) forwards, caret 1s infinite;
+}
+
+@-webkit-keyframes typing2 {
+  to {
+    width: 0;
+  }
+}
+
+@keyframes typing2 {
+  to {
+    width: 0;
+  }
+}
+
+@-webkit-keyframes caret {
+  50% {
+    color: transparent;
+  }
+}
+@keyframes caret {
+  50% {
+    color: transparent;
+  }
+}
+
+#flip {
+  height:67px;
+  overflow:hidden;
+}
+
+#flip > div > div {
+  color:#1d1f20;
+  padding:2px 12px;
+  height:45px;
+  margin-bottom:45px;
+  display:inline-block;
+}
+
+#flip div:first-child {
+  animation: show 5s linear;
+}
+
+/* #flip div div {
+  background:#42c58a;
+}
+#flip div:first-child div {
+  background:#4ec7f3;
+}
+#flip div:last-child div {
+  background:#DC143C;
+} */
+
+@keyframes show {
+  0% {margin-top:-270px;}
+  5% {margin-top:-180px;}
+  33% {margin-top:-180px;}
+  38% {margin-top:-90px;}
+  66% {margin-top:-90px;}
+  71% {margin-top:0px;}
+  99.99% {margin-top:0px;}
+  100% {margin-top:-270px;}
+}
+
+/* p {
+  position:fixed;
+  width:100%;
+  bottom:30px;
+  font-size:12px;
+  color:#999;
+  margin-top:200px;
+} */
 </style>
